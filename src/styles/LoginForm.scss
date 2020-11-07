@@ -1,0 +1,7 @@
+@import "styles/mixins.scss";
+@import "styles/variables.scss";
+
+
+.login__container{
+  @include flex-temp(column, center, center)
+}

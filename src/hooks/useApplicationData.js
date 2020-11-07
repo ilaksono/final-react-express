@@ -6,35 +6,22 @@ import {
   CREATE,
   DELETE
 } from 'reducers/appReducer';
-import { logReducer, EMPTY_FIELD } from 'reducers/logReducer';
 // const socket = new WebSocket('');
 
 const initApp = {
   authorized: false,
   name: ''
 };
-const initLogin = {
-  email: '',
-  password: '',
-  errMsg: ''
-};
 
-const fakeLogins = {
+const fakeLogins = [{
   email: 'test@test.ca',
   password: 'asd'
-};
+}];
 
 const useApplicationData = () => {
   const [appState, appDispatch] = useReducer(appReducer, initApp);
-  const [logState, logDispatch] = useReducer(logReducer, initLogin);
 
-  const validate = () => {
-    if (!logState.email || !logState.password) {
-      logDispatch({ type: EMPTY_FIELD });
-      return false;
-    }
-    return true;
-  };
+
 
   const createHandle = (event) => {
     if (true) {
@@ -56,22 +43,18 @@ const useApplicationData = () => {
     }
   };
 
-  const submitHandle = (event) => {
-    event.preventDefault();
-    if (validate(logState)) {
-      axios
-        .post({ data: { email: logState.email, password: logState.password }, url: '/api/login' })
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.auth) {
-            appDispatch({ type: AUTHORIZE, name: logState.email.split('@')[0].join('') });
-          }
-        });
-    }
+  const submitHandle = (email, password) => {
+    axios
+      .post({ data: { email, password }, url: '/api/login' })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.auth) {
+          appDispatch({ type: AUTHORIZE, name: email.split('@')[0].join('') });
+        }
+      });
   };
 
   return {
-    logState,
     submitHandle,
     appState,
     createHandle,
