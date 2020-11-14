@@ -1,4 +1,4 @@
-import 'styles/App.css';
+import 'styles/App.scss';
 import useApplicationData from 'hooks/useApplicationData';
 import LoginForm from 'components/LoginForm';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
