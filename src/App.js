@@ -1,6 +1,7 @@
-import 'styles/App.css';
+import 'styles/App.scss';
 import useApplicationData from 'hooks/useApplicationData';
 import LoginForm from 'components/LoginForm';
+import GoogleSuggest from 'components/GoogleSuggest'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path='/login'>
             <LoginForm submitHandle={submitHandle} logState={logState} />
+          </Route>
+          <Route path='/search'>
+            <GoogleSuggest />
           </Route>
         </Switch>
       </Router>
