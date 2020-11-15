@@ -21,9 +21,6 @@ function Map(props) {
     map.fitBounds(bounds);
     setMap(map);
   }, []);
-  if (props.places) {
-    props.markers.map();
-  }
 
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
@@ -44,7 +41,6 @@ function Map(props) {
           onUnmount={onUnmount}
         >
           { /* Child components, such as markers, info windows, etc. */}
-          <MarkerComponent lat={-35} lng={120} />
           {parsedMarkers}
           <></>
         </GoogleMap>

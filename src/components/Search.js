@@ -10,11 +10,11 @@ const Search = props => {
     },
   });
   const onChange = (event) => {
-    let res = [];
+    let latLngPromises = [];
     if (status === 'OK') {
       console.log(data);
       try {
-        res = data.map(async data => {
+        latLngPromises = data.map(async data => {
           const codes = await getGeocode({ address: data.description });
           const { lat, lng } = await getLatLng(codes[0]);
           return { lat, lng };
@@ -22,7 +22,7 @@ const Search = props => {
       } catch (er) {
         console.log(er);
       }
-      Promise.all(res).then(data => {
+      Promise.all(latLngPromises).then(data => {
         console.log(data);
 
         props.addResults(data);
