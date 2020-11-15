@@ -1,50 +1,54 @@
-import PropTypes from "prop-types"
-import React from "react"
-import ReactGoogleMapLoader from "react-google-maps-loader"
-import ReactGooglePlacesSuggest from "react-google-places-suggest"
+import PropTypes from "prop-types";
+import React from "react";
+import ReactGoogleMapLoader from "react-google-maps-loader";
+import ReactGooglePlacesSuggest from "react-google-places-suggest";
 
-const API_KEY = "AIzaSyBDPrmJAvGx0h968D3iPsJ1jmwcFMEcunQ"
+const API_KEY = "AIzaSyBDPrmJAvGx0h968D3iPsJ1jmwcFMEcunQ";
 class GoogleSuggest extends React.Component {
   state = {
     search: "",
     value: "",
-  }
+    results: []
+  };
+
 
   handleInputChange(e) {
-    this.setState({search: e.target.value, value: e.target.value})
+    this.setState({ search: e.target.value, value: e.target.value });
   }
 
   handleSelectSuggest(suggest) {
-    console.log(suggest)
+    console.log(suggest);
     console.log(ReactGoogleMapLoader);
-    this.setState({search: "", value: suggest.formatted_address})
+    this.setState({ search: "", value: suggest.formatted_address });
   }
 
   render() {
-    const {search, value} = this.state
+    const { search, value } = this.state;
+    console.log(this.state);
     return (
       <ReactGoogleMapLoader
         params={{
           key: API_KEY,
-          libraries: "places,geocode",
+          libraries: "places, geometry, geocode",
         }}
         render={googleMaps =>
           googleMaps && (
             <div>
               <ReactGooglePlacesSuggest
-                autocompletionRequest={{input: search, componentRestrictions: {
-                  country: ['us', 'ca']
-                  }}}
+                autocompletionRequest={{
+                  input: search, componentRestrictions: {
+                    country: ['us', 'ca']
+                  }
+                }}
                 googleMaps={googleMaps}
                 onSelectSuggest={this.handleSelectSuggest.bind(this)}
                 customRender={prediction => (
                   <div className="customWrapper">
-                      {prediction
-                          ? prediction.description
-                          : "My custom no results text"}
+                    {prediction
+                      ? prediction.description
+                      : "My custom no results text"}
                   </div>
-              )}
-              >
+                )}              >
                 <input
                   type="text"
                   value={value}
@@ -56,12 +60,12 @@ class GoogleSuggest extends React.Component {
           )
         }
       />
-    )
+    );
   }
 }
 
 GoogleSuggest.propTypes = {
   googleMaps: PropTypes.object,
-}
+};
 
-export default GoogleSuggest
+export default GoogleSuggest;

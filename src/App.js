@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Map from 'components/Map';
+import useMapData from 'hooks/useMapData';
+
+
 function App() {
   const { logState,
     appState,
@@ -13,7 +16,7 @@ function App() {
     createHandle,
     deleteHandle
   } = useApplicationData();
-
+  const {mapState, addResults} = useMapData();
 
   return (
     <div className="App">
@@ -27,10 +30,8 @@ function App() {
             <LoginForm submitHandle={submitHandle} logState={logState} />
           </Route>
           <Route path='/search'>
-            <GoogleSuggest />
-          </Route>
-          <Route path='/map'>
-            <Map />
+            <GoogleSuggest addResults={addResults}/>
+            <Map mapState={mapState}/>
           </Route>
         </Switch>
       </Router>
