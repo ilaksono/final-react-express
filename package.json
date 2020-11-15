@@ -1,6 +1,7 @@
 {
   "name": "final",
   "version": "0.1.0",
+  "proxy": "http://localhost:8001",
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^1.13.0",

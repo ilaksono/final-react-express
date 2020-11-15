@@ -43,7 +43,7 @@ function App() {
             {/* <Map mapState={mapState}/> */}
           </Route>
           <Route path='/maps'>
-            <Map mapState={mapState}/>
+            <Map isLoaded={isLoaded} mapState={mapState}/>
           </Route>
         </Switch>
       </Router>

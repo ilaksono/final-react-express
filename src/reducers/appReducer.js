@@ -1,8 +1,9 @@
 export const AUTHORIZE = 'AUTHORIZE';
 export const CREATE = 'CREATE';
 export const DELETE = 'DELETE';
+export const INIT_CENTER = 'INIT_CENTER'
 
-export const appReducer = (appState, action) => {
+const appReducer = (appState, action) => {
 
   switch (action.type) {
     case AUTHORIZE: {
@@ -13,6 +14,9 @@ export const appReducer = (appState, action) => {
     }
     case DELETE: {
       return { ...appState };
+    }
+    case INIT_CENTER: {
+      return {...appState, center: action.center}
     }
     default:
       throw new Error('Invalid action type for data');

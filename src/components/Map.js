@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { GoogleMap } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
@@ -10,17 +10,29 @@ const containerStyle = {
 };
 
 const center = {
-  lat: -3.745,
-  lng: -38.523
+  lat: 43.745,
+  lng: -79.523
 };
 
-function Map(props) {
+const Map = props => {
   const [map, setMap] = React.useState(null);
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
+  // const onLoad = React.useCallback(function callback(map) {
+  //   const bounds = new window.google.maps.LatLngBounds();
+  //   map.fitBounds(bounds);
+  //   setMap(map);
+  // }, []);
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  },[])
+  // const panTo = useCallback(({lat, lng}) => {
+  //   mapRef.current.panTo({lat, lng});
+  //   mapRef.current.setZoom(14);
+  // }, [])
+
+  useEffect(() => {
+
+  }, [])
 
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
@@ -35,21 +47,21 @@ function Map(props) {
   const options = {
     disableDefaultUI: true,
     zoomControl: true,
-  }
+  };
   return (
     <div>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={options}
-        >
-          { /* Child components, such as markers, info windows, etc. */}
-          {parsedMarkers}
-          <></>
-        </GoogleMap>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={6}
+        onLoad={onMapLoad}
+        onUnmount={onUnmount}
+        options={options}
+      >
+        { /* Child components, such as markers, info windows, etc. */}
+        {parsedMarkers}
+        <></>
+      </GoogleMap>
       <Link to={'/search'}>
         <button>Go to Search</button>
       </Link>
@@ -57,4 +69,4 @@ function Map(props) {
   );
 }
 
-export default React.memo(Map);
+export default Map;

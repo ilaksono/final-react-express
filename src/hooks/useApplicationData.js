@@ -1,7 +1,6 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import axios from 'axios';
-import {
-  appReducer,
+import appReducer, {
   AUTHORIZE,
   CREATE,
   DELETE
@@ -10,7 +9,9 @@ import {
 
 const initApp = {
   authorized: false,
-  name: ''
+  name: '',
+  center: {lat: 42, lng: -79}
+
 };
 
 const fakeLogins = [{
@@ -18,11 +19,9 @@ const fakeLogins = [{
   password: 'asd'
 }];
 
-const useApplicationData = () => {
+const useApplicationData = () => { // login and user state information
   const [appState, appDispatch] = useReducer(appReducer, initApp);
-
-
-
+  
   const createHandle = (event) => {
     if (true) {
       // ... stage created state object
@@ -53,6 +52,12 @@ const useApplicationData = () => {
         }
       });
   };
+
+  useEffect(() => {
+    axios
+    .get('/api/center')
+    .then((data) => console.log(data))
+  })
 
   return {
     submitHandle,
