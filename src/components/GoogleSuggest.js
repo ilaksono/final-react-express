@@ -37,6 +37,13 @@ class GoogleSuggest extends React.Component {
                   }}}
                 googleMaps={googleMaps}
                 onSelectSuggest={this.handleSelectSuggest.bind(this)}
+                customRender={prediction => (
+                  <div className="customWrapper">
+                      {prediction
+                          ? prediction.description
+                          : "My custom no results text"}
+                  </div>
+              )}
               >
                 <input
                   type="text"
