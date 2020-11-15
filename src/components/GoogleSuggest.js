@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactGoogleMapLoader from "react-google-maps-loader";
 import ReactGooglePlacesSuggest from "react-google-places-suggest";
-
-const API_KEY = "AIzaSyBDPrmJAvGx0h968D3iPsJ1jmwcFMEcunQ";
+const API_KEY = "AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E";
 class GoogleSuggest extends React.Component {
   state = {
     search: "",
@@ -42,13 +41,8 @@ class GoogleSuggest extends React.Component {
                 }}
                 googleMaps={googleMaps}
                 onSelectSuggest={this.handleSelectSuggest.bind(this)}
-                customRender={prediction => (
-                  <div className="customWrapper">
-                    {prediction
-                      ? prediction.description
-                      : "My custom no results text"}
-                  </div>
-                )}              >
+                customRender={prediction => console.log(prediction)}
+              >
                 <input
                   type="text"
                   value={value}

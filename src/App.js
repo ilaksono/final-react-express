@@ -1,13 +1,15 @@
 import 'styles/App.scss';
 import useApplicationData from 'hooks/useApplicationData';
 import LoginForm from 'components/LoginForm';
-import GoogleSuggest from 'components/GoogleSuggest'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Map from 'components/Map';
 import useMapData from 'hooks/useMapData';
+import Search from 'components/Search';
+import { useLoadScript } from '@react-google-maps/api';
 
+const libraries = ["places"]
 
 function App() {
   const { logState,
@@ -17,6 +19,13 @@ function App() {
     deleteHandle
   } = useApplicationData();
   const {mapState, addResults} = useMapData();
+  const {isLoaded, loadError} = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries
+  })
+  console.log(isLoaded);
+  if(loadError) return 'Error loading maps';
+  if(!isLoaded) return "loading maps";
 
   return (
     <div className="App">
@@ -30,7 +39,10 @@ function App() {
             <LoginForm submitHandle={submitHandle} logState={logState} />
           </Route>
           <Route path='/search'>
-            <GoogleSuggest addResults={addResults}/>
+            <Search isLoaded={isLoaded} addResults={addResults}/>
+            {/* <Map mapState={mapState}/> */}
+          </Route>
+          <Route path='/maps'>
             <Map mapState={mapState}/>
           </Route>
         </Switch>
