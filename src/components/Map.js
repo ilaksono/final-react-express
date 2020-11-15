@@ -31,6 +31,11 @@ function Map(props) {
       <MarkerComponent key={ind} lat={coord.lat} lng={coord.lng} />
     );
   });
+
+  const options = {
+    disableDefaultUI: true,
+    zoomControl: true,
+  }
   return (
     <div>
         <GoogleMap
@@ -39,6 +44,7 @@ function Map(props) {
           zoom={10}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          options={options}
         >
           { /* Child components, such as markers, info windows, etc. */}
           {parsedMarkers}
