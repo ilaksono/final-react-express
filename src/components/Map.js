@@ -1,7 +1,9 @@
 import React from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
-import MarkerComponent from './MarkerComponent'
-const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E'
+import { GoogleMap } from '@react-google-maps/api';
+import MarkerComponent from './MarkerComponent';
+import { Link } from 'react-router-dom';
+
+// const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E';
 const containerStyle = {
   width: '400px',
   height: '400px'
@@ -12,14 +14,13 @@ const center = {
   lng: -38.523
 };
 
-function MyComponent(props) {
+function Map(props) {
   const [map, setMap] = React.useState(null);
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
     setMap(map);
   }, []);
-  const markersArr = []
   if (props.places) {
     props.markers.map();
   }
@@ -28,23 +29,30 @@ function MyComponent(props) {
     setMap(null);
   }, []);
 
+  const parsedMarkers = props.mapState.places.map((coord, ind) => {
+    return (
+      <MarkerComponent key={ind} lat={coord.lat} lng={coord.lng} />
+    );
+  });
   return (
-    <LoadScript
-      googleMapsApiKey={api}
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        { /* Child components, such as markers, info windows, etc. */}
-        <MarkerComponent lat={-35} lng={120}/>
-        <></>
-      </GoogleMap>
-    </LoadScript>
+    <div>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          { /* Child components, such as markers, info windows, etc. */}
+          <MarkerComponent lat={-35} lng={120} />
+          {parsedMarkers}
+          <></>
+        </GoogleMap>
+      <Link to={'/search'}>
+        <button>Go to Search</button>
+      </Link>
+    </div>
   );
 }
 
-export default React.memo(MyComponent)
+export default React.memo(Map);
