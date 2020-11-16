@@ -19,8 +19,7 @@ CREATE TABLE places(
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-
+  description VARCHAR(255) NOT NULL
 );
 CREATE TABLE categories_places(
   id SERIAL PRIMARY KEY NOT NULL,
@@ -29,7 +28,7 @@ CREATE TABLE categories_places(
 );
 CREATE TABLE reviews(
   id SERIAL PRIMARY KEY NOT NULL,
-  date TIMESTAMP NOT NULL,
+  date TIMESTAMPTZ NOT NULL DEFAULT Now(),
   title VARCHAR(255),
   description VARCHAR(255),
   rating INTEGER,
