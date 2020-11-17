@@ -2,6 +2,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng, getDetails } from 'use-pl
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
 const flatten = arr => {
   arr.forEach((val, i) => {
     if (Array.isArray(val)) {
@@ -11,6 +12,21 @@ const flatten = arr => {
   return arr;
 };
 const Search = props => {
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+  
+  const flatten = arr => {
+    arr.forEach((val, i) => {
+      if (Array.isArray(val)) {
+        arr.splice(i, 1, ...arr[i]);
+      }
+    });
+    return arr;
+  };
+  
   const { ready, value, suggestions: { status, data }, setValue, clearSuggestion } = usePlacesAutocomplete({
     requestOptions: {
       location: { lat: () => 43.6, lng: () => -79 },
