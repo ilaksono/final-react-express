@@ -2,34 +2,30 @@ const PORT = process.env.PORT || 8001;
 const bodyParser = require('body-parser');
 const app = require('express')();
 const cookieSession = require("cookie-session");
-const apiRegister = require('./controllers/apiRegister');
 
-// app.use('/api/users')
+// PG database client/connection setup
+const { Pool } = require('pg');
+const dbParams = require('./lib/db.js');
+const db = new Pool(dbParams);
+db.connect();
+const dbHelpers = require('./db/dbHelpers.js')(db);
+
+
 app.use(bodyParser.json());
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['secret', 'keyy']
+  keys: ['secret', 'key']
 }));
 
 app.get('/api/center', (req, res) => {
   res.json({msg:'hi'});
 });
-app.get('')
-
-// app.get('/hello', (req, res) => {
-//   queries.test()
-//   .then(data => {
-//     console.log(data);
-//     res.json(data);
-//   })
-// })
-app.get('/api/login', (req, res) => {
-
-})
-
-app.post('/api/register', (req, res) => {
-  return apiRegister(req, res);
+app.get('/api/', (req, res) => {
+  res.json('hello');
+  dbHelpers.fetchLatlngByIP()
+  .then((res) => req.session.latLng = res)
+  .catch(er=> console.log(er));
 })
 
 app.listen(PORT, () => {
