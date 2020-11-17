@@ -5,7 +5,6 @@ const yelp = require('yelp-fusion');
 const apiKey = 'EkoF1-eKSzhwegJB-UG8DqUOXkQm8WtEgwt9AMT4AG2eCzNWb5dkGKReVK0aA2MAUvDO2MZBnVLdHHFkuAKDMCDKrHytgMM-dOJFGSs9-T41qYcdo-NH-mpW6_SxX3Yx';
 
 const searchRequest = {
-  term:'Lafleur',
   location: 'montreal, qc',
   limit: 2,
 };
