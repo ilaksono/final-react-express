@@ -53,11 +53,11 @@ const useApplicationData = () => { // login and user state information
       });
   };
 
-  useEffect(() => {
-    axios
-    .get('/api/center')
-    .then((data) => console.log(data))
-  })
+  // useEffect(() => {
+  //   axios
+  //   .get('/api/center')
+  //   .then((data) => console.log(data))
+  // })
 
   return {
     submitHandle,
