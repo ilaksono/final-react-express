@@ -5,9 +5,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Map from 'components/Map';
+import RegisterForm from 'components/RegisterForm';
 import useMapData from 'hooks/useMapData';
 import Search from 'components/Search';
 import { useLoadScript } from '@react-google-maps/api';
+
 
 const libraries = ["places"]
 
@@ -35,12 +37,14 @@ function App() {
           <Route exact path='/' >
             <Home />
           </Route>
+          <Route path='/register' >
+            <RegisterForm />
+          </Route>
           <Route path='/login'>
             <LoginForm submitHandle={submitHandle} logState={logState} />
           </Route>
           <Route path='/search'>
             <Search isLoaded={isLoaded} addResults={addResults}/>
-            {/* <Map mapState={mapState}/> */}
           </Route>
           <Route path='/maps'>
             <Map isLoaded={isLoaded} mapState={mapState}/>

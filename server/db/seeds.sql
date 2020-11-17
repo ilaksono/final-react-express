@@ -1,7 +1,2 @@
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS categories CASCADE;
-DROP TABLE IF EXISTS reviews CASCADE;
-DROP TABLE IF EXISTS places CASCADE;
-DROP TABLE IF EXISTS days CASCADE;
-
-CREATE TABLE categories;
+INSERT INTO reviews (user_id, venue_id, description, overall_rating)
+VALUES (1, 1, 'Hot and cheesy', 5);

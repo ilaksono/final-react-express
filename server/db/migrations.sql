@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS reviews CASCADE;
+
+CREATE TABLE reviews(
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER NOT NULL,
+  venue_id VARCHAR(255) NOT NULL,
+  date TIMESTAMPTZ NOT NULL DEFAULT Now(),
+  description VARCHAR(255),
+  helpful_count INTEGER DEFAULT 0,
+  overall_rating INTEGER NOT NULL,
+  deleted BOOLEAN DEFAULT false
+);
+
