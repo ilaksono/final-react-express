@@ -46,3 +46,4 @@ yarn-error.log*
 /server/yarn-error.log
 
 /server/.byebug_history
+/server/db/pool.js
