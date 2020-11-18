@@ -7,6 +7,10 @@ import Register from 'components/Register/Register';
 import useMapData from 'hooks/useMapData';
 import SearchPage from "components/SearchPage/SearchPage";
 import { useLoadScript } from '@react-google-maps/api';
+<<<<<<< HEAD
+=======
+import PlacesResults from 'components/PlacesResults';
+>>>>>>> feature/show-yelp-data
 import useYelpData  from "./hooks/useYelpData"
 
 
@@ -19,7 +23,8 @@ function App() {
     submitHandle
   } = useApplicationData();
 
-  const {results} = useYelpData();
+  const {results} = useYelpData("lafleur");
+  console.log("results:", results)
   const {mapState, addResults} = useMapData();
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY,

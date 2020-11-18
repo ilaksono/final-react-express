@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 const yelp = require('yelp-fusion');
 // Place holder for Yelp Fusion's API Key. Grab the
 // from https://www.yelp.com/developers/v3/manage_app
-export default function useYelpData() {
+export default function useYelpData(term="") {
 
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
@@ -17,16 +18,15 @@ export default function useYelpData() {
         "zip_code": data.location.zip_code,
         "phone": data.display_phone,
         "yelpRating": data.rating,
+        "price": data.price,
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
-        "price": data.price,
-        "distance": data.distance
+        // "distance": data.distance
       };
       filteredData.push(filteredDataItems);
     }
     return filteredData
   }
-
   const [results, setResults] = useState([{
     id: '',
     name: '',
@@ -39,42 +39,24 @@ export default function useYelpData() {
     yelpRating: '',
     latitude: 0.0,
     longitude: 0.0,
-    price: '',
     distance: '',
+    price: '',
     delivery: false
   }]);
 
-  const apiKey = 'EkoF1-eKSzhwegJB-UG8DqUOXkQm8WtEgwt9AMT4AG2eCzNWb5dkGKReVK0aA2MAUvDO2MZBnVLdHHFkuAKDMCDKrHytgMM-dOJFGSs9-T41qYcdo-NH-mpW6_SxX3Yx';
-  const searchRequest = {
-    location: 'montreal, qc',
-    limit: 2,
-  };
-  const client = yelp.client(apiKey);
-  client.search(searchRequest).then(response => {
-    const yelpData = response.jsonBody.businesses;
+  
+  useEffect(() => {
+  axios.get('/api/search_yelp')
+  .then((response) => {
+    console.log(response)
+    const yelpData = response.data.businesses;
     const parsedYelpData = getCoreYelpData(yelpData)
-    parsedYelpData.map(data => {
-      setResults([...{
-        id:data.id,
-        name: data.name,
-        image: data.image,
-        categories: data.categories,
-        address: data.address,
-        city: data.city,
-        postal: data.zip_code,
-        phone: data.phone, 
-        yelpRating: data.yelpRating,
-        latitude: data.latitude,
-        longitude: data.longitude,
-        price: data.price,
-        distance: data.distance,
-        delivery: true,
-      }])
-    })
-  }).catch(e => {
-    console.log(e);
-  });
-
+    console.log("This is the parsed data", parsedYelpData)
+      setResults(parsedYelpData)
+  })
+  .catch((err) => {
+    console.log (err)
+    }) 
+  }, [term])
   return {results, setResults}
 }
-  
