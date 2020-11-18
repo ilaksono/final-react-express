@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useLoadScript } from '@react-google-maps/api';
-import NavBar from 'components/NavBar/NavBar';
-import Home from 'components/Home/Home';
-import Register from 'components/Register/Register';
+import NavBar from 'components/NavBar';
+import Home from 'components/Home';
+import Register from 'components/Register';
 import useMapData from 'hooks/useMapData';
 import SearchPage from "components/SearchPage/SearchPage";
 import useYelpData from "./hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
-import Login from 'components/Login/Login';
+import Login from 'components/Login';
 
 const libraries = ["places"];
 
@@ -57,6 +57,7 @@ function App() {
               applyDistanceFilter={applyDistanceFilter}
               mapState={mapState}
               addResults={addResults}
+              refinedResults={refinedResults}
             />
           </Route>
         </Switch>

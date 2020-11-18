@@ -1,8 +1,8 @@
 import React from "react";
-import "./SearchPage.scss";
+import 'styles/SearchPage.scss';
 import useFilter from 'hooks/useFilter';
 import FilterBar from "./Filter/FilterBar";
-import PlacesResults from "./PlacesResults/PlacesResults";
+import Results from "./Results/Results";
 import Map from "./Map/Map";
 
 const SearchPage = props => {  
@@ -11,7 +11,7 @@ const SearchPage = props => {
   return (
     <div className="search-page-layout">
       <FilterBar filters={filters} filterClick={filterClick}/>
-      <PlacesResults />
+      <Results refinedResults={props.refinedResults}/>
       <Map mapState={props.mapState} />
     </div>
   )

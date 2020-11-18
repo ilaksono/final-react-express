@@ -1,4 +1,4 @@
-@import 'components/helper.scss';
+@import './helper';
 
 .results-container{
   @include flexbox(row, center, center);

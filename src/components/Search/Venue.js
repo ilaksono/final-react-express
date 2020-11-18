@@ -1,5 +1,5 @@
 import React from "react";
-import "./Venue.scss";
+import 'styles/Venue.scss';
 
 const Venue = props => {  
   return (

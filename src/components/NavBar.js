@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "./logo.png";
-import "./NavBar.scss";
+import 'styles/NavBar.scss';
 import Search from "components/Search/Search";
-import Button from "components/Button/Button";
+import Button from "components/Button";
 import { Link } from 'react-router-dom';
 
 const NavBar = (props) => {

@@ -1,5 +1,5 @@
 import FilterItem from './FilterItem';
-import "./FilterBar.scss";
+import 'styles/FilterBar.scss';
 
 const FilterBar = (props) => {
   // gets categories present from all results

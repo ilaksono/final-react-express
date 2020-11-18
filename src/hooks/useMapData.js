@@ -7,7 +7,7 @@ const initMapState = {
 
 const useMapData = () => {
   const [mapState, dispatch] = useReducer(placeReducer, initMapState);
-
+  
   const addResults = (results) => {
     dispatch({type: ADD_RESULTS, results})
   }

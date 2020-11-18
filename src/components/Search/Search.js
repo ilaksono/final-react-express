@@ -1,8 +1,8 @@
 import React from "react";
-import "./Search.scss";
-import Venue from "components/Search/Venue/Venue";
-import Location from "components/Search/Location/Location";
-import Button from "components/Button/Button";
+import 'styles/Search.scss';
+import Venue from "components/Search/Venue/";
+import Location from "components/Search/Location/";
+import Button from "components/Button/";
 
 const Search = props => {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Location.scss";
+import 'styles/Location.scss';
 
 const Location = props => {  
   return (

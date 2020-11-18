@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { mockData } from 'helpers/data_filter.js';
+import getCoreYelpData, { mockData } from 'helpers/data_filter.js';
 
 const SEED = 'SEED';
 const SORT = 'SORT'; // can also be sort by x
@@ -24,7 +24,7 @@ const refinedReducer = (refinedResults, action) => {
       throw new Error('invalid refined type');
   }
 };
-const initRefined = mockData;
+const initRefined = getCoreYelpData(mockData);
 const useRefinedData = () => {
 
   const [refinedResults, dispatch] =
