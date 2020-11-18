@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap} from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
 
-// const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E';
+const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E';
 const containerStyle = {
   width: '400px',
   height: '400px'
@@ -21,22 +21,22 @@ const Map = props => {
   //   map.fitBounds(bounds);
   //   setMap(map);
   // }, []);
-  const mapRef = useRef();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  },[])
-  // const panTo = useCallback(({lat, lng}) => {
-  //   mapRef.current.panTo({lat, lng});
-  //   mapRef.current.setZoom(14);
+  // const mapRef = useRef();
+  // const onMapLoad = useCallback((map) => {
+  //   mapRef.current = map;
+  // },[])
+  // // const panTo = useCallback(({lat, lng}) => {
+  // //   mapRef.current.panTo({lat, lng});
+  // //   mapRef.current.setZoom(14);
+  // // }, [])
+
+  // useEffect(() => {
+
   // }, [])
 
-  useEffect(() => {
-
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
+  // const onUnmount = React.useCallback(function callback(map) {
+  //   setMap(null);
+  // }, []);
 
   let parsedMarkers = [];
   if(props.mapState) {
@@ -57,8 +57,8 @@ const Map = props => {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={6}
-        onLoad={onMapLoad}
-        onUnmount={onUnmount}
+        // onLoad={onMapLoad}
+        // onUnmount={onUnmount}
         options={options}
       >
         { /* Child components, such as markers, info windows, etc. */}

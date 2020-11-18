@@ -1,0 +1,11 @@
+@import 'components/helper.scss';
+
+.results-container{
+  @include flexbox(row, center, center);
+}
+
+.articles-container{
+  width: 40%;
+  border: 1px solid black;
+  height: 60%;
+}
