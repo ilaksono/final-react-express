@@ -21,7 +21,7 @@ export default function useYelpData(term="") {
         "price": data.price,
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
-        // "distance": data.distance
+        "distance": data.distance
       };
       filteredData.push(filteredDataItems);
     }
