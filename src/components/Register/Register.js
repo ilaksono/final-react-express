@@ -1,6 +1,6 @@
-import Button from './Button';
+import Button from '../Button/Button';
 import React, { useState } from 'react';
-import axiosRegister from '../axios/register.js';
+import axiosRegister from '../../axios/register.js';
 
 const RegisterForm = (props) => {
   const [state, setState] = useState({

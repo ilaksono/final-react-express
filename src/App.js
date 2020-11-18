@@ -2,12 +2,13 @@ import 'styles/App.scss';
 import useApplicationData from 'hooks/useApplicationData';
 import LoginForm from 'components/LoginForm';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from 'components/NavBar';
+import NavBar from 'components/NavBar/NavBar';
 import Home from 'components/Home';
 import Map from 'components/Map';
 import RegisterForm from 'components/RegisterForm';
 import useMapData from 'hooks/useMapData';
-import Search from 'components/Search';
+import VenueSearch from 'components/Search/VenueSearch';
+import LocationSearch from 'components/Search/LocationSearch';
 import { useLoadScript } from '@react-google-maps/api';
 
 
@@ -32,7 +33,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar />
+        <NavBar isLoaded={isLoaded} addResults={addResults} />
         <Switch>
           <Route exact path='/' >
             <Home />
@@ -43,9 +44,9 @@ function App() {
           <Route path='/login'>
             <LoginForm submitHandle={submitHandle} logState={logState} />
           </Route>
-          <Route path='/search'>
+ {/*          <Route path='/search'>
             <Search isLoaded={isLoaded} addResults={addResults}/>
-          </Route>
+          </Route> */}
           <Route path='/maps'>
             <Map isLoaded={isLoaded} mapState={mapState}/>
           </Route>

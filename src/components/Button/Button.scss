@@ -1,0 +1,36 @@
+@import '../helper';
+
+.button {
+  color: $white;
+  height: 40px;
+  background-color: $purple;
+  font-size: 21px;
+  border: none;
+  border-radius: 5px;
+}
+
+.button--nav:hover {
+  cursor: pointer;
+  color: $salmon;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button--search {
+  background-color: $salmon;
+  color: $white;
+
+  margin-left: 10px;
+  width: 40px;
+}
+
+.button--search:hover {
+  cursor: pointer;
+  color: $purple;
+}
+
+.fa-search {
+  font-size: 20px;
+}

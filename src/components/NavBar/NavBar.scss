@@ -1,0 +1,40 @@
+@import '../helper';
+
+.nav-bar {
+  height: 60px;
+  color: $white;
+  background-color: $purple;
+  display: flex;
+  @include flexbox(row, space-between, center);
+  font-size: 24px;
+}
+
+.logo-container {
+  @include flexbox(row, space-around, center);
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.search-container {
+  @include flexbox(row, space-around, center);
+  height: 40px;
+}
+
+.user-container {
+  @include flexbox(row, space-around, center);
+}
+
+.login {
+  margin-right: 20px;
+}
+
+.register {
+  margin-right: 15px;
+}
+
