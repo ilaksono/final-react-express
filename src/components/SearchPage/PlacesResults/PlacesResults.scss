@@ -2,6 +2,10 @@
 
 .results-container{
   @include flexbox(row, center, center);
+  min-width: 400px;
+  flex-grow: 1;
+  background-color: yellow;
+  height: calc(100vh - 60px);
 }
 
 .articles-container{

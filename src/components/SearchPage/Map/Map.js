@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { GoogleMap} from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
+import "./Map.scss";
 
 const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E';
 const containerStyle = {
@@ -52,7 +53,7 @@ const Map = props => {
     zoomControl: true,
   };
   return (
-    <div>
+    <div className="map-container">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -65,9 +66,6 @@ const Map = props => {
         {parsedMarkers}
         <></>
       </GoogleMap>
-      <Link to={'/search'}>
-        <button>Go to Search</button>
-      </Link>
     </div>
   );
 }

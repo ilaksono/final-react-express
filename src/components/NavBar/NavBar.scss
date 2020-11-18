@@ -1,4 +1,4 @@
-@import '../helper';
+@import 'components/helper.scss';
 
 .nav-bar {
   height: 60px;
@@ -30,11 +30,6 @@ a:hover {
 img {
   height: 40px;
   margin-right: 10px;
-}
-
-.search-container {
-  @include flexbox(row, space-around, center);
-  height: 40px;
 }
 
 .user-container {

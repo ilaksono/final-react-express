@@ -3,10 +3,8 @@ import "./Location.scss";
 
 const Location = props => {  
   return (
-    <div>
+    <div className="location-container">
       <input type='text' className="location-search-bar" placeholder="Toronto" />
-      <div className='results-container'>
-      </div>
     </div>
   );
 

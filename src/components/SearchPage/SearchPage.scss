@@ -1,0 +1,8 @@
+@import '../helper';
+
+.search-page-layout {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background-color: red;
+  @include flexbox(row, flex-start, flex-start);
+}

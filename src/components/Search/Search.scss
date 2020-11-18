@@ -1,4 +1,4 @@
-@import '../helper';
+@import 'components/helper.scss';
 
 .search-container {
   @include flexbox(row, space-around, center);

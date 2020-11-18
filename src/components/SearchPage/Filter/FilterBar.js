@@ -1,4 +1,5 @@
 import FilterItem from './FilterItem';
+import "./FilterBar.scss";
 
 const FilterBar = (props) => {
 
@@ -22,7 +23,8 @@ const FilterBar = (props) => {
   }
 
   return (
-    <div>
+    <div class="filter-container">
+      Filter:
       <div className='price-filter-container'>
         <FilterItem type='price' filterClick={() => {
           props.filterClick({ type: 'price', value: `$` });

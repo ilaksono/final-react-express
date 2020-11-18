@@ -3,10 +3,8 @@ import "./Venue.scss";
 
 const Venue = props => {  
   return (
-    <div>
+    <div className="venue-container">
       <input type='text' className="venue-search-bar" placeholder="Restaurants, parks, Max's"/>
-      <div className='results-container'>
-      </div>
     </div>
   );
 
