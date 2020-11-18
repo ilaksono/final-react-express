@@ -1,10 +1,10 @@
 import 'styles/App.scss';
 import useApplicationData from 'hooks/useApplicationData';
-import LoginForm from 'components/LoginForm';
+import Login from 'components/Login/Login';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from 'components/NavBar/NavBar';
 import Home from 'components/Home';
-import RegisterForm from 'components/RegisterForm';
+import Register from 'components/Register/Register';
 import useMapData from 'hooks/useMapData';
 import VenueSearch from 'components/Search/VenueSearch';
 import LocationSearch from 'components/Search/LocationSearch';
@@ -37,22 +37,16 @@ function App() {
             <Home />
           </Route>
           <Route path='/register' >
-            <RegisterForm />
+            <Register />
           </Route>
           <Route path='/login'>
-            <LoginForm submitHandle={submitHandle}/>
+            <Login submitHandle={submitHandle}/>
           </Route>
- {/*          <Route path='/search'>
+          <Route path='/search'>
             <Search isLoaded={isLoaded} addResults={addResults}/>
-<<<<<<< HEAD
-          </Route> */}
-          <Route path='/maps'>
-            <Map isLoaded={isLoaded} mapState={mapState}/>
-=======
           </Route>
           <Route path='/results'>
             <PlacesResults isLoaded={isLoaded} mapState={mapState} addResults={addResults} />
->>>>>>> 174d4e9a1480d10938e91c3e529f301cbe21c574
           </Route>
         </Switch>
       </Router>
