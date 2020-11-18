@@ -9,6 +9,7 @@ import RegisterForm from 'components/RegisterForm';
 import useMapData from 'hooks/useMapData';
 import Search from 'components/Search';
 import { useLoadScript } from '@react-google-maps/api';
+import useYelpData  from "./hooks/useYelpData"
 
 
 const libraries = ["places"]
@@ -20,6 +21,8 @@ function App() {
     createHandle,
     deleteHandle
   } = useApplicationData();
+
+  const {results} = useYelpData();
   const {mapState, addResults} = useMapData();
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
