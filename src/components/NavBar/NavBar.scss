@@ -16,6 +16,17 @@
   font-size: 24px;
 }
 
+a {
+  text-decoration: none;
+  color: $white;
+  text-align: center;
+  @include flexbox(row, space-around, center);
+}
+
+a:hover {
+  color: $salmon;
+}
+
 img {
   height: 40px;
   margin-right: 10px;

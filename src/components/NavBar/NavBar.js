@@ -1,24 +1,24 @@
 import React from "react";
 import logo from "./logo.png";
 import "./NavBar.scss";
-import VenueSearch from "components/Search/VenueSearch";
-import LocationSearch from "components/Search/LocationSearch";
+import Search from "components/Search/Search";
 import Button from "components/Button/Button";
 import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = (props) => {
 
   return (
     <nav className="nav-bar">
       <div className="logo-container">
-        <img src={logo} alt="Logo" />
-        SafeSpace
+        <Link to={'/'}>
+          <img src={logo} alt="Logo" />
+              SafeSpace
+        </Link>
       </div>
-      <div className="search-container">
-        <VenueSearch />
-        <LocationSearch />
-        <Button message={<i class="fas fa-search"></i>} search />
-      </div>
+      { props.loadSearch && (
+        <Search buttonMessage={<i class="fas fa-search"></i>} />
+      )}
+      
       <div className="user-container">
         <div className="login">
           <Link to={'/login'}>

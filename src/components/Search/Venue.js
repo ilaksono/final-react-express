@@ -1,7 +1,7 @@
 import React from "react";
-import "./VenueSearch.scss";
+import "./Venue.scss";
 
-const VenueSearch = props => {  
+const Venue = props => {  
   return (
     <div>
       <input type='text' className="venue-search-bar" placeholder="Restaurants, parks, Max's"/>
@@ -12,4 +12,4 @@ const VenueSearch = props => {
 
 };
 
-export default VenueSearch;
+export default Venue;

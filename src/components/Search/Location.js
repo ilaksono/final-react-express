@@ -1,7 +1,7 @@
 import React from "react";
-import "./LocationSearch.scss";
+import "./Location.scss";
 
-const LocationSearch = props => {  
+const Location = props => {  
   return (
     <div>
       <input type='text' className="location-search-bar" placeholder="Toronto" />
@@ -12,4 +12,4 @@ const LocationSearch = props => {
 
 };
 
-export default LocationSearch;
+export default Location;

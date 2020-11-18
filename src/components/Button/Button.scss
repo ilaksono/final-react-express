@@ -6,12 +6,13 @@
   background-color: $purple;
   font-size: 21px;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .button--nav:hover {
   cursor: pointer;
   color: $salmon;
+  border-bottom: 1px solid $salmon;
 }
 
 .button:focus {
@@ -20,15 +21,17 @@
 
 .button--search {
   background-color: $salmon;
-  color: $white;
-
+  color: $purple;
   margin-left: 10px;
   width: 40px;
 }
 
 .button--search:hover {
   cursor: pointer;
-  color: $purple;
+  color: $white;
+  -webkit-box-shadow: 0px 0px 1px 1px $salmon;
+  -moz-box-shadow: 0px 0px 1px 1px $salmon;
+  box-shadow: 0px 0px 1px 1px $salmon;
 }
 
 .fa-search {

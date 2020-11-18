@@ -6,8 +6,7 @@ import NavBar from 'components/NavBar/NavBar';
 import Home from 'components/Home';
 import Register from 'components/Register/Register';
 import useMapData from 'hooks/useMapData';
-import VenueSearch from 'components/Search/VenueSearch';
-import LocationSearch from 'components/Search/LocationSearch';
+import Search from 'components/Search/Search';
 import { useLoadScript } from '@react-google-maps/api';
 import PlacesResults from 'components/PlacesResults';
 import useYelpData  from "./hooks/useYelpData"
@@ -35,23 +34,26 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar isLoaded={isLoaded} addResults={addResults} />
         <Switch>
-          <Route exact path='/' >
-            <Home />
-          </Route>
-          <Route path='/register' >
-            <Register />
-          </Route>
-          <Route path='/login'>
-            <Login submitHandle={submitHandle}/>
-          </Route>
-          <Route path='/search'>
-            {/* <Search isLoaded={isLoaded} addResults={addResults}/> */}
-          </Route>
-          <Route path='/results'>
-            <PlacesResults  mapState={mapState} addResults={addResults} />
-          </Route>
+            <Route exact path='/' >
+              <NavBar isLoaded={isLoaded} addResults={addResults}>
+                <Home />
+              </NavBar>
+            </Route>
+          <NavBar isLoaded={isLoaded} addResults={addResults} loadSearch >
+            <Route path='/register' >
+              <Register />
+            </Route>
+            <Route path='/login'>
+              <Login submitHandle={submitHandle}/>
+            </Route>
+            <Route path='/search'>
+              {/* <Search isLoaded={isLoaded} addResults={addResults}/> */}
+            </Route>
+            <Route path='/results'>
+              <PlacesResults  mapState={mapState} addResults={addResults} />
+            </Route>
+          </NavBar>
         </Switch>
       </Router>
     </div>

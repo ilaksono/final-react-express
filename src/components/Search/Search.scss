@@ -1,0 +1,6 @@
+@import '../helper';
+
+.search-container {
+  @include flexbox(row, space-around, center);
+  height: 40px;
+}
