@@ -10,6 +10,8 @@ import VenueSearch from 'components/Search/VenueSearch';
 import LocationSearch from 'components/Search/LocationSearch';
 import { useLoadScript } from '@react-google-maps/api';
 import PlacesResults from 'components/PlacesResults';
+import useYelpData  from "./hooks/useYelpData"
+
 
 const libraries = ["places"]
 
@@ -19,6 +21,8 @@ function App() {
     appState,
     submitHandle
   } = useApplicationData();
+
+  const {results} = useYelpData();
   const {mapState, addResults} = useMapData();
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY,
@@ -46,7 +50,7 @@ function App() {
             {/* <Search isLoaded={isLoaded} addResults={addResults}/> */}
           </Route>
           <Route path='/results'>
-            <PlacesResults isLoaded={isLoaded} mapState={mapState} addResults={addResults} />
+            <PlacesResults  mapState={mapState} addResults={addResults} />
           </Route>
         </Switch>
       </Router>
