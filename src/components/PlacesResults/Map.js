@@ -38,11 +38,14 @@ const Map = props => {
     setMap(null);
   }, []);
 
-  const parsedMarkers = props.mapState.places.map((coord, ind) => {
+  let parsedMarkers = [];
+  if(props.mapState) {
+  parsedMarkers = props.mapState.places.map((coord, ind) => {
     return (
       <MarkerComponent key={ind} lat={coord.lat} lng={coord.lng} />
     );
   });
+  }
 
   const options = {
     disableDefaultUI: true,

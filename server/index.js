@@ -7,7 +7,6 @@ const cookieSession = require("cookie-session");
 const db = require('./lib/pool.js');
 const dbHelpers = require('./db/dbHelpers.js')(db);
 
-
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
