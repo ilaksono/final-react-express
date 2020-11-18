@@ -42,9 +42,9 @@ function App() {
           <Route path='/login'>
             <Login submitHandle={submitHandle}/>
           </Route>
-          <Route path='/search'>
+          {/* <Route path='/search'>
             <Search isLoaded={isLoaded} addResults={addResults}/>
-          </Route>
+          </Route> */}
           <Route path='/results'>
             <PlacesResults isLoaded={isLoaded} mapState={mapState} addResults={addResults} />
           </Route>

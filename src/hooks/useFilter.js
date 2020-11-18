@@ -9,8 +9,7 @@ const initFilter = {
 const useFilter = () => {
   const [filters, setFilters] = useState(initFilter);
 
-
-
+  
   return {
     filters,
     setFilters
