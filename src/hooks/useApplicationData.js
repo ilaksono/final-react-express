@@ -3,15 +3,18 @@ import axios from 'axios';
 import appReducer, {
   AUTHORIZE,
   CREATE,
-  DELETE
+  DELETE,
+  INIT_CENTER
 } from 'reducers/appReducer';
 // const socket = new WebSocket('');
+
+const GET_IP = 'https://api.ipify.org/?format=json';
+const GET_LATLNG = 'http://ip-api.com/json/';
 
 const initApp = {
   authorized: false,
   name: '',
-  center: {lat: 42, lng: -79}
-
+  center: { }
 };
 
 const fakeLogins = [{
@@ -20,8 +23,19 @@ const fakeLogins = [{
 }];
 
 const useApplicationData = () => { // login and user state information
-  const [appState, appDispatch] = useReducer(appReducer, initApp);
-  
+  const [appState, dispatch] = useReducer(appReducer, initApp);
+
+  useEffect(() => {
+    axios.get(GET_IP)
+    .then(body => {
+      axios.get(`${GET_LATLNG}/${body.data.ip}`)
+      .then(coords => {
+        console.log(coords);
+        dispatch({ type: INIT_CENTER, center: { lat: coords.data.lat, lng: coords.data.lon } });
+      });
+    });
+  }, []);
+
   const createHandle = (event) => {
     if (true) {
       // ... stage created state object
@@ -29,7 +43,7 @@ const useApplicationData = () => { // login and user state information
       //.post({url: '/api/whatever', data:{ ...stuff }})
       //.then(res => console.log(res.data) )
       //.catch(er => console.log(er))
-      appDispatch({ type: CREATE });
+      dispatch({ type: CREATE });
     }
   };
   const deleteHandle = (id) => {
@@ -38,7 +52,7 @@ const useApplicationData = () => { // login and user state information
       // axios.delete('/api/whatever/${id}')
       //.then(res => console.log(res.data))
       //.catch(er => console.log(er))
-      appDispatch({ type: DELETE });
+      dispatch({ type: DELETE });
     }
   };
 
@@ -48,7 +62,7 @@ const useApplicationData = () => { // login and user state information
       .then((res) => {
         console.log(res.data);
         if (res.data.auth) {
-          appDispatch({ type: AUTHORIZE, name: email.split('@')[0].join('') });
+          dispatch({ type: AUTHORIZE, name: email.split('@')[0].join('') });
         }
       });
   };
