@@ -7,7 +7,6 @@ import Register from 'components/Register/Register';
 import useMapData from 'hooks/useMapData';
 import SearchPage from "components/SearchPage/SearchPage";
 import { useLoadScript } from '@react-google-maps/api';
-import PlacesResults from 'components/PlacesResults';
 import useYelpData  from "./hooks/useYelpData"
 
 
