@@ -4,12 +4,10 @@ const app = require('express')();
 const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
-const { Pool } = require('pg');
-const dbParams = require('./lib/db.js');
-const db = new Pool(dbParams);
-db.connect();
-const dbHelpers = require('./db/dbHelpers.js')(db);
 
+const db = require('./lib/pool.js');
+
+const dbHelpers = require('./db/dbHelpers.js')(db);
 
 app.use(bodyParser.json());
 
