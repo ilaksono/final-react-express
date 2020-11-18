@@ -24,8 +24,9 @@ function App() {
     setRefinedSeed,
     applyPriceFilter,
     applyDistanceFilter } = useRefinedData();
-  const { mapState, addResults } = useMapData();
-  const { isLoaded, loadError } = useLoadScript({
+  console.log("results:", results)
+  const {mapState, addResults} = useMapData();
+  const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY,
     libraries
   });

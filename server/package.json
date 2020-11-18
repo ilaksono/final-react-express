@@ -1,6 +1,7 @@
 {
   "name": "server",
   "dependencies": {
+    "axios": "^0.21.0",
     "bcrypt": "^2.0.0",
     "body-parser": "^1.18.3",
     "cookie-session": "^1.4.0",

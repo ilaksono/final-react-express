@@ -19,7 +19,8 @@ const useFilter = () => {
           cats.push(cat);
       }
     }
-    setFilters({...filters, categories: cats});
+    return cats;
+    // setFilters({...filters, categories: cats});
 
   };
   //type can be price, category
