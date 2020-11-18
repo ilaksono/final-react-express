@@ -2,13 +2,6 @@ const request = require('request-promise-native');
 const ipify = 'https://api.ipify.org/?format=json';
 
 module.exports = (db) => {
-  const fetchLatlngByIP = () => {
-    return request(ipify)
-      .then(body => {
-        const ip = JSON.parse(body).ip;
-        return request('https://ipvigilante.com/' + ip);
-      });
-  };
   
 /*   const loadAllMaps = function () {
     const queryString = `
@@ -30,6 +23,6 @@ module.exports = (db) => {
 
 
   return {
-    fetchLatlngByIP
+    /* fetchLatlngByIP */
   };
 };

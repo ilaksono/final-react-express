@@ -4,6 +4,7 @@
     "bcrypt": "^2.0.0",
     "body-parser": "^1.18.3",
     "cookie-session": "^1.4.0",
+    "cors": "^2.8.4",
     "express": "^4.17.1",
     "pg": "^6.4.2",
     "pg-native": "^3.0.0",
