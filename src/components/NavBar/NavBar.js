@@ -15,19 +15,22 @@ const NavBar = (props) => {
               SafeSpace
         </Link>
       </div>
-      { props.loadSearch && (
-        <Search buttonMessage={<i class="fas fa-search"></i>} />
+      {props.loadSearch && (
+        <Search setRefinedSeed={props.setRefinedSeed}
+          setResults={props.setResults}
+          buttonMessage={<i class="fas fa-search"></i>}
+        />
       )}
-      
+
       <div className="user-container">
         <div className="login">
           <Link to={'/login'}>
-            <Button message="Login" nav/>
+            <Button message="Login" nav />
           </Link>
         </div>
         <div className="register">
           <Link to={'/register'}>
-            <Button message="Register" nav/>
+            <Button message="Register" nav />
           </Link>
         </div>
       </div>
