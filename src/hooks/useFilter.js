@@ -13,13 +13,15 @@ const useFilter = () => {
 
   const populateCategories = (results) => {
     const cats = [];
-    results.forEach(result => {
-      result.categories.forEach((cat) => {
-        if (!cats.includes(cat.title))
-          cats.push(cat.title);
-      })
-    });
-    setFilters(prev => ({ ...prev, categories: cats }));
+    if (results.length > 1) {
+      results.forEach(result => {
+        result.categories.forEach((cat) => {
+          if (!cats.includes(cat.title))
+            cats.push(cat.title);
+        });
+      });
+      setFilters(prev => ({ ...prev, categories: cats }));
+    }
   };
   //type can be price, category
   const filterClick = ({ type, value }) => {
