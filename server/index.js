@@ -2,18 +2,17 @@ const PORT = process.env.PORT || 8001;
 const bodyParser = require('body-parser');
 const app = require('express')();
 const cookieSession = require("cookie-session");
-const https = require('https')
-
+const https = require('https');
+const request = require('request-promise-native');
 // PG database client/connection setup
-const db = require('./lib/db.js');
+const db = require('./lib/pool.js');
 const dbHelpers = require('./db/dbHelpers.js')(db);
-
+const yelp = require('yelp-fusion');
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
   keys: ['secret', 'key']
 }));
-
 /* app.get('/api/center', (req, res) => {
   res.json({msg:'hi'});
 }); */
@@ -25,19 +24,53 @@ app.use(cookieSession({
   })
   .catch(er=> console.log(er));
 }) */
+const apiKey = '-YMJsVqjVv1kq_rVfU1XhxosOPD06hwpRU5pG2OHqzgkIGWGQc-UaX_66qxdPEgOAvhtNIRO9OzMscCr2yhNAx34S20VZGXu2Tia91y6TVldQycQLamv18aGKky1X3Yx';
+const client = yelp.client(apiKey);
 
-app.get("/api/search_yelp", (req, res) => {
-  const apiKey = '-YMJsVqjVv1kq_rVfU1XhxosOPD06hwpRU5pG2OHqzgkIGWGQc-UaX_66qxdPEgOAvhtNIRO9OzMscCr2yhNAx34S20VZGXu2Tia91y6TVldQycQLamv18aGKky1X3Yx';
-  https.get({
-    hostname: 'api.yelp.com',
-    path: `/v3/businesses/search?term=${req.query.term}&location=montreal,qc&limit=5`,
-    headers: {
-      Authorization: `Bearer ${apiKey}`
-    }
-  }, response => {
-    response.pipe(res)
-  })
-})
+// app.post("/api/search_yelp", (req, res) => {
+//   https.get({
+//     hostname: 'api.yelp.com',
+//     path: `/v3/businesses/search?term=${req.body.venue}&location=${req.body.location}&limit=5`,
+//     headers: {
+//       Authorization: `Bearer ${apiKey}`
+//     }
+//   }, response => {
+//     response.pipe(res)
+//   })
+// });
+app.post("/api/search_yelp", (req, res) => {
+  client
+    .search({
+      term: req.body.venue,
+      location: req.body.location,
+    }).then(response => {
+      res.json(response.jsonBody.businesses);
+      // console.log(response.jsonBody.businesses);
+    }).catch(e => {
+      console.log(e);
+    });
+});
+
+// get business details
+app.get("/api/search_yelp/:id", (req, res) => {
+  // https.get({
+  //   hostname: 'api.yelp.com',
+  //   path: `/v3/businesses/${req.query.term}`,
+  //   headers: {
+  //     Authorization: `Bearer ${apiKey}`
+  //   }
+  // }, response => {
+  //   response.pipe(res)
+  // })
+});
+
+app.get("/api/reviews", (req, res) => {
+  dbHelpers.getAllReviews()
+    .then(reviews => {
+      res.send(reviews);
+    })
+    .catch(error => { console.log(error); });
+});
 
 app.listen(PORT, () => {
   console.log('listening on ', PORT);

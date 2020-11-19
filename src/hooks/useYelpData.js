@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-const yelp = require('yelp-fusion');
-// Place holder for Yelp Fusion's API Key. Grab the
-// from https://www.yelp.com/developers/v3/manage_app
-export default function useYelpData(term="") {
+
+export default function useYelpData() {
 
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
@@ -21,7 +19,8 @@ export default function useYelpData(term="") {
         "price": data.price,
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
-        "distance": data.distance
+        "distance": data.distance,
+        "is_closed": data.is_closed
       };
       filteredData.push(filteredDataItems);
     }
@@ -41,22 +40,22 @@ export default function useYelpData(term="") {
     longitude: 0.0,
     distance: '',
     price: '',
-    delivery: false
+    delivery: false,
+    is_closed:''
   }]);
 
-  
-  useEffect(() => {
-  axios.get('/api/search_yelp')
-  .then((response) => {
-    console.log(response)
-    const yelpData = response.data.businesses;
+  const yelpSearch = (venue, location) => {
+   return axios.post('/api/search_yelp', {venue, location})
+    .then((response) => {
+      console.log(response);
+    const yelpData = response.data;
     const parsedYelpData = getCoreYelpData(yelpData)
-    console.log("This is the parsed data", parsedYelpData)
-      setResults(parsedYelpData)
+    return setResults(parsedYelpData)
   })
   .catch((err) => {
     console.log (err)
     }) 
-  }, [term])
-  return {results, setResults}
+  }
+  
+return { results, setResults, yelpSearch }
 }
