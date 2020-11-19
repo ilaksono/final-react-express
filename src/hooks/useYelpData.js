@@ -45,7 +45,7 @@ export default function useYelpData() {
   }]);
 
   const yelpSearch = (venue, location) => {
-   return axios.post('/api/search_yelp', {venue, location})
+    return axios.post('/api/search_yelp', {venue, location})
     .then((response) => {
     const yelpData = response.data.businesses;
     const parsedYelpData = getCoreYelpData(yelpData)
