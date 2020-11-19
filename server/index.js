@@ -26,7 +26,7 @@ app.use(cookieSession({
   })
   .catch(er=> console.log(er));
 }) */
-const apiKey = process.env.YELP_API_KEY
+const apiKey = process.env.YELP_API_KEY;
 const client = yelp.client(apiKey);
 // app.post("/api/search_yelp", (req, res) => {
 //   https.get({
