@@ -1,16 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import 'styles/Search.scss';
 import Venue from "components/Search/Venue/";
 import Location from "components/Search/Location/";
 import Button from "components/Button/";
 import 'styles/Venue.scss';
 import 'styles/Location.scss';
+import { YelpContext } from 'YelpContext.js';
 import { Link } from 'react-router-dom';
 
 const Search = props => {
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
-
+  console.log(YelpContext);
+  const { 
+    setRefinedSeed,
+    results,
+    yelpSearch } = useContext(YelpContext);
+    console.log('yelpSearch: ', yelpSearch);
 
   // function validate() {
   //   if (location == "") {
@@ -23,12 +29,12 @@ const Search = props => {
 
   // }
   useEffect(() => {
-    props.setRefinedSeed(props.results);
+    setRefinedSeed(results);
     // eslint-disable-next-line
-  }, [props.results]);
+  }, [results]);
 
   const handleSearch = () => {
-    props.yelpSearch(venue, location)
+    yelpSearch(venue, location)
   };
   return (
     <div className="search-container">

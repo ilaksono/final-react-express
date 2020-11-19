@@ -21,11 +21,7 @@ const NavBar = (props) => {
       </div>
       {!isHome &&
         props.loadSearch && (
-          <Search setRefinedSeed={props.setRefinedSeed}
-            results={props.results}
-            setResults={props.setResults}
-            buttonMessage={<i class="fas fa-search"></i>}
-            yelpSearch={props.yelpSearch}
+          <Search buttonMessage={<i class="fas fa-search"></i>}
           />
         )}
       <div className="user-container">

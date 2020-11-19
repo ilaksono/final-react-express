@@ -3,30 +3,18 @@ import { useLoadScript } from '@react-google-maps/api';
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Register from 'components/Register';
-import useMapData from 'hooks/useMapData';
-import SearchPage from "components/SearchPage";
-import useYelpData from "./hooks/useYelpData";
-import useRefinedData from 'hooks/useRefinedData';
-import useApplicationData from 'hooks/useApplicationData';
 import Login from 'components/Login';
-
+import SearchPage from 'components/SearchPage';
+import React from 'react';
+import { YelpProvider } from './YelpContext';
 const libraries = ["places"];
+
+// export const YelpContext = React.createContext();
+
 
 function App() {
 
-  const {
-    appState,
-    submitHandle
-  } = useApplicationData();
-
-  const { results, setResults, yelpSearch } = useYelpData();
-  const { refinedResults,
-    setRefinedSeed,
-    applyPriceFilter,
-    applyAllFilters,
-    applyDistanceFilter } = useRefinedData();
-  const {mapState, addResults} = useMapData();
-  const {isLoaded, loadError} = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY,
     libraries
   });
@@ -36,31 +24,25 @@ function App() {
 
   return (
     <div className="layout">
-      <Router>
-      <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
-        <Switch>
-          <Route exact path='/' >
+      <YelpProvider>
+        <Router>
+          <NavBar isLoaded={isLoaded} loadSearch />
+          <Switch>
+            <Route exact path='/' >
               <Home />
-          </Route>
-          <Route path='/register' >
-            <Register />
-          </Route>
-          <Route path='/login'>
-            <Login submitHandle={submitHandle} />
-          </Route>
-          <Route path='/search'>
-            <SearchPage applyPriceFilter={applyPriceFilter}
-              applyDistanceFilter={applyDistanceFilter}
-              mapState={mapState}
-              addResults={addResults}
-              applyAllFilters={applyAllFilters}
-              refinedResults={refinedResults}
-              setRefinedSeed={setRefinedSeed}
-              results={results}
-            />
-          </Route>
-        </Switch>
-      </Router>
+            </Route>
+            <Route path='/register' >
+              <Register />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/search'>
+              <SearchPage />
+            </Route>
+          </Switch>
+        </Router>
+      </YelpProvider>
     </div>
   );
 }

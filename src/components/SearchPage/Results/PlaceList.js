@@ -1,7 +1,11 @@
 import PlaceListItem from "./PlaceListItem";
+import { YelpContext } from 'YelpContext';
+import { useContext } from "react";
 
 const PlaceList = (props) => {
-  const placeList = props.refinedResults.map(place => {
+
+  const { refinedResults } = useContext(YelpContext)
+  const placeList = refinedResults.map(place => {
     return <PlaceListItem {...place} />
   });
 

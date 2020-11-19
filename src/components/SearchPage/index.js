@@ -11,14 +11,10 @@ const SearchPage = props => {
   return (
     <div className="search-page-layout">
         <FilterBar filters={filters} 
-        applyPriceFilter={props.applyPriceFilter} 
         filterClick={filterClick}
-        applyAllFilters={props.applyAllFilters}
-        setRefinedSeed={props.setRefinedSeed}
-        results={props.results}
         />
-        <Results refinedResults={props.refinedResults} />
-        <Map mapState={props.mapState} />
+        <Results/>
+        <Map/>
     </div>
   );
 };

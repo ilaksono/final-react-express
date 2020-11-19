@@ -38,34 +38,34 @@ const refinedReducer = (refinedResults, action) => {
 const initRefined = getCoreYelpData(mockData);
 const useRefinedData = () => {
   const [refinedResults, dispatch] =
-  useReducer(refinedReducer, initRefined);
+    useReducer(refinedReducer, initRefined);
 
   let reviewArr = [];
 
   useEffect(() => {
     axios.get(REVIEWS_DATA)
-    .then(body => {
-      reviewArr.push(body.data);
-    })
-    .catch(er => console.log(er));
-  }, [])
+      .then(body => {
+        reviewArr.push(body.data);
+      })
+      .catch(er => console.log(er));
+  }, []);
 
   const addReviewCount = () => {
     const filteredCopy = [...refinedResults];
     refinedResults.forEach((result, index) => {
       filteredCopy[index].review = [];
-      for(const review of reviewArr) {
-        if(review.venue_id === result.id) 
-          filteredCopy[index].review.push(review)
+      for (const review of reviewArr) {
+        if (review.venue_id === result.id)
+          filteredCopy[index].review.push(review);
       }
       filteredCopy[index].reviewCount = filteredCopy[index].review.length;
-      filteredCopy[index].avgReviewRating = filteredCopy[index].review.reduce((acc, rating) => acc + rating, 0) / filteredCopy[index].reviewCount
+      filteredCopy[index].avgReviewRating = filteredCopy[index].review.reduce((acc, rating) => acc + rating, 0) / filteredCopy[index].reviewCount;
     });
-    dispatch({type: ADD_REVIEWS, filteredCopy})
+    dispatch({ type: ADD_REVIEWS, filteredCopy });
   };
 
   const setRefinedSeed = (data) => {
-    dispatch({ type: 'SEED', data })
+    dispatch({ type: 'SEED', data });
     // addReviewCount();
 
   };
@@ -83,7 +83,7 @@ const useRefinedData = () => {
     if (filters.price.length)
       applyPriceFilter(filters);
     // if (filters.distance)
-      // applyDistanceFilter(filters.distance);
+    // applyDistanceFilter(filters.distance);
   };
   const applyDistanceFilter = (distanceFilter) => {
     // distanceFilter is integer datatype

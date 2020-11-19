@@ -1,35 +1,39 @@
 import FilterItem from './FilterItem';
 import 'styles/FilterBar.scss';
+import { YelpContext } from 'YelpContext.js';
+import { useContext } from 'react';
+
 
 const FilterBar = (props) => {
   // gets categories present from all results
-  const { filters,
+  
+  const { results,
+    filters,
     applyPriceFilter,
     applyAllFilters,
     setRefinedSeed,
-    filterClick,
-    results
-  } = props;
+    filterClick } = useContext(YelpContext);
   let val = '';
   const parsedCategoryFilters = '';
+
   const handleClick = ({ type, value }) => {
     // console.log('hi')
-    if(!filters[type][value]) {
+    if (!filters[type][value]) {
       console.log(filters);
       applyPriceFilter(filters);
     }
     else {
       setRefinedSeed(results);
-      applyAllFilters(filters)
+      applyAllFilters(filters);
     }
     filterClick({ type, value });
 
     // if (type === 'price' || type === 'categories') {
-      
+
     // }
     // if (type === 'price') {
     //   applyPriceFilter(props.filters.price);
-      
+
     // }
   };
 
