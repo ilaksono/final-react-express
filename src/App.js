@@ -37,22 +37,18 @@ function App() {
   return (
     <div className="layout">
       <Router>
+      <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
         <Switch>
           <Route exact path='/' >
-            <NavBar >
               <Home />
-            </NavBar >
           </Route>
           <Route path='/register' >
-            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
             <Register />
           </Route>
           <Route path='/login'>
-            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results}  />
             <Login submitHandle={submitHandle} />
           </Route>
           <Route path='/search'>
-            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
             <SearchPage applyPriceFilter={applyPriceFilter}
               applyDistanceFilter={applyDistanceFilter}
               mapState={mapState}
