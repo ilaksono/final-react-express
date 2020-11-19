@@ -34,13 +34,22 @@ const useRefinedData = () => {
     dispatch({ type: 'SEED', data });
   };
 
-  const applyPriceFilter = ({ type, filters }) => {
+  const applyPriceFilter = (filters) => {
     const filteredCopy = [];
+    const removed = [];
     refinedResults.forEach((biz, index) => {
       if (!filters.includes(biz.price))
         filteredCopy.push(biz);
+      else removed.push(biz);
     });
     dispatch({ type: 'PRICE_FILTER', filteredCopy });
+    return removed;
+  };
+  const applyAllFilters = (filters) => {
+    if (filters.price.length)
+      applyPriceFilter(filters);
+    if (filters.distance)
+      applyDistanceFilter(filters.distance);
   };
   const applyDistanceFilter = (distanceFilter) => {
     // distanceFilter is integer datatype
@@ -49,14 +58,15 @@ const useRefinedData = () => {
       if (biz.distance < distanceFilter)
         filteredCopy.push(biz);
     });
-    dispatch({type: 'DIST_FILTER', filteredCopy})
+    dispatch({ type: 'DIST_FILTER', filteredCopy });
   };
 
   return {
     refinedResults,
     applyPriceFilter,
     setRefinedSeed,
-    applyDistanceFilter
+    applyDistanceFilter,
+    applyAllFilters
   };
 };
 export default useRefinedData;

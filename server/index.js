@@ -5,7 +5,7 @@ const cookieSession = require("cookie-session");
 const https = require('https')
 
 // PG database client/connection setup
-const db = require('./lib/db.js');
+const db = require('./lib/pool.js');
 const dbHelpers = require('./db/dbHelpers.js')(db);
 
 app.use(bodyParser.json());

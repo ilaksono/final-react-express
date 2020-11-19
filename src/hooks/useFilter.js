@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 
 const initFilter = {
-  categories: [],
-  price: [],
+  categories: {},
+  price: {},
   distance: 10000
 };
 
@@ -25,12 +25,13 @@ const useFilter = () => {
   };
   //type can be price, category
   const filterClick = ({ type, value }) => {
-    if (filters[type].includes(value)) {
+    if (filters[type][value]) {
       const cpy = [...filters[type]];
-      cpy.splice(filters[type].indexOf(value), 1);
+      cpy[value] = !cpy[value];
       return setFilters({ ...filters, [type]: cpy });
-    } else
-      return setFilters({ ...filters, [type]: [...filters[type], value] });
+    } else   
+      return setFilters({ ...filters, [type]: {...filters[type], value: true} });
+    
   };
   const distanceFilterClick = (value) => {
     setFilters({...filters, distance: value});
