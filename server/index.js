@@ -25,7 +25,7 @@ app.use(cookieSession({
   })
   .catch(er=> console.log(er));
 }) */
-const apiKey = '-YMJsVqjVv1kq_rVfU1XhxosOPD06hwpRU5pG2OHqzgkIGWGQc-UaX_66qxdPEgOAvhtNIRO9OzMscCr2yhNAx34S20VZGXu2Tia91y6TVldQycQLamv18aGKky1X3Yx';
+const apiKey = process.env.YELP_API_KEY;
 
 app.post("/api/search_yelp", (req, res) => {
   https.get({
