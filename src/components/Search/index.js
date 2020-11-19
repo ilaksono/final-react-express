@@ -5,6 +5,7 @@ import Location from "components/Search/Location/";
 import Button from "components/Button/";
 import 'styles/Venue.scss';
 import 'styles/Location.scss';
+import { Link } from 'react-router-dom';
 
 const Search = props => {
   const [location, setLocation] = useState("");
@@ -32,8 +33,10 @@ const Search = props => {
   return (
     <div className="search-container">
       <Venue venue={venue} onChange={setVenue} />
-      <Location location={location} onChange={setLocation} />
-      <Button onClick={handleSearch} message={props.buttonMessage} search />
+      <Location location={location} onChange={setLocation} />        
+      <Link to={'/search'}>
+        <Button onClick={handleSearch} message={props.buttonMessage} search />
+      </Link>
     </div>
   );
 };
