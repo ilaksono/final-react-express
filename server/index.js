@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const PORT = process.env.PORT || 8001;
 const bodyParser = require('body-parser');
 const app = require('express')();
@@ -24,7 +26,7 @@ app.use(cookieSession({
   })
   .catch(er=> console.log(er));
 }) */
-const apiKey = 'Pu-8bZd2OpVbd3UsOOhb2UI7At6lvBOtXc7K4jX9krAsTS3eTZmUHGKxr-1kE_usUVhOmy3WYYtnofNJxbxR8ok96vR1JRmgiXRaopYEh0wAoG7hfX0SVwF1JJu1X3Yx';
+const apiKey = process.env.YELP_API_KEY
 const client = yelp.client(apiKey);
 // app.post("/api/search_yelp", (req, res) => {
 //   https.get({
