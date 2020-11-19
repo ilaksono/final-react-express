@@ -5,13 +5,9 @@ import Results from "./Results";
 import Map from "./Map";
 
 const SearchPage = props => {  
-  const {filters, filterClick} = useFilter();
-
-
   return (
     <div className="search-page-layout">
-        <FilterBar filters={filters} 
-        filterClick={filterClick}
+        <FilterBar 
         />
         <Results/>
         <Map/>

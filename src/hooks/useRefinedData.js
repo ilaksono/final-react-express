@@ -19,9 +19,12 @@ const refinedReducer = (refinedResults, action) => {
       return;
     }
     case SEED: {
+      console.log('seed');
       return [...action.data];
     }
     case PRICE_FILTER: {
+      console.log('price');
+
       return [...action.filteredCopy];
     }
     case DIST_FILTER: {
@@ -65,34 +68,45 @@ const useRefinedData = () => {
   };
 
   const setRefinedSeed = (data) => {
-    dispatch({ type: 'SEED', data });
+    return new Promise((res, rej) => {
+      res(dispatch({ type: 'SEED', data }));
+    });
     // addReviewCount();
-
   };
 
-  const applyPriceFilter = (filters) => {
-    console.log('2', filters);
-    const filteredCopy = [];
-    refinedResults.forEach((biz, index) => {
-      if (filters.price[biz.price])
-        filteredCopy.push(biz);
+  const applyPriceFilter = (filters, results) => {
+    return new Promise((res, rej) => {
+      if (filters.price.length > 0) {
+        const filteredCopy = []
+        results.forEach((biz, index) => {
+          if (filters.price.includes(biz.price) && biz.distance < filters.distance)
+            filteredCopy.push(biz);
+        });
+        res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
+      } else res(true);
     });
-    dispatch({ type: 'PRICE_FILTER', filteredCopy });
   };
-  const applyAllFilters = (filters) => {
-    if (filters.price.length)
-      applyPriceFilter(filters);
-    // if (filters.distance)
-    // applyDistanceFilter(filters.distance);
+  const applyAllFilters = (filters, results) => {
+    applyPriceFilter(filters, results)
+      .then(applyDistanceFilter(filters, results));
   };
-  const applyDistanceFilter = (distanceFilter) => {
+  const applyDistanceFilter = (filters, results) => {
     // distanceFilter is integer datatype
-    const filteredCopy = [];
-    refinedResults.forEach((biz, index) => {
-      if (biz.distance < distanceFilter)
-        filteredCopy.push(biz);
+    return new Promise((res, rej) => {
+      if (filters.price.length < 1) {
+        const filteredCopy = results.filter((biz, index) =>
+          biz.distance < filters.distance && biz
+        );
+        res(dispatch({ type: 'DIST_FILTER', filteredCopy }));
+      } else {
+        const filteredCopy = refinedResults.filter((biz, index) =>
+          biz.distance < filters.distance && biz
+        );
+        res(dispatch({ type: 'DIST_FILTER', filteredCopy }));
+
+      }
+
     });
-    dispatch({ type: 'DIST_FILTER', filteredCopy });
   };
 
   return {

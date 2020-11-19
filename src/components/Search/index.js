@@ -11,12 +11,12 @@ import { Link } from 'react-router-dom';
 const Search = props => {
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
-  console.log(YelpContext);
-  const { 
+  const {
     setRefinedSeed,
     results,
-    yelpSearch } = useContext(YelpContext);
-    console.log('yelpSearch: ', yelpSearch);
+    yelpSearch,
+    resetFilters,
+    populateCategories } = useContext(YelpContext);
 
   // function validate() {
   //   if (location == "") {
@@ -30,16 +30,19 @@ const Search = props => {
   // }
   useEffect(() => {
     setRefinedSeed(results);
+    populateCategories(results);
+    
     // eslint-disable-next-line
   }, [results]);
 
   const handleSearch = () => {
-    yelpSearch(venue, location)
+    yelpSearch(venue, location);
+    resetFilters();
   };
   return (
     <div className="search-container">
       <Venue venue={venue} onChange={setVenue} />
-      <Location location={location} onChange={setLocation} />        
+      <Location location={location} onChange={setLocation} />
       <Link to={'/search'}>
         <Button onClick={handleSearch} message={props.buttonMessage} search />
       </Link>
