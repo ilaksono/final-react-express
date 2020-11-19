@@ -16,8 +16,8 @@ const Search = props => {
     
     
     // need both results state and callback to seed refinedResults
-    const { results, setRefinedSeed } = props;
-    setRefinedSeed(results);
+    // const { results, setRefinedSeed } = props;
+    // setRefinedSeed(results);
 
   };
   return (

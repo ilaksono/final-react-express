@@ -6,34 +6,47 @@ const FilterBar = (props) => {
   const { filters,
     applyPriceFilter,
     applyAllFilters,
+    setRefinedSeed,
     filterClick,
+    results
   } = props;
   let val = '';
   const parsedCategoryFilters = '';
   const handleClick = ({ type, value }) => {
-    props.filterClick({ type, value });
-    if (type === 'price' || type === 'categories') {
+    // console.log('hi')
+    if(!filters[type][value]) {
+      console.log(filters);
+      applyPriceFilter(filters);
+    }
+    else {
+      setRefinedSeed(results);
+      applyAllFilters(filters)
+    }
+    filterClick({ type, value });
+
+    // if (type === 'price' || type === 'categories') {
       
-    }
-    if (type === 'price') {
-      applyPriceFilter(props.filters.price);
-    }
+    // }
+    // if (type === 'price') {
+    //   applyPriceFilter(props.filters.price);
+      
+    // }
   };
 
   return (
     <div class="filter-container">
       Filter:
       <div className='price-filter-container'>
-        <FilterItem type='price' applyPriceFilter={props.applyPriceFilter} filterClick={() => {
+        <FilterItem type='price' handleClick={() => {
           handleClick({ type: 'price', value: `$` });
         }} message='$' />
-        <FilterItem type='price' filterClick={() => {
+        <FilterItem type='price' handleClick={() => {
           handleClick({ type: 'price', value: `$$` });
         }} message='$$' />
-        <FilterItem type='price' filterClick={() => {
+        <FilterItem type='price' handleClick={() => {
           handleClick({ type: 'price', value: `$$$` });
         }} message='$$$' />
-        <FilterItem type='price' filterClick={() => {
+        <FilterItem type='price' handleClick={() => {
           handleClick({ type: 'price', value: `$$$$` });
         }} message='$$$$' />
       </div>

@@ -23,8 +23,8 @@ function App() {
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
+    applyAllFilters,
     applyDistanceFilter } = useRefinedData();
-  console.log("results:", results)
   const {mapState, addResults} = useMapData();
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY,
@@ -57,7 +57,10 @@ function App() {
               applyDistanceFilter={applyDistanceFilter}
               mapState={mapState}
               addResults={addResults}
+              applyAllFilters={applyAllFilters}
               refinedResults={refinedResults}
+              setRefinedSeed={setRefinedSeed}
+              results={results}
             />
           </Route>
         </Switch>

@@ -31,25 +31,24 @@ const useRefinedData = () => {
     useReducer(refinedReducer, initRefined);
 
   const setRefinedSeed = (data) => {
+    console.log('1')
     dispatch({ type: 'SEED', data });
   };
 
   const applyPriceFilter = (filters) => {
+    console.log('2');
     const filteredCopy = [];
-    const removed = [];
     refinedResults.forEach((biz, index) => {
-      if (!filters.includes(biz.price))
+      if (filters.price[biz.price])
         filteredCopy.push(biz);
-      else removed.push(biz);
     });
     dispatch({ type: 'PRICE_FILTER', filteredCopy });
-    return removed;
   };
   const applyAllFilters = (filters) => {
     if (filters.price.length)
       applyPriceFilter(filters);
-    if (filters.distance)
-      applyDistanceFilter(filters.distance);
+    // if (filters.distance)
+      // applyDistanceFilter(filters.distance);
   };
   const applyDistanceFilter = (distanceFilter) => {
     // distanceFilter is integer datatype
