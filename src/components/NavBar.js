@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import logo from "./logo.png";
 import 'styles/NavBar.scss';
-import Search from "components/Search/Search";
+import Search from "components/Search";
 import Button from "components/Button";
 import { Link, useLocation } from 'react-router-dom';
 
@@ -20,16 +20,14 @@ const NavBar = (props) => {
         </Link>
       </div>
       {!isHome &&
-      props.loadSearch && (
-        <Search setRefinedSeed={props.setRefinedSeed}
-          results={props.results}
-          setResults={props.setResults}
-          buttonMessage={<i class="fas fa-search"></i>}
-          yelpSearch={props.yelpSearch}
-        />
-        )
-        }
-
+        props.loadSearch && (
+          <Search setRefinedSeed={props.setRefinedSeed}
+            results={props.results}
+            setResults={props.setResults}
+            buttonMessage={<i class="fas fa-search"></i>}
+            yelpSearch={props.yelpSearch}
+          />
+        )}
       <div className="user-container">
         <div className="login">
           <Link to={'/login'}>

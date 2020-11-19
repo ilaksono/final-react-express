@@ -43,6 +43,7 @@ app.post("/api/search_yelp", (req, res) => {
     .search({
       term: req.body.venue,
       location: req.body.location,
+      limit: 3
     }).then(response => {
       res.json(response.jsonBody.businesses);
       // console.log(response.jsonBody.businesses);

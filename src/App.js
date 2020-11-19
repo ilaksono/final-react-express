@@ -4,7 +4,7 @@ import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Register from 'components/Register';
 import useMapData from 'hooks/useMapData';
-import SearchPage from "components/SearchPage/SearchPage";
+import SearchPage from "components/SearchPage";
 import useYelpData from "./hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
