@@ -24,8 +24,8 @@ app.use(cookieSession({
   })
   .catch(er=> console.log(er));
 }) */
-const apiKey = process.env.YELP_API_KEY;
-
+const apiKey = 'Pu-8bZd2OpVbd3UsOOhb2UI7At6lvBOtXc7K4jX9krAsTS3eTZmUHGKxr-1kE_usUVhOmy3WYYtnofNJxbxR8ok96vR1JRmgiXRaopYEh0wAoG7hfX0SVwF1JJu1X3Yx';
+const client = yelp.client(apiKey);
 // app.post("/api/search_yelp", (req, res) => {
 //   https.get({
 //     hostname: 'api.yelp.com',
@@ -44,6 +44,7 @@ app.post("/api/search_yelp", (req, res) => {
       location: req.body.location,
       limit: 3
     }).then(response => {
+      console.log("RESPONSE", response);
       res.json(response.jsonBody.businesses);
       // console.log(response.jsonBody.businesses);
     }).catch(e => {
