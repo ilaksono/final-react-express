@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useLoadScript } from '@react-google-maps/api';
+// import { useLoadScript } from '@react-google-maps/api';
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Register from 'components/Register';
@@ -14,19 +14,19 @@ const libraries = ["places"];
 
 function App() {
 
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_API_KEY,
-    libraries
-  });
-  console.log(isLoaded);
-  if (loadError) return 'Error loading maps';
-  if (!isLoaded) return "loading maps";
+  // const { isLoaded, loadError } = useLoadScript({
+  //   googleMapsApiKey: process.env.GOOGLE_API_KEY,
+  //   libraries
+  // });
+  // console.log(isLoaded);
+  // if (loadError) return 'Error loading maps';
+  // if (!isLoaded) return "loading maps";
 
   return (
     <div className="layout">
       <YelpProvider>
         <Router>
-          <NavBar isLoaded={isLoaded} loadSearch />
+          <NavBar loadSearch />
           <Switch>
             <Route exact path='/' >
               <Home />
