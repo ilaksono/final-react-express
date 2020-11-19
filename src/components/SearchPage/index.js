@@ -1,7 +1,7 @@
 import 'styles/SearchPage.scss';
 import useFilter from 'hooks/useFilter';
 import FilterBar from "./Filter/FilterBar";
-import Results from "./Results/Results";
+import Results from "./Results";
 import Map from "./Map";
 
 const SearchPage = props => {  
