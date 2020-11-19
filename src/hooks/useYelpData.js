@@ -24,8 +24,8 @@ export default function useYelpData() {
       };
       filteredData.push(filteredDataItems);
     }
-    return filteredData
-  }
+    return filteredData;
+  };
   const [results, setResults] = useState([{
     id: '',
     name: '',
@@ -45,9 +45,10 @@ export default function useYelpData() {
   }]);
 
   const yelpSearch = (venue, location) => {
-   return axios.post('/api/search_yelp', {venue, location})
+    return axios.post('/api/search_yelp', {venue, location})
     .then((response) => {
-    const yelpData = response.data.businesses;
+      console.log(response);
+    const yelpData = response.data;
     const parsedYelpData = getCoreYelpData(yelpData)
     return setResults(parsedYelpData)
   })

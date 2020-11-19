@@ -1,40 +1,30 @@
-import {useState} from "react";
+import React from "react";
 import 'styles/Search.scss';
 import Venue from "components/Search/Venue/";
 import Location from "components/Search/Location/";
 import Button from "components/Button/";
-import axiosRegister from "axios/register";
-
 
 const Search = props => {
-  const [location, setLocation] = useState("");
-  const [venue, setVenue] = useState("");
-  
-  
-  // function validate() {
-    //   if (location == "") {
-      
-      //   }
-      // }
-      
-      // function reset() {
-        //   // resets the text data
-        // }
-        
-  const handleSearch = (results) => {
-    props.yelpSearch(venue, location)
-      .then(() => {
-        const { setRefinedSeed } = props;
-        setRefinedSeed([...props.results]);
-      });
-    };
-   
 
+  const handleSearch = () => {
+    
+    //make dan's api request
+    const queryLocation = ''; 
+    const queryTerm = '';
+    
+    // <-- api function call goes here getResults(queryTerm, queryLocation) 
+    
+    
+    // need both results state and callback to seed refinedResults
+    // const { results, setRefinedSeed } = props;
+    // setRefinedSeed(results);
+
+  };
   return (
     <div className="search-container">
-      <Venue venue={venue} onChange={setVenue}/>
-      <Location location={location} onChange={setLocation} />
-      <Button onClick={() => handleSearch(props.results)} message={props.buttonMessage} search />
+      <Venue />
+      <Location />
+      <Button onClick={handleSearch} message={props.buttonMessage} search />
     </div>
   );
 };

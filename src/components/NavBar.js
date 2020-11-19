@@ -1,12 +1,16 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import logo from "./logo.png";
 import 'styles/NavBar.scss';
-import Search from "components/Search/Search";
+import Search from "components/Search";
 import Button from "components/Button";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = (props) => {
-
+  const location = useLocation();
+  const [isHome, setIsHome] = useState(false);
+  useEffect(() => {
+    setIsHome(location.pathname === '/');
+  }, [location]);
   return (
     <nav className="nav-bar">
       <div className="logo-container">
@@ -15,15 +19,15 @@ const NavBar = (props) => {
               SafeSpace
         </Link>
       </div>
-      {props.loadSearch && (
-        <Search setRefinedSeed={props.setRefinedSeed}
-          results={props.results}
-          setResults={props.setResults}
-          buttonMessage={<i class="fas fa-search"></i>}
-          yelpSearch={props.yelpSearch}
-        />
-      )}
-
+      {!isHome &&
+        props.loadSearch && (
+          <Search setRefinedSeed={props.setRefinedSeed}
+            results={props.results}
+            setResults={props.setResults}
+            buttonMessage={<i class="fas fa-search"></i>}
+            yelpSearch={props.yelpSearch}
+          />
+        )}
       <div className="user-container">
         <div className="login">
           <Link to={'/login'}>

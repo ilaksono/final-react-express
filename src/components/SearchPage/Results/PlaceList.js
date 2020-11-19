@@ -1,4 +1,5 @@
 import PlaceListItem from "./PlaceListItem";
+
 const PlaceList = (props) => {
   const placeList = props.refinedResults.map(place => {
     return <PlaceListItem {...place} />

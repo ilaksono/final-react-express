@@ -4,7 +4,7 @@ const FilterItem = props => {
   return (
     <div>
       <label>{props.children}</label>
-      <button onClick={props.filterClick}>{props.message}</button>
+      <button onClick={props.handleClick}>{props.message}</button>
     </div>
   );
 };
