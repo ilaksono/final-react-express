@@ -8,9 +8,11 @@ import { Link, useLocation } from 'react-router-dom';
 const NavBar = (props) => {
   const location = useLocation();
   const [isHome, setIsHome] = useState(false);
+
   useEffect(() => {
     setIsHome(location.pathname === '/');
   }, [location]);
+  
   return (
     <nav className="nav-bar">
       <div className="logo-container">

@@ -46,13 +46,36 @@ app.post("/api/search_yelp", (req, res) => {
       location: req.body.location,
       limit: 3
     }).then(response => {
-      console.log("RESPONSE", response);
+      console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
       res.json(response.jsonBody.businesses);
-      // console.log(response.jsonBody.businesses);
     }).catch(e => {
       console.log(e);
     });
 });
+
+app.post("/api/autocomplete_yelp", (req, res) => {
+  client
+    .autocomplete({
+      text: req.body.venue,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
+    }).then(response => {
+      console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
+      const businesses = cleanAutoComplete(response.jsonBody.businesses, "name").slice(0, 4);
+      const categories = cleanAutoComplete(response.jsonBody.categories, "title").slice(0, 5);
+      const obj = { businesses, categories };
+      res.json(obj);
+      
+    }).catch(e => {
+      console.log(e);
+    })
+})
+
+const cleanAutoComplete = (data, keyword) => {
+  const result = data.map(item => item[keyword]);
+  return result;
+}
+
 
 // get business details
 app.get("/api/search_yelp/:id", (req, res) => {

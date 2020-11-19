@@ -77,7 +77,7 @@ const useApplicationData = () => { // login and user state information
     submitHandle,
     appState,
     createHandle,
-    deleteHandle,
+    deleteHandle
   };
 
 };

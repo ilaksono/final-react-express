@@ -1,0 +1,38 @@
+@import './helper';
+
+.autocomplete-container {
+  @include flexbox(column, flex-start, flex-start);
+  position: absolute; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: calc((180.16px + (100% - 836.75px) / 2) + 8px);
+  top: 48px;
+  border-top: 1px solid $gray-line;
+  width: 264px;
+  height: auto;
+  background-color: #FFFFFF;
+}
+
+.autocomplete-list {
+  width: 100%;
+}
+
+.first {
+  border-top: 1px solid $gray-line;
+}
+
+.autocomplete-list-item {
+  background-color: #FFFFFF;
+  color: $text;
+  height: 30px;
+  width: calc(100% - 10px);
+  font-size: 16px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.autocomplete-list-item:hover {
+  cursor: pointer;
+  background-color: rgb(214, 213, 213);
+}
