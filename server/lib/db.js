@@ -7,6 +7,3 @@ const dbParams = {
 };
 
 module.exports = dbParams;
-
-// sudo apt install postgresql-12;
-// sudo - u postgres - i;

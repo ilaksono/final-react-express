@@ -8,6 +8,7 @@ import Map from "./Map/Map";
 const SearchPage = props => {  
   const {filters, filterClick} = useFilter();
 
+
   return (
     <div className="search-page-layout">
       <FilterBar filters={filters} filterClick={filterClick}/>

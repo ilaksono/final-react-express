@@ -19,7 +19,7 @@ function App() {
     submitHandle
   } = useApplicationData();
 
-  const { results, setResults } = useYelpData();
+  const { results, setResults, yelpSearch } = useYelpData();
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
@@ -39,20 +39,20 @@ function App() {
       <Router>
         <Switch>
           <Route exact path='/' >
-            <NavBar setResults={setResults} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults}>
+            <NavBar >
               <Home />
             </NavBar >
           </Route>
           <Route path='/register' >
-            <NavBar isLoaded={isLoaded} addResults={addResults} loadSearch />
+            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
             <Register />
           </Route>
           <Route path='/login'>
-            <NavBar isLoaded={isLoaded} addResults={addResults} loadSearch />
+            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results}  />
             <Login submitHandle={submitHandle} />
           </Route>
           <Route path='/search'>
-            <NavBar isLoaded={isLoaded} addResults={addResults} loadSearch />
+            <NavBar yelpSearch={yelpSearch} setRefinedSeed={setRefinedSeed} isLoaded={isLoaded} addResults={addResults} loadSearch results={results} />
             <SearchPage applyPriceFilter={applyPriceFilter}
               applyDistanceFilter={applyDistanceFilter}
               mapState={mapState}

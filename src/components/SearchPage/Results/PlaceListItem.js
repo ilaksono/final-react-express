@@ -5,6 +5,7 @@ const PlaceListItem = (props) => {
     <div>
       {props.name}
       {props.phone}
+      {props.reviewCount}
     </div>
   )
 }

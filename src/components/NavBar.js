@@ -17,8 +17,10 @@ const NavBar = (props) => {
       </div>
       {props.loadSearch && (
         <Search setRefinedSeed={props.setRefinedSeed}
+          results={props.results}
           setResults={props.setResults}
           buttonMessage={<i class="fas fa-search"></i>}
+          yelpSearch={props.yelpSearch}
         />
       )}
 
