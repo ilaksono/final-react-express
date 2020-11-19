@@ -70,13 +70,20 @@ const useRefinedData = () => {
 
   };
 
-  const applyPriceFilter = ({ type, filters }) => {
+  const applyPriceFilter = (filters) => {
+    console.log('2', filters);
     const filteredCopy = [];
     refinedResults.forEach((biz, index) => {
-      if (!filters.includes(biz.price))
+      if (filters.price[biz.price])
         filteredCopy.push(biz);
     });
     dispatch({ type: 'PRICE_FILTER', filteredCopy });
+  };
+  const applyAllFilters = (filters) => {
+    if (filters.price.length)
+      applyPriceFilter(filters);
+    // if (filters.distance)
+      // applyDistanceFilter(filters.distance);
   };
   const applyDistanceFilter = (distanceFilter) => {
     // distanceFilter is integer datatype
@@ -85,7 +92,7 @@ const useRefinedData = () => {
       if (biz.distance < distanceFilter)
         filteredCopy.push(biz);
     });
-    dispatch({type: 'DIST_FILTER', filteredCopy})
+    dispatch({ type: 'DIST_FILTER', filteredCopy });
   };
 
   return {
@@ -93,7 +100,8 @@ const useRefinedData = () => {
     applyPriceFilter,
     setRefinedSeed,
     applyDistanceFilter,
-    addReviewCount
+    addReviewCount,
+    applyAllFilters
   };
 };
 export default useRefinedData;

@@ -84,7 +84,7 @@ export const mockData = [
       "longitude": -73.5802391312828
     },
     "transactions": [],
-    "price": "$$",
+    "price": "$",
     "location": {
       "address1": "922 Avenue du Mont-Royal E",
       "address2": "",

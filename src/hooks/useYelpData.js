@@ -24,8 +24,8 @@ export default function useYelpData() {
       };
       filteredData.push(filteredDataItems);
     }
-    return filteredData
-  }
+    return filteredData;
+  };
   const [results, setResults] = useState([{
     id: '',
     name: '',

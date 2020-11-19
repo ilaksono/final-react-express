@@ -1,4 +1,3 @@
-import React from "react";
 import 'styles/SearchPage.scss';
 import useFilter from 'hooks/useFilter';
 import FilterBar from "./Filter/FilterBar";
@@ -11,11 +10,17 @@ const SearchPage = props => {
 
   return (
     <div className="search-page-layout">
-      <FilterBar filters={filters} filterClick={filterClick}/>
-      <Results refinedResults={props.refinedResults}/>
-      <Map mapState={props.mapState} />
+        <FilterBar filters={filters} 
+        applyPriceFilter={props.applyPriceFilter} 
+        filterClick={filterClick}
+        applyAllFilters={props.applyAllFilters}
+        setRefinedSeed={props.setRefinedSeed}
+        results={props.results}
+        />
+        <Results refinedResults={props.refinedResults} />
+        <Map mapState={props.mapState} />
     </div>
-  )
+  );
 };
 
 export default SearchPage;
