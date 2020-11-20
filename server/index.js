@@ -10,6 +10,7 @@ const request = require('request-promise-native');
 const db = require('./lib/pool.js');
 const dbHelpers = require('./db/dbHelpers.js')(db);
 const yelp = require('yelp-fusion');
+const { resolveNaptr } = require('dns');
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
@@ -28,17 +29,7 @@ app.use(cookieSession({
 }) */
 const apiKey = process.env.YELP_API_KEY;
 const client = yelp.client(apiKey);
-// app.post("/api/search_yelp", (req, res) => {
-//   https.get({
-//     hostname: 'api.yelp.com',
-//     path: `/v3/businesses/search?term=${req.body.venue}&location=${req.body.location}&limit=5`,
-//     headers: {
-//       Authorization: `Bearer ${apiKey}`
-//     }
-//   }, response => {
-//     response.pipe(res)
-//   })
-// });
+
 app.post("/api/search_yelp", (req, res) => {
   client
     .search({
@@ -47,7 +38,21 @@ app.post("/api/search_yelp", (req, res) => {
       limit: 5
     }).then(response => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
-      res.json(response.jsonBody.businesses);
+      let bus = response.jsonBody.businesses;
+      bus = bus.map((biz) => {
+        biz.categories = cleanAutoComplete(biz.categories,'title');
+        return biz
+      })
+      res.json(bus);
+    }).catch(e => {
+      console.log(e);
+    });
+});
+
+app.post("/api/search_yelp/:id", (req, res) => {
+  client 
+    .business(req.params.id).then(response => {
+      res.json(response.jsonBody);
     }).catch(e => {
       console.log(e);
     });
@@ -71,24 +76,13 @@ app.post("/api/autocomplete_yelp", (req, res) => {
     })
 })
 
+
+
 const cleanAutoComplete = (data, keyword) => {
   const result = data.map(item => item[keyword]);
   return result;
 }
 
-
-// get business details
-app.get("/api/search_yelp/:id", (req, res) => {
-  // https.get({
-  //   hostname: 'api.yelp.com',
-  //   path: `/v3/businesses/${req.query.term}`,
-  //   headers: {
-  //     Authorization: `Bearer ${apiKey}`
-  //   }
-  // }, response => {
-  //   response.pipe(res)
-  // })
-});
 
 app.get("/api/reviews", (req, res) => {
   dbHelpers.getAllReviews()
@@ -97,6 +91,14 @@ app.get("/api/reviews", (req, res) => {
     })
     .catch(error => { console.log(error); });
 });
+
+app.post("/api/reviews/:id", (req, res) => {
+  dbHelpers.getReviewsPerBusiness(req.params.id)
+  .then(reviews => {
+    res.send(reviews);
+  })
+  .catch(error => { console.log(error); });
+})
 
 app.listen(PORT, () => {
   console.log('listening on ', PORT);

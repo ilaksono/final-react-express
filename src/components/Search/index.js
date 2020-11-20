@@ -22,9 +22,9 @@ const Search = props => {
     getBrowserLocation,
     populateCategories,
     addResults,
-    getPriceFilterMode
+    getPriceFilterMode,
+    setCategoriesSelected
   } = useContext(YelpContext);
-  //console.log(appState.center.city);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -40,16 +40,11 @@ const Search = props => {
   //   // resets the text data
 
   // // }
-  // useEffect(() => {
-  // },[results])
   useEffect(() => {
-    // setRefinedSeed(results);
-    addResults(results); // map
-    populateCategories(results); // filter.categories
+    populateCategories(results) 
+    addResults(results);
     getPriceFilterMode(results) 
-    console.log('1') // filter.mode
-    setRefinedSeed(results); //refinedData
-    console.log('2')
+    setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
 

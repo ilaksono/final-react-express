@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import BusinessPage from "../components/BusinessPage/index";
+import { Link } from 'react-router-dom';
+
 
 export default function useYelpData() {
 
@@ -29,6 +32,31 @@ export default function useYelpData() {
     return filteredData;
   };
 
+  const getCoreBusinessData = (data) => {
+    let filteredData = [];
+      const filteredDataItems = {
+        "id": data.id,
+        "name": data.name,
+        "image": data.image_url,
+        "categories": data.categories,
+        "address": data.location.address1,
+        "city": data.location.city,
+        "zip_code": data.location.zip_code,
+        "phone": data.display_phone,
+        "yelpRating": data.rating,
+        "price": data.price,
+        "reviews": [],
+        "reviewScore": '',
+        "latitude": data.coordinates.latitude,
+        "longitude": data.coordinates.longitude,
+        "distance": data.distance,
+        "is_closed": data.is_closed,
+        "hours": data.hours,
+        "photos": data.photos
+      };
+    return filteredDataItems;
+  }
+
   const [results, setResults] = useState([{
     id: '',
     name: '',
@@ -48,9 +76,30 @@ export default function useYelpData() {
     is_closed:''
   }]);
 
+  const [businessDetails, setBusinessDetails ] = useState([{
+   id: '',
+   name: '',
+   image: '',
+   address: '',
+   city: '',
+   postal: '',
+   phone: "",
+   yelpRating: '',
+   latitude: 0.0,
+   longitude: 0.0,
+   distance: '',
+   price: '',
+   reviews: [],
+   reviewScore: '',
+   delivery: false,
+   is_closed:'',
+   hours: [],
+   photos: [] 
+  }])
+
  
 
-  const addReviewCount = (query, reviews) => {
+  const addReview = (query, reviews) => {
    query.forEach((result, index) => {
    for (const review of reviews) {
     if (review.venue_id === result.id) {
@@ -61,15 +110,11 @@ export default function useYelpData() {
   return query
 };
 
-  const getAvgReview = () => {
-    
-  }
-
-           
+   // function to get all business details        
   const yelpSearch = (venue, location) => {
-    
-    let reviewArr = [];
-          
+
+    let reviewArr = [];      
+
     return Promise.all([
       axios.post('/api/search_yelp', {venue, location}),
       axios.get('/api/reviews')
@@ -79,13 +124,27 @@ export default function useYelpData() {
       all[1].data.forEach((data) => {
         reviewArr.push(data)
       })
-      const yelpDataWithReviews = addReviewCount(parsedYelpData, reviewArr)
+      const yelpDataWithReviews = addReview(parsedYelpData, reviewArr)
       return setResults(yelpDataWithReviews) 
     })
       .catch((err) => {
         console.log(err)
       })
   }
-  
-  return { results, setResults, yelpSearch }
+
+  // function to get individual business details
+
+    const getIndividualBusinessData = (id) => {
+    return Promise.all([
+      axios.post(`/api/search_yelp/${id}`),
+      axios.post(`/api/reviews/${id}`)
+    ]).then(all => {
+      const businessData = all[0].data
+      const parsedBusinessData = getCoreBusinessData(businessData);
+      parsedBusinessData.reviews = all[1].data;
+      return setBusinessDetails(...[parsedBusinessData]); 
+    })
+  }
+
+  return { results, setResults, yelpSearch, businessDetails, setBusinessDetails, getIndividualBusinessData }
 }

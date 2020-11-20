@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 const initFilter = {
   categories: [],
+  catsSelected: [],
   price: ['$', '$$', '$$$', '$$$$'],
   distance: 50000,
   mode: false
@@ -16,15 +17,36 @@ const useFilter = () => {
     if (results.length > 1) {
       results.forEach(result => {
         result.categories.forEach((cat) => {
-          if (!cats.includes(cat.title))
-            cats.push(cat.title);
+          if (!cats.includes(cat))
+            cats.push(cat);
         });
       });
       setFilters(({ ...filters, categories: cats }));
     }
+    return filters;
   };
-  //type can be price, category
+  //type can be price, categories
   const filterClick = ({ type, value }) => {
+    if(type === 'categories')
+      type = "catsSelected"
+    if (filters[type].length === 1) {
+      if (type === 'price') {
+        if (filters.price.includes(value))
+        return setFilters({ ...filters, price: [...initFilter.price] });
+        else
+        return setFilters({ ...filters, price: [...filters.price, value] });
+      } else if (type === 'catsSelected') {
+        if (filters.catsSelected.includes(value))
+        return setFilters({ ...filters, catsSelected: [...filters.categories] });
+        else 
+        return setFilters({...filters, catsSelected: [...filters.catsSelected, value]})  
+      }
+    }
+    if(type === 'catsSelected') {
+      if(filters.catsSelected.length === filters.categories.length) {
+        return setFilters({...filters, catsSelected:[value]})
+      }
+    }
     if (filters[type].includes(value)) {
       const cpy = [...filters[type]];
       // cpy[value] = !cpy[value];
@@ -39,6 +61,7 @@ const useFilter = () => {
   const distanceFilterClick = (value) => {
     setFilters({ ...filters, distance: value });
   };
+
   const resetFilters = () => {
     setFilters(initFilter);
   };
@@ -48,6 +71,9 @@ const useFilter = () => {
         setFilters(prev => ({ ...prev, mode: true }));
     });
   };
+  const setCategoriesSelected = () => {
+    setFilters({...filters, catsSelected:[...filters.categories]})
+  }
 
 
   return {
@@ -56,7 +82,8 @@ const useFilter = () => {
     resetFilters,
     distanceFilterClick,
     populateCategories,
-    getPriceFilterMode
+    getPriceFilterMode,
+    setCategoriesSelected
   };
 };
 

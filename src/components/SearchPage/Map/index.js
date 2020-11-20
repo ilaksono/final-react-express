@@ -10,7 +10,6 @@ const containerStyle = {
   height: '400px'
 };
 
-
 const Map = props => {
 
   const {
@@ -50,7 +49,7 @@ const Map = props => {
   if (mapState.places.length) {
     parsedMarkers = mapState.places.map((coord, ind) => {
       return (
-        <MarkerComponent key={ind} {...coord} />
+        <MarkerComponent key={ind} {...coord}  />
       );
     });
   }

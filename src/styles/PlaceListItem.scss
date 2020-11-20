@@ -11,6 +11,7 @@
   text-align: left;
 }
 
+
 .venue-image {
   height: 120px;
   width: 120px;
@@ -24,9 +25,16 @@
   
 
   .venue_name {
+    
     margin-top: 10%;
     text-align: left;
     font-size: 20px;
+  }
+
+  .venue_name:hover {
+    color: blue;
+    opacity: 50%;
+    cursor: pointer
   }
 
   .yelp_rating {

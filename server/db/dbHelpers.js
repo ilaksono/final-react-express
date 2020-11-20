@@ -14,6 +14,19 @@ module.exports = (db) => {
         return response.rows;
       });
   };
+
+  const getReviewsPerBusiness = (id) => {
+    const queryString = `
+    SELECT * 
+    FROM reviews
+    WHERE venue_id = $1;
+    `
+    const queryParams = [id]
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      })
+  };
   // average rating for given venue ISSUE IS THAT WE MAY NOT BE ABLE TO PASS THE ARGUMENT TO THE BACKEND, MAYBE NEED TO FILTER WHAT WE RETURN FROM getallReviews
 
 
@@ -40,6 +53,10 @@ module.exports = (db) => {
 
   return {
     getAllReviews,
+<<<<<<< HEAD
     submitReview
+=======
+    getReviewsPerBusiness
+>>>>>>> 3fd849d3368b4f32bc9b44886b2dc43bc61b7b9c
   };
 };

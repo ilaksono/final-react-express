@@ -14,25 +14,36 @@ export function YelpProvider({ children }) {
     resetFilters,
     distanceFilterClick,
     populateCategories,
-    getPriceFilterMode } = useFilter();
+    getPriceFilterMode,
+    setCategoriesSelected } = useFilter();
 
   const {
     appState,
     submitHandle
   } = useApplicationData();
-  const { results, setResults, yelpSearch } = useYelpData();
+  const { results, 
+    setResults,
+     yelpSearch,
+    businessDetails,
+    setBusinessDetails,
+    getIndividualBusinessData } = useYelpData();
+
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter } = useRefinedData();
-  const { mapState, addResults } = useMapData();
+  const { mapState, addResults,
+    hoverMarker, notHoverMarker } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete();
   return (
     <YelpContext.Provider value={{
       results,
       setResults,
       yelpSearch,
+      businessDetails,
+      setBusinessDetails,
+      getIndividualBusinessData,
       appState,
       submitHandle,
       refinedResults,
@@ -50,7 +61,10 @@ export function YelpProvider({ children }) {
       filterClick,
       distanceFilterClick,
       populateCategories,
-      getPriceFilterMode
+      getPriceFilterMode,
+      setCategoriesSelected,
+      hoverMarker,
+      notHoverMarker
     }}>
       {children}
     </YelpContext.Provider>

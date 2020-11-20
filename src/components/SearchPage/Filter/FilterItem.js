@@ -6,12 +6,13 @@ const FilterItem = props => {
     ('filter-btn', {
       'price-selected-true': props.filters.price.includes(props.message)
       ,
-      'distance-selected-true': props.filters.distance === props.value
+      'distance-selected-true': props.filters.distance === props.value,
+      'category-selected-true': props.filters.catsSelected.includes(props.message)
     });
   return (
     <div>
       <label>{props.children}</label>
-      <button className={filterItemClass} onClick={props.handleClick}>{props.message}</button>
+      <button name={props.message} className={filterItemClass} onClick={props.handleClick}>{props.message}</button>
     </div>
   );
 };
