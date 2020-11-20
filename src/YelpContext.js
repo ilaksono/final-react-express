@@ -1,5 +1,4 @@
-
-import React, { useContext } from 'react';
+import React from 'react';
 import useMapData from 'hooks/useMapData';
 import useYelpData from "hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
@@ -9,6 +8,12 @@ import useAutoComplete from 'hooks/useAutoComplete';
 export const YelpContext = React.createContext();
 
 export function YelpProvider({ children }) {
+  const { filters,
+    filterClick,
+    resetFilters,
+    distanceFilterClick,
+    populateCategories } = useFilter();
+
   const {
     appState,
     submitHandle
@@ -22,23 +27,28 @@ export function YelpProvider({ children }) {
   const { mapState, addResults } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete(); 
   return (
-    <YelpContext.Provider value={{ 
-      results, 
-      setResults, 
-      yelpSearch, 
-      appState, 
-      submitHandle, 
-      refinedResults, 
-      setRefinedSeed, 
-      applyPriceFilter, 
+    <YelpContext.Provider value={{
+      results,
+      setResults,
+      yelpSearch,
+      appState,
+      submitHandle,
+      refinedResults,
+      setRefinedSeed,
+      applyPriceFilter,
       applyAllFilters,
       applyDistanceFilter,
       mapState,
       addResults,
       autoComplete,
       resetAutoComplete,
-      yelpAutoComplete
-      }}>
+      yelpAutoComplete,
+      resetFilters,
+      filters,
+      filterClick,
+      distanceFilterClick,
+      populateCategories
+    }}>
       {children}
     </YelpContext.Provider>
   );

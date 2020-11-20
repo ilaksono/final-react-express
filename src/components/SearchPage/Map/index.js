@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { GoogleMap} from '@react-google-maps/api';
+import { useContext, useEffect } from 'react';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
 import 'styles/Map.scss';
+import {YelpContext} from 'YelpContext.js';
 
-const api = 'AIzaSyDPN7RgxORR0HLOo0Iq9v2_L2TNlownf2E';
 const containerStyle = {
   width: '400px',
   height: '400px'
@@ -16,7 +16,12 @@ const center = {
 };
 
 const Map = props => {
-  const [map, setMap] = React.useState(null);
+
+  const {
+    mapState,
+    refinedResults
+  } = useContext(YelpContext);
+  // const [map, setMap] = React.useState(null);
   // const onLoad = React.useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds();
   //   map.fitBounds(bounds);
@@ -38,12 +43,12 @@ const Map = props => {
   // const onUnmount = React.useCallback(function callback(map) {
   //   setMap(null);
   // }, []);
-
   let parsedMarkers = [];
-  if(props.mapState) {
-  parsedMarkers = props.mapState.places.map((coord, ind) => {
+
+  if(mapState.places.length) {
+  parsedMarkers = mapState.places.map((coord, ind) => {
     return (
-      <MarkerComponent key={ind} lat={coord.lat} lng={coord.lng} />
+      <MarkerComponent key={ind} {...coord} />
     );
   });
   }
@@ -54,6 +59,9 @@ const Map = props => {
   };
   return (
     <div className="map-container">
+      <LoadScript
+        googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
+      >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -66,6 +74,7 @@ const Map = props => {
         {parsedMarkers}
         <></>
       </GoogleMap>
+      </LoadScript>
     </div>
   );
 }

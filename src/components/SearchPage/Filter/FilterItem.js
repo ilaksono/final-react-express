@@ -1,10 +1,17 @@
+import 'styles/FilterItem.scss';
+const classNames = require('classnames');
 
 const FilterItem = props => {
-  const filterItemClass = '';
+  const filterItemClass = classNames
+    ('filter-btn', {
+      'price-selected-true': props.filters.price.includes(props.message)
+      ,
+      'distance-selected-true': props.filters.distance === props.value
+    });
   return (
     <div>
       <label>{props.children}</label>
-      <button onClick={props.handleClick}>{props.message}</button>
+      <button className={filterItemClass} onClick={props.handleClick}>{props.message}</button>
     </div>
   );
 };

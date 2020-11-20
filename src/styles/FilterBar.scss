@@ -6,8 +6,17 @@
   max-width: 300px;
   height: calc(100vh - 60px);
   background-color: purple;
+  @include flexbox(column, flex-start, center);
 }
 
 .price-filter-container {
   width: 100%;
+  @include flexbox(column, center, center);
+  margin-bottom: 5%;
+}
+.distance-filter-container {
+  width: 100%;
+  @include flexbox(column, center, center);
+  margin-bottom: 5%;
+
 }

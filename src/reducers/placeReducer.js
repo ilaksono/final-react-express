@@ -4,7 +4,7 @@ const placeReducer = (mapState, action) => {
   switch(action.type) {
 
     case ADD_RESULTS: {
-      return {...mapState, places: action.results}
+      return {places: action.results}
     }
     default:
       throw new Error('Invalid use map action type') 

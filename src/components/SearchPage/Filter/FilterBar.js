@@ -1,61 +1,85 @@
 import FilterItem from './FilterItem';
 import 'styles/FilterBar.scss';
 import { YelpContext } from 'YelpContext.js';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 
 const FilterBar = (props) => {
-  // gets categories present from all results
-  
+  // context destructure
   const { results,
-    filters,
     applyPriceFilter,
     applyAllFilters,
     setRefinedSeed,
-    filterClick } = useContext(YelpContext);
-  let val = '';
-  const parsedCategoryFilters = '';
+    refinedResults,
+    filters, filterClick,
+    applyDistanceFilter,
+    distanceFilterClick,
+    addResults
+  } = useContext(YelpContext);
+
+  let parsedCategoryFilters = [];
+  if (filters.categories.length) {
+    parsedCategoryFilters = filters.categories.map((cat, index) => {
+      return (
+        <FilterItem filters={filters}
+          message={cat}
+          type='category'
+          handleClick={() => console.log(`i am ${cat} filter`)}
+          key={index} />
+      );
+    });
+  }
+
+  useEffect(() => {
+    applyPriceFilter(filters, results);
+    // .then((res) => {
+    // })  
+    // eslint-disable-next-line
+  }, [filters]);
+
+  useEffect(() => {
+    addResults(refinedResults);
+    // eslint-disable-next-line
+  }, [refinedResults]);
 
   const handleClick = ({ type, value }) => {
-    // console.log('hi')
-    if (!filters[type][value]) {
-      console.log(filters);
-      applyPriceFilter(filters);
-    }
-    else {
-      setRefinedSeed(results);
-      applyAllFilters(filters);
-    }
-    filterClick({ type, value });
-
-    // if (type === 'price' || type === 'categories') {
-
-    // }
-    // if (type === 'price') {
-    //   applyPriceFilter(props.filters.price);
-
-    // }
+    if (type === 'price')
+      filterClick({ type, value });
+    if (type === 'distance')
+      distanceFilterClick(value);
   };
 
   return (
     <div className="filter-container">
       Filter:
       <div className='price-filter-container'>
-        <FilterItem type='price' handleClick={() => {
-          handleClick({ type: 'price', value: `$` });
-        }} message='$' />
-        <FilterItem type='price' handleClick={() => {
-          handleClick({ type: 'price', value: `$$` });
-        }} message='$$' />
-        <FilterItem type='price' handleClick={() => {
-          handleClick({ type: 'price', value: `$$$` });
-        }} message='$$$' />
-        <FilterItem type='price' handleClick={() => {
-          handleClick({ type: 'price', value: `$$$$` });
-        }} message='$$$$' />
+        <FilterItem type='price' handleClick={() =>
+          handleClick({ type: 'price', value: `$` })}
+          message='$' filters={filters} />
+        <FilterItem type='price' handleClick={() =>
+          handleClick({ type: 'price', value: `$$` })
+        } message='$$' filters={filters} />
+        <FilterItem type='price' handleClick={() =>
+          handleClick({ type: 'price', value: `$$$` })
+        } message='$$$' filters={filters} />
+        <FilterItem type='price' handleClick={() =>
+          handleClick({ type: 'price', value: `$$$$` })
+        } message='$$$$' filters={filters} />
       </div>
       <div className='category-filter-container'>
-
+        {parsedCategoryFilters.length > 0 && parsedCategoryFilters}
+      </div>
+      <div className='distance-filter-container'>
+        <FilterItem type='distance' handleClick={() =>
+          handleClick({ type: 'distance', value: 50000 })} filters={filters} message='Large Distance' value={50000} />
+        <FilterItem type='distance' handleClick={() =>
+          handleClick({ type: 'distance', value: 8000 })} filters={filters} message='8 km' value={8000} />
+        <FilterItem type='distance' handleClick={() =>
+          handleClick({ type: 'distance', value: 6000 })} filters={filters} message='6 km' value={6000} />
+        <FilterItem type='distance' handleClick={() =>
+          handleClick({ type: 'distance', value: 4000 })} filters={filters} message='4 km' value={4000} />
+        <FilterItem type='distance' handleClick={() =>
+          handleClick({ type: 'distance', value: 2000 })} filters={filters} message='< 2 km' value={2000} />
       </div>
     </div>
   );
@@ -66,10 +90,8 @@ export default FilterBar;// sort;
 // yelp rating;
 // most reviewed ?
 // 
-// 
-// 
 // filter;
 // price
 // category
 // distance
-// 
+// isopen
