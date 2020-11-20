@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default function useYelpData() {
 
+
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
     for (const data of yelpData) {
@@ -17,6 +18,7 @@ export default function useYelpData() {
         "phone": data.display_phone,
         "yelpRating": data.rating,
         "price": data.price,
+        "reviews": [],
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
         "distance": data.distance,
@@ -26,6 +28,7 @@ export default function useYelpData() {
     }
     return filteredData;
   };
+
   const [results, setResults] = useState([{
     id: '',
     name: '',
@@ -40,22 +43,49 @@ export default function useYelpData() {
     longitude: 0.0,
     distance: '',
     price: '',
+    reviews: [],
     delivery: false,
     is_closed:''
   }]);
 
-  const yelpSearch = (venue, location) => {
-    return axios.post('/api/search_yelp', {venue, location})
-    .then((response) => {
-      console.log(response);
-    const yelpData = response.data;
-    const parsedYelpData = getCoreYelpData(yelpData)
-    return setResults(parsedYelpData)
+ 
+
+  const addReviewCount = (query, reviews) => {
+   query.forEach((result, index) => {
+   for (const review of reviews) {
+    if (review.venue_id === result.id) {
+      query[index].reviews.push(review)
+      }
+    }
   })
-  .catch((err) => {
-    console.log (err)
-    }) 
+  return query
+};
+
+  const getAvgReview = () => {
+    
+  }
+
+           
+  const yelpSearch = (venue, location) => {
+    
+    let reviewArr = [];
+          
+    return Promise.all([
+      axios.post('/api/search_yelp', {venue, location}),
+      axios.get('/api/reviews')
+    ]).then((all) => {
+      const yelpData = all[0].data
+      const parsedYelpData = getCoreYelpData(yelpData)
+      all[1].data.forEach((data) => {
+        reviewArr.push(data)
+      })
+      const yelpDataWithReviews = addReviewCount(parsedYelpData, reviewArr)
+      return setResults(yelpDataWithReviews) 
+    })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   
-return { results, setResults, yelpSearch }
+  return { results, setResults, yelpSearch }
 }

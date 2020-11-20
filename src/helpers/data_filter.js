@@ -2,19 +2,21 @@ const getCoreYelpData = (yelpData) => {
   let filteredData = [];
   for (const data of yelpData) {
     const filteredDataItems = {
-      "id": data.id,
-      "name": data.name,
-      "image": data.image_url,
-      "category": data.categories[0].title,
-      "address": data.location.address1,
-      "city": data.location.city,
-      "zip_code": data.location.zip_code,
-      "phone": data.phone,
-      "yelpRating": data.rating,
-      "latitude": data.coordinates.latitude,
-      "longitude": data.coordinates.longitude,
-      "price": data.price,
-      "distance": data.distance
+        "id": data.id,
+        "name": data.name,
+        "image": data.image_url,
+        "categories": data.categories,
+        "address": data.location.address1,
+        "city": data.location.city,
+        "zip_code": data.location.zip_code,
+        "phone": data.display_phone,
+        "yelpRating": data.rating,
+        "price": data.price,
+        "reviews": [],
+        "latitude": data.coordinates.latitude,
+        "longitude": data.coordinates.longitude,
+        "distance": data.distance,
+        "is_closed": data.is_closed
     };
     filteredData.push(filteredDataItems);
   }
