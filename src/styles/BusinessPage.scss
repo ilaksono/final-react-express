@@ -1,0 +1,17 @@
+.business-container {
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+
+  .images {
+    display:flex;
+    justify-content: space-evenly;
+  }
+  img{
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+  }
+  
+}

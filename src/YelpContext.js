@@ -21,7 +21,13 @@ export function YelpProvider({ children }) {
     appState,
     submitHandle
   } = useApplicationData();
-  const { results, setResults, yelpSearch } = useYelpData();
+  const { results, 
+    setResults,
+     yelpSearch,
+    businessDetails,
+    setBusinessDetails,
+    getIndividualBusinessData } = useYelpData();
+
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
@@ -35,6 +41,9 @@ export function YelpProvider({ children }) {
       results,
       setResults,
       yelpSearch,
+      businessDetails,
+      setBusinessDetails,
+      getIndividualBusinessData,
       appState,
       submitHandle,
       refinedResults,

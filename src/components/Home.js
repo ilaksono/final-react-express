@@ -1,9 +1,14 @@
+import Button from 'components/Button';
+import { Link} from 'react-router-dom';
+
 
 const Home = () => {
 
   return (
     <div>
-      I Am Home
+      <Link to='/search'>
+       <button>Search</button>
+      </Link>
     </div>
   );
 };
