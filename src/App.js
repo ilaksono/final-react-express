@@ -7,6 +7,8 @@ import Login from 'components/Login';
 import SearchPage from 'components/SearchPage';
 import React from 'react';
 import { YelpProvider } from './YelpContext';
+// TEST NEWREVIEW COMPONENT
+import NewReview from 'components/Review/NewReview';
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
@@ -22,6 +24,9 @@ function App() {
   // if (loadError) return 'Error loading maps';
   // if (!isLoaded) return "loading maps";
 
+  // MOCK DATA TO TEST NEWREVIEW COMPONENT
+  const id = '7hcxAsYC5R8BIcm1xQ_1_Q';
+  const name = 'Birria Catrina';
   return (
     <div className="layout">
       <YelpProvider>
@@ -39,6 +44,9 @@ function App() {
             </Route>
             <Route path='/search'>
               <SearchPage />
+            </Route>
+            <Route path='/new-review'>
+              <NewReview place_id={id} name={name} />
             </Route>
           </Switch>
         </Router>

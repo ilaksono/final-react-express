@@ -90,11 +90,17 @@ const Search = props => {
     setShowAutoComplete(true);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (/* name */) => {
+/*     if (name)
+    yelpSearch(name)
+    else
+    yelpSearch(venue) */
+
     console.log("calling search with ", venue);
     yelpSearch(venue, location);
     resetFilters();
   };
+
 
   return (
     <div className="search-container">
