@@ -11,6 +11,8 @@ const PlaceList = (props) => {
 
   return (
     <div className=''>
+      <h2>Search Results</h2>
+        <span>Sort By:</span> 
       { placeList }
     </div>
   );
