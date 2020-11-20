@@ -1,6 +1,6 @@
 import { Divider } from "@material-ui/core";
 import {useContext, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
 import "styles/BusinessPage.scss"
 
@@ -10,8 +10,14 @@ export default function BusinessPage() {
     businessDetails, 
     getIndividualBusinessData, 
     setBusinessDetails } = useContext(YelpContext);
+    
+    const {id} = useParams();
 
-
+    useEffect(() => {
+      if(!businessDetails.id) {
+        getIndividualBusinessData(id)
+      }
+    })
       return (
       <div class='business-container'>
       <div class='images'> 
