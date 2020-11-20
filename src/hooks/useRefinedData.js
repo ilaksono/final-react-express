@@ -82,6 +82,7 @@ const useRefinedData = () => {
           if (filters.price.includes(biz.price) && biz.distance < filters.distance)
             filteredCopy.push(biz);
         });
+        
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
       } else res(true);
     });

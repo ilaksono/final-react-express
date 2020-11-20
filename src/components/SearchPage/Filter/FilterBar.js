@@ -13,7 +13,8 @@ const FilterBar = (props) => {
     refinedResults,
     filters, filterClick,
     applyDistanceFilter,
-    distanceFilterClick
+    distanceFilterClick,
+    addResults
   } = useContext(YelpContext);
 
   let parsedCategoryFilters = [];
@@ -31,8 +32,14 @@ const FilterBar = (props) => {
 
   useEffect(() => {
     applyPriceFilter(filters, results);
+    // .then((res) => {
+    // })  
     // eslint-disable-next-line
   }, [filters]);
+  useEffect(() => {
+    addResults(refinedResults);
+    // eslint-disable-next-line
+  }, [refinedResults]);
 
   const handleClick = ({ type, value }) => {
     if (type === 'price')

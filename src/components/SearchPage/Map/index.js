@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useContext, useEffect } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
 import 'styles/Map.scss';
+import {YelpContext} from 'YelpContext.js';
 
 const containerStyle = {
   width: '400px',
@@ -15,7 +16,12 @@ const center = {
 };
 
 const Map = props => {
-  const [map, setMap] = React.useState(null);
+
+  const {
+    mapState,
+    refinedResults
+  } = useContext(YelpContext);
+  // const [map, setMap] = React.useState(null);
   // const onLoad = React.useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds();
   //   map.fitBounds(bounds);
@@ -37,12 +43,12 @@ const Map = props => {
   // const onUnmount = React.useCallback(function callback(map) {
   //   setMap(null);
   // }, []);
-
   let parsedMarkers = [];
-  if(props.mapState) {
-  parsedMarkers = props.mapState.places.map((coord, ind) => {
+
+  if(mapState.places.length) {
+  parsedMarkers = mapState.places.map((coord, ind) => {
     return (
-      <MarkerComponent key={ind} lat={coord.lat} lng={coord.lng} />
+      <MarkerComponent key={ind} {...coord} />
     );
   });
   }

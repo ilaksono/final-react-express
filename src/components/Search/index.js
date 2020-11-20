@@ -16,7 +16,8 @@ const Search = props => {
     results,
     yelpSearch,
     resetFilters,
-    populateCategories } = useContext(YelpContext);
+    populateCategories,
+    addResults } = useContext(YelpContext);
 
   // function validate() {
   //   if (location == "") {
@@ -31,7 +32,7 @@ const Search = props => {
   useEffect(() => {
     setRefinedSeed(results);
     populateCategories(results);
-    
+    addResults(results);
     // eslint-disable-next-line
   }, [results]);
 
