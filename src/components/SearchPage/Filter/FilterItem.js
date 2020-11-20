@@ -8,7 +8,6 @@ const FilterItem = props => {
       ,
       'distance-selected-true': props.filters.distance === props.value
     });
-  console.log(filterItemClass);
   return (
     <div>
       <label>{props.children}</label>

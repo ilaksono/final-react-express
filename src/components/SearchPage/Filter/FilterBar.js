@@ -24,7 +24,7 @@ const FilterBar = (props) => {
         <FilterItem filters={filters}
           message={cat}
           type='category'
-          handleClick={''}
+          handleClick={() => console.log(`i am ${cat} filter`)}
           key={index} />
       );
     });
@@ -67,7 +67,7 @@ const FilterBar = (props) => {
         } message='$$$$' filters={filters} />
       </div>
       <div className='category-filter-container'>
-        {parsedCategoryFilters.length && parsedCategoryFilters}
+        {parsedCategoryFilters.length > 0 && parsedCategoryFilters}
       </div>
       <div className='distance-filter-container'>
         <FilterItem type='distance' handleClick={() =>
