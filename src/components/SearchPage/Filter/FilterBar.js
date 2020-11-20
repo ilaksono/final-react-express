@@ -36,6 +36,7 @@ const FilterBar = (props) => {
     // })  
     // eslint-disable-next-line
   }, [filters]);
+
   useEffect(() => {
     addResults(refinedResults);
     // eslint-disable-next-line
