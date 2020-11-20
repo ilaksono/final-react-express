@@ -19,6 +19,7 @@ const Search = props => {
     resetAutoComplete,
     yelpAutoComplete,
     resetFilters,
+    getBrowserLocation,
     populateCategories,
     addResults
     } = useContext(YelpContext);
@@ -44,6 +45,10 @@ const Search = props => {
     addResults(results);
     // eslint-disable-next-line
   }, [results]);
+
+  useEffect(() => {
+    setLocation(appState.center.city);
+  }, [appState]);
 
   useEffect(() => {
     handleSearch();
