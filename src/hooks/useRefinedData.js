@@ -45,21 +45,21 @@ const useRefinedData = () => {
 
 
   const setRefinedSeed = (data) => {
-    return new Promise((res, rej) => {
-      res(dispatch({ type: 'SEED', data }));
-    });
+    // return new Promise((res, rej) => {
+    console.log('3');
+    dispatch({ type: 'SEED', data });
+    // });
     // addReviewCount();
   };
 
   const applyPriceFilter = (filters, results) => {
     return new Promise((res, rej) => {
-      if (filters.price.length > 0) {
-        const filteredCopy = []
+      if (filters.categories.length > 0 && results[0].price) {
+        const filteredCopy = [];
         results.forEach((biz, index) => {
           if (filters.price.includes(biz.price) && biz.distance < filters.distance)
             filteredCopy.push(biz);
         });
-        
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
       } else res(true);
     });
@@ -81,9 +81,7 @@ const useRefinedData = () => {
           biz.distance < filters.distance && biz
         );
         res(dispatch({ type: 'DIST_FILTER', filteredCopy }));
-
       }
-
     });
   };
 

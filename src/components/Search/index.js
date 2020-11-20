@@ -10,7 +10,7 @@ import { YelpContext } from 'YelpContext.js';
 import { Link } from 'react-router-dom';
 
 const Search = props => {
-  const { 
+  const {
     setRefinedSeed,
     results,
     appState,
@@ -21,9 +21,10 @@ const Search = props => {
     resetFilters,
     getBrowserLocation,
     populateCategories,
-    addResults
-    } = useContext(YelpContext);
-    //console.log(appState.center.city);
+    addResults,
+    getPriceFilterMode
+  } = useContext(YelpContext);
+  //console.log(appState.center.city);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -38,11 +39,17 @@ const Search = props => {
   // function reset() {
   //   // resets the text data
 
-  // }
+  // // }
+  // useEffect(() => {
+  // },[results])
   useEffect(() => {
-    setRefinedSeed(results);
-    populateCategories(results);
-    addResults(results);
+    // setRefinedSeed(results);
+    addResults(results); // map
+    populateCategories(results); // filter.categories
+    getPriceFilterMode(results) 
+    console.log('1') // filter.mode
+    setRefinedSeed(results); //refinedData
+    console.log('2')
     // eslint-disable-next-line
   }, [results]);
 
@@ -53,6 +60,7 @@ const Search = props => {
   useEffect(() => {
     handleSearch();
     setAutoCompleteClicked(false);
+    // eslint-disable-next-line
   }, [autoCompleteClicked]);
 
   const setVenueAndHandleSearch = (text) => {
@@ -60,7 +68,7 @@ const Search = props => {
     setAutoCompleteFalse();
     handleSearch();
     setAutoCompleteClicked(true);
-  }
+  };
 
   const setVenueAndAutoComplete = (text) => {
     if (text === "") {
@@ -72,15 +80,15 @@ const Search = props => {
     }
     setVenue(text);
     setAutoCompleteTrue();
-  }
+  };
 
   const setAutoCompleteFalse = () => {
     setShowAutoComplete(false);
-  }
+  };
 
   const setAutoCompleteTrue = () => {
     setShowAutoComplete(true);
-  }
+  };
 
   const handleSearch = () => {
     console.log("calling search with ", venue);
@@ -91,14 +99,14 @@ const Search = props => {
   return (
     <div className="search-container">
       <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete} />
-      { showAutoComplete && 
+      {showAutoComplete &&
         <VenueAutoComplete
           data={autoComplete}
           setAutoCompleteFalse={setAutoCompleteFalse}
           onClick={setVenueAndHandleSearch}
         />
       }
-      <Location location={location} onChange={setLocation} />        
+      <Location location={location} onChange={setLocation} />
       <Link to={'/search'}>
         <Button onClick={handleSearch} message={props.buttonMessage} search />
       </Link>
