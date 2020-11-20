@@ -7,6 +7,7 @@ import Login from 'components/Login';
 import SearchPage from 'components/SearchPage';
 import React from 'react';
 import { YelpProvider } from './YelpContext';
+import BusinessPage from "components/BusinessPage/index";
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
@@ -37,8 +38,11 @@ function App() {
             <Route path='/login'>
               <Login />
             </Route>
-            <Route path='/search'>
+            <Route exact path='/search'>
               <SearchPage />
+            </Route>
+            <Route path='/search/:id'>
+              <BusinessPage />
             </Route>
           </Switch>
         </Router>

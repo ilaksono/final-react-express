@@ -19,12 +19,19 @@ export function YelpProvider({ children }) {
     appState,
     submitHandle
   } = useApplicationData();
-  const { results, setResults, yelpSearch } = useYelpData();
+  const { results, 
+    setResults,
+     yelpSearch,
+    businessDetails,
+    setBusinessDetails,
+    getIndividualBusinessData } = useYelpData();
+
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter } = useRefinedData();
+    
   const { mapState, addResults } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete(); 
   return (
@@ -32,6 +39,9 @@ export function YelpProvider({ children }) {
       results,
       setResults,
       yelpSearch,
+      businessDetails,
+      setBusinessDetails,
+      getIndividualBusinessData,
       appState,
       submitHandle,
       refinedResults,
