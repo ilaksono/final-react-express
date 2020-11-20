@@ -27,7 +27,8 @@ export function YelpProvider({ children }) {
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter } = useRefinedData();
-  const { mapState, addResults } = useMapData();
+  const { mapState, addResults,
+    hoverMarker, notHoverMarker } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete();
   return (
     <YelpContext.Provider value={{
@@ -52,7 +53,9 @@ export function YelpProvider({ children }) {
       distanceFilterClick,
       populateCategories,
       getPriceFilterMode,
-      setCategoriesSelected
+      setCategoriesSelected,
+      hoverMarker,
+      notHoverMarker
     }}>
       {children}
     </YelpContext.Provider>

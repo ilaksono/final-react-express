@@ -1,8 +1,8 @@
 import "styles/PlaceListItem.scss"
 const PlaceListItem = (props) => {
-  
+
   return (
-    <div class='result-container'>
+    <div class='result-container' onMouseOver={() => props.hoverMarker(props.id)} onMouseOut={() => props.notHoverMarker()}>
       <div class='img-logo'>
       <img src={props.image} alt="Logo" class='venue-image' />
       </div>
