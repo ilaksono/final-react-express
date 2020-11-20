@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export default function useYelpData() {
 
-  const REVIEWS_DATA = '/api/reviews';
 
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
@@ -29,7 +28,7 @@ export default function useYelpData() {
     }
     return filteredData;
   };
-  
+
   const [results, setResults] = useState([{
     id: '',
     name: '',
@@ -49,24 +48,31 @@ export default function useYelpData() {
     is_closed:''
   }]);
 
-   const addReviewCount = (query, reviews) => {
-    query.forEach((result, index) => {
-    for (const review of reviews) {
-        if (review.venue_id === result.id) {
-          query[index].reviews.push(review)
-        }
+ 
+
+  const addReviewCount = (query, reviews) => {
+   query.forEach((result, index) => {
+   for (const review of reviews) {
+    if (review.venue_id === result.id) {
+      query[index].reviews.push(review)
       }
-    })
+    }
+  })
   return query
 };
-            
+
+  const getAvgReview = () => {
+    
+  }
+
+           
   const yelpSearch = (venue, location) => {
     
     let reviewArr = [];
           
     return Promise.all([
       axios.post('/api/search_yelp', {venue, location}),
-      axios.get(REVIEWS_DATA)
+      axios.get('/api/reviews')
     ]).then((all) => {
       const yelpData = all[0].data
       const parsedYelpData = getCoreYelpData(yelpData)
@@ -81,5 +87,5 @@ export default function useYelpData() {
       })
   }
   
-return { results, setResults, yelpSearch }
+  return { results, setResults, yelpSearch }
 }
