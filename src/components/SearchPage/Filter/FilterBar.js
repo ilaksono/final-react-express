@@ -38,7 +38,7 @@ const FilterBar = (props) => {
   };
 
   return (
-    <div class="filter-container">
+    <div className="filter-container">
       Filter:
       <div className='price-filter-container'>
         <FilterItem type='price' handleClick={() => {

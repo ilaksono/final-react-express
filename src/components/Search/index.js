@@ -10,10 +10,6 @@ import { YelpContext } from 'YelpContext.js';
 import { Link } from 'react-router-dom';
 
 const Search = props => {
-  const [location, setLocation] = useState("");
-  const [venue, setVenue] = useState("");
-  const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [autoCompleteClicked, setAutoCompleteClicked] = useState(false);
   const { 
     setRefinedSeed,
     results,
@@ -22,6 +18,11 @@ const Search = props => {
     autoComplete,
     resetAutoComplete,
     yelpAutoComplete } = useContext(YelpContext);
+    //console.log(appState.center.city);
+  const [location, setLocation] = useState("");
+  const [venue, setVenue] = useState("");
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+  const [autoCompleteClicked, setAutoCompleteClicked] = useState(false);
 
   // function validate() {
   //   if (location == "") {
@@ -46,7 +47,7 @@ const Search = props => {
   const setVenueAndHandleSearch = (text) => {
     setAutoCompleteFalse();
     setAutoCompleteClicked(true);
-    setVenue(text, handleSearch);
+    setVenue(text);
   }
 
   const setVenueAndAutoComplete = (text) => {
@@ -69,13 +70,12 @@ const Search = props => {
   }
 
   const handleSearch = () => {
-    console.log("value of venue", venue);
     yelpSearch(venue, location);
   };
 
   return (
     <div className="search-container">
-      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setAutoCompleteTrue} />
+      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete} />
       { showAutoComplete && 
         <VenueAutoComplete
           data={autoComplete}

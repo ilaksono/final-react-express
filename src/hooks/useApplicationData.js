@@ -30,8 +30,7 @@ const useApplicationData = () => { // login and user state information
     .then(body => {
       axios.get(`${GET_LATLNG}/${body.data.ip}`)
       .then(coords => {
-        console.log(coords);
-        dispatch({ type: INIT_CENTER, center: { lat: coords.data.lat, lng: coords.data.lon } });
+        dispatch({ type: INIT_CENTER, center: { lat: coords.data.lat, lng: coords.data.lon, city: coords.data.city } });
       });
     });
   }, []);
