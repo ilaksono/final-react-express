@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '0px',
     paddingLeft: '0px'
   },
-  businessName: {
+  descriptionName: {
     marginTop: '0px',
     marginBottom: '8px',
   }
@@ -33,12 +33,13 @@ const QuestionRating = props => {
   return (
     <div>
       <Box component="fieldset" mb={3} borderColor="transparent" className={classes.box}>
-        <p id="transition-modal-description" className={classes.businessName}>{ props.description }</p>
+        <p id="transition-modal-description" className={classes.descriptionName}>{ props.description }</p>
           <StyledRating
             name={props.id}
-            defaultValue={2}
+            defaultValue={3}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
             precision={0.5}
+            onChange={(event) => props.onChange(props.title, event.target.value)}
             icon={<FavoriteIcon fontSize="inherit" />}
           />
       </Box>

@@ -46,7 +46,7 @@ function App() {
               <SearchPage />
             </Route>
             <Route path='/new-review'>
-              <NewReview place_id={id} name={name} />
+              <NewReview venue_id={id} name={name} />
             </Route>
           </Switch>
         </Router>

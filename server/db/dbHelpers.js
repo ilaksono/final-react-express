@@ -25,9 +25,21 @@ module.exports = (db) => {
 
   // specific user page
   // all reviews by given user
-
+  const submitReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
+    const queryString = `
+    INSERT INTO reviews (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *;
+    `;
+    const queryParams = [user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows;
+      });
+  }
 
   return {
-    getAllReviews
+    getAllReviews,
+    submitReview
   };
 };

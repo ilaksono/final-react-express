@@ -29,6 +29,7 @@ const QuestionDescription = props => {
             rows={4}
             defaultValue=""
             fullWidth
+            onChange={(event) => props.onChange(props.title, event.target.value)}
             inputProps={{ maxLength: 150 }}
             variant="outlined"
           />
