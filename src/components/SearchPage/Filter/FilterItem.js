@@ -7,7 +7,7 @@ const FilterItem = props => {
       'price-selected-true': props.filters.price.includes(props.message)
       ,
       'distance-selected-true': props.filters.distance === props.value,
-      'category-selected-true': props.filters.categories.includes(props.message)
+      'category-selected-true': props.filters.catsSelected.includes(props.message)
     });
   return (
     <div>

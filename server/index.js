@@ -47,7 +47,12 @@ app.post("/api/search_yelp", (req, res) => {
       limit: 5
     }).then(response => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
-      res.json(response.jsonBody.businesses);
+      let bus = response.jsonBody.businesses;
+      bus = bus.map((biz) => {
+        biz.categories = cleanAutoComplete(biz.categories,'title');
+        return biz
+      })
+      res.json(bus);
     }).catch(e => {
       console.log(e);
     });

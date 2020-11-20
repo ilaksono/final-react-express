@@ -23,9 +23,9 @@ const FilterBar = (props) => {
       return (
         <FilterItem filters={filters}
           message={cat}
-          type='category'
+          type='categories'
           handleClick={(event) => 
-            console.log(event.target.getAttribute('name'))}
+            handleClick({type:'categories', value: event.target.getAttribute('name')})}
           key={index} />
       );
     });
@@ -42,7 +42,7 @@ const FilterBar = (props) => {
   }, [refinedResults]);
 
   const handleClick = ({ type, value }) => {
-    if (type === 'price')
+    if (type === 'price' || type === 'categories')
       filterClick({ type, value });
     if (type === 'distance')
       distanceFilterClick(value);

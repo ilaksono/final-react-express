@@ -10,7 +10,6 @@ const containerStyle = {
   height: '400px'
 };
 
-
 const Map = props => {
 
   const {

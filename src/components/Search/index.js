@@ -22,7 +22,8 @@ const Search = props => {
     getBrowserLocation,
     populateCategories,
     addResults,
-    getPriceFilterMode
+    getPriceFilterMode,
+    setCategoriesSelected
   } = useContext(YelpContext);
   //console.log(appState.center.city);
   const [location, setLocation] = useState("");
@@ -44,12 +45,10 @@ const Search = props => {
   // },[results])
   useEffect(() => {
     // setRefinedSeed(results);
+    populateCategories(results) // filter.categories
     addResults(results); // map
-    populateCategories(results); // filter.categories
     getPriceFilterMode(results) 
-    console.log('1') // filter.mode
     setRefinedSeed(results); //refinedData
-    console.log('2')
     // eslint-disable-next-line
   }, [results]);
 

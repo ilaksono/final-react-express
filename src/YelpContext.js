@@ -14,7 +14,8 @@ export function YelpProvider({ children }) {
     resetFilters,
     distanceFilterClick,
     populateCategories,
-    getPriceFilterMode } = useFilter();
+    getPriceFilterMode,
+    setCategoriesSelected } = useFilter();
 
   const {
     appState,
@@ -50,7 +51,8 @@ export function YelpProvider({ children }) {
       filterClick,
       distanceFilterClick,
       populateCategories,
-      getPriceFilterMode
+      getPriceFilterMode,
+      setCategoriesSelected
     }}>
       {children}
     </YelpContext.Provider>

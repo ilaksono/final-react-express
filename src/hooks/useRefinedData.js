@@ -57,7 +57,14 @@ const useRefinedData = () => {
       if (filters.categories.length > 0 && results[0].price) {
         const filteredCopy = [];
         results.forEach((biz, index) => {
-          if (filters.price.includes(biz.price) && biz.distance < filters.distance)
+          if (filters.catsSelected.length < 1) {
+            if (filters.price.includes(biz.price)
+              && biz.distance < filters.distance)
+              filteredCopy.push(biz);
+          }
+          else if (filters.price.includes(biz.price)
+            && biz.distance < filters.distance
+            && filters.catsSelected.some( cat => biz.categories.includes(cat)))
             filteredCopy.push(biz);
         });
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
