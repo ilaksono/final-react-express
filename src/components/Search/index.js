@@ -11,12 +11,12 @@ import { Link } from 'react-router-dom';
 const Search = props => {
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
-  console.log(YelpContext);
+  
   const { 
     setRefinedSeed,
     results,
     yelpSearch } = useContext(YelpContext);
-    console.log('yelpSearch: ', yelpSearch);
+   
 
   // function validate() {
   //   if (location == "") {

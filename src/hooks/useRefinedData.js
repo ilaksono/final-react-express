@@ -40,34 +40,9 @@ const useRefinedData = () => {
   const [refinedResults, dispatch] =
     useReducer(refinedReducer, initRefined);
 
-  let reviewArr = [];
-
-  useEffect(() => {
-    axios.get(REVIEWS_DATA)
-      .then(body => {
-        reviewArr.push(body.data);
-      })
-      .catch(er => console.log(er));
-  }, []);
-
-  const addReviewCount = () => {
-    const filteredCopy = [...refinedResults];
-    refinedResults.forEach((result, index) => {
-      filteredCopy[index].review = [];
-      for (const review of reviewArr) {
-        if (review.venue_id === result.id)
-          filteredCopy[index].review.push(review);
-      }
-      filteredCopy[index].reviewCount = filteredCopy[index].review.length;
-      filteredCopy[index].avgReviewRating = filteredCopy[index].review.reduce((acc, rating) => acc + rating, 0) / filteredCopy[index].reviewCount;
-    });
-    dispatch({ type: ADD_REVIEWS, filteredCopy });
-  };
 
   const setRefinedSeed = (data) => {
     dispatch({ type: 'SEED', data });
-    // addReviewCount();
-
   };
 
   const applyPriceFilter = (filters) => {
@@ -79,6 +54,7 @@ const useRefinedData = () => {
     });
     dispatch({ type: 'PRICE_FILTER', filteredCopy });
   };
+  
   const applyAllFilters = (filters) => {
     if (filters.price.length)
       applyPriceFilter(filters);
@@ -100,7 +76,6 @@ const useRefinedData = () => {
     applyPriceFilter,
     setRefinedSeed,
     applyDistanceFilter,
-    addReviewCount,
     applyAllFilters
   };
 };

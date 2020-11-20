@@ -6,7 +6,8 @@ VALUES (1, '1Hvm57g7zTpBR2hhFg8awQ', 'Hot and cheesy', 5),
 (2,'O_UC_izJXcAmkm6HlEyGSA', 'not bad',4),
 (2,'o6Yor6ofIw2TqM3mN28Kzg', 'not bad',5),
 (2,'eYeFOcNJO2iTNPCPi8XAxw', 'not bad',2),
-(2,'dRjU-uxMeInyYgBb61Ap7A', 'not bad',1);
+(2,'dRjU-uxMeInyYgBb61Ap7A', 'not bad',1),
+(2,'5T6kFKFycym_GkhgOiysIw', 'not bad',1);
 
 
 /* CREATE TABLE reviews(
