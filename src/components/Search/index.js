@@ -17,7 +17,11 @@ const Search = props => {
     yelpSearch,
     autoComplete,
     resetAutoComplete,
-    yelpAutoComplete } = useContext(YelpContext);
+    yelpAutoComplete,
+    resetFilters,
+    populateCategories,
+    addResults
+    } = useContext(YelpContext);
     //console.log(appState.center.city);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
@@ -47,9 +51,10 @@ const Search = props => {
   }, [autoCompleteClicked]);
 
   const setVenueAndHandleSearch = (text) => {
-    setAutoCompleteFalse();
-    setAutoCompleteClicked(true);
     setVenue(text);
+    setAutoCompleteFalse();
+    handleSearch();
+    setAutoCompleteClicked(true);
   }
 
   const setVenueAndAutoComplete = (text) => {
@@ -57,6 +62,7 @@ const Search = props => {
       resetAutoComplete();
     }
     if (text !== "") {
+      resetAutoComplete();
       yelpAutoComplete(text, appState.center.lat, appState.center.lng);
     }
     setVenue(text);
@@ -72,7 +78,9 @@ const Search = props => {
   }
 
   const handleSearch = () => {
+    console.log("calling search with ", venue);
     yelpSearch(venue, location);
+    resetFilters();
   };
 
   return (

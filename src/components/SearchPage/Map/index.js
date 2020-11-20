@@ -46,11 +46,11 @@ const Map = props => {
   let parsedMarkers = [];
 
   if(mapState.places.length) {
-  parsedMarkers = mapState.places.map((coord, ind) => {
-    return (
-      <MarkerComponent key={ind} {...coord} />
-    );
-  });
+    parsedMarkers = mapState.places.map((coord, ind) => {
+      return (
+        <MarkerComponent key={ind} {...coord} />
+      );
+    });
   }
 
   const options = {
@@ -59,9 +59,7 @@ const Map = props => {
   };
   return (
     <div className="map-container">
-      <LoadScript
-        googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
-      >
+      <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

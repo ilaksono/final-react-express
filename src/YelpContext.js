@@ -4,6 +4,7 @@ import useYelpData from "hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
+import useFilter from 'hooks/useFilter';
 
 export const YelpContext = React.createContext();
 
