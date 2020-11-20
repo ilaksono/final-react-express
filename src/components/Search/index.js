@@ -13,12 +13,14 @@ const Search = props => {
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
+  const [autoCompleteClicked, setAutoCompleteClicked] = useState(false);
   const { 
     setRefinedSeed,
     results,
     appState,
     yelpSearch,
     autoComplete,
+    resetAutoComplete,
     yelpAutoComplete } = useContext(YelpContext);
 
   // function validate() {
@@ -36,19 +38,25 @@ const Search = props => {
     // eslint-disable-next-line
   }, [results]);
 
+  useEffect(() => {
+    handleSearch();
+    setAutoCompleteClicked(false);
+  }, [autoCompleteClicked]);
+
   const setVenueAndHandleSearch = (text) => {
     setAutoCompleteFalse();
-    setVenuePromise(text)
-    .then(() => {
-      console.log("value of venue", venue);
-      handleSearch();
-    })
-    .catch(e => console.log(e));
+    setAutoCompleteClicked(true);
+    setVenue(text, handleSearch);
   }
 
   const setVenueAndAutoComplete = (text) => {
+    if (text === "") {
+      resetAutoComplete();
+    }
+    if (text !== "") {
+      yelpAutoComplete(text, appState.center.lat, appState.center.lng);
+    }
     setVenue(text);
-    yelpAutoComplete(text, appState.center.lat, appState.center.lng);
     setAutoCompleteTrue();
   }
 
@@ -60,13 +68,8 @@ const Search = props => {
     setShowAutoComplete(true);
   }
 
-  const setVenuePromise = (text) => {
-    return new Promise ((resolve) => {
-      resolve(setVenue(text));
-    });
-  }
-
   const handleSearch = () => {
+    console.log("value of venue", venue);
     yelpSearch(venue, location);
   };
 

@@ -3,7 +3,6 @@ import 'styles/VenueAutoComplete.scss';
 
 const VenueAutoComplete = props => {
   const wrapperRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(true);
 
   // below is the same as componentDidMount and componentDidUnmount
   useEffect(() => {
@@ -16,12 +15,12 @@ const VenueAutoComplete = props => {
   const handleClickOutside = event => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       props.setAutoCompleteFalse();
-    } 
+    }
   };
 
   const businessAutoComplete = props.data.businesses.map((item, index) => {
     return (
-      <li className="autocomplete-list-item" onClick={event => props.onClick(event.target.value)} key={index} >
+      <li className="autocomplete-list-item" onClick={() => props.onClick(item)} key={index} >
         { item }
       </li>
     )
@@ -29,21 +28,19 @@ const VenueAutoComplete = props => {
 
   const categoryAutoComplete = props.data.categories.map((item, index) => {
     return (
-        <li className={`autocomplete-list-item ${index === 0 ? "first" : ""}`} onClick={event => props.onClick(event.target.value)} key={index} >
+        <li className={`autocomplete-list-item ${index === 0 ? "first" : ""}`} onClick={() => props.onClick(item)} key={index} >
           { item }
         </li>
     )
   });
 
   return (
-    isVisible && (
-      <div className="autocomplete-container" ref={wrapperRef} >
-        <ul className="autocomplete-list">
-          { businessAutoComplete }
-          { categoryAutoComplete }
-        </ul>
-      </div>
-    )
+    <div className="autocomplete-container" ref={wrapperRef} >
+      <ul className="autocomplete-list">
+        { businessAutoComplete }
+        { categoryAutoComplete }
+      </ul>
+    </div>
   );
 };
 

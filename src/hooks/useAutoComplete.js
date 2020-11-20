@@ -1,9 +1,14 @@
 import { useState } from "react";
 import axios from 'axios';
 
+const initState = {
+  businesses: [],
+  categories: []
+};
+
 export default function useAutoComplete() {
 
-  const [autoComplete, setAutoComplete] = useState({ businesses: [], categories: [] });
+  const [autoComplete, setAutoComplete] = useState(initState);
 
   const yelpAutoComplete = (venue, latitude, longitude) => {
     return axios.post('/api/autocomplete_yelp', {venue, latitude, longitude })
@@ -14,6 +19,10 @@ export default function useAutoComplete() {
     console.log (err)
     }) 
   }
+
+  const resetAutoComplete = () => {
+    setAutoComplete(initState);
+  }
   
-return { autoComplete, setAutoComplete, yelpAutoComplete }
+return { autoComplete, resetAutoComplete, yelpAutoComplete }
 }
