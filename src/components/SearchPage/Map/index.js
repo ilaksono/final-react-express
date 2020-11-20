@@ -3,24 +3,26 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
 import 'styles/Map.scss';
-import {YelpContext} from 'YelpContext.js';
+import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
   width: '400px',
   height: '400px'
 };
 
-const center = {
-  lat: 43.745,
-  lng: -79.523
-};
 
 const Map = props => {
 
   const {
     mapState,
-    refinedResults
+    refinedResults,
+    appState
   } = useContext(YelpContext);
+
+  const center = {
+    lat: appState.center.lat || 80.745,
+    lng: appState.center.lng || -20.523
+  };
   // const [map, setMap] = React.useState(null);
   // const onLoad = React.useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds();
@@ -45,7 +47,7 @@ const Map = props => {
   // }, []);
   let parsedMarkers = [];
 
-  if(mapState.places.length) {
+  if (mapState.places.length) {
     parsedMarkers = mapState.places.map((coord, ind) => {
       return (
         <MarkerComponent key={ind} {...coord} />
@@ -60,21 +62,21 @@ const Map = props => {
   return (
     <div className="map-container">
       <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={6}
-        // onLoad={onMapLoad}
-        // onUnmount={onUnmount}
-        options={options}
-      >
-        { /* Child components, such as markers, info windows, etc. */}
-        {parsedMarkers}
-        <></>
-      </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={12}
+          // onLoad={onMapLoad}
+          // onUnmount={onUnmount}
+          options={options}
+        >
+          { /* Child components, such as markers, info windows, etc. */}
+          {parsedMarkers}
+          <></>
+        </GoogleMap>
       </LoadScript>
     </div>
   );
-}
+};
 
 export default Map;

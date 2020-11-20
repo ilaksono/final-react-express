@@ -3,9 +3,9 @@ import { useState } from 'react';
 
 const initFilter = {
   categories: [],
-  price: [],
+  price: ['$', '$$', '$$$', '$$$$'],
   distance: 50000,
-  mode: true
+  mode: false
 };
 
 const useFilter = () => {
@@ -20,7 +20,7 @@ const useFilter = () => {
             cats.push(cat.title);
         });
       });
-      setFilters(prev => ({ ...prev, categories: cats }));
+      setFilters(({ ...filters, categories: cats }));
     }
   };
   //type can be price, category
@@ -42,6 +42,12 @@ const useFilter = () => {
   const resetFilters = () => {
     setFilters(initFilter);
   };
+  const getPriceFilterMode = (results) => {
+    results.forEach((result) => {
+      if (result.price)
+        setFilters(prev => ({ ...prev, mode: true }));
+    });
+  };
 
 
   return {
@@ -49,7 +55,8 @@ const useFilter = () => {
     filterClick,
     resetFilters,
     distanceFilterClick,
-    populateCategories
+    populateCategories,
+    getPriceFilterMode
   };
 };
 

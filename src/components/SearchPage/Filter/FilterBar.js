@@ -32,8 +32,6 @@ const FilterBar = (props) => {
 
   useEffect(() => {
     applyPriceFilter(filters, results);
-    // .then((res) => {
-    // })  
     // eslint-disable-next-line
   }, [filters]);
 
@@ -52,7 +50,7 @@ const FilterBar = (props) => {
   return (
     <div className="filter-container">
       Filter:
-      <div className='price-filter-container'>
+      { filters.mode && (<div className='price-filter-container'>
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
           message='$' filters={filters} />
@@ -65,7 +63,7 @@ const FilterBar = (props) => {
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$$` })
         } message='$$$$' filters={filters} />
-      </div>
+      </div>)}
       <div className='category-filter-container'>
         {parsedCategoryFilters.length > 0 && parsedCategoryFilters}
       </div>
