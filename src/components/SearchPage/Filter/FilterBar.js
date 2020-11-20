@@ -24,7 +24,8 @@ const FilterBar = (props) => {
         <FilterItem filters={filters}
           message={cat}
           type='category'
-          handleClick={() => console.log(`i am ${cat} filter`)}
+          handleClick={(event) => 
+            console.log(event.target.getAttribute('name'))}
           key={index} />
       );
     });
@@ -45,6 +46,8 @@ const FilterBar = (props) => {
       filterClick({ type, value });
     if (type === 'distance')
       distanceFilterClick(value);
+    // if (type === 'category')
+      //categoryFilterClick(value);  
   };
 
   return (
