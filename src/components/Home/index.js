@@ -85,45 +85,47 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
 
   const classes = useStyles();
-  const { getTops, tops, yelpSearch
-   } = useContext(YelpContext);
-  useEffect(() => {
-    getTops();
-  }, []);
+  const { tops, yelpSearch, appState,
+    resetFilters
+  } = useContext(YelpContext);
+
   let parsedTopList = 'hi';
-  if (tops.length) {
-    parsedTopList = tops.map((image) => {
+  if (tops.show.length) {
+    parsedTopList = tops.show.map((image) => {
       return (
         <Link to={'/search'}>
-        <ButtonBase
-          focusRipple
-          key={image.title}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          onClick={() => yelpSearch(image.title, image.location)}
-          style={{
-            width: image.width,
-          }}
-        >
-          <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${image.url})`,
+          <ButtonBase
+            focusRipple
+            key={image.title}
+            className={classes.image}
+            focusVisibleClassName={classes.focusVisible}
+            onClick={() => {
+              resetFilters();
+              yelpSearch(image.title, appState.center.city);
             }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              className={classes.imageTitle}
-            >
-              {image.title}
-              <span className={classes.imageMarked} />
-            </Typography>
-          </span>
-        </ButtonBase>
+            style={{
+              width: image.width,
+            }}
+          >
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${image.url})`,
+              }}
+            />
+            <span className={classes.imageBackdrop} />
+            <span className={classes.imageButton}>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                className={classes.imageTitle}
+              >
+                {image.title}
+                <span className={classes.imageMarked} />
+              </Typography>
+            </span>
+          </ButtonBase>
         </Link>
       );
     });
