@@ -4,7 +4,7 @@
   border-radius: 15px;
   cursor: pointer;
   background-color: rgb(255, 245, 244);
-  width: 100px;
+  width: 30px;
   border: none; 
   color: $white;
 
@@ -28,7 +28,6 @@
   width: 100%;
   @include flexbox(row, space-around, center)
 }
-
 
 .filter-label {
   border: none;
