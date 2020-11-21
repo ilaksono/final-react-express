@@ -3,7 +3,7 @@ import useMapData from 'hooks/useMapData';
 import useYelpData from "hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
-import useAutoComplete from 'hooks/useAutoComplete'; 
+import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
 
 export const YelpContext = React.createContext();
@@ -15,8 +15,10 @@ export function YelpProvider({ children }) {
     distanceFilterClick,
     populateCategories,
     getPriceFilterMode,
-    setCategoriesSelected } = useFilter();
-    
+    setCategoriesSelected,
+    expandCategories,
+    toggleFilterShow } = useFilter();
+
   const {
     appState,
     submitHandle,
@@ -69,6 +71,7 @@ export function YelpProvider({ children }) {
       resetFilters,
       filters,
       filterClick,
+      toggleFilterShow,
       distanceFilterClick,
       populateCategories,
       getPriceFilterMode,
@@ -82,7 +85,8 @@ export function YelpProvider({ children }) {
       populateCenter,
       getCenterPan,
       tops,
-      getTops
+      getTops,
+      expandCategories
     }}>
       {children}
     </YelpContext.Provider>

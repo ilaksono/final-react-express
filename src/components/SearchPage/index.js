@@ -1,18 +1,30 @@
 import 'styles/SearchPage.scss';
-import useFilter from 'hooks/useFilter';
+import { useContext } from 'react';
 import FilterBar from "./Filter/FilterBar";
 import Results from "./Results";
 import Map from "./Map";
-// import { Switch } from '@material-ui/core';
+import { YelpContext } from 'YelpContext.js';
+import Button from '@material-ui/core/Button';
 
 
-const SearchPage = props => {  
+const SearchPage = props => {
+  const { filters, toggleFilterShow } = useContext(YelpContext);
   return (
     <div className="search-page-layout">
-        <FilterBar 
-        />
-        <Results/>
-        <Map/>
+      <Button name='toggle' 
+      className='show-filters' 
+      value='toggle-switch' 
+      checked='false' 
+      onClick={toggleFilterShow}
+      color='primary'
+      variant='outlined'
+      >Show Filters</Button>
+      {filters.show &&
+      <FilterBar
+      />
+      }
+      <Results />
+      <Map />
     </div>
   );
 };

@@ -1,8 +1,6 @@
-import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
 import { useContext, useEffect } from 'react';
-import Top from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     position: 'relative',
     height: 200,
+    margin: 30,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
