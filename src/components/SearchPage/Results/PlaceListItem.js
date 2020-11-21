@@ -2,7 +2,7 @@ import "styles/PlaceListItem.scss";
 import {useContext} from 'react';
 import { YelpContext } from 'YelpContext';
 import { useHistory } from 'react-router-dom';
-import BusinessPage from "components/BusinessPage";
+
 
 const PlaceListItem = (props) => {
   const { getIndividualBusinessData, businessDetails } = useContext(YelpContext);
