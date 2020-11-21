@@ -11,7 +11,6 @@ const MarkerComponent = ({ lat, lng, id, hover }) => {
 
   const handleClick = () => {
     setBusinessDetails('')
-    getIndividualBusinessData(id)
     history.push(`/search/${id}`);
   };
 

@@ -60,15 +60,15 @@ export default function BusinessPage() {
         </div>
         <div class='location-hours'>
           <span>Map</span><br/>
-          <table>
-      {businessDetails.hours && <tr>{`Monday:  ${businessDetails.hours[0].open[0].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Tuesday:  ${businessDetails.hours[0].open[1].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Wednesday:  ${businessDetails.hours[0].open[2].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Thursday:  ${businessDetails.hours[0].open[3].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Friday:  ${businessDetails.hours[0].open[4].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Saturday:  ${businessDetails.hours[0].open[5].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-      {businessDetails.hours && <tr>{`Sunday:  ${businessDetails.hours[0].open[6].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
-          </table>
+          { businessDetails.hours && <table>
+      {businessDetails.hours[0].open[0] && <tr>{`Monday:  ${businessDetails.hours[0].open[0].start} -  ${businessDetails.hours[0].open[0].end}`}  </tr> }
+      {businessDetails.hours[0].open[1] && <tr>{`Tuesday:  ${businessDetails.hours[0].open[1].start} -  ${businessDetails.hours[0].open[1].end}`}  </tr> }
+      {businessDetails.hours[0].open[2] && <tr>{`Wednesday:  ${businessDetails.hours[0].open[2].start} -  ${businessDetails.hours[0].open[2].end}`}  </tr> }
+      {businessDetails.hours[0].open[3] && <tr>{`Thursday:  ${businessDetails.hours[0].open[3].start} -  ${businessDetails.hours[0].open[3].end}`}  </tr> }
+      {businessDetails.hours[0].open[4] && <tr>{`Friday:  ${businessDetails.hours[0].open[4].start} -  ${businessDetails.hours[0].open[4].end}`}  </tr> }
+      {businessDetails.hours[0].open[5] && <tr>{`Saturday:  ${businessDetails.hours[0].open[5].start} -  ${businessDetails.hours[0].open[5].end}`}  </tr> }
+      {businessDetails.hours[0].open[6] && <tr>{`Sunday:  ${businessDetails.hours[0].open[6].start} -  ${businessDetails.hours[0].open[6].end}`}  </tr> }
+          </table>}
         </div>
         <div class='reviews'>
         reviews
