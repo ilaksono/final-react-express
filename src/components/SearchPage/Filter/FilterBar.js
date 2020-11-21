@@ -62,7 +62,7 @@ const FilterBar = (props) => {
   return (
     <div className="filter-container">
       Filter:
-      { filters.mode && filters.price.length && (<div className='price-filter-container'>
+      { (filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
           message='$' filters={filters} />

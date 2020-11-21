@@ -54,10 +54,14 @@ const useRefinedData = () => {
             if (filters.price.includes(biz.price)
               && biz.distance < filters.distance)
               filteredCopy.push(biz);
+            else if (biz.price === undefined && biz.distance < filters.distance)
+              filteredCopy.push(biz);
           }
           else if (filters.price.includes(biz.price)
             && biz.distance < filters.distance
             && filters.catsSelected.some(cat => biz.categories.includes(cat)))
+            filteredCopy.push(biz);
+          else if (biz.price === undefined && filters.price.length > 3 && biz.distance < filters.distance)
             filteredCopy.push(biz);
         });
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));

@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import appReducer, {
   AUTHORIZE,
@@ -11,10 +11,15 @@ import appReducer, {
 const GET_IP = 'https://api.ipify.org/?format=json';
 const GET_LATLNG = 'http://ip-api.com/json/';
 
+const initTops = {
+  show: [],
+  city: null
+};
+
 const initApp = {
   authorized: false,
   name: '',
-  center: { }
+  center: {}
 };
 
 const fakeLogins = [{
@@ -24,15 +29,26 @@ const fakeLogins = [{
 
 const useApplicationData = () => { // login and user state information
   const [appState, dispatch] = useReducer(appReducer, initApp);
+  const [tops, setTops] = useState(initTops);
 
   useEffect(() => {
     axios.get(GET_IP)
-    .then(body => {
-      axios.get(`${GET_LATLNG}/${body.data.ip}`)
-      .then(coords => {
-        dispatch({ type: INIT_CENTER, center: { lat: coords.data.lat, lng: coords.data.lon, city: coords.data.city } });
-      });
-    });
+      .then(body => {
+        axios.get(`${GET_LATLNG}/${body.data.ip}`)
+          .then(coords => {
+            dispatch({
+              type: INIT_CENTER, center: {
+                lat: coords.data.lat,
+                lng: coords.data.lon,
+                city: coords.data.city
+              }
+            });
+            return coords;
+          })
+          .then(() => getTops())
+          .catch((er) => console.log(er));
+      }).catch((err) => console.log(err));
+    // eslint-disable-next-line
   }, []);
 
   const createHandle = (event) => {
@@ -65,6 +81,48 @@ const useApplicationData = () => { // login and user state information
         }
       });
   };
+  const getTops = () => {
+    const width = '95%';
+    const example = [];
+    example.push({
+      venue: 'hot-dog',
+      title: 'hot-dog',
+      width
+    });
+    example.push({
+      venue: 'Dog Park',
+      title: 'Dog Park',
+      width
+
+    });
+    example.push({
+      venue: 'andrew',
+      title: 'andrew',
+      width
+
+    });
+    example.push({
+      venue: 'daniel',
+      title: 'daniel',
+      width
+
+    });
+    const pArr = example.map((ex) => {
+      return axios
+        .post('/api/search_one', {
+          venue: ex.venue,
+          location: 'toronto'
+        });
+    });
+    return Promise.all(pArr)
+      .then((all) => {
+        all.forEach((each, index) => {
+          example[index].location = tops.city;
+          example[index].url = each.data[0].image_url;
+        });
+        return setTops({ ...tops, show: example });
+      });
+  };
 
   // useEffect(() => {
   //   axios
@@ -76,7 +134,9 @@ const useApplicationData = () => { // login and user state information
     submitHandle,
     appState,
     createHandle,
-    deleteHandle
+    deleteHandle,
+    tops,
+    getTops
   };
 
 };

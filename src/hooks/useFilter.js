@@ -26,10 +26,12 @@ const useFilter = () => {
             price.push(result.price);
         }
       });
-      return setFilters(({ ...filters, 
-        categories: cats, 
-        catsSelects: cats, 
-        price }));
+      return setFilters(({
+        ...filters,
+        categories: cats,
+        catsSelects: cats,
+        price
+      }));
       return filters;
     }
   };
@@ -40,7 +42,7 @@ const useFilter = () => {
     if (filters[type].length <= 1) {
       if (type === 'price') {
         if (filters.price.includes(value))
-          return setFilters({ ...filters, price: ['$','$$','$$$','$$$$'] });
+          return setFilters({ ...filters, price: ['$', '$$', '$$$', '$$$$'] });
         else
           return setFilters({ ...filters, price: [...filters.price, value] });
       } else if (type === 'catsSelected') {
@@ -55,6 +57,8 @@ const useFilter = () => {
         return setFilters({ ...filters, catsSelected: [value] });
       }
     }
+    if (type === 'price' && filters.price.length === 4)
+      return setFilters({ ...filters, price: [value] });
     if (filters[type].includes(value)) {
       const cpy = [...filters[type]];
       // cpy[value] = !cpy[value];
@@ -76,8 +80,8 @@ const useFilter = () => {
   const getPriceFilterMode = (results) => {
     results.forEach((result) => {
       if (result.price) {
-        setFilters(prev => ({...prev, mode: true }));
-      }  
+        setFilters(prev => ({ ...prev, mode: true }));
+      }
     });
   };
   const setCategoriesSelected = () => {
