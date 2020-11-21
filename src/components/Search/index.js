@@ -60,6 +60,7 @@ const Search = props => {
   };
 
   const setVenueAndAutoComplete = (text) => {
+    console.log("Set venue an auto called", text);
     if (text === "") {
       resetAutoComplete();
     }
@@ -100,7 +101,7 @@ const Search = props => {
       }
       <Location location={location} onChange={setLocation} />
       <Link to={'/search'}>
-        <Button onClick={handleSearch} message={props.buttonMessage} search />
+        <Button onClick={() => handleSearch()} message={props.buttonMessage} search />
       </Link>
     </div>
   );
