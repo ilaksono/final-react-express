@@ -74,4 +74,5 @@ export default function BusinessPage() {
         reviews
         </div>
      </div>
+     </div>
   )}
