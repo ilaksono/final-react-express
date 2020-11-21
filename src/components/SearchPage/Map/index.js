@@ -30,8 +30,8 @@ const Map = props => {
   }, []);
 
   const center = {
-    lat: mapState.center.lat || 80.745,
-    lng: mapState.center.lng || -20.523
+    lat: mapState.center.lat || appState.center.lat || 43,
+    lng: mapState.center.lng || appState.center.lng || -79
   };
 
 
