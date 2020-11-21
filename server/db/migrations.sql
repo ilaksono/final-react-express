@@ -4,7 +4,7 @@ CREATE TABLE reviews(
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER NOT NULL,
   venue_id VARCHAR(255) NOT NULL,
-  date TIMESTAMPTZ NOT NULL DEFAULT Now(),
+  date timestamp NOT NULL DEFAULT Now(),
   helpful_count INTEGER DEFAULT 0,
   cleanliness  NUMERIC(3, 1),
   socialDistancing NUMERIC(3, 1),
