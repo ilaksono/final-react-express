@@ -148,8 +148,9 @@ const NewReview = props => {
     }).then(review => {
       handleClose();
       resetState();
+      console.log("this is the revbiew:", review.data[0])
       const updatedBusinessDetails = {...businessDetails};
-      updatedBusinessDetails.reviews.unshift(review);
+      updatedBusinessDetails.reviews.unshift(review.data[0]);
       setBusinessDetails(updatedBusinessDetails);
     }).catch(err => console.log(err));
   }
