@@ -19,13 +19,9 @@ const Search = props => {
     resetAutoComplete,
     yelpAutoComplete,
     resetFilters,
-    getBrowserLocation,
     populateCategories,
     addResults,
     getPriceFilterMode,
-    setCategoriesSelected,
-    populateCenter,
-    panTo
   } = useContext(YelpContext);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");

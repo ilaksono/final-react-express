@@ -1,3 +1,9 @@
+@import './helper.scss';
+
+.home-layout {
+  background-color: $white
+}
+
 .widget-container {
   display: grid;
   grid-template-columns: [col1-start] 50% [col1-end col2-start] 50% [col2-end];
@@ -5,6 +11,21 @@
   justify-content: center;
   align-content: center;
   position: relative;
-  top: 200px;
+  margin-top: 10px;
 
+}
+
+.search-home-container {
+  padding-top: 50px;
+  padding-left: 180px;
+  padding-right: 180px;
+}
+.top-label{
+  text-align: center;
+  font: $font-stack;
+  font-size: 1.5em;
+}
+.top-container {
+  margin-top: 40px;
+  @include flexbox(column, center, center)
 }

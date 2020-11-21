@@ -85,25 +85,25 @@ const useApplicationData = () => { // login and user state information
     const width = '95%';
     const example = [];
     example.push({
-      venue: 'hot-dog',
-      title: 'hot-dog',
+      venue: 'Andrew',
+      title: 'Andrew',
       width
     });
     example.push({
-      venue: 'Dog Park',
-      title: 'Dog Park',
-      width
-
-    });
-    example.push({
-      venue: 'andrew',
-      title: 'andrew',
+      venue: 'Daniel',
+      title: 'Daniel',
       width
 
     });
     example.push({
-      venue: 'daniel',
-      title: 'daniel',
+      venue: 'Poop',
+      title: 'Poop',
+      width
+
+    });
+    example.push({
+      venue: 'Orgy',
+      title: 'Orgy',
       width
 
     });

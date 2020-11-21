@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import { useContext, useEffect } from 'react';
+import { useContext, Fragment } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import 'styles/Home.scss';
+import Search from 'components/Search';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:hover, &$focusVisible': {
       zIndex: 1,
+      boxShadow: "20px 20px 20px #9E9E9E",
       '& $imageBackdrop': {
         opacity: 0.15,
       },
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
       },
       '& $imageTitle': {
         border: '4px solid currentColor',
+        borderRadius: 50
       },
     },
   },
@@ -88,7 +91,7 @@ const Home = () => {
     resetFilters
   } = useContext(YelpContext);
 
-  let parsedTopList = 'hi';
+  let parsedTopList = [];
   if (tops.show.length) {
     parsedTopList = tops.show.map((image) => {
       return (
@@ -104,6 +107,7 @@ const Home = () => {
             }}
             style={{
               width: image.width,
+              borderRadius: 50
             }}
           >
             <span
@@ -131,11 +135,18 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <Link to='/search'>
-        <button>Search</button>
-      </Link>
+    <div className='home-layout'>
+      <div className='search-home-container'>
+        <Search
+        isHome
+          buttonMessage={<i class="fas fa-search"></i>}
+        />
+      </div>
+      <div className='top-container'>
+        <span className='top-label'>Most Popular</span>
+      </div>
       <div className='widget-container'>
+
         {parsedTopList}
       </div>
     </div>

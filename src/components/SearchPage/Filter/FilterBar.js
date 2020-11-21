@@ -71,18 +71,18 @@ const FilterBar = (props) => {
         Hide Filters
       </Button>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
-        <FilterItem type='price' handleClick={() =>
+        <FilterItem type='price' name='priceLeft' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
           message='$' filters={filters} />
-        <FilterItem type='price' handleClick={() =>
+        <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$` })
         } message='$$' filters={filters} />
-        <FilterItem type='price' handleClick={() =>
+        <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$` })
         } message='$$$' filters={filters} />
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$$` })
-        } message='$$$$' filters={filters} />
+        } message='$$$$' name='priceRight' filters={filters} />
       </div>)}
       <div className='category-filter-container'>
         {

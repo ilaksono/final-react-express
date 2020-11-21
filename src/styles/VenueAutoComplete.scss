@@ -36,3 +36,15 @@
   cursor: pointer;
   background-color: rgb(214, 213, 213);
 }
+
+.home-autocomplete-container {
+  @include flexbox(column, flex-start, flex-start);
+  position: absolute; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: calc((180.16px + (100% - 836.75px) / 2) + 8px);
+  top: 48px;
+  border-top: 1px solid $gray-line;
+  width: 264px;
+  height: auto;
+  background-color: #FFFFFF;
+}

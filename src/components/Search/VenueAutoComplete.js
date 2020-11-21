@@ -4,6 +4,9 @@ import 'styles/VenueAutoComplete.scss';
 const VenueAutoComplete = props => {
   const wrapperRef = useRef(null);
 
+  const cls = `${props.isHome && 
+    'home-'}autocomplete-container`
+
   // below is the same as componentDidMount and componentDidUnmount
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, false);
@@ -35,7 +38,7 @@ const VenueAutoComplete = props => {
   });
 
   return (
-    <div className="autocomplete-container" ref={wrapperRef} >
+    <div className={cls} ref={wrapperRef} >
       <ul className="autocomplete-list">
         { businessAutoComplete }
         { categoryAutoComplete }
