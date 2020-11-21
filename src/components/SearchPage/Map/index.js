@@ -7,7 +7,7 @@ import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
   width: '400px',
-  height: '400px'
+  height: '578px'
 };
 
 const Map = props => {

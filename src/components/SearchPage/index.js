@@ -18,6 +18,7 @@ const SearchPage = props => {
       onClick={toggleFilterShow}
       color='primary'
       variant='outlined'
+      style={{position: 'fixed'}}
       >Show Filters</Button>
       {filters.show &&
       <FilterBar
