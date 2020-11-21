@@ -23,6 +23,9 @@ function App() {
   // if (loadError) return 'Error loading maps';
   // if (!isLoaded) return "loading maps";
 
+  // MOCK DATA TO TEST NEWREVIEW COMPONENT
+  const id = '7hcxAsYC5R8BIcm1xQ_1_Q';
+  const name = 'Birria Catrina';
   return (
     <div className="layout">
       <YelpProvider>

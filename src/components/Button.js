@@ -14,7 +14,7 @@ const Button = props => {
 
   const { onClick, message } = props;
   return (
-    <button onClick={props.onClick} className={btnClass}>
+    <button onClick={onClick} className={btnClass}>
       {message}
     </button>
   );

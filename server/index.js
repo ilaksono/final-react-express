@@ -121,3 +121,18 @@ app.post("/api/reviews/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log('listening on ', PORT);
 });
+
+app.post("/reviews/new", (req, res) => {
+  dbHelpers.submitReview(
+    req.body.user_id,
+    req.body.venue_id,
+    req.body.cleanliness,
+    req.body.socialDistancing,
+    req.body.transactionProcess,
+    req.body.description,
+    req.body.overall_rating)
+  .then(review => {
+      res.send(review);
+  })
+  .catch(error => console.log(error));
+})

@@ -40,7 +40,7 @@ const useFilter = () => {
     if (filters[type].length <= 1) {
       if (type === 'price') {
         if (filters.price.includes(value))
-          return setFilters({ ...filters, price: [...initFilter.price] });
+          return setFilters({ ...filters, price: ['$','$$','$$$','$$$$'] });
         else
           return setFilters({ ...filters, price: [...filters.price, value] });
       } else if (type === 'catsSelected') {

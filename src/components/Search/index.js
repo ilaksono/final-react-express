@@ -30,7 +30,6 @@ const Search = props => {
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [autoCompleteClicked, setAutoCompleteClicked] = useState(false);
 
   // function validate() {
   //   if (location == "") {
@@ -54,20 +53,14 @@ const Search = props => {
     setLocation(appState.center.city);
   }, [appState]);
 
-  useEffect(() => {
-    handleSearch();
-    setAutoCompleteClicked(false);
-    // eslint-disable-next-line
-  }, [autoCompleteClicked]);
-
   const setVenueAndHandleSearch = (text) => {
     setVenue(text);
     setAutoCompleteFalse();
-    handleSearch();
-    setAutoCompleteClicked(true);
+    handleSearch(text);
   };
 
   const setVenueAndAutoComplete = (text) => {
+    console.log("Set venue an auto called", text);
     if (text === "") {
       resetAutoComplete();
     }
@@ -87,11 +80,15 @@ const Search = props => {
     setShowAutoComplete(true);
   };
 
-  const handleSearch = () => {
-    console.log("calling search with ", venue);
-    yelpSearch(venue, location);
+  const handleSearch = (name) => {
+    if (name) {
+      yelpSearch(name, location);
+    } else {
+      yelpSearch(venue, location);
+    }
     resetFilters();
   };
+
 
   return (
     <div className="search-container">
@@ -105,7 +102,7 @@ const Search = props => {
       }
       <Location location={location} onChange={setLocation} />
       <Link to={'/search'}>
-        <Button onClick={handleSearch} message={props.buttonMessage} search />
+        <Button onClick={() => handleSearch()} message={props.buttonMessage} search />
       </Link>
     </div>
   );

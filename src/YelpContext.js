@@ -3,7 +3,7 @@ import useMapData from 'hooks/useMapData';
 import useYelpData from "hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
-import useAutoComplete from 'hooks/useAutoComplete';
+import useAutoComplete from 'hooks/useAutoComplete'; 
 import useFilter from 'hooks/useFilter';
 import useTopSearch from 'hooks/useTopSearch';
 

@@ -5,9 +5,12 @@ CREATE TABLE reviews(
   user_id INTEGER NOT NULL,
   venue_id VARCHAR(255) NOT NULL,
   date TIMESTAMPTZ NOT NULL DEFAULT Now(),
-  description VARCHAR(255),
   helpful_count INTEGER DEFAULT 0,
-  overall_rating INTEGER NOT NULL,
+  cleanliness  NUMERIC(3, 1),
+  socialDistancing NUMERIC(3, 1),
+  transactionProcess NUMERIC(3, 1),
+  overall_rating NUMERIC(3, 1) NOT NULL,
+  description VARCHAR(255),
   deleted BOOLEAN DEFAULT false
 );
 
