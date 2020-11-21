@@ -29,7 +29,7 @@ const useFilter = () => {
       return setFilters(({
         ...filters,
         categories: cats,
-        catsSelects: cats,
+        catsSelected: cats,
         price
       }));
       return filters;
