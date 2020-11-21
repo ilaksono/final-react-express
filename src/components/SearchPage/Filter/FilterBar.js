@@ -89,6 +89,7 @@ const FilterBar = (props) => {
           !filters.expandCats ?
             <>
               <SquishCategory filters={filters}
+              handleClick={handleClick}
                 expandCategories={expandCategories} />
               {filters.categories.length > 3 &&
                 <Button
