@@ -48,6 +48,24 @@ app.post("/api/search_yelp", (req, res) => {
       console.log(e);
     });
 });
+app.post("/api/search_one", (req, res) => {
+  client
+    .search({
+      term: req.body.venue,
+      location: req.body.location,
+      limit: 1
+    }).then(response => {
+      console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
+      let bus = response.jsonBody.businesses;
+      bus = bus.map((biz) => {
+        biz.categories = cleanAutoComplete(biz.categories, 'title');
+        return biz;
+      });
+      res.json(bus);
+    }).catch(e => {
+      console.log(e);
+    });
+});
 
 app.post("/api/search_yelp/:id", (req, res) => {
   client 

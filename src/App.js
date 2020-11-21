@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import { useLoadScript } from '@react-google-maps/api';
 import NavBar from 'components/NavBar';
-import Home from 'components/Home';
+import Home from 'components/Home'
 import Register from 'components/Register';
 import Login from 'components/Login';
 import SearchPage from 'components/SearchPage';

@@ -90,7 +90,7 @@ const Search = props => {
   const handleSearch = () => {
     console.log("calling search with ", venue);
     yelpSearch(venue, location);
-
+    resetFilters();
   };
 
   return (

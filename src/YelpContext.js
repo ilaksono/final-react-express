@@ -5,6 +5,7 @@ import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
+import useTopSearch from 'hooks/useTopSearch';
 
 export const YelpContext = React.createContext();
 
@@ -16,14 +17,15 @@ export function YelpProvider({ children }) {
     populateCategories,
     getPriceFilterMode,
     setCategoriesSelected } = useFilter();
-
+    
+  const {getTops, tops} = useTopSearch();
   const {
     appState,
     submitHandle
   } = useApplicationData();
-  const { results, 
+  const { results,
     setResults,
-     yelpSearch,
+    yelpSearch,
     businessDetails,
     setBusinessDetails,
     getIndividualBusinessData } = useYelpData();
@@ -78,7 +80,9 @@ export function YelpProvider({ children }) {
       onMapLoad,
       mapRef,
       populateCenter,
-      getCenterPan
+      getCenterPan,
+      tops,
+      getTops
     }}>
       {children}
     </YelpContext.Provider>
