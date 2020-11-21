@@ -14,7 +14,10 @@ const FilterBar = (props) => {
     filters, filterClick,
     applyDistanceFilter,
     distanceFilterClick,
-    addResults
+    addResults,
+    populateCenter,
+    getCenterPan,
+    panTo
   } = useContext(YelpContext);
 
   let parsedCategoryFilters = [];
@@ -24,8 +27,8 @@ const FilterBar = (props) => {
         <FilterItem filters={filters}
           message={cat}
           type='categories'
-          handleClick={(event) => 
-            handleClick({type:'categories', value: event.target.getAttribute('name')})}
+          handleClick={(event) =>
+            handleClick({ type: 'categories', value: event.target.getAttribute('name') })}
           key={index} />
       );
     });
@@ -38,6 +41,12 @@ const FilterBar = (props) => {
 
   useEffect(() => {
     addResults(refinedResults);
+    // populateCenter(refinedResults);
+    getCenterPan(refinedResults)
+    .then(res => {
+      panTo(res);
+    })
+    .catch(er => console.log(er));
     // eslint-disable-next-line
   }, [refinedResults]);
 
@@ -47,13 +56,13 @@ const FilterBar = (props) => {
     if (type === 'distance')
       distanceFilterClick(value);
     // if (type === 'category')
-      //categoryFilterClick(value);  
+    //categoryFilterClick(value);  
   };
 
   return (
     <div className="filter-container">
       Filter:
-      { filters.mode && (<div className='price-filter-container'>
+      { filters.mode && filters.price.length && (<div className='price-filter-container'>
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
           message='$' filters={filters} />

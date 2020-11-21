@@ -19,12 +19,9 @@ const refinedReducer = (refinedResults, action) => {
       return;
     }
     case SEED: {
-      console.log('seed');
       return [...action.data];
     }
     case PRICE_FILTER: {
-      console.log('price');
-
       return [...action.filteredCopy];
     }
     case DIST_FILTER: {
@@ -45,11 +42,7 @@ const useRefinedData = () => {
 
 
   const setRefinedSeed = (data) => {
-    // return new Promise((res, rej) => {
-    console.log('3');
     dispatch({ type: 'SEED', data });
-    // });
-    // addReviewCount();
   };
 
   const applyPriceFilter = (filters, results) => {
@@ -64,11 +57,22 @@ const useRefinedData = () => {
           }
           else if (filters.price.includes(biz.price)
             && biz.distance < filters.distance
-            && filters.catsSelected.some( cat => biz.categories.includes(cat)))
+            && filters.catsSelected.some(cat => biz.categories.includes(cat)))
             filteredCopy.push(biz);
         });
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
-      } else res(true);
+      } else {
+        const filteredCopy = [];
+        results.forEach((biz) => {
+          if (filters.catsSelected.length < 1) {
+            if (biz.distance < filters.distance)
+              filteredCopy.push(biz);
+          } else if (biz.distance < filters.distance
+            && filters.catsSelected.some(cat => biz.categories.includes(cat)))
+            filteredCopy.push(biz);
+        });
+        res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
+      }
     });
   };
   const applyAllFilters = (filters, results) => {

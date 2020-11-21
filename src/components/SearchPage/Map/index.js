@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useCallback } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
@@ -15,41 +15,32 @@ const Map = props => {
   const {
     mapState,
     refinedResults,
-    appState
+    appState,
+    panTo,
+    onUnmount,
+    onMapLoad,
+    mapRef
   } = useContext(YelpContext);
 
+
+  const showCenter = useCallback((t) => {
+    console.log(mapRef.current.getCenter().lat());
+    // console.log(mapRef.current.getCenter());
+    console.log({ lat: mapRef.current.getCenter().lat(), lng: mapRef.current.getCenter().lng() });
+  }, []);
+
   const center = {
-    lat: appState.center.lat || 80.745,
-    lng: appState.center.lng || -20.523
+    lat: mapState.center.lat || appState.center.lat || 43,
+    lng: mapState.center.lng || appState.center.lng || -79
   };
-  // const [map, setMap] = React.useState(null);
-  // const onLoad = React.useCallback(function callback(map) {
-  //   const bounds = new window.google.maps.LatLngBounds();
-  //   map.fitBounds(bounds);
-  //   setMap(map);
-  // }, []);
-  // const mapRef = useRef();
-  // const onMapLoad = useCallback((map) => {
-  //   mapRef.current = map;
-  // },[])
-  // // const panTo = useCallback(({lat, lng}) => {
-  // //   mapRef.current.panTo({lat, lng});
-  // //   mapRef.current.setZoom(14);
-  // // }, [])
 
-  // useEffect(() => {
 
-  // }, [])
-
-  // const onUnmount = React.useCallback(function callback(map) {
-  //   setMap(null);
-  // }, []);
   let parsedMarkers = [];
 
   if (mapState.places.length) {
     parsedMarkers = mapState.places.map((coord, ind) => {
       return (
-        <MarkerComponent key={ind} {...coord}  />
+        <MarkerComponent key={ind} {...coord} />
       );
     });
   }
@@ -63,11 +54,11 @@ const Map = props => {
       <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>
         <GoogleMap
           mapContainerStyle={containerStyle}
+          options={options}
           center={center}
           zoom={12}
-          // onLoad={onMapLoad}
-          // onUnmount={onUnmount}
-          options={options}
+          onLoad={onMapLoad}
+          onUnmount={onUnmount}
         >
           { /* Child components, such as markers, info windows, etc. */}
           {parsedMarkers}
