@@ -1,5 +1,21 @@
-import "styles/PlaceListItem.scss"
+import "styles/PlaceListItem.scss";
+import {useContext} from 'react';
+import { YelpContext } from 'YelpContext';
+import { useHistory } from 'react-router-dom';
+import BusinessPage from "components/BusinessPage";
+
 const PlaceListItem = (props) => {
+  const { getIndividualBusinessData, businessDetails } = useContext(YelpContext);
+
+  const history = useHistory();
+  
+  
+  const moveToNextPage = () => {
+    getIndividualBusinessData(props.id)
+      .then(() => {
+        history.push(`/search/${props.id}`)
+      })
+  }
 
   return (
     <div class='result-container' onMouseOver={() => props.hoverMarker(props.id)} onMouseOut={() => props.notHoverMarker()}>
@@ -7,7 +23,7 @@ const PlaceListItem = (props) => {
       <img src={props.image} alt="Logo" class='venue-image' />
       </div>
       <div class='general-info'>
-      <h3 class="venue_name">{props.name}</h3><br />
+      <h3 onClick={moveToNextPage} class="venue_name">{props.name}</h3><br />
       <span class='yelp_rating'>Yelp Rating: {props.yelpRating}</span><br />
       <span class='covid_rating'>Safety Rating: NA</span>
       <span class="covid_review_count">{props.reviews.length}</span><br />
