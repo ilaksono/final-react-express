@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +93,7 @@ const NewReview = props => {
   const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
+  const {businessDetails, setBusinessDetails } = useContext(YelpContext);
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -146,7 +148,10 @@ const NewReview = props => {
     }).then(review => {
       handleClose();
       resetState();
-      console.log(review);
+      console.log("this is the revbiew:", review.data[0])
+      const updatedBusinessDetails = {...businessDetails};
+      updatedBusinessDetails.reviews.unshift(review.data[0]);
+      setBusinessDetails(updatedBusinessDetails);
     }).catch(err => console.log(err));
   }
 

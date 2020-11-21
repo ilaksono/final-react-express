@@ -18,11 +18,13 @@ const PlaceListItem = (props) => {
   }
 
   return (
-    <div class='result-container' onMouseOver={() => props.hoverMarker(props.id)} onMouseOut={() => props.notHoverMarker()}>
-      <div class='img-logo'>
-      <img src={props.image} alt="Logo" class='venue-image' />
-      </div>
-      <div class='general-info'>
+    <div>
+      {props.name === "" && ""}
+      {props.name && <div class='result-container' onMouseOver={() => props.hoverMarker(props.id)} onMouseOut={() => props.notHoverMarker()}>
+        <div class='img-logo'>
+          <img src={props.image} alt="Logo" class='venue-image' />
+        </div>
+        <div class='general-info'>
       <h3 onClick={moveToNextPage} class="venue_name">{props.name}</h3><br />
       <span class='yelp_rating'>Yelp Rating: {props.yelpRating}</span><br />
       <span class='covid_rating'>Safety Rating: NA</span>
@@ -36,6 +38,7 @@ const PlaceListItem = (props) => {
         {props.city}
       </span>
       </div>
+    </div>}
     </div>
   )
 }

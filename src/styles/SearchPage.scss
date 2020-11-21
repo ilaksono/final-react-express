@@ -3,6 +3,11 @@
 .search-page-layout {
   width: 100%;
   min-height: calc(100vh - 60px);
-  background-color: red;
+  background-color: rgb(234, 238, 255);
   @include flexbox(row, flex-start, flex-start);
+}
+
+.show-filters {
+  position: fixed;
+  background-color: green;
 }

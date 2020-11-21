@@ -6,7 +6,10 @@ const initFilter = {
   catsSelected: [],
   price: [],
   distance: 50000,
-  mode: false
+  open: false,
+  mode: false,
+  show: false,
+  expandCats: false
 };
 
 const useFilter = () => {
@@ -29,7 +32,7 @@ const useFilter = () => {
       return setFilters(({
         ...filters,
         categories: cats,
-        catsSelects: cats,
+        catsSelected: cats,
         price
       }));
       return filters;
@@ -84,9 +87,17 @@ const useFilter = () => {
       }
     });
   };
+  const toggleFilterShow = () => {
+    setFilters({...filters, show: !filters.show})
+
+  }
   const setCategoriesSelected = () => {
     setFilters({ ...filters, catsSelected: [...filters.categories] });
   };
+
+  const expandCategories = () => {
+    setFilters({...filters, expandCats: !filters.expandCats})
+  }
 
 
   return {
@@ -96,7 +107,9 @@ const useFilter = () => {
     distanceFilterClick,
     populateCategories,
     getPriceFilterMode,
-    setCategoriesSelected
+    setCategoriesSelected,
+    toggleFilterShow,
+    expandCategories
   };
 };
 

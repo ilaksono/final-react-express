@@ -8,6 +8,7 @@ import SearchPage from 'components/SearchPage';
 import React from 'react';
 import { YelpProvider } from './YelpContext';
 import BusinessPage from "components/BusinessPage/index";
+import 'styles/App.scss';
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
@@ -31,6 +32,8 @@ function App() {
       <YelpProvider>
         <Router>
           <NavBar loadSearch />
+          <div class='spacer'> 
+          </div>
           <Switch>
             <Route exact path='/' >
               <Home />
