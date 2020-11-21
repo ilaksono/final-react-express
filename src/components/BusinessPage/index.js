@@ -6,6 +6,8 @@ import NewReview from 'components/Review/NewReview';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ReviewList from './ReviewList';
 import "styles/BusinessPage.scss"
 
 const useStyles = makeStyles((theme) => ({
@@ -17,12 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BusinessPage() {
+
   const classes = useStyles();
   console.log("page loaded")
   const { 
     businessDetails, 
     getIndividualBusinessData, 
-    setBusinessDetails } = useContext(YelpContext);
+    } = useContext(YelpContext);
     
     const {id} = useParams();
 
@@ -31,10 +34,12 @@ export default function BusinessPage() {
         getIndividualBusinessData(id)
       }
     })
-      return (
-      <div class='business-container'>
-      <div class='images'> 
 
+      return (
+        <div>
+      {!businessDetails.id && <CircularProgress />}
+      {businessDetails.id && <div class='business-container'>
+      <div class='images'> 
           {businessDetails.photos && <img src={businessDetails.photos[0]} alt='photos' class='place-imgs-1'/>}
           {businessDetails.photos && <img src={businessDetails.photos[1]} lass='place-imgs-2'/>}
           {businessDetails.photos && <img src={businessDetails.photos[2]} lass='place-imgs-3'/>}
@@ -71,8 +76,13 @@ export default function BusinessPage() {
           </table>}
         </div>
         <div class='reviews'>
-        reviews
+        <h3>Reviews:</h3>
+        {(businessDetails.reviews && businessDetails.reviews.length === 0) && <span>Be the first to write a review!</span>}
+        {console.log(businessDetails.reviews)}
+        {(businessDetails.reviews && businessDetails.reviews.length > 0) && <ReviewList reviews={businessDetails.reviews} />}
         </div>
      </div>
+
+     </div>}
      </div>
   )}

@@ -103,7 +103,7 @@ export default function useYelpData() {
    query.forEach((result, index) => {
    for (const review of reviews) {
     if (review.venue_id === result.id) {
-      query[index].reviews.push(review)
+      query[index].reviews.unshift(review)
       }
     }
   })
@@ -134,13 +134,17 @@ export default function useYelpData() {
   // function to get individual business details
 
     const getIndividualBusinessData = (id) => {
+      let orderedReviews = []
     return Promise.all([
       axios.post(`/api/search_yelp/${id}`),
       axios.post(`/api/reviews/${id}`)
     ]).then(all => {
       const businessData = all[0].data
       const parsedBusinessData = getCoreBusinessData(businessData);
-      parsedBusinessData.reviews = all[1].data;
+      all[1].data.forEach(review => {
+        orderedReviews.unshift(review)
+      })
+      parsedBusinessData.reviews = orderedReviews;
       return setBusinessDetails(...[parsedBusinessData]); 
     })
   }

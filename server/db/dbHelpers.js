@@ -17,7 +17,7 @@ module.exports = (db) => {
 
   const getReviewsPerBusiness = (id) => {
     const queryString = `
-    SELECT * 
+    SELECT *
     FROM reviews
     WHERE venue_id = $1;
     `
