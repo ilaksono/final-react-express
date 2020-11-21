@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useCallback, useState, useEffect, useContext } from "react";
 import 'styles/Search.scss';
 import Venue from "components/Search/Venue/";
 import VenueAutoComplete from "components/Search/VenueAutoComplete/";
@@ -23,7 +23,9 @@ const Search = props => {
     populateCategories,
     addResults,
     getPriceFilterMode,
-    setCategoriesSelected
+    setCategoriesSelected,
+    populateCenter,
+    panTo
   } = useContext(YelpContext);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
@@ -41,9 +43,9 @@ const Search = props => {
 
   // // }
   useEffect(() => {
-    populateCategories(results) 
+    populateCategories(results);
     addResults(results);
-    getPriceFilterMode(results) 
+    getPriceFilterMode(results);
     setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
@@ -88,7 +90,7 @@ const Search = props => {
   const handleSearch = () => {
     console.log("calling search with ", venue);
     yelpSearch(venue, location);
-    resetFilters();
+
   };
 
   return (
