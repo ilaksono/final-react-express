@@ -7,9 +7,10 @@ import Button from "components/Button/";
 import 'styles/Venue.scss';
 import 'styles/Location.scss';
 import { YelpContext } from 'YelpContext.js';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Search = props => {
+  const history = useHistory();
   const {
     setRefinedSeed,
     results,
@@ -57,6 +58,8 @@ const Search = props => {
     setVenue(text);
     setAutoCompleteFalse();
     handleSearch(text);
+
+    history.push('/search')
   };
 
   const setVenueAndAutoComplete = (text) => {
