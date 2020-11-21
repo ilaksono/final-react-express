@@ -112,9 +112,8 @@ export default function useYelpData() {
 
    // function to get all business details        
   const yelpSearch = (venue, location) => {
-
     let reviewArr = [];      
-
+    console.log("yelp search called with", venue, location);
     return Promise.all([
       axios.post('/api/search_yelp', {venue, location}),
       axios.get('/api/reviews')
