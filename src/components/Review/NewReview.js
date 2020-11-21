@@ -59,17 +59,17 @@ const questionData = [
   {
     id: 1,
     title: 'Cleanliness',
-    description: 'Overall cleanliness and availability of hand sanitizer:'
+    description: 'Cleanliness and availability of hand sanitizer:'
   },
   {
     id: 2,
     title: 'Social Distancing',
-    description: 'Social distancing practices and appropriate usage of masks:'
+    description: 'Appropriate social distancing and mask wearing:'
   },
   {
     id: 3,
     title: 'Transaction Process',
-    description: 'Smooth and safe process of paying, picking up your order, and/or being seated:'
+    description: 'Safe payment, seating, and/or pickup process:'
   },
   {
     id: 4,
