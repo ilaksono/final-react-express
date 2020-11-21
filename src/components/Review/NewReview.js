@@ -33,6 +33,26 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     marginBottom: '0px',
   },
+  saveButton: {
+    margin: theme.spacing(1),
+    marginBottom: '0px',
+    color: '#1E0253',
+    fontWeight: 'bold',
+    backgroundColor: '#FF717C',
+    '&:hover': {
+      color: 'white',
+      backgroundColor: '#FF717C',
+    }
+  },
+  new_review: {
+    fontWeight: 'bold',
+    color: '#1E0253',
+    backgroundColor: '#FF717C',
+    '&:hover': {
+      backgroundColor: '#FF717C',
+      color: 'white',
+    }
+  },
 }));
 
 const questionData = [
@@ -73,8 +93,8 @@ const NewReview = props => {
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
 
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -86,13 +106,29 @@ const NewReview = props => {
 
   const handleChange = (title, value) => {
     if (title === 'Cleanliness') {
-      setCleanliness(value);
+      if (cleanliness === value) {
+        setCleanliness(0);
+      } else {
+        setCleanliness(value);
+      }
     } else if (title === 'Social Distancing') {
-      setSocialDistancing(value);
+      if (socialDistancing === value) {
+        setSocialDistancing(0);
+      } else {
+        setSocialDistancing(value);
+      }
     } else if (title === 'Transaction Process') {
-      setTransactionProcess(value);
+      if (transactionProcess === value) {
+        setTransactionProcess(0);
+      } else {
+        setTransactionProcess(value);
+      }
     } else if (title === 'Overall Comfort') {
-      setOverallComfort(value);
+      if (overallComfort === value) {
+        setOverallComfort(0);
+      } else {
+        setOverallComfort(value);
+      }
     } else if (title === 'Description') {
       setDescription(value);
     }
@@ -101,8 +137,7 @@ const NewReview = props => {
   const handleSubmit = () => {
     axios.post('/reviews/new', {
       user_id: 3,
-      venue_id:
-      props.venue_id,
+      venue_id: props.venue_id,
       cleanliness,
       socialDistancing,
       transactionProcess,
@@ -111,6 +146,7 @@ const NewReview = props => {
     }).then(review => {
       handleClose();
       resetState();
+      console.log(review);
     }).catch(err => console.log(err));
   }
 
@@ -132,9 +168,13 @@ const NewReview = props => {
 
   return (
     <div>
-      <button type='button' onClick={handleOpen}>
-        react-transition-group
-      </button>
+      <Button
+        variant="contained"
+        className={classes.new_review}
+        onClick={handleOpen}
+      >
+        Write A Review
+      </Button>
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -157,17 +197,15 @@ const NewReview = props => {
                 { questions }
                 <Button
                   variant='contained'
-                  color='primary'
                   size='large'
                   onClick={handleSubmit}
-                  className={classes.button}
+                  className={classes.saveButton}
                   startIcon={<SaveIcon />}
                 >
                   Save
                 </Button>
                 <Button
                   variant='contained'
-                  color='secondary'
                   className={classes.button}
                   startIcon={<DeleteIcon />}
                   onClick={handleClose}

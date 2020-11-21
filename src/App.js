@@ -8,8 +8,6 @@ import SearchPage from 'components/SearchPage';
 import React from 'react';
 import { YelpProvider } from './YelpContext';
 import BusinessPage from "components/BusinessPage/index";
-// TEST NEWREVIEW COMPONENT
-import NewReview from 'components/Review/NewReview';
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
@@ -45,9 +43,6 @@ function App() {
             </Route>
             <Route exact path='/search'>
               <SearchPage />
-            </Route>
-            <Route path='/new-review'>
-              <NewReview venue_id={id} name={name} />
             </Route>
             <Route path='/search/:id'>
               <BusinessPage />

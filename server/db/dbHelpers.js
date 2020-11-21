@@ -53,10 +53,7 @@ module.exports = (db) => {
 
   return {
     getAllReviews,
-<<<<<<< HEAD
-    submitReview
-=======
+    submitReview,
     getReviewsPerBusiness
->>>>>>> 3fd849d3368b4f32bc9b44886b2dc43bc61b7b9c
   };
 };
