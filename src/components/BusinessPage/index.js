@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
 export default function BusinessPage() {
 
   const classes = useStyles();
-  console.log("page loaded")
+  
   const { 
     businessDetails, 
     getIndividualBusinessData, 
+    setBusinessDetails
     } = useContext(YelpContext);
     
     const {id} = useParams();
@@ -33,7 +34,11 @@ export default function BusinessPage() {
       if(!businessDetails.id) {
         getIndividualBusinessData(id)
       }
-    })
+    });
+
+    // useEffect(() =>{
+    //   getIndividualBusinessData(id)
+    // }, [])
 
       return (
         <div>
@@ -78,7 +83,6 @@ export default function BusinessPage() {
         <div class='reviews'>
         <h3>Reviews:</h3>
         {(businessDetails.reviews && businessDetails.reviews.length === 0) && <span>Be the first to write a review!</span>}
-        {console.log(businessDetails.reviews)}
         {(businessDetails.reviews && businessDetails.reviews.length > 0) && <ReviewList reviews={businessDetails.reviews} />}
         </div>
      </div>
