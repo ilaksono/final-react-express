@@ -48,8 +48,6 @@ const FilterItem = props => {
   else if (props.type === 'categories' && props.filters.catsSelected.includes(props.message))
     val = true;
 
-
-
   if (props.type !== 'price') {
     return (
       <div className='each-filter'>
