@@ -12,8 +12,8 @@ VALUES (1, '1Hvm57g7zTpBR2hhFg8awQ', 'Hot and cheesy', 5, 5, 5, 5),
 (2,'eYeFOcNJO2iTNPCPi8XAxw', 'not bad',2, 1, 4, 1),
 (2,'dRjU-uxMeInyYgBb61Ap7A', 'not bad',1, 1, 1, 1),
 (2,'5T6kFKFycym_GkhgOiysIw', 'not bad',1, 1, 1, 1),
-(1, 'U4GJ5BDZd6qp9SOkvbx4Ng', 'great', 3, 5, 4, 2),
-(2, 'U4GJ5BDZd6qp9SOkvbx4Ng', 'tacos', 2, 3, 5, 1);
+(1, 'U4GJ5BDZd6qp9SOkvbx4Ng', 'great', 5, 5, 4, 2),
+(2, 'U4GJ5BDZd6qp9SOkvbx4Ng', 'tacos', 5, 3, 5, 1);
 /* CREATE TABLE reviews(
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER NOT NULL,

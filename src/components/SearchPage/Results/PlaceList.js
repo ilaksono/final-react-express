@@ -2,7 +2,7 @@ import PlaceListItem from "./PlaceListItem";
 import "styles/PlaceListItem.scss";
 import Sort from 'components/Sort';
 import { YelpContext } from 'YelpContext';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const sortOptions = [
   {
@@ -23,7 +23,6 @@ const sortOptions = [
 ];
 
 const PlaceList = (props) => {
-
   const { refinedResults,
     hoverMarker,
     notHoverMarker,
@@ -39,7 +38,6 @@ const PlaceList = (props) => {
   });
 
   const handleSort = (property) => {
-    console.log("calling handleSort w property", property, "results", results);
     sortBy(results, property, false);
   }
   

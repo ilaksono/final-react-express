@@ -43,7 +43,6 @@ const useRefinedData = () => {
   const [refinedResults, dispatch] =
     useReducer(refinedReducer, initRefined);
 
-
   const setRefinedSeed = (data) => {
     dispatch({ type: 'SEED', data });
   };
@@ -113,9 +112,21 @@ const useRefinedData = () => {
     return new Promise((res, rej) => {
       let filteredCopy = [];
       if (ascending) {
-        filteredCopy = results.sort((a, b) => a[property] - b[property]);
+        filteredCopy = results.sort((a, b) => {
+          if(isFinite(a[property] - b[property])) {
+            return a[property] - b[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
       } else {
-        filteredCopy = results.sort((a, b) => b[property] - a[property]);
+        filteredCopy = results.sort((a, b) => {
+          if(isFinite(b[property] - a[property])) {
+            return b[property] - a[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
       }
       res(dispatch({ type: 'SORT', filteredCopy }));
     });
