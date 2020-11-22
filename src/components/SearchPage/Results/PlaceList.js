@@ -35,10 +35,11 @@ const PlaceList = (props) => {
   const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
   const currentResults = refinedResults.slice(indexOfFirstResult, indexOfLastResult);
 
-  const placeList = currentResults.map(place => {
+  const placeList = currentResults.map((place, index) => {
     return <PlaceListItem {...place}
       hoverMarker={hoverMarker}
       notHoverMarker={notHoverMarker}
+      label={((props.currentPage - 1) * props.resultsPerPage) + index + 1}
     />;
   });
 

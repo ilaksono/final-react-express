@@ -22,7 +22,6 @@ const Map = props => {
     mapRef
   } = useContext(YelpContext);
 
-
   const showCenter = useCallback((t) => {
     console.log(mapRef.current.getCenter().lat());
     // console.log(mapRef.current.getCenter());
@@ -34,17 +33,17 @@ const Map = props => {
     lng: mapState.center.lng || appState.center.lng || -79
   };
 
-
   const indexOfLastResult = props.currentPage * props.resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
   const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
+  console.log('crnt', currentResults);
 
   let parsedMarkers = [];
 
   if (mapState.places.length) {
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent key={ind} {...coord} />
+        <MarkerComponent label={((props.currentPage - 1) * props.resultsPerPage) + ind + 1} {...coord} />
       );
     });
   }

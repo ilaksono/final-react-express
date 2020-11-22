@@ -25,7 +25,7 @@ const PlaceListItem = (props) => {
           <img src={props.image} alt="Logo" class='venue-image' />
         </div>
         <div class='general-info'>
-      <h3 onClick={moveToNextPage} class="venue_name">{props.name}</h3><br />
+      <h3 onClick={moveToNextPage} class="venue_name">{props.label}. {props.name}</h3><br />
       <span class='yelp_rating'>Yelp Rating: {props.yelpRating}</span><br />
       <span class='covid_rating'>Safe Score: {isNaN(props.overall_rating) ? "N/A" : props.overall_rating }</span>
       <span class="covid_review_count">{props.reviews.length}</span><br />
