@@ -4,6 +4,7 @@ import { YelpContext } from 'YelpContext.js';
 import { useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import SquishCategory from './SquishCategory.js';
+import Icon from '@material-ui/core/Icon';
 
 const FilterBar = (props) => {
   // context destructure
@@ -65,10 +66,12 @@ const FilterBar = (props) => {
   return (
     <div className="filter-container">
       <Button
-        variant="outlined"
-        color="secondary"
-        onClick={toggleFilterShow}>
-        Hide Filters
+        endIcon={<Icon>send</Icon>}
+        color="primary"
+        style={{
+          fontSize: 10
+        }}
+        onClick={toggleFilterShow}> 
       </Button>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
         <FilterItem type='price' name='priceLeft' handleClick={() =>
@@ -85,6 +88,7 @@ const FilterBar = (props) => {
         } message='$$$$' name='priceRight' filters={filters} />
       </div>)}
       <div className='category-filter-container'>
+        <span><b>Category</b></span>
         {
           !filters.expandCats ?
             <>
@@ -94,9 +98,12 @@ const FilterBar = (props) => {
               {filters.categories.length > 3 &&
                 <Button
                   variant="outlined"
-                  color="primary"
-                  onClick={expandCategories}>
-                  Expand Categories
+                  color="default"
+                  onClick={expandCategories}
+                  style={{
+                    fontSize:10
+                  }}>
+                  More
               </Button>}
             </>
             : filters.categories.length > 3 ?
@@ -104,9 +111,12 @@ const FilterBar = (props) => {
                 {parsedCategoryFilters}
                 <Button
                   variant="outlined"
-                  color="primary"
-                  onClick={expandCategories}>
-                  Less Categories
+                  color="default"
+                  onClick={expandCategories}
+                  style={{
+                    fontSize: 10
+                  }}>
+                  Less
               </Button>
               </>
               : <>
@@ -115,22 +125,9 @@ const FilterBar = (props) => {
 
               </>
         }
-
-        {/* {parsedCategoryFilters.length > 0 && filters.expandCats && parsedCategoryFilters}
-        {!filters.expand && filters.categories.length > 4 
-        && 
-        <>
-        <SquishCategory filters={filters} 
-        expandCategories={expandCategories}/>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={expandCategories}>
-          Expand Categories
-      </Button>
-      </>} */}
       </div>
       <div className='distance-filter-container'>
+        <span><b>Distance</b></span>
         <FilterItem type='distance' handleClick={() =>
           handleClick({ type: 'distance', value: 50000 })}
           filters={filters} message='Far Away' value={50000} />

@@ -49,10 +49,14 @@ const FilterItem = props => {
     val = true;
 
   if (props.type !== 'price') {
+    const clr = val ? 'primary' : 'default'
     return (
       <div className='each-filter'>
         <label className='filter-label'>{props.message}</label>
-        <Switch checked={val}
+        <Switch
+          checked={val}
+          color={clr}
+          size='small'
           name={props.message}
           className={filterItemClass}
           onClick={props.handleClick}>{props.message}</Switch>
@@ -62,7 +66,7 @@ const FilterItem = props => {
   else {
 
     const color = props.filters.price
-      .includes(props.message) ? 
+      .includes(props.message) ?
       'primary' : 'default';
     return (
       <div className='each-filter'>
