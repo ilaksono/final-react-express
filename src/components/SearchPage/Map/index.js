@@ -43,7 +43,6 @@ const Map = props => {
 
   if (mapState.places.length) {
     parsedMarkers = currentResults.map((coord, ind) => {
-      console.log("index", ind);
       return (
         <MarkerComponent key={ind} {...coord} />
       );

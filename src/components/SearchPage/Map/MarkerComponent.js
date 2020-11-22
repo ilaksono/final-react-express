@@ -6,11 +6,10 @@ import { useHistory } from 'react-router-dom';
 const MarkerComponent = props => {
   const { getIndividualBusinessData, setBusinessDetails} = useContext(YelpContext);
   const history = useHistory();
-  const { lat, lng, id, hover, key } = props;
-  console.log("props", props);
-  const icon = hover ? `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|FFFFFF` :
-    `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`;
-  console.log("marker key", key);
+  const { lat, lng, id, hover, label } = props;
+
+  const icon = hover ? `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${String(label)}|1E0253|FFFFFF` :
+    `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${String(label)}|FF717C|000000`;
   const handleClick = () => {
     setBusinessDetails('')
     history.push(`/search/${id}`);
@@ -18,10 +17,9 @@ const MarkerComponent = props => {
 
   return (
     <Marker
-      label={key}
       position={{ lat, lng }}
-      icon={icon}
       onClick={handleClick}
+      icon={icon}
     />
   );
 };
