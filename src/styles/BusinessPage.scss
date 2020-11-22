@@ -1,17 +1,41 @@
 .business-container {
-  display:flex;
-  flex-direction: column;
-  align-items: flex-start;
+  max-width: 1144px;
+  padding: 0 40px;
+  margin: 0 auto;
 
 
-  .images {
-    display:flex;
-    justify-content: space-evenly;
-  }
   img{
     height: 100px;
     width: 100px;
     margin: 10px;
+  }
+
+  .info-section {
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+  .title {
+    color: blue
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-evenly;
+
+    margin-right: 100px;
+  }
+}
+
+  .location-hours {
+    align-items: flex-end;
+  }
+
+  .reviews {
+
   }
   
 }
