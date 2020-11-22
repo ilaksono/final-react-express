@@ -6,9 +6,10 @@ const sortBy = (data, property, ascending) => {
   }
 }
 
-sortBy(mockData, "review_count", true);
+sortBy(mockSearchData, "rating", true);
+sortBy(mockSearchData, "rating", true);
 
-const mockData = [
+const mockSearchData = [
   {
     "id": "0W4lkclzZThpx3V65bVgig",
     "alias": "schwartzs-montréal-4",
@@ -420,4 +421,4 @@ const mockData = [
 ]
 
 
-console.log("sort by", sortBy(mockData, "review_count", true));
+console.log("sort by", sortBy(mockSearchData, "review_count", true));

@@ -30,6 +30,9 @@ const refinedReducer = (refinedResults, action) => {
     case ADD_REVIEWS: {
       return [...action.filteredCopy];
     }
+    case SORT: {
+      return [...action.filteredCopy];
+    }
     default:
       throw new Error('invalid refined type');
   }
@@ -106,12 +109,25 @@ const useRefinedData = () => {
     });
   };
 
+  const sortBy = (results, property, ascending) => {
+    return new Promise((res, rej) => {
+      let filteredCopy = [];
+      if (ascending) {
+        filteredCopy = results.sort((a, b) => a[property] - b[property]);
+      } else {
+        filteredCopy = results.sort((a, b) => b[property] - a[property]);
+      }
+      res(dispatch({ type: 'SORT', filteredCopy }));
+    });
+  }
+
   return {
     refinedResults,
     applyPriceFilter,
     setRefinedSeed,
     applyDistanceFilter,
-    applyAllFilters
+    applyAllFilters,
+    sortBy
   };
 };
 export default useRefinedData;

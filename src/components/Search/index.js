@@ -59,7 +59,6 @@ const Search = props => {
   };
 
   const setVenueAndAutoComplete = (text) => {
-    console.log("Set venue an auto called", text);
     if (text === "") {
       resetAutoComplete();
     }

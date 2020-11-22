@@ -36,7 +36,8 @@ export function YelpProvider({ children }) {
     setRefinedSeed,
     applyPriceFilter,
     applyAllFilters,
-    applyDistanceFilter } = useRefinedData();
+    applyDistanceFilter,
+    sortBy } = useRefinedData();
   const { mapState,
     addResults,
     hoverMarker,
@@ -63,6 +64,7 @@ export function YelpProvider({ children }) {
       applyPriceFilter,
       applyAllFilters,
       applyDistanceFilter,
+      sortBy,
       mapState,
       addResults,
       autoComplete,

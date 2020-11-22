@@ -19,9 +19,11 @@ export default function useYelpData() {
         "city": data.location.city,
         "zip_code": data.location.zip_code,
         "phone": data.display_phone,
-        "yelpRating": data.rating,
+        "yelpRating": data.rating.toFixed(1),
         "price": data.price,
         "reviews": [],
+        "reviewCount": 0,
+        "overall_rating": "N/A",
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
         "distance": data.distance,
@@ -43,10 +45,11 @@ export default function useYelpData() {
         "city": data.location.city,
         "zip_code": data.location.zip_code,
         "phone": data.display_phone,
-        "yelpRating": data.rating,
+        "yelpRating": data.rating.toFixed(1),
         "price": data.price,
         "reviews": [],
-        "reviewScore": '',
+        "reviewCount": 0,
+        "overall_rating": "N/A",
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
         "distance": data.distance,
@@ -72,6 +75,8 @@ export default function useYelpData() {
     distance: '',
     price: '',
     reviews: [],
+    reviewCount: 0,
+    overall_rating: NaN,
     delivery: false,
     is_closed:''
   }]);
@@ -90,7 +95,8 @@ export default function useYelpData() {
    distance: '',
    price: '',
    reviews: [],
-   reviewScore: '',
+   reviewCount: 0,
+   overall_rating: NaN,
    delivery: false,
    is_closed:'',
    hours: [],
@@ -100,14 +106,26 @@ export default function useYelpData() {
  
 
   const addReview = (query, reviews) => {
+    let ratingSum = 0;
    query.forEach((result, index) => {
    for (const review of reviews) {
     if (review.venue_id === result.id) {
-      query[index].reviews.unshift(review)
+      query[index].reviews.unshift(review);
+      query[index].reviewCount++;
+      ratingSum += Number(review.overall_rating);
       }
     }
-  })
-  return query
+    if (query[index].reviewCount > 0) {
+      console.log("rating sum", ratingSum);
+      console.log("count", query[index].reviewCount)
+      query[index].overall_rating = (ratingSum / query[index].reviewCount).toFixed(1);
+    }
+  })/* 
+  if (query.review.length) {
+    query.reviewCount = query.review.length;
+    query.overall_rating = query.reviews.reduce((acc, rating) => acc + rating, 0) / query.reviewCount;
+  } */
+  return query;
 };
 
    // function to get all business details        
@@ -121,7 +139,7 @@ export default function useYelpData() {
       const yelpData = all[0].data
       const parsedYelpData = getCoreYelpData(yelpData)
       all[1].data.forEach((data) => {
-        reviewArr.push(data)
+        reviewArr.push(data);
       })
       const yelpDataWithReviews = addReview(parsedYelpData, reviewArr)
       return setResults(yelpDataWithReviews) 
@@ -145,6 +163,15 @@ export default function useYelpData() {
         orderedReviews.unshift(review)
       })
       parsedBusinessData.reviews = orderedReviews;
+      parsedBusinessData.reviewCount = orderedReviews.length;
+      let ratingSum = 0;
+      for (const review of orderedReviews) {
+        ratingSum += Number(review.overall_rating);
+      }
+      if (orderedReviews.length > 0) {
+        parsedBusinessData.overall_rating = (ratingSum / orderedReviews.length).toFixed(1);
+      }
+      console.log("PARSE", parsedBusinessData);
       return setBusinessDetails(...[parsedBusinessData]); 
     })
   }

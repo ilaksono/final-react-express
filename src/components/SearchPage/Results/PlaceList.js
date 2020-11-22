@@ -6,17 +6,17 @@ import { useContext } from "react";
 
 const sortOptions = [
   {
-    id: "comfort_rating",
+    id: "overall_rating",
     value: "Comfort Rating",
     default: true
   },
   {
-    id: "number_of_reviews",
+    id: "reviewCount",
     value: "Number Of Reviews",
     default: false
   },
   {
-    id: "yelp_rating",
+    id: "yelpRating",
     value: "Yelp Rating",
     default: false
   }
@@ -26,7 +26,9 @@ const PlaceList = (props) => {
 
   const { refinedResults,
     hoverMarker,
-    notHoverMarker } 
+    notHoverMarker,
+    sortBy,
+    results } 
     = useContext(YelpContext);
 
   const placeList = refinedResults.map(place => {
@@ -36,11 +38,17 @@ const PlaceList = (props) => {
     />;
   });
 
+  const handleSort = (property) => {
+    console.log("calling handleSort w property", property, "results", results);
+    sortBy(results, property, false);
+  }
+  
+
   return (
     <div>
       <div className="search-title-container">
         <h2>Search Results</h2>
-        <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} />
+        <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
       </div>
       {placeList}
     </div>
