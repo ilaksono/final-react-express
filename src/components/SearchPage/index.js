@@ -19,7 +19,8 @@ const SearchPage = props => {
         value='toggle-switch'
         onClick={toggleFilterShow}
         style={{ position: 'fixed',
-        fontSize: 10
+        fontSize: 10,
+        borderRadius: 20
        }}
         variant="outlined"
         color="primary"
