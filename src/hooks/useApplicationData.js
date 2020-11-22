@@ -82,7 +82,7 @@ const useApplicationData = () => { // login and user state information
       });
   };
   const getTops = () => {
-    const width = '95%';
+    const width = '65%';
     const example = [];
     example.push({
       venue: 'Andrew',

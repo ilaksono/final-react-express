@@ -12,6 +12,7 @@ export default function ReviewList(props) {
     date={review.date}
     helpful_count={review.helpful_count}
     description={review.description}
+    id={review.id}
     />
   })
 

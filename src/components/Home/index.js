@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -123,6 +123,10 @@ const Home = () => {
                 variant="subtitle1"
                 color="inherit"
                 className={classes.imageTitle}
+                style={{ fontSize: 28,
+                  fontFamily: 'inherit'
+                }}
+
               >
                 {image.title}
                 <span className={classes.imageMarked} />
