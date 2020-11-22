@@ -147,7 +147,7 @@ const Home = () => {
         />
       </div>
       <div className='top-container'>
-        <span className='top-label'>Most Popular</span>
+        <span className='top-label'>It Filters Tho</span>
       </div>
       <div className='widget-container'>
 
