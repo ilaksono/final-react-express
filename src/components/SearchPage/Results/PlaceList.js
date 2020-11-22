@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 const sortOptions = [
   {
     id: "overall_rating",
-    value: "Comfort Rating",
+    value: "Safe Score",
     default: true
   },
   {
