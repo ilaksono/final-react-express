@@ -1,8 +1,23 @@
+import {useContext } from 'react';
 import { PowerOffSharp } from "@material-ui/icons";
-import 'styles/ReviewListItem.scss'
+import 'styles/ReviewListItem.scss';
+import { YelpContext } from 'YelpContext.js';
+import axios from 'axios';
 
 
 export default function ReviewListItem (props) {
+
+  const {businessDetails, setBusinessDetails } = useContext(YelpContext);
+
+
+  const updateHelpfulCount = (id) => {
+    return axios.post('/reviews/helpful', {id})
+    .then(() => {
+      const updatedBusinessDetails = {...businessDetails};
+      updatedBusinessDetails.reviews.map(review => review.id === id ? review.helpful_count += 1 : "")
+      setBusinessDetails(updatedBusinessDetails)
+    })
+  };
 
   return(
     <div class='review-container'>
@@ -21,7 +36,7 @@ export default function ReviewListItem (props) {
         </div>
       </div>
       <div class='helpful-count'>
-        <button>Helpful?</button>
+        <button onClick={() => {updateHelpfulCount(props.id, props.helpful_count)}}>Helpful?</button>
         <span>{props.helpful_count}</span>
       </div>
     </div>

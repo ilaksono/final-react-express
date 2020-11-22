@@ -25,7 +25,6 @@ export default function BusinessPage() {
   const { 
     businessDetails, 
     getIndividualBusinessData, 
-    setBusinessDetails
     } = useContext(YelpContext);
     
     const {id} = useParams();
@@ -34,11 +33,7 @@ export default function BusinessPage() {
       if(!businessDetails.id) {
         getIndividualBusinessData(id)
       }
-    });
-
-    // useEffect(() =>{
-    //   getIndividualBusinessData(id)
-    // }, [])
+    },[]);
 
       return (
         <div>

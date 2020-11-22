@@ -2,31 +2,29 @@ import PlaceListItem from "./PlaceListItem";
 import "styles/PlaceListItem.scss";
 import Sort from 'components/Sort';
 import { YelpContext } from 'YelpContext';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const sortOptions = [
   {
-    id: "comfort_rating",
-    value: "Comfort Rating",
-    default: true
+    id: "overall_rating",
+    value: "Safe Score"
   },
   {
-    id: "number_of_reviews",
-    value: "Number Of Reviews",
-    default: false
+    id: "reviewCount",
+    value: "Number Of Reviews"
   },
   {
-    id: "yelp_rating",
-    value: "Yelp Rating",
-    default: false
+    id: "yelpRating",
+    value: "Yelp Rating"
   }
 ];
 
 const PlaceList = (props) => {
-
   const { refinedResults,
     hoverMarker,
-    notHoverMarker } 
+    notHoverMarker,
+    sortBy,
+    results } 
     = useContext(YelpContext);
 
   const placeList = refinedResults.map(place => {
@@ -36,11 +34,16 @@ const PlaceList = (props) => {
     />;
   });
 
+  const handleSort = (property) => {
+    sortBy(results, property, false);
+  }
+  
+
   return (
     <div>
       <div className="search-title-container">
         <h2>Search Results</h2>
-        <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} />
+        <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
       </div>
       {placeList}
     </div>

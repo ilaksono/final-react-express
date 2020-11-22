@@ -28,7 +28,7 @@ const Sort = props => {
   };
 
   const items = props.sortOptions.map(option => {
-    return <MenuItem value={option.id}>{ option.value }</MenuItem>
+    return <MenuItem value={option.id} onClick={() => props.onClick(option.id)}>{ option.value }</MenuItem>
   })
 
 

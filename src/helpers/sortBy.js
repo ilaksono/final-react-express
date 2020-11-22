@@ -1,14 +1,16 @@
 const sortBy = (data, property, ascending) => {
+    console.log("data", data);
   if (ascending) {
-    return data.sort((a, b) => a[property] - b[property]);
+    return data.sort((a, b) => Number(a[property]) - Number(b[property]));
   } else {
-    return data.sort((a, b) => b[property] - a[property]);
+    return data.sort((a, b) => Number(b[property]) - Number(a[property]));
   }
 }
 
-sortBy(mockData, "review_count", true);
+sortBy(mockSearchData, "rating", true);
+sortBy(mockSearchData, "rating", true);
 
-const mockData = [
+const mockSearchData = [
   {
     "id": "0W4lkclzZThpx3V65bVgig",
     "alias": "schwartzs-montréal-4",
@@ -420,4 +422,4 @@ const mockData = [
 ]
 
 
-console.log("sort by", sortBy(mockData, "review_count", true));
+console.log("sort by", sortBy(mockSearchData, "review_count", true));

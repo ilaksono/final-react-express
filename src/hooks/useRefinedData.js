@@ -30,6 +30,9 @@ const refinedReducer = (refinedResults, action) => {
     case ADD_REVIEWS: {
       return [...action.filteredCopy];
     }
+    case SORT: {
+      return [...action.filteredCopy];
+    }
     default:
       throw new Error('invalid refined type');
   }
@@ -39,7 +42,6 @@ const initRefined = getCoreYelpData(mockData);
 const useRefinedData = () => {
   const [refinedResults, dispatch] =
     useReducer(refinedReducer, initRefined);
-
 
   const setRefinedSeed = (data) => {
     dispatch({ type: 'SEED', data });
@@ -155,12 +157,37 @@ const useRefinedData = () => {
     });
   };
 
+  const sortBy = (results, property, ascending) => {
+    return new Promise((res, rej) => {
+      let filteredCopy = [];
+      if (ascending) {
+        filteredCopy = results.sort((a, b) => {
+          if(isFinite(a[property] - b[property])) {
+            return a[property] - b[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
+      } else {
+        filteredCopy = results.sort((a, b) => {
+          if(isFinite(b[property] - a[property])) {
+            return b[property] - a[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
+      }
+      res(dispatch({ type: 'SORT', filteredCopy }));
+    });
+  }
+
   return {
     refinedResults,
     applyPriceFilter,
     setRefinedSeed,
     applyDistanceFilter,
-    applyAllFilters
+    applyAllFilters,
+    sortBy
   };
 };
 export default useRefinedData;
