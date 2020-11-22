@@ -28,7 +28,9 @@ export function YelpProvider({ children }) {
     getTops,
     authorizeUser,
     loginSubmit,
-    logout
+    logout,
+    userDetails,
+    setUserDetails,
   } = useApplicationData();
   const { results,
     setResults,
@@ -96,7 +98,7 @@ export function YelpProvider({ children }) {
       getTops,
       expandCategories,
       authorizeUser,
-      loginSubmit,
+      loginSubmit
       // openFilterClick
     }}>
       {children}

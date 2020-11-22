@@ -7,14 +7,17 @@ export const userData = [
   {
     username: 'Test User',
     email: 'test@test.ca',
-    password: 'password'
+    password: 'password',
+    likes:[]
   }
 ];
+
 const initReg = {
   username: '',
   email: '',
   password: '',
-  errMsg: ''
+  errMsg: '',
+  likes: []
 };
 const RegisterForm = (props) => {
   const [state, setState] = useState(initReg);
@@ -44,7 +47,8 @@ const RegisterForm = (props) => {
           userData.push({
             username: state.username,
             email: state.email,
-            password: state.password
+            password: state.password,
+            likes: state.likes
           });
           authorizeUser(state.username);
           history.push('/');

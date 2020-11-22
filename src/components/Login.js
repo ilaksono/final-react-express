@@ -6,7 +6,8 @@ import {useHistory} from 'react-router-dom';
 const initLogin = {
   email: '',
   password: '',
-  errMsg: ''
+  errMsg: '',
+  likes: []
 };
 
 const LoginForm = props => {

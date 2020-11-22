@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from 'axios';
-import BusinessPage from "../components/BusinessPage/index";
-import { Link } from 'react-router-dom';
+
 
 
 export default function useYelpData() {
@@ -35,7 +34,7 @@ export default function useYelpData() {
   };
 
   const getCoreBusinessData = (data) => {
-    let filteredData = [];
+    
       const filteredDataItems = {
         "id": data.id,
         "name": data.name,
@@ -94,6 +93,7 @@ export default function useYelpData() {
    longitude: 0.0,
    distance: '',
    price: '',
+   overall_rating: '',
    reviews: [],
    delivery: false,
    is_closed:'',
@@ -116,11 +116,7 @@ export default function useYelpData() {
       if (query[index].reviewCount > 0) {
         query[index].overall_rating = (ratingSum / query[index].reviewCount).toFixed(1);
       }
-    })/* 
-  if (query.review.length) {
-    query.reviewCount = query.review.length;
-    query.overall_rating = query.reviews.reduce((acc, rating) => acc + rating, 0) / query.reviewCount;
-  } */
+    });
   return query;
 };
 
@@ -158,6 +154,7 @@ export default function useYelpData() {
 
     const getIndividualBusinessData = (id) => {
       let orderedReviews = []
+      let ratingSum = 0;
     return Promise.all([
       axios.post(`/api/search_yelp/${id}`),
       axios.post(`/api/reviews/${id}`)
@@ -165,9 +162,13 @@ export default function useYelpData() {
       const businessData = all[0].data
       const parsedBusinessData = getCoreBusinessData(businessData);
       all[1].data.forEach(review => {
+        parsedBusinessData.reviewCount ++
+        ratingSum += Number(review.overall_rating)
         orderedReviews.unshift(review)
-      })
+      });
+      const overall_rating = (ratingSum/orderedReviews.length).toFixed(1);
       parsedBusinessData.reviews = orderedReviews;
+      parsedBusinessData.overall_rating = overall_rating;
       return setBusinessDetails(...[parsedBusinessData]); 
     })
   }

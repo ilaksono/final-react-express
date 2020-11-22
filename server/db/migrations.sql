@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS reviews CASCADE;
 
 CREATE TABLE reviews(
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER NOT NULL,
+  user_id VARCHAR(255) NOT NULL,
   venue_id VARCHAR(255) NOT NULL,
   date timestamp NOT NULL DEFAULT Now(),
   helpful_count INTEGER DEFAULT 0,

@@ -1,6 +1,6 @@
 import { Divider } from "@material-ui/core";
 import {useContext, useEffect} from 'react';
-import {useLocation, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
 import React from 'react';
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewList from './ReviewList';
 import "styles/BusinessPage.scss"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +27,7 @@ export default function BusinessPage() {
   const { 
     businessDetails, 
     getIndividualBusinessData, 
+    appState
     } = useContext(YelpContext);
     
     const {id} = useParams();
@@ -34,11 +36,7 @@ export default function BusinessPage() {
       if(!businessDetails.id) {
         getIndividualBusinessData(id)
       }
-    });
-
-    // useEffect(() =>{
-    //   getIndividualBusinessData(id)
-    // }, [])
+    },[]);
 
       return (
         <div>
@@ -50,17 +48,12 @@ export default function BusinessPage() {
           {businessDetails.photos && <img src={businessDetails.photos[2]} lass='place-imgs-3'/>}
       </div>
       <div class='info-section'>
-        <div class='title'>
-          <span>{businessDetails.name}</span><br/>
-          <span>Comfort Rating</span><br/>
-          <span>Yelp Rating</span>
-        </div>
-        <NewReview venue_id={id} name={businessDetails.name} />
+        {appState.authorized === true && <NewReview venue_id={id} name={businessDetails.name} />}
         <div class='info-section'>
           <div class='title'>
             <span>{businessDetails.name}</span><br/>
-            <span>Comfort Rating</span><br/>
-            <span>Yelp Rating</span>
+            <span>Safe Score: {businessDetails.overall_rating}</span><br/>
+            <span>Yelp Rating: {businessDetails.yelpRating}</span>
           </div>
           <div class='contact-info'> 
             <span>{businessDetails.address}</span> <br/>
