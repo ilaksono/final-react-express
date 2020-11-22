@@ -93,46 +93,51 @@ const useRefinedData = () => {
       //     res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
       //   }
       // } else {
-        if (filters.categories.length > 0
-          && results.some((res) => res.price)) {
-          const filteredCopy = [];
-          results.forEach((biz) => {
-            if(filters.allCats && filters.allPrice)
+      if (filters.categories.length > 0
+        && results.some((res) => res.price)) {
+        const filteredCopy = [];
+        results.forEach((biz) => {
+
+          if (filters.allCats && filters.allPrice)
+            filteredCopy.push(biz);
+          else if (filters.allPrice
+            && biz.categories.some(cat => filters.catsSelected.includes(cat))
+            && biz.distance < filters.distance)
+            filteredCopy.push(biz);
+          else if (filters.catsSelected.length < 1) {
+            if (filters.price.includes(biz.price)
+              && biz.distance < filters.distance)
               filteredCopy.push(biz);
-            else if (filters.catsSelected.length < 1) {
-              if (filters.price.includes(biz.price)
-                && biz.distance < filters.distance)
-                filteredCopy.push(biz);
-              else if (biz.price === undefined
-                && biz.distance < filters.distance)
-                filteredCopy.push(biz);
-            }
-            else if (filters.price.includes(biz.price)
-              && biz.distance < filters.distance
-              && filters.catsSelected.some(cat =>
-                biz.categories.includes(cat)))
+            else if (biz.price === undefined
+              && biz.distance < filters.distance)
               filteredCopy.push(biz);
-            else if (biz.price === undefined &&
-              filters.price.length > 3 &&
-              filters.catsSelected.some(cat =>
-                biz.categories.includes(cat)) &&
-              biz.distance < filters.distance)
+          }
+          else if (filters.price.includes(biz.price)
+            && biz.distance < filters.distance
+            && filters.catsSelected.some(cat =>
+              biz.categories.includes(cat)))
+            filteredCopy.push(biz);
+          else if (biz.price === undefined &&
+            filters.price.length > 3 &&
+            filters.catsSelected.some(cat =>
+              biz.categories.includes(cat)) &&
+            biz.distance < filters.distance)
+            filteredCopy.push(biz);
+        });
+        res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
+      } else {
+        const filteredCopy = [];
+        results.forEach((biz) => {
+          if (filters.catsSelected.length < 1) {
+            if (biz.distance < filters.distance)
               filteredCopy.push(biz);
-          });
-          res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
-        } else {
-          const filteredCopy = [];
-          results.forEach((biz) => {
-            if (filters.catsSelected.length < 1) {
-              if (biz.distance < filters.distance)
-                filteredCopy.push(biz);
-            } else if (biz.distance < filters.distance
-              && filters.catsSelected.some(cat =>
-                biz.categories.includes(cat)))
-              filteredCopy.push(biz);
-          });
-          res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
-        }
+          } else if (biz.distance < filters.distance
+            && filters.catsSelected.some(cat =>
+              biz.categories.includes(cat)))
+            filteredCopy.push(biz);
+        });
+        res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
+      }
       // }
     });
   };
@@ -162,7 +167,7 @@ const useRefinedData = () => {
       let filteredCopy = [];
       if (ascending) {
         filteredCopy = results.sort((a, b) => {
-          if(isFinite(a[property] - b[property])) {
+          if (isFinite(a[property] - b[property])) {
             return a[property] - b[property];
           } else {
             return isFinite(a[property]) ? -1 : 1;
@@ -170,7 +175,7 @@ const useRefinedData = () => {
         });
       } else {
         filteredCopy = results.sort((a, b) => {
-          if(isFinite(b[property] - a[property])) {
+          if (isFinite(b[property] - a[property])) {
             return b[property] - a[property];
           } else {
             return isFinite(a[property]) ? -1 : 1;
@@ -179,7 +184,7 @@ const useRefinedData = () => {
       }
       res(dispatch({ type: 'SORT', filteredCopy }));
     });
-  }
+  };
 
   return {
     refinedResults,
