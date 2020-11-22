@@ -33,7 +33,7 @@ function App() {
       <YelpProvider>
         <Router>
           <NavBar loadSearch />
-          <div class='spacer'> 
+          <div className='spacer'> 
           </div>
           <Switch>
             <Route exact path='/' >

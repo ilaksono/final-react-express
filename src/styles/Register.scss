@@ -1,0 +1,30 @@
+@import './helper';
+
+.register-container {
+  @include flexbox(column, center, center); 
+  padding-top: 30px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: $white;
+  border-radius: 15px;
+  border: solid rgb(109, 177, 233) 2px;
+  outline: none;
+
+}
+
+.user-input-item {
+  margin: 20px;
+  outline: none;
+  border: none;
+  width: 80%;
+  height: 20px;
+  padding-top: 5px;
+    padding-bottom: 5px;
+
+  background-color: inherit;
+  border-bottom: 1px solid black;
+}
+.user-input-btn {
+  
+}

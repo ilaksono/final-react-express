@@ -75,7 +75,7 @@ const useFilter = () => {
       cpy.splice(cpy.indexOf(value), 1);
       if (type === 'price')
         return setFilters({ ...filters, [type]: cpy, allPrice: false });
-      else if (type === 'categories')
+      else if (type === 'catsSelected')
         return setFilters({ ...filters, [type]: cpy, allCats: false });
 
     } else {

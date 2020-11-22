@@ -1,5 +1,5 @@
 import 'styles/SearchPage.scss';
-import { useContext, useState, useEffect } from 'react';
+import { Fragment, useContext, useState, useEffect } from 'react';
 import FilterBar from "./Filter/FilterBar";
 import Results from "./Results";
 import Map from "./Map";
@@ -35,9 +35,12 @@ const SearchPage = props => {
         color="primary"
       > All </Button>}
       {filters.show &&
-        <FilterBar
+       <>
+       <FilterBar
         />
-      }
+      <div className='filter-spacer'>
+        </div>
+        </>}
       <Results />
       <Map />
     </div>
