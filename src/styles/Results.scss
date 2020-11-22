@@ -4,8 +4,13 @@
   @include flexbox(row, center, center);
   min-width: 400px;
   flex-grow: 1;
+  overflow-y: scroll;
   background-color: white;
   height: calc(100vh - 60px);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .articles-container{

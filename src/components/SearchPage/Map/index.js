@@ -7,7 +7,7 @@ import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
   width: '400px',
-  height: '578px'
+  height: '100vh'
 };
 
 const Map = props => {
@@ -35,10 +35,15 @@ const Map = props => {
   };
 
 
+  const indexOfLastResult = props.currentPage * props.resultsPerPage;
+  const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
+  const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
+
   let parsedMarkers = [];
 
   if (mapState.places.length) {
-    parsedMarkers = mapState.places.map((coord, ind) => {
+    parsedMarkers = currentResults.map((coord, ind) => {
+      console.log("index", ind);
       return (
         <MarkerComponent key={ind} {...coord} />
       );

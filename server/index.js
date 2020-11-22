@@ -35,7 +35,7 @@ app.post("/api/search_yelp", (req, res) => {
     .search({
       term: req.body.venue,
       location: req.body.location,
-      limit: 5
+      limit: 11
     }).then(response => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
       let bus = response.jsonBody.businesses;
