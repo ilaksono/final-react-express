@@ -96,6 +96,7 @@ const Search = props => {
           data={autoComplete}
           setAutoCompleteFalse={setAutoCompleteFalse}
           onClick={setVenueAndHandleSearch}
+          isHome={props.isHome}
         />
       }
       <Location location={location} onChange={setLocation} />

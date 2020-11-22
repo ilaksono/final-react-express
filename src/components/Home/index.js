@@ -142,7 +142,7 @@ const Home = () => {
     <div className='home-layout'>
       <div className='search-home-container'>
         <Search
-        isHome
+          isHome={true}
           buttonMessage={<i class="fas fa-search"></i>}
         />
       </div>

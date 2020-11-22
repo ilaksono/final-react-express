@@ -25,7 +25,7 @@ const NavBar = (props) => {
       </div>
       {!isHome &&
         props.loadSearch && (
-          <Search buttonMessage={<i class="fas fa-search"></i>}
+          <Search isHome={false} buttonMessage={<i class="fas fa-search"></i>}
           />
         )}
       {appState.authorized ?
