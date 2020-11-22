@@ -17,13 +17,18 @@ export function YelpProvider({ children }) {
     getPriceFilterMode,
     setCategoriesSelected,
     expandCategories,
-    toggleFilterShow } = useFilter();
+    toggleFilterShow,
+    // openFilterClick 
+  } = useFilter();
 
   const {
     appState,
     submitHandle,
     tops,
-    getTops
+    getTops,
+    authorizeUser,
+    loginSubmit,
+    logout
   } = useApplicationData();
   const { results,
     setResults,
@@ -85,8 +90,12 @@ export function YelpProvider({ children }) {
       populateCenter,
       getCenterPan,
       tops,
+      logout,
       getTops,
-      expandCategories
+      expandCategories,
+      authorizeUser,
+      loginSubmit,
+      // openFilterClick
     }}>
       {children}
     </YelpContext.Provider>

@@ -1,10 +1,11 @@
-import { useReducer, useEffect, useState, useCallback } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import axios from 'axios';
 import appReducer, {
   AUTHORIZE,
   CREATE,
   DELETE,
-  INIT_CENTER
+  INIT_CENTER,
+  LOGOUT
 } from 'reducers/appReducer';
 // const socket = new WebSocket('');
 
@@ -21,12 +22,6 @@ const initApp = {
   name: '',
   center: {}
 };
-
-const fakeLogins = [{
-  email: 'test@test.ca',
-  password: 'asd'
-}];
-
 const useApplicationData = () => { // login and user state information
   const [appState, dispatch] = useReducer(appReducer, initApp);
   const [tops, setTops] = useState(initTops);
@@ -70,16 +65,29 @@ const useApplicationData = () => { // login and user state information
       dispatch({ type: DELETE });
     }
   };
+  const loginSubmit = ({ email, password }, users) => {
+    for (const user of users) {
+      if (user.email === email && user.password === password)
+        return user.username;
+    }
+    return false;
+  };
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+  };
 
-  const submitHandle = (email, password) => {
-    axios
-      .post({ data: { email, password }, url: '/api/login' })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.auth) {
-          dispatch({ type: AUTHORIZE, name: email.split('@')[0].join('') });
-        }
-      });
+  // const submitHandle = (email, password) => {
+  //   axios
+  //     .post({ data: { email, password }, url: '/api/login' })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data.auth) {
+  //         dispatch({ type: AUTHORIZE, name: email.split('@')[0].join('') });
+  //       }
+  //     });
+  // };
+  const authorizeUser = (name) => {
+    dispatch({ type: AUTHORIZE, name });
   };
   const getTops = () => {
     const width = '65%';
@@ -124,19 +132,16 @@ const useApplicationData = () => { // login and user state information
       });
   };
 
-  // useEffect(() => {
-  //   axios
-  //   .get('/api/center')
-  //   .then((data) => console.log(data))
-  // })
-
   return {
-    submitHandle,
+    // submitHandle,
     appState,
     createHandle,
     deleteHandle,
     tops,
-    getTops
+    getTops,
+    authorizeUser,
+    loginSubmit,
+    logout
   };
 
 };

@@ -9,7 +9,10 @@ const initFilter = {
   open: false,
   mode: false,
   show: false,
-  expandCats: false
+  expandCats: false,
+  allPrice: true,
+  allCats: true,
+  // isOpen: false
 };
 
 const useFilter = () => {
@@ -45,37 +48,48 @@ const useFilter = () => {
     if (filters[type].length <= 1) {
       if (type === 'price') {
         if (filters.price.includes(value))
-          return setFilters({ ...filters, price: ['$', '$$', '$$$', '$$$$'] });
-        else
-          return setFilters({ ...filters, price: [...filters.price, value] });
+          return setFilters({ ...filters, price: ['$', '$$', '$$$', '$$$$'], allPrice: true });
+        else if (filters.allPrice) {
+          return setFilters({...filters, price: [value], allPrice: false})
+        } else
+          return setFilters({ ...filters, price: [...filters.price, value], allPrice: false });
       } else if (type === 'catsSelected') {
         if (filters.catsSelected.includes(value))
-          return setFilters({ ...filters, catsSelected: [...filters.categories] });
+          return setFilters({ ...filters, catsSelected: [...filters.categories], allCats: true });
         else
-          return setFilters({ ...filters, catsSelected: [...filters.catsSelected, value] });
+          return setFilters({ ...filters, catsSelected: [...filters.catsSelected, value], allCats: false });
       }
     }
     if (type === 'catsSelected') {
       if (filters.catsSelected.length === filters.categories.length) {
-        return setFilters({ ...filters, catsSelected: [value] });
+        return setFilters({ ...filters, catsSelected: [value], allCats: false });
       }
     }
+    if (type === 'price' && filters.price.length === 3)
+      return setFilters({ ...filters, price: [...filters.price, value], allPrice: true });
     if (type === 'price' && filters.price.length === 4)
-      return setFilters({ ...filters, price: [value] });
+      return setFilters({ ...filters, price: [value], allPrice: false });
     if (filters[type].includes(value)) {
       const cpy = [...filters[type]];
       // cpy[value] = !cpy[value];
       cpy.splice(cpy.indexOf(value), 1);
-      return setFilters({ ...filters, [type]: cpy });
+      if (type === 'price')
+        return setFilters({ ...filters, [type]: cpy, allPrice: false });
+      else if (type === 'categories')
+        return setFilters({ ...filters, [type]: cpy, allCats: false });
+
     } else {
       const cpy = [...filters[type]];
       cpy.push(value);
-      return setFilters({ ...filters, [type]: [...cpy] });
+      return setFilters({ ...filters, [type]: [...cpy], allCats: false, allPrice: false });
     }
   };
   const distanceFilterClick = (value) => {
     setFilters({ ...filters, distance: value });
   };
+  // const openFilterClick = () => {
+  //   setFilters({...filters, isOpen: !filters.isOpen})
+  // }
 
   const resetFilters = () => {
     setFilters(initFilter);
@@ -88,16 +102,16 @@ const useFilter = () => {
     });
   };
   const toggleFilterShow = () => {
-    setFilters({...filters, show: !filters.show})
+    setFilters({ ...filters, show: !filters.show });
 
-  }
+  };
   const setCategoriesSelected = () => {
     setFilters({ ...filters, catsSelected: [...filters.categories] });
   };
 
   const expandCategories = () => {
-    setFilters({...filters, expandCats: !filters.expandCats})
-  }
+    setFilters({ ...filters, expandCats: !filters.expandCats });
+  };
 
 
   return {
@@ -109,7 +123,8 @@ const useFilter = () => {
     getPriceFilterMode,
     setCategoriesSelected,
     toggleFilterShow,
-    expandCategories
+    expandCategories,
+    // openFilterClick
   };
 };
 

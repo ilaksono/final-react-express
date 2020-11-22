@@ -4,22 +4,22 @@
   border-radius: 15px;
   cursor: pointer;
   background-color: rgb(255, 245, 244);
-  width: 30px;
+  width: 40px;
   border: none; 
   color: $white;
 }
 
 .price-selected-true {
-  background-color: rgb(219, 255, 219);
+  background-color: $white;
   color: $purple;
 }
 .distance-selected-true {
-  background-color: rgb(211, 211, 247);
+  background-color: $white;
   color: $purple;
   
 }
 .category-selected-true {
-  background-color: rgb(217, 245, 255);
+  background-color: $white;
   color: $purple;
   
 }

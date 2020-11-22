@@ -1,6 +1,8 @@
 import Button from 'components/Button';
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
+import { YelpContext } from 'YelpContext';
+import { userData } from './Register.js';
+import {useHistory} from 'react-router-dom';
 const initLogin = {
   email: '',
   password: '',
@@ -10,24 +12,42 @@ const initLogin = {
 const LoginForm = props => {
 
   const [login, setLogin] = useState(initLogin);
+  const {
+    authorizeUser,
+    loginSubmit
+  } = useContext(YelpContext);
+  const handleChange = (type, val) => {
+    setLogin({ ...login, errMsg: '', [type]: val });
+  };
+  const history = useHistory();
+  const validate = () => {
 
-  const validate = (event, { email, password }) => {
-    event.preventDefault();
-    if (!email || !password)
+    const { email, password } = login;
+    if (!email || !password) {
       return setLogin({
         ...login,
+        password: '',
         errMsg: 'Fields cannot be empty'
       });
-    return props.submitHandle(email, password);
+    }
+    if (loginSubmit(login , userData)) {
+      authorizeUser(loginSubmit( login , userData));
+      history.push('/')
+      setLogin(initLogin)
+    } else setLogin({ ...login, errMsg: 'Failed login attempt!' });
   };
 
   return (
     <div className='login__container'>
       <form onSubmit={event => event.preventDefault()}>
         <label>I Am Login Form</label>
-        <input name='email' type='email' value={login.email} onChange={event => setLogin({ ...login, email: event.target.value })} />
-        <input name='password' type='password' value={login.password} onChange={event => setLogin({ ...login, password: event.target.value })} />
-        <Button onClick={(event, login) => validate(event, login)} />
+        <input name='email' type='email' value={login.email} onChange={event => handleChange('email', event.target.value)} />
+        <input name='password' type='password'
+          value={login.password}
+          onChange={event =>
+            handleChange('password', event.target.value)} />
+        <Button onClick={validate} message='Login' confirm />
+        {login.errMsg && <div>{login.errMsg}</div>}
       </form>
     </div>);
 };

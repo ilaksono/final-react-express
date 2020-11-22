@@ -10,9 +10,18 @@ import Icon from '@material-ui/core/Icon';
 
 const SearchPage = props => {
   const { filters, toggleFilterShow } = useContext(YelpContext);
+  const [scroll, setScroll] = useState(0);
+  useEffect(() => {
+    const a = window.addEventListener('scroll', (event) => {
+      setScroll(window.pageYOffset)
+    })
+
+    return window.removeEventListener('scroll', a);
+  }, [])
+
   return (
     <div className="search-page-layout">
-      {window.pageYOffset < 150 && 
+      {scroll < 150 && 
       <Button name='toggle'
         className='show-filters'
         endIcon={<Icon>send</Icon>}
