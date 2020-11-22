@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewList from './ReviewList';
 import "styles/BusinessPage.scss"
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -33,7 +34,11 @@ export default function BusinessPage() {
       if(!businessDetails.id) {
         getIndividualBusinessData(id)
       }
-    },[]);
+    });
+
+    // useEffect(() =>{
+    //   getIndividualBusinessData(id)
+    // }, [])
 
       return (
         <div>

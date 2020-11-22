@@ -104,14 +104,14 @@ const useApplicationData = () => { // login and user state information
 
     });
     example.push({
-      venue: 'Poop',
-      title: 'Poop',
+      venue: 'Safe',
+      title: 'Safe',
       width
 
     });
     example.push({
-      venue: 'Orgy',
-      title: 'Orgy',
+      venue: 'Space',
+      title: 'Space',
       width
 
     });
