@@ -136,3 +136,11 @@ app.post("/reviews/new", (req, res) => {
   })
   .catch(error => console.log(error));
 })
+
+app.post("/reviews/helpful", (req, res) => {
+  dbHelpers.updateHelpfulCount(req.body.id)
+    .then(response => {
+      res.send(response)
+    })
+    .catch(err => {console.log(err)})
+  })

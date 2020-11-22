@@ -49,11 +49,25 @@ module.exports = (db) => {
       .then(response => {
         return response.rows;
       });
-  }
+  };
+
+  const updateHelpfulCount = (id) => {
+    const queryString = `
+    UPDATE reviews
+    SET helpful_count = helpful_count + 1
+    where id = $1;
+    `;
+    const queryParams = [id]
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      })
+  };
 
   return {
     getAllReviews,
     submitReview,
-    getReviewsPerBusiness
+    getReviewsPerBusiness,
+    updateHelpfulCount
   };
 };
