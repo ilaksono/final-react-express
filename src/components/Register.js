@@ -19,7 +19,8 @@ const initReg = {
   username: '',
   email: '',
   password: '',
-  errMsg: ''
+  errMsg: '',
+  errType: '',
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -38,22 +39,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = (props) => {
+
   const [state, setState] = useState(initReg);
   const classes = useStyles();
   const {
     authorizeUser
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!username || !email || !password) {
-      setState({ ...state, errMsg: 'Fields cannot be empty!' });
-      return false;
-    } else if (userData.some(user =>
+      if (!username) {
+        setState({ ...state, errMsg: 'Username cannot be empty!', errType: 'username' });
+        return false;
+      }
+      else if (!email) {
+        setState({ ...state, errMsg: 'Email cannot be empty!', errType: 'email' });
+        return false;
+      }
+      else if (!password) {
+        setState({ ...state, errMsg: 'Password cannot be empty!', errType: 'password' });
+        return false;
+      }
+    } else if (!re.test(String(state.email).toLowerCase())) {
+      setState({ ...state, errMsg: 'Invalid email' });
+    }
+    else if (userData.some(user =>
       user.email === email)) {
-      setState({ ...state, errMsg: 'Email already in use!' });
+      setState({ ...state, errMsg: 'Email already in use!', errType: 'email' });
       return false;
     } else if (userData.some(user =>
       user.username === username)) {
-      setState({ ...state, errMsg: 'Username already in use!' });
+      setState({ ...state, errMsg: 'Username already in use!', errType: 'username' });
       return false;
     } else return true;
   };
@@ -62,6 +79,7 @@ const RegisterForm = (props) => {
   };
 
   const handleClick = () => {
+
     if (validate(state))
       axiosRegister(state)
         .then((res) => {
@@ -72,7 +90,7 @@ const RegisterForm = (props) => {
           });
           authorizeUser(state.username);
           setState(initReg);
-          props.setModal(prev => ({ ...prev, regOpen: false }))
+          props.setModal(prev => ({ ...prev, regOpen: false }));
 
 
         });
@@ -84,7 +102,7 @@ const RegisterForm = (props) => {
   };
 
   const handleChange = (event, type) => {
-    setState({ ...state, [type]: event.target.value });
+    setState({ ...state, [type]: event.target.value, errMsg: '', errType: '' });
   };
 
   return (
@@ -104,15 +122,15 @@ const RegisterForm = (props) => {
         <Fade in={props.modal.regOpen}>
           <div className='register-container'>
             <input placeholder='Username' type='text' value={state.username} onChange={(event) =>
-              handleChange(event, 'username')} className='user-input-item' />
+              handleChange(event, 'username')} className={`user-input-item${state.errType === 'username' ? ' error-input' : ''}`} />
             <input type='email' placeholder='Email@gmail.com' value={state.email} onChange={(event) =>
-              handleChange(event, 'email')} className='user-input-item' />
+              handleChange(event, 'email')} className={`user-input-item${state.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={state.password} onChange={(event) =>
-              handleChange(event, 'password')} className='user-input-item' />
+              handleChange(event, 'password')} className={`user-input-item${state.errType === 'password' ? ' error-input' : ''}`} />
             <Button onClick={() => handleClick()}
               variant='contained' color='primary'
               className='user-input-btn'>Register</Button>
-            {state.errMsg && state.errMsg}
+            <div className='error'> {state.errMsg && state.errMsg}</div>
           </div>
         </Fade>
       </Modal>

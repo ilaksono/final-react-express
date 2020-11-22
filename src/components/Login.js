@@ -12,7 +12,8 @@ import { Button } from '@material-ui/core';
 const initLogin = {
   email: '',
   password: '',
-  errMsg: ''
+  errMsg: '',
+  errType: ''
 };
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -39,20 +40,35 @@ const LoginForm = props => {
     setLogin({ ...login, errMsg: '', [type]: val });
   };
   const validate = () => {
-
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const { email, password } = login;
     if (!email || !password) {
-      return setLogin({
-        ...login,
-        password: '',
-        errMsg: 'Fields cannot be empty'
-      });
+      if (!email) {
+        return setLogin({
+          ...login,
+          password: '',
+          errMsg: 'Email cannot be empty',
+          errType: 'email'
+        });
+      }
+      else if (!password) {
+        return setLogin({
+          ...login,
+          password: '',
+          errMsg: 'Password cannot be empty',
+          errType: 'password'
+
+        });
+      }
     }
-    if (loginSubmit(login , userData)) {
-      authorizeUser(loginSubmit( login , userData));
-      setLogin(initLogin)
-      props.setModal(prev => ({...prev, logOpen: false}))
-    } else setLogin({ ...login, errMsg: 'Failed login attempt!' });
+    if (loginSubmit(login, userData)) {
+      authorizeUser(loginSubmit(login, userData));
+      setLogin(initLogin);
+      props.setModal(prev => ({ ...prev, logOpen: false }));
+    } else if (!re.test(String(login.email).toLowerCase())) {
+      setLogin({ ...login, errMsg: 'Invalid email' });
+    }
+    else setLogin({ ...login, errMsg: 'Failed login attempt!' });
   };
   const handleClose = () => {
     props.setModal(prev => ({ ...prev, logOpen: false }));
@@ -75,18 +91,18 @@ const LoginForm = props => {
         <Fade in={props.modal.logOpen}>
           <div className='register-container'>
             <input type='email' placeholder='Email@gmail.com' value={login.email} onChange={(event) =>
-              handleChange(event.target.value, 'email')} className='user-input-item' />
+              handleChange(event.target.value, 'email')} className={`user-input-item${login.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={login.password} onChange={(event) =>
-              handleChange(event.target.value, 'password')} className='user-input-item' />
+              handleChange(event.target.value, 'password')} className={`user-input-item${login.errType === 'password' ? ' error-input' : ''}`} />
             <Button onClick={validate}
               variant='contained' color='primary'
               className='user-input-btn'>Login</Button>
-            {login.errMsg && login.errMsg}
+            <div className='error'> {login.errMsg && login.errMsg}</div>
           </div>
         </Fade>
       </Modal>
     </>
-    );
+  );
 };
 
 export default LoginForm;
