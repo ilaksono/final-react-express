@@ -7,18 +7,15 @@ import { useContext, useEffect } from "react";
 const sortOptions = [
   {
     id: "overall_rating",
-    value: "Safe Score",
-    default: true
+    value: "Safe Score"
   },
   {
     id: "reviewCount",
-    value: "Number Of Reviews",
-    default: false
+    value: "Number Of Reviews"
   },
   {
     id: "yelpRating",
-    value: "Yelp Rating",
-    default: false
+    value: "Yelp Rating"
   }
 ];
 
