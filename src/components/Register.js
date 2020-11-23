@@ -14,7 +14,8 @@ export const userData = [
     email: 'test@test.ca',
     password: 'password',
     img:'https://i.imgur.com/LpaY82x.png',
-    likes:[]
+    likes:[],
+    
   },
   {
     username: 'Test User1',
@@ -86,7 +87,6 @@ export const userData = [
     img: 'https://i.imgur.com/TdOAdde.jpg',
     likes: []
   },
-
 ];
 
 const initReg = {

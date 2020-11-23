@@ -5,10 +5,10 @@
 }
 
 .articles-container{
-  overflow-y: scroll;
   width: 100%;
   padding-top: 8px;
   height: calc(100vh - 260px);
+  overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
 }

@@ -20,4 +20,10 @@
 .pagination-container {
   @include flexbox(row, center, center);
   margin-bottom: 20px;
+  color: transparent;
+}
+.search-title-container {
+  height: 10%;
+  margin: 0;
+  margin-left: 10%;
 }

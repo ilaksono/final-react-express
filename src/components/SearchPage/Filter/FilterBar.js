@@ -110,7 +110,8 @@ const FilterBar = (props) => {
                   color="default"
                   onClick={expandCategories}
                   style={{
-                    fontSize: 10
+                    fontSize: 10,
+                    marginTop:10
                   }}>
                   More
               </Button>}
@@ -123,7 +124,8 @@ const FilterBar = (props) => {
                   color="default"
                   onClick={expandCategories}
                   style={{
-                    fontSize: 10
+                    fontSize: 10,
+                    marginTop: 10
                   }}>
                   Less
               </Button>
