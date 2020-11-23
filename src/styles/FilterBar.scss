@@ -5,13 +5,13 @@
   width: calc((100% - 400px) * 0.3);
   max-width: 320px;
   height: calc(100vh - 60px);
-  background-color: beige;
+  background-color: #FFFFFF;
   position: fixed;
   top: 60px;
-  border-right: 3px solid $purple;
-  @include flexbox(column, flex-start, center);
-  border-bottom-right-radius: 30px;
-  border-top-right-radius: 30px;
+  @include flexbox(column, flex-start, center);  
+  -moz-box-shadow:    1px 0px 5px 3px gray;
+  -webkit-box-shadow: 1px 0px 5px 3px gray;
+  box-shadow:         1px 0px 5px 3px gray;
 }
 
 .price-filter-container {

@@ -1,8 +1,7 @@
 import PlaceListItem from "./PlaceListItem";
 import "styles/PlaceListItem.scss";
-import Sort from 'components/Sort';
 import { YelpContext } from 'YelpContext';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 
 const PlaceList = (props) => {
