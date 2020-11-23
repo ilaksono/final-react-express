@@ -4,8 +4,7 @@ import 'styles/VenueAutoComplete.scss';
 const VenueAutoComplete = props => {
   const wrapperRef = useRef(null);
 
-  const cls = `${props.isHome && 
-    'home-'}autocomplete-container`
+  const cls = `${ props.isHome === true ? "home-autocomplete-container" : "venue-autocomplete-container" }`;
 
   // below is the same as componentDidMount and componentDidUnmount
   useEffect(() => {

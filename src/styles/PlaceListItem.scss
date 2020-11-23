@@ -11,12 +11,22 @@
   text-align: left;
 }
 
-
 .venue-image {
   height: 120px;
   width: 120px;
   float: left;
   margin: 10px;
+}
+
+
+.articles-container{
+  overflow-y: scroll;
+  width: 100%;
+  height: calc(100vh - 260px);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .general-info {
@@ -66,7 +76,7 @@
 
 .search-title-container {
   @include flexbox(row, space-between, center);
-  margin: 20px 20px 30px 20px;
+  margin: 0px 20px 10px 20px;
   padding: 0px 10px 20px 10px;
   border-bottom: 1px solid $gray-line;
 }

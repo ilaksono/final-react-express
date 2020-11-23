@@ -8,11 +8,22 @@ import SearchPage from 'components/SearchPage';
 import React from 'react';
 import { YelpProvider } from './YelpContext';
 import BusinessPage from "components/BusinessPage/index";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#1E0253',
+    },
+    secondary: {
+      main: '#FF717C',
+    }
+  }
+});
 
 function App() {
 
@@ -31,28 +42,30 @@ function App() {
   return (
     <div className="layout">
       <YelpProvider>
-        <Router>
-          <NavBar loadSearch />
-          <div className='spacer'> 
-          </div>
-          <Switch>
-            <Route exact path='/' >
-              <Home />
-            </Route>
-            <Route path='/register' >
-              <Register />
-            </Route>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route exact path='/search'>
-              <SearchPage />
-            </Route>
-            <Route path='/search/:id'>
-              <BusinessPage />
-            </Route>
-          </Switch>
-        </Router>
+        <MuiThemeProvider theme={theme}>
+          <Router>
+            <NavBar loadSearch />
+            <div class='spacer'> 
+            </div>
+            <Switch>
+              <Route exact path='/' >
+                <Home />
+              </Route>
+              <Route path='/register' >
+                <Register />
+              </Route>
+              <Route path='/login'>
+                <Login />
+              </Route>
+              <Route exact path='/search'>
+                <SearchPage />
+              </Route>
+              <Route path='/search/:id'>
+                <BusinessPage />
+              </Route>
+            </Switch>
+          </Router>
+        </MuiThemeProvider>
       </YelpProvider>
     </div>
   );

@@ -8,7 +8,7 @@ const initFilter = {
   distance: 50000,
   open: false,
   mode: false,
-  show: false,
+  show: true,
   expandCats: false,
   allPrice: true,
   allCats: true,

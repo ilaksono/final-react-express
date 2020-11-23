@@ -37,7 +37,9 @@ export function YelpProvider({ children }) {
     yelpSearch,
     businessDetails,
     setBusinessDetails,
-    getIndividualBusinessData } = useYelpData();
+    getIndividualBusinessData,
+    loadingSearch,
+    setLoadingSearch } = useYelpData();
 
   const { refinedResults,
     setRefinedSeed,
@@ -96,7 +98,9 @@ export function YelpProvider({ children }) {
       getTops,
       expandCategories,
       authorizeUser,
-      loginSubmit
+      loginSubmit,
+      loadingSearch,
+      setLoadingSearch
       // openFilterClick
     }}>
       {children}

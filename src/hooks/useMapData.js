@@ -22,12 +22,8 @@ const useMapData = () => {
 
   const addResults = (refined) => {
     // if (refined.length > 0) {
-    const results = refined.map(biz =>
-      ({
-        lat: biz.latitude,
-        lng: biz.longitude, id: biz.id,
-        hover: false
-      }));
+    const results = refined.map((biz, index) =>
+      ({ lat: biz.latitude, lng: biz.longitude, id: biz.id, hover: false, label: index + 1}));
     dispatch({ type: ADD_RESULTS, results });
     // }
   };

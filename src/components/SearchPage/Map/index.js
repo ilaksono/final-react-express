@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState } from 'react';
+import { useContext, useCallback, useEffect, useState } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
   width: '400px',
-  height: '578px'
+  height: 'calc(100vh - 60px)'
 };
 
 const Map = props => {
@@ -18,7 +18,8 @@ const Map = props => {
     appState,
     panTo,
     onMapLoad,
-    mapRef
+    mapRef,
+    setLoadingSearch
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
 
@@ -37,13 +38,21 @@ const Map = props => {
     lng: mapState.center.lng || appState.center.lng || -79
   };
 
+  useEffect(() => {
+    setLoadingSearch(false);
+  }, [mapState.places])
+
+  const indexOfLastResult = props.currentPage * props.resultsPerPage;
+  const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
+  const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
+  console.log('crnt', currentResults);
 
   let parsedMarkers = [];
 
   if (mapState.places.length) {
-    parsedMarkers = mapState.places.map((coord, ind) => {
+    parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent key={ind} {...coord} />
+        <MarkerComponent label={((props.currentPage - 1) * props.resultsPerPage) + ind + 1} {...coord} />
       );
     });
   }

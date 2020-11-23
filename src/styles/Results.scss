@@ -1,15 +1,23 @@
 @import './helper';
 
 .results-container{
-  @include flexbox(row, center, center);
+  @include flexbox(column, center, center);
   min-width: 400px;
   flex-grow: 1;
   background-color: white;
   height: calc(100vh - 60px);
 }
 
-.articles-container{
+.articles-pagination-container{
   width: 100%;
-  border-right: 1px solid black;
-  height: 100%;
+  max-height: calc(100vh - 100px);
+}
+
+.progress-bar-container {
+  @include flexbox(row, center, center);
+}
+
+.pagination-container {
+  @include flexbox(row, center, center);
+  margin-bottom: 20px;
 }

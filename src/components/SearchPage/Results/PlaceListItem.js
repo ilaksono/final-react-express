@@ -27,20 +27,20 @@ const PlaceListItem = (props) => {
           <img src={props.image} alt="Logo" class='venue-image' />
         </div>
         <div class='general-info'>
-          <h3 onClick={moveToNextPage} class="venue_name">{props.name}</h3><br />
-          <span class='yelp_rating'>Yelp Rating: {props.yelpRating}</span><br />
-          <span class='covid_rating'>Safe Score: {isNaN(props.overall_rating) ? "N/A" : props.overall_rating}</span>
-          <span class="covid_review_count">{props.reviews.length}</span><br />
-          <span class="review-description">{props.reviews.length > 0 ? `Review: ${props.reviews[0].description}` : ""}</span>
-        </div>
-        <div class='location'>
-          <span>
-            {props.phone}<br />
-            {props.address}<br />
-            {props.city}
-          </span>
-        </div>
-      </div>}
+      <h3 onClick={moveToNextPage} class="venue_name">{props.label}. {props.name}</h3><br />
+      <span class='yelp_rating'>Yelp Rating: {props.yelpRating}</span><br />
+      <span class='covid_rating'>Safe Score: {isNaN(props.overall_rating) ? "N/A" : props.overall_rating }</span>
+      <span class="covid_review_count">{props.reviews.length}</span><br />
+      <span class= "review-description">{props.reviews.length > 0 ? `Review: ${props.reviews[0].description}` : ""}</span>
+      </div>
+      <div class='location'> 
+      <span>
+        {props.phone}<br />
+        {props.address}<br />
+        {props.city}
+      </span>
+      </div>
+    </div>}
     </div>
   );
 };

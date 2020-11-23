@@ -152,7 +152,7 @@ const useApplicationData = () => { // login and user state information
     getTops,
     authorizeUser,
     loginSubmit,
-    logout
+    logout,
   };
 
 };

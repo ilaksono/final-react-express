@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 export default function useYelpData() {
-
+  const [loadingSearch, setLoadingSearch] = useState(false);
 
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
@@ -122,8 +122,7 @@ export default function useYelpData() {
 
    // function to get all business details        
   const yelpSearch = (venue, location) => {
-    let reviewArr = [];      
-    console.log("yelp search called with", venue, location);
+    let reviewArr = [];
     return Promise.all([
       axios.post('/api/search_yelp', {venue, location}),
       axios.get('/api/reviews')
@@ -134,7 +133,6 @@ export default function useYelpData() {
         reviewArr.push(data);
       })
       const yelpDataWithReviews = addReview(parsedYelpData, reviewArr);
-      console.log('BEFORE', yelpDataWithReviews);
       const sortedByRating = yelpDataWithReviews.sort((a, b) => {
         if(isFinite(b['overall_rating'] - a['overall_rating'])) {
           return b['overall_rating'] - a['overall_rating'];
@@ -142,8 +140,8 @@ export default function useYelpData() {
           return isFinite(a['overall_rating']) ? -1 : 1;
         }
       });
-      console.log('AFTER', sortedByRating);
-      return setResults(sortedByRating) 
+
+      return setResults(sortedByRating);
     })
       .catch((err) => {
         console.log(err)
@@ -173,5 +171,14 @@ export default function useYelpData() {
     })
   }
 
-  return { results, setResults, yelpSearch, businessDetails, setBusinessDetails, getIndividualBusinessData }
+  return { 
+    results,
+    setResults,
+    yelpSearch,
+    businessDetails,
+    setBusinessDetails, 
+    loadingSearch,
+    setLoadingSearch,
+    getIndividualBusinessData
+  }
 }

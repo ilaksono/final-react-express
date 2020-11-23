@@ -7,10 +7,15 @@ import { YelpContext } from 'YelpContext.js';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
+const RESULTS_PER_PAGE = 5;
 
 const SearchPage = props => {
   const { filters, toggleFilterShow } = useContext(YelpContext);
   const [scroll, setScroll] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPageNumber, setMaxPageNumber] = useState(1);
+
+
   useEffect(() => {
     const a = window.addEventListener('scroll', (event) => {
       setScroll(window.pageYOffset)
@@ -18,6 +23,11 @@ const SearchPage = props => {
 
     return window.removeEventListener('scroll', a);
   }, [])
+
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  }
 
   return (
     <div className="search-page-layout">
@@ -33,16 +43,15 @@ const SearchPage = props => {
        }}
         variant="outlined"
         color="primary"
-      > {(filters.allPrice && filters.allCats ? 'All' : 'Some')}</Button>}
+      > Filter </Button>}
       {filters.show &&
        <>
        <FilterBar
         />
-      <div className='filter-spacer'>
-        </div>
+        <div className='filter-spacer'></div>
         </>}
-      <Results />
-      <Map />
+      <Results currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} setMaxPageNumber={setMaxPageNumber} maxPageNumber={maxPageNumber} handlePageChange={handlePageChange}/>
+      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE}/>
       <div className='map-spacer'>
       </div>
     </div>
