@@ -19,6 +19,7 @@ export default function useYelpData() {
         "zip_code": data.location.zip_code,
         "phone": data.display_phone,
         "yelpRating": data.rating.toFixed(1),
+        "yelpRatingCount": data.review_count,
         "price": data.price,
         "reviews": [],
         "reviewCount": 0,
@@ -45,6 +46,7 @@ export default function useYelpData() {
         "zip_code": data.location.zip_code,
         "phone": data.display_phone,
         "yelpRating": data.rating.toFixed(1),
+        "yelpRatingCount": data.review_count,
         "price": data.price,
         "reviews": [],
         "reviewCount": 0,
@@ -69,6 +71,7 @@ export default function useYelpData() {
     postal: '',
     phone: "",
     yelpRating: '',
+    yelpRatingCount: 0,
     latitude: 0.0,
     longitude: 0.0,
     distance: '',
@@ -89,6 +92,7 @@ export default function useYelpData() {
    postal: '',
    phone: "",
    yelpRating: '',
+   yelpRatingCount: 0,
    latitude: 0.0,
    longitude: 0.0,
    distance: '',
@@ -128,6 +132,7 @@ export default function useYelpData() {
       axios.get('/api/reviews')
     ]).then((all) => {
       const yelpData = all[0].data
+      console.log("yelp", yelpData);
       const parsedYelpData = getCoreYelpData(yelpData)
       all[1].data.forEach((data) => {
         reviewArr.push(data);

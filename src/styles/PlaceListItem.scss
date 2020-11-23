@@ -1,23 +1,24 @@
 @import './helper';
 
 .result-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  @include flexbox(row, space-between, flex-start);
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  border: solid;
-  text-align: left;
+  border: 1px solid $gray-line;
+  border-radius: 6px;
+}
+
+.img-container {
+  height: 100%;
+  width: 140px;
 }
 
 .venue-image {
   height: 120px;
   width: 120px;
-  float: left;
   margin: 10px;
 }
-
 
 .articles-container{
   overflow-y: scroll;
@@ -29,10 +30,7 @@
   display: none;
 }
 
-.general-info {
-  
-  margin-left: -35%;
-  
+.general-info { 
 
   .venue_name {
     
@@ -42,8 +40,7 @@
   }
 
   .venue_name:hover {
-    color: blue;
-    opacity: 50%;
+    color: $purple;
     cursor: pointer
   }
 
@@ -56,8 +53,10 @@
   }
 
   .covid_review_count{
-    font-size: 10px;
-    margin-left: 5%;
+    @include flexbox(row, center, center);
+    height: 100%;
+    font-size: 12px;
+    margin-left: 0px;
   }
 
   .review-description {
@@ -79,4 +78,17 @@
   margin: 0px 20px 10px 20px;
   padding: 0px 10px 20px 10px;
   border-bottom: 1px solid $gray-line;
+}
+
+.rating-outer-container {
+  @include flexbox(row, flex-start, center);
+  width: 300px;
+  font-size: 14px;
+  height: 25px;
+}
+
+.rating-title {
+  @include flexbox(row, center, center);
+  width: 85px;
+  height: 100%;
 }
