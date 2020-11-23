@@ -43,7 +43,7 @@ const SearchPage = props => {
        }}
         variant="outlined"
         color="primary"
-      > All </Button>}
+      > Filter </Button>}
       {filters.show &&
         <FilterBar
         />
