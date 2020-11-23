@@ -21,15 +21,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Sort = props => {
   const classes = useStyles();
-  const [sortBy, setSortBy] = React.useState(props.defaultOption);
+  const [sortBy, setSortBy] =
+    React.useState(props.defaultOption);
 
   const handleChange = (event) => {
     setSortBy(event.target.value);
   };
 
   const items = props.sortOptions.map(option => {
-    return <MenuItem value={option.id} onClick={() => props.onClick(option.id)}>{ option.value }</MenuItem>
-  })
+    return <MenuItem value={option.id} onClick={() => props.onClick(option.id)}>{option.value}</MenuItem>;
+  });
 
 
   return (
@@ -44,12 +45,12 @@ const Sort = props => {
           onChange={handleChange}
           label="Sort By"
         >
-          { items }
+          {items}
         </Select>
       </FormControl>
     </div>
   );
-}
+};
 
 
 export default Sort;
