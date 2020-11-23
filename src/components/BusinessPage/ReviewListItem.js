@@ -23,7 +23,9 @@ export default function ReviewListItem(props) {
       setErr('');
     }, 2000);
   };
+
   const updateHelpfulCount = (id) => {
+    
     if (appState.likes.includes(id)) {
       console.log("can't push it again");
       return false;
@@ -39,11 +41,7 @@ export default function ReviewListItem(props) {
         setBusinessDetails(updatedBusinessDetails);
       });
   };
-  // const convertDate = date => {
-
-  //   return (new Date(date)
-  //     .toISOString().slice(0, 10).replace('T', ' '));
-  // };
+ 
   const convertTime = (date) => {
     const time = new Date(date).getTime();
     let unit = "second";
@@ -84,7 +82,7 @@ export default function ReviewListItem(props) {
     <div className='review-container'>
       <div className='user'>
         <span>{props.username}</span>
-        <img className='profile-img' src={user.img} alt='no img found' />
+        {user && <img className='profile-img' src={user.img} alt='no img found' />}
       </div>
       <div className='review-content'>
         <div className='review-numbers'>
@@ -132,7 +130,7 @@ export default function ReviewListItem(props) {
         {/*eslint-disable-next-line */}
         <div className='helpful-count'
           onClick={appState.authorized
-            ? updateHelpfulCount : showErr}>
+            ? () => {updateHelpfulCount(props.id)} : showErr}>
           <i className="far fa-thumbs-up">{props.helpful_count}
           </i>
         </div>

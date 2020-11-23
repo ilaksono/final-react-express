@@ -11,18 +11,8 @@ const RESULTS_PER_PAGE = 5;
 
 const SearchPage = props => {
   const { filters, toggleFilterShow } = useContext(YelpContext);
-  const [scroll, setScroll] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPageNumber, setMaxPageNumber] = useState(1);
-
-
-  useEffect(() => {
-    const a = window.addEventListener('scroll', (event) => {
-      setScroll(window.pageYOffset)
-    })
-
-    return window.removeEventListener('scroll', a);
-  }, [])
 
 
   const handlePageChange = (event, value) => {
@@ -31,19 +21,17 @@ const SearchPage = props => {
 
   return (
     <div className="search-page-layout">
-      {scroll < 150 && 
       <Button name='toggle'
-        className='show-filters'
-        endIcon={<Icon>send</Icon>}
+        className='show-filters'/* 
+        endIcon={<Icon>send</Icon>} */
         value='toggle-switch'
         onClick={toggleFilterShow}
-        style={{ position: 'fixed',
+        style={{position: 'absolute',
         fontSize: 10,
-        borderRadius: 20
        }}
         variant="outlined"
         color="primary"
-      > Filter </Button>}
+      > Show Filter </Button>
       {filters.show &&
        <>
        <FilterBar

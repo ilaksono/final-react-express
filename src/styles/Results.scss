@@ -5,7 +5,7 @@
   min-width: 400px;
   flex-grow: 1;
   background-color: white;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 80px);
 }
 
 .articles-pagination-container{
@@ -19,5 +19,5 @@
 
 .pagination-container {
   @include flexbox(row, center, center);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }

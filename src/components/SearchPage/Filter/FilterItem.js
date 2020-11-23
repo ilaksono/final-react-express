@@ -16,11 +16,21 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const classNames = require('classnames');
 const useStyles = makeStyles((theme) => ({
+/*   muiButton: {
+    label: {
+      width: '10px',
+    }
+  }, */
+  root: {
+    width: '15px',
+  },
   price: {
     margin: 0,
     paddingRight: 0,
     paddingLeft: 0,
     fontSize: 10,
+    borderRadius: 0,
+    maxWidth: '15px',
   },
   priceLeft: {
     margin: 0,
@@ -93,10 +103,11 @@ const FilterItem = props => {
       .includes(props.message) ? val ?
       'primary' : 'default' : 'default';
     return (
-      <div className='each-filter'>
+      <div >
         <Button
           color={color}
           variant='contained'
+          style={{maxWidth: '30px'}}
           className={classes[props.name]}
           name={props.message}
           onClick={props.handleClick}>{props.message}</Button>
