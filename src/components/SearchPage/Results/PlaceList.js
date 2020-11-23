@@ -10,8 +10,13 @@ const PlaceList = (props) => {
     notHoverMarker,
     results,
     loadingSearch,
-    setLoadingSearch
+    setLoadingSearch,
+    // setRefinedSeed
   } = useContext(YelpContext);
+  
+  // useEffect(() => {
+  //   setRefinedSeed(results);
+  // }, [results])
   
   useEffect(() => {
     props.setMaxPageNumber(Math.ceil(refinedResults.length / props.resultsPerPage));

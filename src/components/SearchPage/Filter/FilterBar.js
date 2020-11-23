@@ -24,7 +24,8 @@ const FilterBar = (props) => {
     panTo,
     toggleFilterShow,
     expandCategories,
-    openFilterClick
+    openFilterClick,
+    sort
   } = useContext(YelpContext);
 
   let parsedCategoryFilters = [];
@@ -45,6 +46,10 @@ const FilterBar = (props) => {
     applyPriceFilter(filters, results);
     // eslint-disable-next-line
   }, [filters]);
+  useEffect(() => {
+    applyPriceFilter(filters, results)
+        // eslint-disable-next-line
+  }, [sort])
 
   useEffect(() => {
     addResults(refinedResults);

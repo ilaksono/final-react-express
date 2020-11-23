@@ -10,13 +10,18 @@ import Icon from '@material-ui/core/Icon';
 const RESULTS_PER_PAGE = 5;
 
 const SearchPage = props => {
-  const { filters, toggleFilterShow } = useContext(YelpContext);
+  const { filters, toggleFilterShow,
+    results, refinedResults, setRefinedSeed } = useContext(YelpContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPageNumber, setMaxPageNumber] = useState(1);
 
+  useEffect(() => {
+    setRefinedSeed(results);
+    // eslint-disable-next-line
+  }, [results]);
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
-  }
+  };
 
   return (
     <div className="search-page-layout">
@@ -25,20 +30,27 @@ const SearchPage = props => {
         endIcon={<Icon>send</Icon>} */
         value='toggle-switch'
         onClick={toggleFilterShow}
-        style={{position: 'absolute',
-        fontSize: 10,
-       }}
+        style={{
+          position: 'absolute',
+          fontSize: 10,
+        }}
         variant="outlined"
         color="primary"
       > Show Filter </Button>
       {filters.show &&
-       <>
-       <FilterBar
-        />
-        <div className='filter-spacer'></div>
+        <>
+          <FilterBar
+          />
+          <div className='filter-spacer'></div>
         </>}
-      <Results currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} setMaxPageNumber={setMaxPageNumber} maxPageNumber={maxPageNumber} handlePageChange={handlePageChange}/>
-      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE}/>
+      <Results
+        currentPage={currentPage}
+        resultsPerPage={RESULTS_PER_PAGE}
+        setMaxPageNumber={setMaxPageNumber}
+        maxPageNumber={maxPageNumber}
+        handlePageChange={handlePageChange}
+      />
+      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} />
       <div className='map-spacer'>
       </div>
     </div>

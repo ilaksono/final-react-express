@@ -135,7 +135,7 @@ const useApplicationData = () => { // login and user state information
       .then((all) => {
         all.forEach((each, index) => {
           example[index].location = tops.city;
-          example[index].url = each.data[0].image_url;
+          example[index].url = each.data;
         });
         return setTops({ ...tops, show: example });
       });

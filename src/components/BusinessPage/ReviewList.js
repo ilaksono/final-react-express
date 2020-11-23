@@ -38,7 +38,7 @@ export default function ReviewList(props) {
   const handleSort = (property) => {
     sortBy(businessDetails.reviews,
       property,
-      false);
+      false, 'review');
   };
   return (
     <div>

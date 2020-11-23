@@ -5,6 +5,7 @@ import useRefinedData from 'hooks/useRefinedData';
 import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
+import useSort from 'hooks/useSort';
 
 export const YelpContext = React.createContext();
 
@@ -39,14 +40,21 @@ export function YelpProvider({ children }) {
     setBusinessDetails,
     getIndividualBusinessData,
     loadingSearch,
-    setLoadingSearch } = useYelpData();
+    setLoadingSearch,
+    sortBy 
+  } = useYelpData();
 
+  const {
+    sort, 
+    setSort
+  } = useSort();
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter,
-    sortBy } = useRefinedData();
+    // sortBy 
+  } = useRefinedData();
   const { mapState,
     addResults,
     hoverMarker,
@@ -100,7 +108,9 @@ export function YelpProvider({ children }) {
       authorizeUser,
       loginSubmit,
       loadingSearch,
-      setLoadingSearch
+      setLoadingSearch,
+      sort,
+      setSort
       // openFilterClick
     }}>
       {children}

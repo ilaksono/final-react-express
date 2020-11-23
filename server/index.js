@@ -56,12 +56,7 @@ app.post("/api/search_one", (req, res) => {
       limit: 1
     }).then(response => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
-      let bus = response.jsonBody.businesses;
-      bus = bus.map((biz) => {
-        biz.categories = cleanAutoComplete(biz.categories, 'title');
-        return biz;
-      });
-      res.json(bus);
+      res.json(response.jsonBody.businesses[0].image_url);
     }).catch(e => {
       console.log(e);
     });
