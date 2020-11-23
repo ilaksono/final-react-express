@@ -12,15 +12,18 @@ export const userData = [
   {
     username: 'Test User',
     email: 'test@test.ca',
-    password: 'password'
+    password: 'password',
+    likes:[]
   }
 ];
+
 const initReg = {
   username: '',
   email: '',
   password: '',
   errMsg: '',
   errType: '',
+  likes: []
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -86,7 +89,8 @@ const RegisterForm = (props) => {
           userData.push({
             username: state.username,
             email: state.email,
-            password: state.password
+            password: state.password,
+            likes: state.likes
           });
           authorizeUser(state.username);
           setState(initReg);

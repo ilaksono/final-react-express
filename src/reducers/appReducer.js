@@ -10,7 +10,8 @@ const appReducer = (appState, action) => {
       return {
         ...appState,
         authorized: true,
-        name: action.name
+        name: action.name,
+        likes: []
       };
     }
     case LOGOUT: {

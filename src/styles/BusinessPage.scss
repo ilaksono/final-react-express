@@ -1,17 +1,58 @@
 .business-container {
-  display:flex;
-  flex-direction: column;
-  align-items: flex-start;
-
+  max-width: 1144px;
+  padding: 0 40px;
+  margin: 0 auto;
 
   .images {
     display:flex;
-    justify-content: space-evenly;
+    
   }
+
+
   img{
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     margin: 10px;
+    margin: 10px;
+  }
+
+  .info-section {
+    
+  
+  .review {
+    
+  }
+
+  .title {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 30px;
+    line-height: 1.2em;
+    color: #333;
+    padding-top: 6px;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    
+
+    margin-right: 100px;
+  }
+}
+
+  .location-hours {
+    display: flex;
+    justify-content: center;
+  }
+
+  .reviews {
+    
   }
   
 }

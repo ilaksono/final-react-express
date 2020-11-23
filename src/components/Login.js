@@ -13,7 +13,8 @@ const initLogin = {
   email: '',
   password: '',
   errMsg: '',
-  errType: ''
+  errType: '',
+  likes: []
 };
 const useStyles = makeStyles((theme) => ({
   modal: {

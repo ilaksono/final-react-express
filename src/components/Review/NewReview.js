@@ -93,7 +93,7 @@ const NewReview = props => {
   const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
-  const {businessDetails, setBusinessDetails } = useContext(YelpContext);
+  const {businessDetails, setBusinessDetails, appState } = useContext(YelpContext);
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -138,7 +138,7 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     axios.post('/reviews/new', {
-      user_id: 3,
+      user_id: appState.name,
       venue_id: props.venue_id,
       cleanliness,
       socialDistancing,
@@ -148,7 +148,6 @@ const NewReview = props => {
     }).then(review => {
       handleClose();
       resetState();
-      console.log("this is the revbiew:", review.data[0])
       const updatedBusinessDetails = {...businessDetails};
       updatedBusinessDetails.reviews.unshift(review.data[0]);
       setBusinessDetails(updatedBusinessDetails);
