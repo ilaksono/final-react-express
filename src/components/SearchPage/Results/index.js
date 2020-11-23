@@ -37,17 +37,17 @@ const Results = props => {
     sortBy,
     results,
     setRefinedSeed,
-    addResults
+    addResults,
+    maxPageNumber,
+    handlePageChange
   } = useContext(YelpContext);
-  
-
 
   const handleSort = (property) => {
-    sortBy(results, property, false,'search')
-    .then(() => {
-      setRefinedSeed(results);
-      addResults(results);
-    });
+    sortBy(results, property, false, 'search')
+      .then(() => {
+        setRefinedSeed(results);
+        addResults(results);
+      });
   };
 
   return (
@@ -64,12 +64,13 @@ const Results = props => {
               <h2>Search Results</h2>
               <Sort sortOptions={sortOptions}
                 defaultOption={sortOptions[0].id}
-                onClick={handleSort} />
+                onClick={handleSort}
+              />
             </div>
-            <PlaceList currentPage={props.currentPage} resultsPerPage={props.resultsPerPage} setMaxPageNumber={props.setMaxPageNumber} />
+            <PlaceList />
             <div className="pagination-container">
               <div className={classes.root}>
-                <Pagination count={props.maxPageNumber} color="primary" onChange={props.handlePageChange} />
+                <Pagination count={maxPageNumber} color="primary" onChange={handlePageChange} />
               </div>
             </div>
           </div>

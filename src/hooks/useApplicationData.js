@@ -154,7 +154,6 @@ const useApplicationData = () => { // login and user state information
     loginSubmit,
     logout,
   };
-
 };
 
 export default useApplicationData;

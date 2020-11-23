@@ -26,6 +26,7 @@ const Search = props => {
     getPriceFilterMode,
     loadingSearch,
     setLoadingSearch,
+    handlePageChange
   } = useContext(YelpContext);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
@@ -58,7 +59,6 @@ const Search = props => {
     setVenue(text);
     setAutoCompleteFalse();
     handleSearch(text);
-
     history.push('/search')
   };
 
@@ -83,14 +83,13 @@ const Search = props => {
   };
 
   const handleSearch = (name) => {
-    console.log("loading? ", loadingSearch);
     setLoadingSearch(true);
     if (name) {
       yelpSearch(name, location);
-      console.log("loading? ", loadingSearch);
     } else {
       yelpSearch(venue, location);
     }
+    handlePageChange(null, 1);
     resetFilters();
   };
 

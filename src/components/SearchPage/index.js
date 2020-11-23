@@ -7,7 +7,6 @@ import { YelpContext } from 'YelpContext.js';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
-const RESULTS_PER_PAGE = 5;
 
 const SearchPage = props => {
   const { filters, toggleFilterShow,
@@ -43,14 +42,8 @@ const SearchPage = props => {
           />
           <div className='filter-spacer'></div>
         </>}
-      <Results
-        currentPage={currentPage}
-        resultsPerPage={RESULTS_PER_PAGE}
-        setMaxPageNumber={setMaxPageNumber}
-        maxPageNumber={maxPageNumber}
-        handlePageChange={handlePageChange}
-      />
-      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} />
+      <Results />
+      <Map />
       <div className='map-spacer'>
       </div>
     </div>
