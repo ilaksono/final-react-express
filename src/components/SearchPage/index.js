@@ -33,7 +33,7 @@ const SearchPage = props => {
        }}
         variant="outlined"
         color="primary"
-      > All </Button>}
+      > {(filters.allPrice && filters.allCats ? 'All' : 'Some')}</Button>}
       {filters.show &&
        <>
        <FilterBar
