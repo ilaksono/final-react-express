@@ -1,13 +1,16 @@
 import React from "react";
 import 'styles/Venue.scss';
+import 'styles/Home.scss';
 
-const Venue = props => {  
+const Venue = props => {
+
   return (
-    <div className="venue-container">
+    <div className={`${props.isHome ? 'home-search-v-container' :'venue-container'}`}>
+      {props.isHome && <div className='search-prompt'>Find</div>}
       <input type='text' value={props.venue} 
       onClick={event => 
       props.onClick(event.target.value)} 
-      className="venue-search-bar" 
+        className={`${props.isHome ? 'home-search-v': "venue-search-bar"}`} 
       default="" 
       placeholder="Restaurants, parks, Max's" 
       onChange={event => 

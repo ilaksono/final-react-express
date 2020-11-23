@@ -28,7 +28,9 @@ export function YelpProvider({ children }) {
     getTops,
     authorizeUser,
     loginSubmit,
-    logout
+    logout,
+    userDetails,
+    setUserDetails,
   } = useApplicationData();
   const { results,
     setResults,
@@ -50,7 +52,6 @@ export function YelpProvider({ children }) {
     hoverMarker,
     notHoverMarker,
     panTo,
-    onUnmount,
     onMapLoad,
     mapRef,
     getCenterPan,
@@ -88,7 +89,6 @@ export function YelpProvider({ children }) {
       hoverMarker,
       notHoverMarker,
       panTo,
-      onUnmount,
       onMapLoad,
       mapRef,
       populateCenter,

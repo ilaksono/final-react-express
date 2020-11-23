@@ -1,6 +1,6 @@
 import { Divider } from "@material-ui/core";
 import {useContext, useEffect} from 'react';
-import {useLocation, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
 import React from 'react';
@@ -8,7 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewList from './ReviewList';
+import Photos from './Photos'
 import "styles/BusinessPage.scss"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,47 +22,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BusinessPage() {
-
+  
   const classes = useStyles();
   
   const { 
     businessDetails, 
     getIndividualBusinessData, 
-    } = useContext(YelpContext);
-    
+    appState
+  } = useContext(YelpContext);
+  
     const {id} = useParams();
 
     useEffect(() => {
       if(!businessDetails.id) {
         getIndividualBusinessData(id)
       }
-    });
-
-    // useEffect(() =>{
-    //   getIndividualBusinessData(id)
-    // }, [])
+    },[]);
 
       return (
         <div>
       {!businessDetails.id && <CircularProgress />}
       {businessDetails.id && <div class='business-container'>
-      <div class='images'> 
-          {businessDetails.photos && <img src={businessDetails.photos[0]} alt='photos' class='place-imgs-1'/>}
-          {businessDetails.photos && <img src={businessDetails.photos[1]} lass='place-imgs-2'/>}
-          {businessDetails.photos && <img src={businessDetails.photos[2]} lass='place-imgs-3'/>}
+      <div class='images'>
+        {businessDetails.photos.map(review => {
+          return (
+            <Photos photos={review}/>
+          )
+        })} 
       </div>
       <div class='info-section'>
-        <div class='title'>
-          <span>{businessDetails.name}</span><br/>
-          <span>Comfort Rating</span><br/>
-          <span>Yelp Rating</span>
+        <div class='review'>
+        {appState.authorized === true && <NewReview venue_id={id} name={businessDetails.name} />}
         </div>
-        <NewReview venue_id={id} name={businessDetails.name} />
-        <div class='info-section'>
-          <div class='title'>
-            <span>{businessDetails.name}</span><br/>
-            <span>Comfort Rating</span><br/>
-            <span>Yelp Rating</span>
+          <div class='title'><br />
+            <p>{businessDetails.name}</p>
+            </div>
+            <div class='rating'>
+            <p>Safe Score: {businessDetails.overall_rating}</p>
+            <p>Yelp Rating: {businessDetails.yelpRating}</p>
           </div>
           <div class='contact-info'> 
             <span>{businessDetails.address}</span> <br/>
@@ -85,8 +84,6 @@ export default function BusinessPage() {
         {(businessDetails.reviews && businessDetails.reviews.length === 0) && <span>Be the first to write a review!</span>}
         {(businessDetails.reviews && businessDetails.reviews.length > 0) && <ReviewList reviews={businessDetails.reviews} />}
         </div>
-     </div>
-
      </div>}
      </div>
   )}

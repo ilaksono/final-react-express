@@ -1,6 +1,14 @@
+import {useContext} from 'react';
+import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
+import Sort from 'components/Sort';
+
 
 export default function ReviewList(props) {
+
+  const {sortBy, businessDetails} = useContext(YelpContext);
+
+  
 
   const reviews = props.reviews.map(review => {
     return <ReviewListItem 
@@ -14,10 +22,27 @@ export default function ReviewList(props) {
     description={review.description}
     id={review.id}
     />
-  })
+  });
+
+  const sortOptions = [
+    {
+      id: "overall_rating",
+      value: "Safe Score"
+    },
+    {
+      id: "helpful_count",
+      value: "Helpful Count"
+    }
+  ];
+
+  const handleSort = (property) => {
+    sortBy(businessDetails.reviews, property, false);
+  }
+  
 
   return (
     <div>
+      <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
       {reviews}
     </div>
   )

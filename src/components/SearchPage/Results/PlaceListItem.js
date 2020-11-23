@@ -1,5 +1,5 @@
 import "styles/PlaceListItem.scss";
-import {useContext} from 'react';
+import { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import { useHistory } from 'react-router-dom';
 
@@ -8,19 +8,21 @@ const PlaceListItem = (props) => {
   const { getIndividualBusinessData, businessDetails } = useContext(YelpContext);
 
   const history = useHistory();
-  
-  
   const moveToNextPage = () => {
     getIndividualBusinessData(props.id)
       .then(() => {
-        history.push(`/search/${props.id}`)
-      })
-  }
+        history.push(`/search/${props.id}`);
+      });
+  };
 
   return (
     <div>
       {props.name === "" && ""}
-      {props.name && <div class='result-container' onMouseOver={() => props.hoverMarker(props.id)} onMouseOut={() => props.notHoverMarker()}>
+      {props.name && <div class='result-container'
+        onMouseOver={() =>
+          props.hoverMarker({id:props.id, lat: props.latitude, lng: props.longitude})}
+        onMouseOut={() =>
+          props.notHoverMarker()}>
         <div class='img-logo'>
           <img src={props.image} alt="Logo" class='venue-image' />
         </div>
@@ -40,7 +42,7 @@ const PlaceListItem = (props) => {
       </div>
     </div>}
     </div>
-  )
-}
+  );
+};
 
 export default PlaceListItem;

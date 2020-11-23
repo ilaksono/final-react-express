@@ -8,7 +8,7 @@
   background-color: beige;
   position: fixed;
   top: 60px;
-  border-right: 3px solid rgb(201, 245, 235);
+  border-right: 3px solid $purple;
   @include flexbox(column, flex-start, center);
   border-bottom-right-radius: 30px;
   border-top-right-radius: 30px;

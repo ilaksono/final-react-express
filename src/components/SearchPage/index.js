@@ -1,5 +1,5 @@
 import 'styles/SearchPage.scss';
-import { useContext, useState, useEffect } from 'react';
+import { Fragment, useContext, useState, useEffect } from 'react';
 import FilterBar from "./Filter/FilterBar";
 import Results from "./Results";
 import Map from "./Map";
@@ -45,11 +45,15 @@ const SearchPage = props => {
         color="primary"
       > Filter </Button>}
       {filters.show &&
-        <FilterBar
+       <>
+       <FilterBar
         />
-      }
-      <Results currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} setMaxPageNumber={setMaxPageNumber} maxPageNumber={maxPageNumber} handlePageChange={handlePageChange} />
-      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} />
+        <div className='filter-spacer'></div>
+        </>}
+      <Results currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE} setMaxPageNumber={setMaxPageNumber} maxPageNumber={maxPageNumber} handlePageChange={handlePageChange}/>
+      <Map currentPage={currentPage} resultsPerPage={RESULTS_PER_PAGE}/>
+      <div className='map-spacer'>
+      </div>
     </div>
   );
 };

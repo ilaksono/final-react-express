@@ -22,9 +22,18 @@ const initApp = {
   name: '',
   center: {}
 };
+
+const initReg = {
+  username: '',
+  email: '',
+  password: '',
+  errMsg: '',
+  likes: []
+};
 const useApplicationData = () => { // login and user state information
   const [appState, dispatch] = useReducer(appReducer, initApp);
   const [tops, setTops] = useState(initTops);
+  const [userDetails, setUserDetails] = useState(initReg);
 
   useEffect(() => {
     axios.get(GET_IP)
@@ -90,7 +99,7 @@ const useApplicationData = () => { // login and user state information
     dispatch({ type: AUTHORIZE, name });
   };
   const getTops = () => {
-    const width = '65%';
+    const width = '60%';
     const example = [];
     example.push({
       venue: 'Andrew',
@@ -135,6 +144,8 @@ const useApplicationData = () => { // login and user state information
   return {
     // submitHandle,
     appState,
+    userDetails,
+    setUserDetails,
     createHandle,
     deleteHandle,
     tops,

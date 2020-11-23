@@ -17,11 +17,15 @@ const Map = props => {
     refinedResults,
     appState,
     panTo,
-    onUnmount,
     onMapLoad,
     mapRef,
     setLoadingSearch
   } = useContext(YelpContext);
+  const [map, setMap] = useState(null);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
 
   const showCenter = useCallback((t) => {
     console.log(mapRef.current.getCenter().lat());
@@ -65,8 +69,8 @@ const Map = props => {
           options={options}
           center={center}
           zoom={12}
-          onLoad={onMapLoad}
-          onUnmount={onUnmount}
+          onLoad={() => onMapLoad(map)}
+          onUnmount={() => onUnmount(map)}
         >
           { /* Child components, such as markers, info windows, etc. */}
           {parsedMarkers}
