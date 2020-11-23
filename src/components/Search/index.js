@@ -23,6 +23,8 @@ const Search = props => {
     populateCategories,
     addResults,
     getPriceFilterMode,
+    loadingSearch,
+    setLoadingSearch
   } = useContext(YelpContext);
   const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
@@ -79,8 +81,11 @@ const Search = props => {
   };
 
   const handleSearch = (name) => {
+    console.log("loading? ", loadingSearch);
+    setLoadingSearch(true);
     if (name) {
       yelpSearch(name, location);
+      console.log("loading? ", loadingSearch);
     } else {
       yelpSearch(venue, location);
     }

@@ -24,8 +24,10 @@ const PlaceList = (props) => {
     hoverMarker,
     notHoverMarker,
     sortBy,
-    results } 
-    = useContext(YelpContext);
+    results,
+    loadingSearch,
+    setLoadingSearch
+  } = useContext(YelpContext);
   
   useEffect(() => {
     props.setMaxPageNumber(Math.ceil(refinedResults.length / props.resultsPerPage));

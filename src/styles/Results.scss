@@ -6,7 +6,7 @@
   flex-grow: 1;
   overflow-y: scroll;
   background-color: white;
-  height: calc(100vh - 60px);
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {
@@ -15,6 +15,14 @@
 
 .articles-container{
   width: 100%;
-  border: 1px solid black;
-  height: 100%;
+  height: 100vh;
+}
+
+.progress-bar-container {
+  @include flexbox(row, center, center);
+}
+
+.pagination-container {
+  @include flexbox(row, center, center);
+  margin-bottom: 20px;
 }

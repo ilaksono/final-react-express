@@ -1,4 +1,4 @@
-import { useContext, useCallback } from 'react';
+import { useContext, useCallback, useEffect } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,8 @@ const Map = props => {
     panTo,
     onUnmount,
     onMapLoad,
-    mapRef
+    mapRef,
+    setLoadingSearch
   } = useContext(YelpContext);
 
   const showCenter = useCallback((t) => {
@@ -32,6 +33,10 @@ const Map = props => {
     lat: mapState.center.lat || appState.center.lat || 43,
     lng: mapState.center.lng || appState.center.lng || -79
   };
+
+  useEffect(() => {
+    setLoadingSearch(false);
+  }, [mapState.places])
 
   const indexOfLastResult = props.currentPage * props.resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
