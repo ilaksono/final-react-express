@@ -65,7 +65,7 @@ const RegisterForm = (props) => {
         return false;
       }
     } else if (!re.test(String(state.email).toLowerCase())) {
-      setState({ ...state, errMsg: 'Invalid email' });
+      setState({ ...state, errMsg: 'Invalid email', errType:'email' });
     }
     else if (userData.some(user =>
       user.email === email)) {

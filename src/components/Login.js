@@ -38,7 +38,7 @@ const LoginForm = props => {
     loginSubmit
   } = useContext(YelpContext);
   const handleChange = (val, type) => {
-    setLogin({ ...login, errMsg: '', [type]: val });
+    setLogin({ ...login, errMsg: '', [type]: val, errType:'' });
   };
   const validate = () => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -67,7 +67,7 @@ const LoginForm = props => {
       setLogin(initLogin);
       props.setModal(prev => ({ ...prev, logOpen: false }));
     } else if (!re.test(String(login.email).toLowerCase())) {
-      setLogin({ ...login, errMsg: 'Invalid email' });
+      setLogin({ ...login, errMsg: 'Invalid email', errType:'email' });
     }
     else setLogin({ ...login, errMsg: 'Failed login attempt!' });
   };
