@@ -43,6 +43,8 @@ const SearchPage = props => {
         </>}
       <Results />
       <Map />
+      <div className='map-spacer'>
+      </div>
     </div>
   );
 };

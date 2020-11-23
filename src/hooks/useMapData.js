@@ -5,7 +5,11 @@ import {
   useCallback,
   useState
 } from 'react';
-import placeReducer, { ADD_RESULTS, HOVER, PAN_CENTER } from 'reducers/placeReducer.js';
+import placeReducer, 
+{ ADD_RESULTS, 
+  HOVER, 
+  PAN_CENTER } 
+  from 'reducers/placeReducer.js';
 
 const initMapState = {
   places: [],
@@ -19,21 +23,15 @@ const useMapData = () => {
   const addResults = (refined) => {
     // if (refined.length > 0) {
     const results = refined.map(biz =>
-      ({ lat: biz.latitude, 
-        lng: biz.longitude, id: biz.id, 
-        hover: false }));
+      ({
+        lat: biz.latitude,
+        lng: biz.longitude, id: biz.id,
+        hover: false
+      }));
     dispatch({ type: ADD_RESULTS, results });
     // }
   };
-  const hoverMarker = (id) => {
 
-    const results = mapState.places.map((marker) => {
-      if (marker.id === id)
-        return { ...marker, hover: true };
-      else return { ...marker };
-    });
-    dispatch({ type: HOVER, results });
-  };
   const notHoverMarker = () => {
     const results = mapState.places.map((marker) => {
       if (marker.hover === true)
@@ -42,12 +40,22 @@ const useMapData = () => {
     });
     dispatch({ type: HOVER, results });
   };
-  const [map, setMap] = useState(null);
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
+  const hoverMarker = ({ id, lat, lng }) => {
+
+    const results = mapState.places.map((marker) => {
+      if (marker.id === id)
+        return { ...marker, hover: true };
+      else return { ...marker };
+    });
+    // if (lat && lng)
+    //   mapRef.current.panTo({ lat, lng });
+    dispatch({ type: HOVER, results });
+  };
 
   const populateCenter = (results) => {
     const coords = {
@@ -71,12 +79,13 @@ const useMapData = () => {
         }, 0) / results.length
       };
       dispatch({ type: PAN_CENTER, coords });
-      res({lat: coords.lat, lng:coords.lng});
-    })
-  }
+      res({ lat: coords.lat, lng: coords.lng });
+    });
+  };
 
   const panTo = useCallback((center) => {
-    if( center && mapRef.current) {
+    console.log(center, mapRef.current);
+    if (center && mapRef.current) {
       mapRef.current.panTo(center);
     }
     else if (mapRef.current) {
@@ -84,9 +93,6 @@ const useMapData = () => {
     }
   }, []);
 
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
   // const onLoad = useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds();
   //   map.fitBounds(bounds);
@@ -98,7 +104,6 @@ const useMapData = () => {
     hoverMarker,
     notHoverMarker,
     panTo,
-    onUnmount,
     onMapLoad,
     mapRef,
     populateCenter,
