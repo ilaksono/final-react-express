@@ -90,7 +90,7 @@ const useApplicationData = () => { // login and user state information
     dispatch({ type: AUTHORIZE, name });
   };
   const getTops = () => {
-    const width = '65%';
+    const width = '60%';
     const example = [];
     example.push({
       venue: 'Andrew',

@@ -1,6 +1,7 @@
 import React from "react";
 import 'styles/Button.scss';
 import classNames from 'classnames';
+import 'styles/Home.scss'
 
 const Button = props => {
   let btnClass = classNames(
@@ -8,13 +9,13 @@ const Button = props => {
        'button--confirm': props.confirm,
        'button--danger': props.danger,
        'button--search': props.search,
-       'button--nav': props.nav
+       'button--nav': props.nav,
     }
  );
 
   const { onClick, message } = props;
   return (
-    <button onClick={onClick} className={btnClass}>
+    <button onClick={onClick} className={props.isHome ? 'btn-search-home' : btnClass}>
       {message}
     </button>
   );

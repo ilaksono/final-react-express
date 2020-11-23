@@ -19,7 +19,9 @@ const useMapData = () => {
   const addResults = (refined) => {
     // if (refined.length > 0) {
     const results = refined.map(biz =>
-      ({ lat: biz.latitude, lng: biz.longitude, id: biz.id, hover: false }));
+      ({ lat: biz.latitude, 
+        lng: biz.longitude, id: biz.id, 
+        hover: false }));
     dispatch({ type: ADD_RESULTS, results });
     // }
   };

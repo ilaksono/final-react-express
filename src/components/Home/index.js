@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import { useContext } from 'react';
+import { useContext, Fragment } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     position: 'relative',
     height: 200,
-    margin: 30,
+    margin: '20px auto',
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     display: 'flex',
     alignItems: 'center',
+    justifySelf:'center',
     justifyContent: 'center',
     color: theme.palette.common.white,
   },
@@ -95,7 +96,6 @@ const Home = () => {
   if (tops.show.length) {
     parsedTopList = tops.show.map((image) => {
       return (
-        <Link to={'/search'}>
           <ButtonBase
             focusRipple
             key={image.title}
@@ -110,30 +110,32 @@ const Home = () => {
               borderRadius: 50
             }}
           >
-            <span
-              className={classes.imageSrc}
-              style={{
-                backgroundImage: `url(${image.url})`,
-              }}
-            />
-            <span className={classes.imageBackdrop} />
-            <span className={classes.imageButton}>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                color="inherit"
-                className={classes.imageTitle}
-                style={{ fontSize: 28,
-                  fontFamily: 'inherit'
+            <Link to={'/search'}>
+              <span
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${image.url})`,
                 }}
+              />
+              <span className={classes.imageBackdrop} />
+              <span className={classes.imageButton}>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="inherit"
+                  className={classes.imageTitle}
+                  style={{
+                    fontSize: 28,
+                    fontFamily: 'inherit'
+                  }}
 
-              >
-                {image.title}
-                <span className={classes.imageMarked} />
-              </Typography>
-            </span>
+                >
+                  {image.title}
+                  <span className={classes.imageMarked} />
+                </Typography>
+              </span>
+            </Link>
           </ButtonBase>
-        </Link>
       );
     });
   }
@@ -142,12 +144,12 @@ const Home = () => {
     <div className='home-layout'>
       <div className='search-home-container'>
         <Search
-        isHome
+          isHome={true}
           buttonMessage={<i class="fas fa-search"></i>}
         />
       </div>
       <div className='top-container'>
-        <span className='top-label'>It Filters Tho</span>
+        <span className='top-label'>Top Searches</span>
       </div>
       <div className='widget-container'>
 

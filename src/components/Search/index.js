@@ -8,6 +8,7 @@ import 'styles/Venue.scss';
 import 'styles/Location.scss';
 import { YelpContext } from 'YelpContext.js';
 import { Link, useHistory } from 'react-router-dom';
+import 'styles/Home.scss'
 
 const Search = props => {
   const history = useHistory();
@@ -89,8 +90,9 @@ const Search = props => {
 
 
   return (
-    <div className="search-container">
-      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete} />
+    <div className={props.isHome ? 'home-search' : "search-container"}>
+      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete} 
+      isHome={props.isHome}/>
       {showAutoComplete &&
         <VenueAutoComplete
           data={autoComplete}
@@ -98,9 +100,9 @@ const Search = props => {
           onClick={setVenueAndHandleSearch}
         />
       }
-      <Location location={location} onChange={setLocation} />
+      <Location location={location} onChange={setLocation} isHome={props.isHome}/>
       <Link to={'/search'}>
-        <Button onClick={() => handleSearch()} message={props.buttonMessage} search />
+        <Button onClick={() => handleSearch()} message={props.buttonMessage} search isHome={props.isHome}/>
       </Link>
     </div>
   );
