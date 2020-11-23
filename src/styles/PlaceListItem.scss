@@ -7,19 +7,27 @@
 .articles-container{
   overflow-y: scroll;
   width: 100%;
+  padding-top: 8px;
   height: calc(100vh - 260px);
   scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
 }
 
 .result-container {
   scroll-snap-align: start;
+  scroll-padding-top: 10px;
   @include flexbox(row, space-between, flex-start);
-  margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0px 8px 8px 8px;
   height: 140px;
   border: 1px solid $gray-line;
   border-radius: 6px;
+}
+
+
+.result-container:hover {
+  -moz-box-shadow:    1px 0px 3px 3px rgb(192, 192, 192);
+  -webkit-box-shadow: 1px 0px 3px 3px rgb(192, 192, 192);
+  box-shadow:         1px 0px 3px 3px rgb(192, 192, 192);
 }
 
 .img-general-info-container {

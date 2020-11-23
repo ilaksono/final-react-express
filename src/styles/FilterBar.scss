@@ -9,9 +9,9 @@
   position: fixed;
   top: 60px;
   @include flexbox(column, flex-start, center);  
-  -moz-box-shadow:    1px 0px 5px 3px gray;
-  -webkit-box-shadow: 1px 0px 5px 3px gray;
-  box-shadow:         1px 0px 5px 3px gray;
+  -moz-box-shadow:    1px 0px 5px 3px rgb(192, 192, 192);
+  -webkit-box-shadow: 1px 0px 5px 3px rgb(192, 192, 192);
+  box-shadow:         1px 0px 5px 3px rgb(192, 192, 192);
 }
 
 .price-filter-container {
