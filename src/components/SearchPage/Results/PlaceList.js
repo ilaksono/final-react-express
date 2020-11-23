@@ -35,7 +35,11 @@ const PlaceList = (props) => {
   
   return (
     <div className='articles-container'>
-      {placeList}
+      { currentResults.length > 0 ? placeList : (
+        <div className="no-search-container">
+          There were no results found for that search
+        </div>
+      )}
     </div>
   );
 };
