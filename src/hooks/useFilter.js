@@ -50,7 +50,7 @@ const useFilter = () => {
         if (filters.price.includes(value))
           return setFilters({ ...filters, price: ['$', '$$', '$$$', '$$$$'], allPrice: true });
         else if (filters.allPrice) {
-          return setFilters({...filters, price: [value], allPrice: false})
+          return setFilters({ ...filters, price: [value], allPrice: false });
         } else
           return setFilters({ ...filters, price: [...filters.price, value], allPrice: false });
       } else if (type === 'catsSelected') {
@@ -65,6 +65,10 @@ const useFilter = () => {
         return setFilters({ ...filters, catsSelected: [value], allCats: false });
       }
     }
+    else if (type === 'price' && filters.allPrice)
+      return setFilters({ ...filters, price: [value], allPrice: false });
+    else if (type === 'catsSelected' && filters.allCats)
+      return setFilters({ ...filters, catSelected: [value], allCats: false });
     if (type === 'price' && filters.price.length === 3)
       return setFilters({ ...filters, price: [...filters.price, value], allPrice: true });
     if (type === 'price' && filters.price.length === 4)
@@ -81,7 +85,10 @@ const useFilter = () => {
     } else {
       const cpy = [...filters[type]];
       cpy.push(value);
-      return setFilters({ ...filters, [type]: [...cpy], allCats: false, allPrice: false });
+      if(type === "catsSelected")
+        return setFilters({ ...filters, [type]: [...cpy], allCats: false});
+      else if(type === 'price')
+        return setFilters({ ...filters, [type]: [...cpy], allPrice: false });
     }
   };
   const distanceFilterClick = (value) => {

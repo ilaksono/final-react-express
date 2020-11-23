@@ -15,7 +15,6 @@ const SearchPage = props => {
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPageNumber, setMaxPageNumber] = useState(1);
 
-
   useEffect(() => {
     const a = window.addEventListener('scroll', (event) => {
       setScroll(window.pageYOffset)
