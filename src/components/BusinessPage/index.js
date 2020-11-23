@@ -51,11 +51,15 @@ export default function BusinessPage() {
         })} 
       </div>
       <div class='info-section'>
+        <div class='review'>
         {appState.authorized === true && <NewReview venue_id={id} name={businessDetails.name} />}
-          <div class='title'>
-            <span>{businessDetails.name}</span><br/>
-            <span>Safe Score: {businessDetails.overall_rating}</span><br/>
-            <span>Yelp Rating: {businessDetails.yelpRating}</span>
+        </div>
+          <div class='title'><br />
+            <p>{businessDetails.name}</p>
+            </div>
+            <div class='rating'>
+            <p>Safe Score: {businessDetails.overall_rating}</p>
+            <p>Yelp Rating: {businessDetails.yelpRating}</p>
           </div>
           <div class='contact-info'> 
             <span>{businessDetails.address}</span> <br/>
