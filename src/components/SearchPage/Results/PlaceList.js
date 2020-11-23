@@ -10,22 +10,25 @@ const PlaceList = (props) => {
     notHoverMarker,
     results,
     loadingSearch,
-    setLoadingSearch
+    setLoadingSearch,
+    currentPage,
+    setMaxPageNumber,
+    resultsPerPage,
   } = useContext(YelpContext);
   
   useEffect(() => {
-    props.setMaxPageNumber(Math.ceil(refinedResults.length / props.resultsPerPage));
+    setMaxPageNumber(Math.ceil(refinedResults.length / resultsPerPage));
   }, [refinedResults]);
 
-  const indexOfLastResult = props.currentPage * props.resultsPerPage;
-  const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
+  const indexOfLastResult = currentPage * resultsPerPage;
+  const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = refinedResults.slice(indexOfFirstResult, indexOfLastResult);
 
   const placeList = currentResults.map((place, index) => {
     return <PlaceListItem {...place}
       hoverMarker={hoverMarker}
       notHoverMarker={notHoverMarker}
-      label={((props.currentPage - 1) * props.resultsPerPage) + index + 1}
+      label={((currentPage - 1) * resultsPerPage) + index + 1}
     />;
   });
 

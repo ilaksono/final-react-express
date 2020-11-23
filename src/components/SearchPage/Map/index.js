@@ -19,7 +19,9 @@ const Map = props => {
     panTo,
     onMapLoad,
     mapRef,
-    setLoadingSearch
+    setLoadingSearch,
+    currentPage,
+    resultsPerPage
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
 
@@ -42,17 +44,16 @@ const Map = props => {
     setLoadingSearch(false);
   }, [mapState.places])
 
-  const indexOfLastResult = props.currentPage * props.resultsPerPage;
-  const indexOfFirstResult = indexOfLastResult - props.resultsPerPage;
+  const indexOfLastResult = currentPage * resultsPerPage;
+  const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
-  console.log('crnt', currentResults);
 
   let parsedMarkers = [];
 
   if (mapState.places.length) {
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent label={((props.currentPage - 1) * props.resultsPerPage) + ind + 1} {...coord} />
+        <MarkerComponent label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
       );
     });
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import useMapData from 'hooks/useMapData';
 import useYelpData from "hooks/useYelpData";
 import useRefinedData from 'hooks/useRefinedData';
+import usePagination from 'hooks/usePagination';
 import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
@@ -57,6 +58,14 @@ export function YelpProvider({ children }) {
     getCenterPan,
     populateCenter } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete();
+  const { 
+    currentPage,
+    setCurrentPage,
+    maxPageNumber,
+    setMaxPageNumber,
+    resultsPerPage,
+    handlePageChange } = usePagination();
+
   return (
     <YelpContext.Provider value={{
       results,
@@ -100,7 +109,13 @@ export function YelpProvider({ children }) {
       authorizeUser,
       loginSubmit,
       loadingSearch,
-      setLoadingSearch
+      setLoadingSearch,
+      currentPage,
+      setCurrentPage,
+      maxPageNumber,
+      setMaxPageNumber,
+      handlePageChange,
+      resultsPerPage
       // openFilterClick
     }}>
       {children}

@@ -35,7 +35,9 @@ const Results = props => {
   const {
     loadingSearch,
     sortBy,
-    results } = useContext(YelpContext);
+    results,
+    maxPageNumber,
+    handlePageChange } = useContext(YelpContext);
 
 
   const handleSort = (property) => {
@@ -56,10 +58,10 @@ const Results = props => {
           <h2>Search Results</h2>
           <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
         </div>
-        <PlaceList currentPage={props.currentPage} resultsPerPage={props.resultsPerPage} setMaxPageNumber={props.setMaxPageNumber} />
+        <PlaceList />
         <div className="pagination-container">
           <div className={classes.root}>
-            <Pagination count={props.maxPageNumber} color="primary" onChange={props.handlePageChange} />
+            <Pagination count={maxPageNumber} color="primary" onChange={handlePageChange} />
           </div>
         </div>
       </div>
