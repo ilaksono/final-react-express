@@ -64,10 +64,24 @@ module.exports = (db) => {
       })
   };
 
+  const registration = (username, email, password) => {
+    const queryString = `
+    INSERT INTO users
+    VALUES($1, $2, $3)
+    RETURNING *;
+    `;
+    const queryParams = [username, email, password];
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      })
+  }
+
   return {
     getAllReviews,
     submitReview,
     getReviewsPerBusiness,
-    updateHelpfulCount
+    updateHelpfulCount,
+    registration
   };
 };
