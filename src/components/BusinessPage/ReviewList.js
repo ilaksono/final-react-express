@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext, Fragment } from 'react';
 import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
 import Sort from 'components/Sort';
@@ -6,22 +6,22 @@ import Sort from 'components/Sort';
 
 export default function ReviewList(props) {
 
-  const {sortBy, businessDetails} = useContext(YelpContext);
+  const { sortBy, businessDetails } = useContext(YelpContext);
 
-  
+
 
   const reviews = props.reviews.map(review => {
-    return <ReviewListItem 
-    username={review.user_id}
-    social_distancing={review.socialdistancing}
-    transaction_process={review.socialdistancing}
-    cleanliness={review.cleanliness}
-    overall_rating={review.overall_rating}
-    date={review.date}
-    helpful_count={review.helpful_count}
-    description={review.description}
-    id={review.id}
-    />
+    return <ReviewListItem
+      username={review.user_id}
+      social_distancing={review.socialdistancing}
+      transaction_process={review.socialdistancing}
+      cleanliness={review.cleanliness}
+      overall_rating={review.overall_rating}
+      date={review.date}
+      helpful_count={review.helpful_count}
+      description={review.description}
+      id={review.id}
+    />;
   });
 
   const sortOptions = [
@@ -36,15 +36,20 @@ export default function ReviewList(props) {
   ];
 
   const handleSort = (property) => {
-    sortBy(businessDetails.reviews, property, false);
-  }
-  
-
+    sortBy(businessDetails.reviews,
+      property,
+      false);
+  };
   return (
     <div>
-      <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
+      <div className='sort-group'>
+        <h3><strong>Reviews</strong></h3>
+        <Sort sortOptions={sortOptions}
+          defaultOption={sortOptions[0].id}
+          onClick={handleSort} />
+      </div>
       {reviews}
     </div>
-  )
+  );
 
 }

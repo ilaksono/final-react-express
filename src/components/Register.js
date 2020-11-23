@@ -13,8 +13,80 @@ export const userData = [
     username: 'Test User',
     email: 'test@test.ca',
     password: 'password',
+    img:'https://i.imgur.com/LpaY82x.png',
     likes:[]
-  }
+  },
+  {
+    username: 'Test User1',
+    email: 'test1@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/Nmx0Qxo.png',
+    likes: []
+  },
+  {
+    username: 'Test User2',
+    email: 'test2@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/T2WwVfS.png',
+    likes: []
+  },
+  {
+    username: 'Test User3',
+    email: 'test3@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/FK8V841.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User4',
+    email: 'test4@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/twYrpay.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User5',
+    email: 'test5@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/TdOAdde.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User6',
+    email: 'test6@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/3tVgsra.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User7',
+    email: 'test7@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/iHq8K8Z.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User8',
+    email: 'test8@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/nPywAp1.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User9',
+    email: 'test9@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/okB9WKC.jpg',
+    likes: []
+  },
+  {
+    username: 'Test User10',
+    email: 'test10@test.ca',
+    password: 'password',
+    img: 'https://i.imgur.com/TdOAdde.jpg',
+    likes: []
+  },
+
 ];
 
 const initReg = {
@@ -50,7 +122,6 @@ const RegisterForm = (props) => {
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if (!username || !email || !password) {
       if (!username) {
         setState({ ...state, errMsg: 'Username cannot be empty!', errType: 'username' });

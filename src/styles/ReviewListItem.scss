@@ -1,6 +1,59 @@
+@import './helper';
+
 .review-container{
   display:flex;
   flex-direction: column;
-  margin: 10px;
-  border: solid black;
+  margin: 20px;
+  border: none;
+  box-shadow: 0 0 2px 2px $salmon;
+  background-color: beige;
+  border-radius: 15px;
+  padding: 2%;
+  width: 400px;
+}
+
+.review-container:hover {
+  box-shadow: 0 0 5px 5px salmon;
+}
+
+.review-footer {
+  @include flexbox(row, space-around, center);
+}
+.user {
+  @include flexbox(row, space-around, center);
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-img {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.helpful-count {
+  left: 10px;
+  cursor: pointer;
+}
+.review-numbers {
+  @include flexbox(row, flex-start, flex-start)
+}
+.review {
+
+}
+.review-table {
+  width: 200px;
+}
+.date {
+  font-size: 0.9em;
+}
+.error-container {
+  width: 92px;
+}
+.date {
+
+}
+
+.sort-group {
+  @include flexbox(row, space-around, center);
+  margin-bottom: 0;
 }

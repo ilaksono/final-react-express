@@ -33,7 +33,7 @@ const NavBar = (props) => {
     <nav className="nav-bar">
       <div className="logo-container">
         <Link to={'/'}>
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo" className='nav-icon'/>
               SafeSpace
         </Link>
       </div>
