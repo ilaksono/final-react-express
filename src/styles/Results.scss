@@ -5,12 +5,12 @@
   min-width: 400px;
   flex-grow: 1;
   background-color: white;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 60px);
 }
 
 .articles-pagination-container{
   width: 100%;
-  max-height: calc(100vh - 100px);
+  height: 100%;
 }
 
 .progress-bar-container {

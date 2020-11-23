@@ -4,7 +4,7 @@ import { YelpContext } from 'YelpContext.js';
 import { useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import SquishCategory from './SquishCategory.js';
-import Icon from '@material-ui/core/Icon';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 
@@ -69,11 +69,9 @@ const FilterBar = (props) => {
   return (
     <div className="filter-container">
       <Button
-        endIcon={<Icon>send</Icon>}
+        endIcon={<CloseIcon />}
         color="primary"
-        style={{
-          fontSize: 10
-        }}
+        size="large"
         onClick={toggleFilterShow}>
       </Button>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
@@ -110,7 +108,8 @@ const FilterBar = (props) => {
                   color="default"
                   onClick={expandCategories}
                   style={{
-                    fontSize: 10
+                    fontSize: 10,
+                    marginTop:10
                   }}>
                   More
               </Button>}
@@ -123,7 +122,8 @@ const FilterBar = (props) => {
                   color="default"
                   onClick={expandCategories}
                   style={{
-                    fontSize: 10
+                    fontSize: 10,
+                    marginTop: 10
                   }}>
                   Less
               </Button>

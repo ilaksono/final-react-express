@@ -23,10 +23,7 @@ const Hours = (props) => {
       if (index === props.dayNum) {
         if (props.openNow()) {
           msg = 'Open now';
-        }
-
-        else msg = 'Closed now';
-
+        } else msg = 'Closed now';
       }
 
       return (
@@ -37,8 +34,8 @@ const Hours = (props) => {
           <td className='time-block'>{formatAMPM(time.start)} - {formatAMPM(time.end)}
           </td>
           {msg &&
-            <td className={`${msg === 'Open Now' 
-            ? 'is-open' : 'is-closed'}`}>
+            <td className={`${msg === 'Open now'
+              ? 'is-open' : 'is-closed'}`}>
               {msg}
             </td>}
         </tr>

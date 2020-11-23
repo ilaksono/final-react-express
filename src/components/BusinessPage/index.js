@@ -1,5 +1,5 @@
 import { Divider } from "@material-ui/core";
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
@@ -12,6 +12,7 @@ import Photos from './Photos';
 import "styles/BusinessPage.scss";
 import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
+import PhotoModal from './PhotoModal.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
 export default function BusinessPage() {
 
   const classes = useStyles();
+  const [bigPhoto, setBigPhoto]
+    = useState({
+      open: false,
+      url: ''
+    });
 
   const {
     businessDetails,
@@ -32,7 +38,9 @@ export default function BusinessPage() {
   } = useContext(YelpContext);
 
   const { id } = useParams();
-
+  const clickPhoto = () => {
+    setBigPhoto(true);
+  };
 
   useEffect(() => {
     if (!businessDetails.id) {
@@ -62,10 +70,13 @@ export default function BusinessPage() {
           <div className='images-container'>
             {businessDetails.photos.map(review => {
               return (
-                <Photos photos={review} />
+                <Photos photos={review} clickPhoto={clickPhoto} />
               );
             })}
           </div>
+          {bigPhoto.open &&
+            <PhotoModal 
+            />}
           <div className='business-container'>
             <div className='info-section'>
               <div className='bus-title'>
