@@ -6,16 +6,15 @@
 
 .articles-container{
   width: 100%;
-  padding-top: 8px;
-  height: calc(100vh - 260px);
+  padding-top: 4px;
   overflow-y: scroll;
+  height: calc(100% - 185px);
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
 }
 
 .result-container {
   scroll-snap-align: start;
-  scroll-padding-top: 10px;
   @include flexbox(row, space-between, flex-start);
   margin: 0px 8px 8px 8px;
   height: 140px;
@@ -96,8 +95,8 @@
 
 .search-title-container {
   @include flexbox(row, space-between, center);
-  margin: 0px 20px 10px 20px;
-  padding: 0px 10px 20px 10px;
+  margin: 10px 20px 10px 20px;
+  padding: 0px 10px 30px 10px;
   border-bottom: 1px solid $gray-line;
 }
 

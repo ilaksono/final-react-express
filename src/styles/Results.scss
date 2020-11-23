@@ -10,7 +10,7 @@
 
 .articles-pagination-container{
   width: 100%;
-  max-height: calc(100vh - 100px);
+  height: 100%;
 }
 
 .progress-bar-container {
@@ -19,11 +19,5 @@
 
 .pagination-container {
   @include flexbox(row, center, center);
-  margin-bottom: 20px;
-  color: transparent;
-}
-.search-title-container {
-  height: 10%;
-  margin: 0;
-  margin-left: 10%;
+  margin-bottom: 10px;
 }
