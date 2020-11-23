@@ -24,13 +24,14 @@
 
 
 .result-container:hover {
+  cursor: pointer;
   -moz-box-shadow:    1px 0px 3px 3px rgb(192, 192, 192);
   -webkit-box-shadow: 1px 0px 3px 3px rgb(192, 192, 192);
   box-shadow:         1px 0px 3px 3px rgb(192, 192, 192);
 }
 
 .img-general-info-container {
-  width: 440px;
+  width: 580px;
   height: 100%;
   @include flexbox(row, flex-start, center);
 }
@@ -51,6 +52,7 @@
 .general-info { 
   height: 100%;
   @include flexbox(column, flex-start, flex-start);
+  width: 440px;
 
   .venue_name {
     margin-top: 5px;
@@ -115,8 +117,10 @@
 
 .sample-review-container {
   margin-top: 5px;
+  width: 100%;
   color: gray;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 .sample-review-user {
   font-size: 12px;

@@ -182,6 +182,7 @@ const useRefinedData = () => {
           }
         });
       }
+      
       res(dispatch({ type: 'SORT', filteredCopy }));
     });
   };

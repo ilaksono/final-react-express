@@ -39,6 +39,7 @@ const PlaceListItem = (props) => {
     <div>
       {props.name === "" && ""}
       {props.name && <div class='result-container'
+        onClick={moveToNextPage}
         onMouseOver={() =>
           props.hoverMarker({id:props.id, lat: props.latitude, lng: props.longitude})}
         onMouseOut={() =>
@@ -48,7 +49,7 @@ const PlaceListItem = (props) => {
             <img src={props.image} alt="Logo" class='venue-image' />
           </div>
           <div class='general-info'>
-          <h3 onClick={moveToNextPage} class="venue_name">{props.label}. {props.name}</h3>
+          <h3 class="venue_name">{props.label}. {props.name}</h3>
           <div className="rating-outer-container">
             <div className="rating-title">
               Yelp Rating:
