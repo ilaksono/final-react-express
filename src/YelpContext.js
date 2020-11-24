@@ -28,9 +28,7 @@ export function YelpProvider({ children }) {
     getTops,
     authorizeUser,
     loginSubmit,
-    logout,
-    userDetails,
-    setUserDetails,
+    logout
   } = useApplicationData();
   const { results,
     setResults,

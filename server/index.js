@@ -95,12 +95,33 @@ const cleanAutoComplete = (data, keyword) => {
 
 app.post("/register", (req, res) => {
   const password = bcrpyt.hashSync(req.body.password, salt)
-  dbHelpers.registration(req.body.username, req.body.email, password)
+  console.log(req.body.email)
+  dbHelpers.serverRegistrationValidation()
+  .then((query) => {
+    query.some(user => {
+      if (user.username === req.body.username) {
+        return res.send("username exists")
+      } else if (user.email === req.body.email) {
+        console.log(user.email)
+         return res.send("email exists")
+      } else {
+        return res.send("true")
+      } 
+    })
+    
+  })
+  .then (() => {
+    dbHelpers.registration(req.body.username, req.body.email, password)
     .then(response => {
-      res.send(response)
+      console.log(response)
     })
     .catch(err => { console.log(err) })
-})
+  })
+  .catch(error => {console.log(error)})
+
+});
+
+
 
 app.get("/api/reviews", (req, res) => {
   dbHelpers.getAllReviews()

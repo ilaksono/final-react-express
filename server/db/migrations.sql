@@ -8,7 +8,6 @@ CREATE TABLE users (
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  image_url VARCHAR(255) DEFAULT 'https://britarchschools.com/img/founder.png',
   created_at timestamp NOT NULL DEFAULT Now()
 );
 

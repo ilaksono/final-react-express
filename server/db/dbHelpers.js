@@ -66,12 +66,23 @@ module.exports = (db) => {
 
   const registration = (username, email, password) => {
     const queryString = `
-    INSERT INTO users
+    INSERT INTO users (username, email, password)
     VALUES($1, $2, $3)
     RETURNING *;
     `;
     const queryParams = [username, email, password];
     return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      })
+  };
+
+  const serverRegistrationValidation = (username, email) => {
+    const queryString = `
+    SELECT username, email 
+    FROM users;
+    `;
+    return db.query(queryString)
       .then(response => {
         return response.rows
       })
@@ -82,6 +93,7 @@ module.exports = (db) => {
     submitReview,
     getReviewsPerBusiness,
     updateHelpfulCount,
-    registration
+    registration,
+    serverRegistrationValidation
   };
 };

@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from 'react';
-import axiosRegister from '../axios/register.js';
+import axios from 'axios';
 import { YelpContext } from 'YelpContext.js';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -95,7 +95,6 @@ const initReg = {
   password: '',
   errMsg: '',
   errType: '',
-  likes: []
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -122,32 +121,24 @@ const RegisterForm = (props) => {
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!username || !email || !password) {
       if (!username) {
         setState({ ...state, errMsg: 'Username cannot be empty!', errType: 'username' });
         return false;
-      }
-      else if (!email) {
+    }
+      if (!email) {
         setState({ ...state, errMsg: 'Email cannot be empty!', errType: 'email' });
         return false;
-      }
-      else if (!password) {
+    }
+      if (!password) {
         setState({ ...state, errMsg: 'Password cannot be empty!', errType: 'password' });
         return false;
-      }
-    } else if (!re.test(String(state.email).toLowerCase())) {
+    }
+      if (!re.test(String(state.email).toLowerCase())) {
       setState({ ...state, errMsg: 'Invalid email', errType:'email' });
     }
-    else if (userData.some(user =>
-      user.email === email)) {
-      setState({ ...state, errMsg: 'Email already in use!', errType: 'email' });
-      return false;
-    } else if (userData.some(user =>
-      user.username === username)) {
-      setState({ ...state, errMsg: 'Username already in use!', errType: 'username' });
-      return false;
-    } else return true;
+    return true;
   };
+  
   const cancel = () => {
     setState(initReg);
   };
@@ -155,20 +146,27 @@ const RegisterForm = (props) => {
   const handleClick = () => {
 
     if (validate(state))
-      axiosRegister(state)
+       axios.post("/register", {username:state.username, email: state.email, password:state.password})
         .then((res) => {
-          userData.push({
+          console.log(res.data)
+          if (res.data === true) {
+          const currentUser = {
             username: state.username,
-            email: state.email,
-            password: state.password,
-            likes: state.likes
-          });
+            email: state.email
+          }
           authorizeUser(state.username);
-          setState(initReg);
+          setState(currentUser);
+          console.log("great")
           props.setModal(prev => ({ ...prev, regOpen: false }));
-
-
-        });
+        } else if (res.data === "email exists") {
+          setState({ ...state, errMsg: 'Email already in use!', errType: 'email' });
+          return false;
+        } else if (res.data === "username exists") {
+          setState({ ...state, errMsg: 'Username already in use!', errType: 'username' });
+          return false;
+        } 
+      })
+      .catch(err => {console.log(err)});
     else
       return;
   };
