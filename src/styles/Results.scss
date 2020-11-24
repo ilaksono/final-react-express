@@ -15,6 +15,9 @@
 
 .progress-bar-container {
   @include flexbox(row, center, center);
+  align-self: center;
+  justify-self: center;
+  padding-top: 100px;
 }
 
 .pagination-container {

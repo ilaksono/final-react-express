@@ -55,7 +55,7 @@ const Results = props => {
       {loadingSearch ? (
         <div className='progress-bar-container'>
           <div className="progress-bar-container">
-            <CircularProgress />
+            <CircularProgress size={110} disableShrink/>
           </div>
         </div>
       ) : (
