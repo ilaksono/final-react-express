@@ -21,15 +21,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const initPhoto = {
+  open: false,
+  url: ''
+};
 
 export default function BusinessPage() {
 
   const classes = useStyles();
   const [bigPhoto, setBigPhoto]
-    = useState({
-      open: false,
-      url: ''
-    });
+    = useState(initPhoto);
 
   const {
     businessDetails,
@@ -38,8 +39,12 @@ export default function BusinessPage() {
   } = useContext(YelpContext);
 
   const { id } = useParams();
-  const clickPhoto = () => {
-    setBigPhoto(true);
+  const clickPhoto = (url) => {
+    setBigPhoto({ open: true, url });
+  };
+
+  const hideBigPhoto = () => {
+    setBigPhoto(initPhoto);
   };
 
   useEffect(() => {
@@ -75,7 +80,10 @@ export default function BusinessPage() {
             })}
           </div>
           {bigPhoto.open &&
-            <PhotoModal 
+            <PhotoModal
+              url={bigPhoto.url}
+              bigPhoto={bigPhoto}
+              hideBigPhoto={hideBigPhoto}
             />}
           <div className='business-container'>
             <div className='info-section'>

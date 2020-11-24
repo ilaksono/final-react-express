@@ -2,7 +2,7 @@ import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
+import 'styles/Photos.scss'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 const PhotoModal = (props) => {
   const classes = useStyles();
+
   const handleClose = () => {
-    props.setBigPhoto(false);
+    props.hideBigPhoto();
   };
 
   return (
@@ -37,8 +38,12 @@ const PhotoModal = (props) => {
         BackdropProps={{
           timeout: 500,
         }}
-        open={props.modal.regOpen}
-      />
+        open={props.bigPhoto.open}
+      >
+        <Fade in={props.bigPhoto.open}>
+          <img src={props.url} alt='no img found'/>
+        </Fade>
+      </Modal>
     </div>
   );
 
