@@ -52,7 +52,8 @@ const initOptions = {
 
 const initChartSelect = {
   options: ['Overall', 'Clean', 'Distancing', 'Process'],
-  select: 'Overall'
+  select: 'Overall',
+  perDay: false
 };
 
 export default function BusinessPage() {
@@ -65,7 +66,7 @@ export default function BusinessPage() {
   const [chartSelect, setChartSelect] = useState(initChartSelect);
 
   const clickChartTab = (value) => {
-    setChartSelect({...chartSelect, select:value});
+    setChartSelect({ ...chartSelect, select: value });
   };
   const {
     businessDetails,
@@ -77,6 +78,12 @@ export default function BusinessPage() {
   const { id } = useParams();
   const clickPhoto = (url) => {
     setBigPhoto({ open: true, url });
+  };
+  const changePerDay = () => {
+    setChartSelect({
+      ...chartSelect,
+      perDay: !chartSelect.perDay
+    });
   };
 
   const hideBigPhoto = () => {
