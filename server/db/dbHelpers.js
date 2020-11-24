@@ -67,7 +67,7 @@ module.exports = (db) => {
       })
   };
 
-  const updateHelpfulCount = (id) => {
+  const increaseHelpfulCount = (id) => {
     const queryString = `
     UPDATE reviews
     SET helpful_count = helpful_count + 1
@@ -79,6 +79,19 @@ module.exports = (db) => {
         return response.rows
       })
   };
+
+  const descreaseHelpfulCount = (id) => {
+    const queryString = `
+    UPDATE reviews
+    SET helpful_count = helpful_count - 1
+    where id = $1;
+    `;
+    const queryParams = [id]
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      })
+  }
 
   const registration = (username, email, password) => {
     const queryString = `
@@ -115,13 +128,13 @@ module.exports = (db) => {
     })
   };
 
-  const checkIfLikesExist = (id, reviewId) => {
+  const checkIfLikesExist = (reviewId, userId) => {
     const queryString = `
     SELECT * 
     FROM liked_reviews
-    WHERE user_id = $1 AND review_id = $2;
+    WHERE review_id = $1 AND user_id = $2;
     `
-    const queryParams = [id, reviewId];
+    const queryParams = [reviewId, userId];
 
     return db.query(queryString, queryParams)
     .then(response => {
@@ -145,8 +158,9 @@ module.exports = (db) => {
 
   const addLikes = (reviewId, userId) => {
     const queryString = `
-    INSERT INTO liked_reviews (user_id, review_id)
-    VALUES($1, $2);
+    INSERT INTO liked_reviews (review_id, user_id)
+    VALUES($1, $2)
+    RETURNING *;
     `
     const queryParams = [reviewId, userId];
 
@@ -154,6 +168,21 @@ module.exports = (db) => {
     .then(response => {
       return response.rows[0]
     })
+  }; 
+
+  const deleteLikes = (reviewId, userId) => {
+    const queryString = `
+    DELETE
+    FROM liked_reviews
+    WHERE review_id = $1 AND user_id = $2
+    RETURNING *;
+    `
+    const queryParams = [reviewId, userId];
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows;
+    })
+
   }
 
 
@@ -162,13 +191,15 @@ module.exports = (db) => {
     submitReview,
     getIdByUsername,
     getReviewsPerBusiness,
-    updateHelpfulCount,
+    increaseHelpfulCount,
     registration,
     serverRegistrationValidation,
     serverLoginValidation,
     hasUserMadeAPreviousReview,
     checkIfLikesExist,
     getReviewIdByVenueAndUser,
-    addLikes
+    addLikes,
+    deleteLikes,
+    descreaseHelpfulCount
   };
 };

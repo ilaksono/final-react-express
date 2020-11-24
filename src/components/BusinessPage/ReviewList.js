@@ -45,6 +45,7 @@ export default function ReviewList(props) {
     <div>
       <div className='sort-group'>
         <h3><strong>Reviews</strong></h3>
+        {console.log(props)}
         <Sort sortOptions={sortOptions}
           defaultOption={sortOptions[0].id}
           onClick={handleSort} />

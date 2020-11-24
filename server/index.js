@@ -203,6 +203,7 @@ app.post("/reviews/new", (req, res) => {
 app.post("/reviews/helpful", (req, res) => {
     let userId;
     let exists = false;
+    console.log(req.body.username)
     dbHelpers.getIdByUsername(req.body.username)
     .then (response => {
       userId = response[0].id
@@ -210,18 +211,38 @@ app.post("/reviews/helpful", (req, res) => {
     .then(() => {
       dbHelpers.checkIfLikesExist(req.body.id, userId)
       .then(response => {
-        if (response) {
+        if (response.length > 0) {
           console.log("validation ---->",response)
           exists = true;
         }
       })
-      .then(() => {
-        if (exists === false) {
-          dbHelpers.addLikes(req.body.id, userId)
-          .then(response => {
-            console.log("howdy")
+        .then(() => {
+          if (exists === false) {
+            dbHelpers.addLikes(req.body.id, userId)
+            .then(response => {
+              console.log("is this undefined --->?", response)
+              })
+              .then(() => {
+                dbHelpers.increaseHelpfulCount(req.body.id)
+                .then(() => {
+                  res.send("add")
+                })
+                .catch(err => { console.log(err) })
+              })
+            } else if (exists === true) {
+              console.log("did it work?")
+              dbHelpers.deleteLikes(req.body.id, userId)
+              .then(response => {
+                console.log("is this deleted--->", response)
+              })
+              .then(() => {
+                dbHelpers.descreaseHelpfulCount(req.body.id)
+                .then(() => {
+                  res.send("delete")
+                })
+              })
+              .catch(err => { console.log(err) })
+            }
           })
-        }
-      })
     })
   })

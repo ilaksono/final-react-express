@@ -22,13 +22,24 @@ export default function ReviewListItem(props) {
   const updateHelpfulCount = (id, name) => {
     
     return axios.post('/reviews/helpful', { id, username: name})
-      .then(() => {
+      .then((response) => {
+        console.log(response)
+        if (response.data === "add") {
         const updatedBusinessDetails = { ...businessDetails };
         updatedBusinessDetails.reviews.map
           (review => review.id === id ?
             review.helpful_count += 1
             : "");
         setBusinessDetails(updatedBusinessDetails);
+          }
+          if(response.data === "delete") {
+            const updatedBusinessDetails = { ...businessDetails };
+        updatedBusinessDetails.reviews.map
+          (review => review.id === id ?
+            review.helpful_count -= 1
+            : "");
+        setBusinessDetails(updatedBusinessDetails);
+          };
       });
   };
  
