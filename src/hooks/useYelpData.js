@@ -35,29 +35,29 @@ export default function useYelpData() {
   };
 
   const getCoreBusinessData = (data) => {
-    
-      const filteredDataItems = {
-        "id": data.id,
-        "name": data.name,
-        "image": data.image_url,
-        "categories": data.categories,
-        "address": data.location.address1,
-        "city": data.location.city,
-        "zip_code": data.location.zip_code,
-        "phone": data.display_phone,
-        "yelpRating": data.rating.toFixed(1),
-        "yelpRatingCount": data.review_count,
-        "price": data.price,
-        "reviews": [],
-        "reviewCount": 0,
-        "overall_rating": NaN,
-        "latitude": data.coordinates.latitude,
-        "longitude": data.coordinates.longitude,
-        "distance": data.distance,
-        "is_closed": data.is_closed,
-        "hours": data.hours,
-        "photos": data.photos
-      };
+
+    const filteredDataItems = {
+      "id": data.id,
+      "name": data.name,
+      "image": data.image_url,
+      "categories": data.categories,
+      "address": data.location.address1,
+      "city": data.location.city,
+      "zip_code": data.location.zip_code,
+      "phone": data.display_phone,
+      "yelpRating": data.rating.toFixed(1),
+      "yelpRatingCount": data.review_count,
+      "price": data.price,
+      "reviews": [],
+      "reviewCount": 0,
+      "overall_rating": NaN,
+      "latitude": data.coordinates.latitude,
+      "longitude": data.coordinates.longitude,
+      "distance": data.distance,
+      "is_closed": data.is_closed,
+      "hours": data.hours,
+      "photos": data.photos
+    };
     return filteredDataItems;
   };
 
@@ -105,30 +105,43 @@ export default function useYelpData() {
     photos: []
   }]);
 
-  const [businessDetails, setBusinessDetails ] = useState([{
-   id: '',
-   name: '',
-   image: '',
-   address: '',
-   city: '',
-   postal: '',
-   phone: "",
-   yelpRating: '',
-   yelpRatingCount: 0,
-   latitude: 0.0,
-   longitude: 0.0,
-   categories: [],
-   distance: '',
-   price: '',
-   overall_rating: '',
-   reviews: [],
-   delivery: false,
-   is_closed:'',
-   hours: [],
-   photos: [] 
-  }])
+  const sortBy = (results, property, ascending, type) => {
+    return new Promise((res, rej) => {
+      let filteredCopy = [];
+      if (ascending) {
+        filteredCopy = results.sort((a, b) => {
+          if (isFinite(a[property] - b[property])) {
+            return a[property] - b[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
+      } else if (property === 'date') {
+        filteredCopy = results.sort((a, b) => {
+          const leftP = new Date(a[property]).getTime();
+          const rightP = new Date(b[property]).getTime();
+          if (isFinite(rightP - leftP)) {
+            return rightP - leftP;
+          } else {
+            return isFinite(leftP) ? -1 : 1;
+          }
+        });
+      } else {
+        filteredCopy = results.sort((a, b) => {
+          if (isFinite(b[property] - a[property])) {
+            return b[property] - a[property];
+          } else {
+            return isFinite(a[property]) ? -1 : 1;
+          }
+        });
+      }
+      if (type === 'search')
+        res(setResults(filteredCopy));
+      else if (type === 'review')
+        res(setBusinessDetails({ ...businessDetails, reviews: [...filteredCopy] }));
+    });
+  };
 
- 
 
   const addReview = (query, reviews) => {
     query.forEach((result, index) => {
@@ -155,7 +168,8 @@ export default function useYelpData() {
       axios.get('/api/reviews')
     ]).then((all) => {
       const yelpData = all[0].data;
-      const parsedYelpData = getCoreYelpData(yelpData)
+      console.log("yelp", yelpData);
+      const parsedYelpData = getCoreYelpData(yelpData);
       all[1].data.forEach((data) => {
         reviewArr.push(data);
       });
@@ -198,54 +212,12 @@ export default function useYelpData() {
     });
   };
 
-  const submitNewReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
-    return axios.post('/reviews/new', {
-      user_id,
-      venue_id,
-      cleanliness,
-      socialDistancing,
-      transactionProcess,
-      overall_rating,
-      description
-    })
-    .then(review => {
-      const updatedBusinessDetails = {...businessDetails};
-      if (isNaN(updatedBusinessDetails.overall_rating)) {
-        updatedBusinessDetails.overall_rating = review.data[0].overall_rating;
-      } else {
-        updatedBusinessDetails.overall_rating = (updatedBusinessDetails.overall_rating * updatedBusinessDetails.reviewCount + Number(review.data[0].overall_rating))/(updatedBusinessDetails.reviewCount + 1);
-      }
-      updatedBusinessDetails.reviews.unshift(review.data[0]);
-      updatedBusinessDetails.reviewCount++;
-      setBusinessDetails(updatedBusinessDetails);
-
-      const searchResults = [...results];
-      const updatedSearchResults = searchResults.map(venue => {
-        if (venue.id === venue_id) {
-          const updatedVenue = { ...venue };
-          if (isNaN(updatedVenue.overall_rating)) {
-            updatedVenue.overall_rating = review.data[0].overall_rating;
-          } else {
-            updatedVenue.overall_rating = (updatedVenue.overall_rating * updatedVenue.reviewCount + Number(review.data[0].overall_rating))/(updatedVenue.reviewCount + 1);
-          }
-          updatedVenue.reviews.unshift(review.data[0]);
-          updatedVenue.reviewCount++;
-          return updatedVenue;
-        } else {
-          return venue;
-        }
-      });
-      setResults(updatedSearchResults);
-    });
-  }
-
-  return { 
+  return {
     results,
     setResults,
     yelpSearch,
     businessDetails,
     setBusinessDetails,
-    submitNewReview,
     loadingSearch,
     setLoadingSearch,
     getIndividualBusinessData,
