@@ -10,25 +10,20 @@ const request = require('request-promise-native');
 const db = require('./lib/pool.js');
 const dbHelpers = require('./db/dbHelpers.js')(db);
 const yelp = require('yelp-fusion');
-const { resolveNaptr } = require('dns');
+const {
+  resolveNaptr
+} = require('dns');
+const bcrpyt = require("bcrypt");
+const salt = bcrpyt.genSaltSync(10);
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
   keys: ['secret', 'key']
 }));
-/* app.get('/api/center', (req, res) => {
-  res.json({msg:'hi'});
-}); */
-/* app.get('/api/center', (req, res) => {
-  dbHelpers.fetchLatlngByIP()
-  .then((res) => { 
-    res.json(latLng)
-    console.log("RES", res);
-  })
-  .catch(er=> console.log(er));
-}) */
+
 const apiKey = process.env.YELP_API_KEY;
 const client = yelp.client(apiKey);
+
 
 app.post("/api/search_yelp", (req, res) => {
   client
@@ -81,7 +76,10 @@ app.post("/api/autocomplete_yelp", (req, res) => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
       const businesses = cleanAutoComplete(response.jsonBody.businesses, "name").slice(0, 4);
       const categories = cleanAutoComplete(response.jsonBody.categories, "title").slice(0, 5);
-      const obj = { businesses, categories };
+      const obj = {
+        businesses,
+        categories
+      };
       res.json(obj);
 
     }).catch(e => {
@@ -90,11 +88,69 @@ app.post("/api/autocomplete_yelp", (req, res) => {
 });
 
 
-
 const cleanAutoComplete = (data, keyword) => {
   const result = data.map(item => item[keyword]);
   return result;
 };
+
+app.post("/register", (req, res) => {
+  const password = bcrpyt.hashSync(req.body.password, salt)
+  let exists = false;
+  dbHelpers.serverRegistrationValidation()
+    .then((userData) => {
+      userData.some(user => {
+        if (user.username === req.body.username) {
+          exists = true;
+          return res.send("username exists")
+        } else if (user.email === req.body.email) {
+          exists = true;
+          return res.send("email exists")
+        }
+      })
+    })
+    .then(() => {
+      if (exists === false) {
+        dbHelpers.registration(req.body.username, req.body.email, password)
+          .then(response => {
+            console.log(response)
+            res.json({
+              username: response[0].username,
+              profile_pic: response[0].profile_pic
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+});
+
+app.post("/login", (req, res) => {
+  dbHelpers.serverLoginValidation()
+    .then((userData) => {
+      userData.some(user => {
+        if (user.email === req.body.email) {
+          if (bcrpyt.compareSync(req.body.password, user.password)) {
+            return res.json({
+              username: user.username,
+              profile_pic: user.profile_pic
+            })
+          } else {
+            return res.send("password incorrect")
+          }
+        }
+      })
+      return res.send("email does not exist");
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+
 
 
 app.get("/api/reviews", (req, res) => {
@@ -102,7 +158,9 @@ app.get("/api/reviews", (req, res) => {
     .then(reviews => {
       res.send(reviews);
     })
-    .catch(error => { console.log(error); });
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.post("/api/reviews/:id", (req, res) => {
@@ -118,27 +176,82 @@ app.listen(PORT, () => {
 });
 
 app.post("/reviews/new", (req, res) => {
-  dbHelpers.submitReview(
-    req.body.user_id,
-    req.body.venue_id,
-    req.body.cleanliness,
-    req.body.socialDistancing,
-    req.body.transactionProcess,
-    req.body.description,
-    req.body.overall_rating)
-    .then(review => {
-      res.send(review);
+  let userId;
+  let exists = false
+  dbHelpers.getIdByUsername(req.body.username)
+    .then(response => {
+      userId = response[0].id
     })
-    .catch(error => console.log(error));
-});
+    .then(() => {
+      dbHelpers.hasUserMadeAPreviousReview(userId, req.body.venue_id)
+        .then(response => {
+          console.log(response)
+          if (response) {
+            exists = true;
+            res.send("can't make another review for the same venue")
+          }
+        })
+        .then(() => {
+          if (exists === false) {
+            dbHelpers.submitReview(
+                userId,
+                req.body.venue_id,
+                req.body.cleanliness,
+                req.body.socialDistancing,
+                req.body.transactionProcess,
+                req.body.description,
+                req.body.overall_rating)
+              .then(review => {
+                res.send(review);
+              })
+              .catch(error => console.log(error));
+          }
+        })
+    })
+})
 
 app.post("/reviews/helpful", (req, res) => {
-  dbHelpers.updateHelpfulCount(req.body.id)
+  let userId;
+  let exists = false;
+  dbHelpers.getIdByUsername(req.body.username)
     .then(response => {
-      res.send(response);
+      userId = response[0].id
     })
-    .catch(err => { console.log(err); });
-});
+    .then(() => {
+      dbHelpers.checkIfLikesExist(req.body.id, userId)
+        .then(response => {
+          if (response.length > 0) {
+            exists = true;
+          }
+        })
+        .then(() => {
+          if (exists === false) {
+            dbHelpers.addLikes(req.body.id, userId)
+              .then(() => {
+                dbHelpers.increaseHelpfulCount(req.body.id)
+                  .then(() => {
+                    res.send("add")
+                  })
+                  .catch(err => {
+                    console.log(err)
+                  })
+              })
+          } else if (exists === true) {
+            console.log("did it work?")
+            dbHelpers.deleteLikes(req.body.id, userId)
+              .then(() => {
+                dbHelpers.descreaseHelpfulCount(req.body.id)
+                  .then(() => {
+                    res.send("delete")
+                  })
+              })
+              .catch(err => {
+                console.log(err)
+              })
+          }
+        })
+    })
+})
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers
