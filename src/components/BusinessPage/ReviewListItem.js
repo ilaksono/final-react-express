@@ -35,7 +35,7 @@ export default function ReviewListItem(props) {
           if(response.data === "delete") {
             const updatedBusinessDetails = { ...businessDetails };
         updatedBusinessDetails.reviews.map
-          (review => review.id === id ?
+          (review => review.id === id && review.helpful_count > 0 ?
             review.helpful_count -= 1
             : "");
         setBusinessDetails(updatedBusinessDetails);
