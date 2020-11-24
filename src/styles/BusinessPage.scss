@@ -1,11 +1,83 @@
 @import './helper.scss';
 
 .business-page-container {
-  @include flexbox(column, center, space-between);
+  @include flexbox(column, flex-start, center);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  max-width: 1100px;
+}
+
+.left-col {
+  width: 70%;
+}
+
+.right-col {
+  @include flexbox(column, flex-start, flex-start);
+  width: 30%;
+}
+
+.row {
+  @include flexbox(row, flex-start, center);
+  width: 100%;
+  margin-top: 5px;
+}
+
+.icon {
+  @include flexbox(row, center, center);
+  width: 30px;
+}
+
+.data {
+  width: calc(100% - 30px);
+  margin-left: 5px;
+}
+
+
+
+.back-and-message-container {
+  width: 100%;
+  height: 48px;
+  @include flexbox(row, space-between, center);
+}
+
+.rating-outer-container {
+  @include flexbox(row, flex-start, center);
+  width: 350px;
+  font-size: 18px;
+  height: 35px;
+}
+
+.rating-title {
+  @include flexbox(row, flex-start, center);
+  width: 110px;
+  height: 100%;
+}
+
+.covid_review_count{
+  @include flexbox(row, center, center);
+  height: 100%;
+  margin-left: 0px;
+  font-size: 14px;
+}
+
+.images-container {
+  @include flexbox(row, center, center);
+  height: 20%;
+  width: 100%;
+  margin: 30px;
+  background-color: rgb(230, 230, 230);
+  border-radius: 8px;
+}
+
+.bus-data {
+  @include flexbox(row, center, center);
+  margin-left: 10px;
 }
 
 .business-container {
-  @include flexbox(row, flex-start, flex-start);
+  @include flexbox(column, flex-start, center);
+  margin-left: 10px;
   width: 100%;
 }
 .photos {
@@ -23,7 +95,6 @@
   filter: grayscale(45%);
   border-radius: 30px;
   cursor:pointer;
-  margin-top: 0;
 }
 .static-map-container {
   margin-top: 5%;
@@ -39,20 +110,14 @@
   color: #333;
   padding-top: 6px;
   text-align: left;
-  margin-left: 10%;
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .bus-images:hover {
   filter: grayscale(0%);
   border-radius: 8px;
 }
-.images-container {
-  @include flexbox(row, center, center);
-  height: 20%;
-  width: 100%;
 
-}
 .time-block {
   text-align: center;
 }
@@ -60,12 +125,12 @@
 .rating {
   @include flexbox(column, center, center);
 }
-.review {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding: 60px;
-  font-size: 20px;
+
+.bus-buttons {
+  @include flexbox(row, space-between, center);
+  width: 440px;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .loc-label {
@@ -73,10 +138,7 @@
 }
 
 .info-section {
-  border-top: 2px solid rgb(236, 232, 232);
-  width: 33%;
-  height: 100%;
-  margin-left: 3%;
+  width: 100%;
 }
 .write-review-btn {
   position: -webkit-sticky;
@@ -113,6 +175,16 @@
 .reviews {
     
 }
+
+.bus-price {
+  margin-right: 10px;
+}
+
+.category {
+  font-style: italic;
+  margin-left: 5px;
+}
+
 .table-container {
   margin-top: 5%;
   margin-bottom: 10%;
@@ -124,4 +196,12 @@
   justify-self: center;
   padding-top: 100px;
   @include flexbox(row, center, center);
+}
+
+.close-icon:hover {
+  cursor: pointer;
+}
+
+.right-offset {
+  width: 64px;
 }

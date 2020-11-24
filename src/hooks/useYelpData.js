@@ -50,6 +50,7 @@ export default function useYelpData() {
         "price": data.price,
         "reviews": [],
         "reviewCount": 0,
+        "categories": data.categories,
         "overall_rating": NaN,
         "latitude": data.coordinates.latitude,
         "longitude": data.coordinates.longitude,
@@ -95,6 +96,7 @@ export default function useYelpData() {
    yelpRatingCount: 0,
    latitude: 0.0,
    longitude: 0.0,
+   categories: [],
    distance: '',
    price: '',
    overall_rating: '',
@@ -131,8 +133,7 @@ export default function useYelpData() {
       axios.post('/api/search_yelp', {venue, location}),
       axios.get('/api/reviews')
     ]).then((all) => {
-      const yelpData = all[0].data
-      console.log("yelp", yelpData);
+      const yelpData = all[0].data;
       const parsedYelpData = getCoreYelpData(yelpData)
       all[1].data.forEach((data) => {
         reviewArr.push(data);
@@ -176,12 +177,54 @@ export default function useYelpData() {
     })
   }
 
+  const submitNewReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+    return axios.post('/reviews/new', {
+      user_id,
+      venue_id,
+      cleanliness,
+      socialDistancing,
+      transactionProcess,
+      overall_rating,
+      description
+    })
+    .then(review => {
+      const updatedBusinessDetails = {...businessDetails};
+      if (isNaN(updatedBusinessDetails.overall_rating)) {
+        updatedBusinessDetails.overall_rating = review.data[0].overall_rating;
+      } else {
+        updatedBusinessDetails.overall_rating = (updatedBusinessDetails.overall_rating * updatedBusinessDetails.reviewCount + Number(review.data[0].overall_rating))/(updatedBusinessDetails.reviewCount + 1);
+      }
+      updatedBusinessDetails.reviews.unshift(review.data[0]);
+      updatedBusinessDetails.reviewCount++;
+      setBusinessDetails(updatedBusinessDetails);
+
+      const searchResults = [...results];
+      const updatedSearchResults = searchResults.map(venue => {
+        if (venue.id === venue_id) {
+          const updatedVenue = { ...venue };
+          if (isNaN(updatedVenue.overall_rating)) {
+            updatedVenue.overall_rating = review.data[0].overall_rating;
+          } else {
+            updatedVenue.overall_rating = (updatedVenue.overall_rating * updatedVenue.reviewCount + Number(review.data[0].overall_rating))/(updatedVenue.reviewCount + 1);
+          }
+          updatedVenue.reviews.unshift(review.data[0]);
+          updatedVenue.reviewCount++;
+          return updatedVenue;
+        } else {
+          return venue;
+        }
+      });
+      setResults(updatedSearchResults);
+    });
+  }
+
   return { 
     results,
     setResults,
     yelpSearch,
     businessDetails,
-    setBusinessDetails, 
+    setBusinessDetails,
+    submitNewReview,
     loadingSearch,
     setLoadingSearch,
     getIndividualBusinessData

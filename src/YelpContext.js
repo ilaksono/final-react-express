@@ -40,7 +40,8 @@ export function YelpProvider({ children }) {
     setBusinessDetails,
     getIndividualBusinessData,
     loadingSearch,
-    setLoadingSearch } = useYelpData();
+    setLoadingSearch,
+    submitNewReview } = useYelpData();
 
   const { refinedResults,
     setRefinedSeed,
@@ -115,7 +116,8 @@ export function YelpProvider({ children }) {
       maxPageNumber,
       setMaxPageNumber,
       handlePageChange,
-      resultsPerPage
+      resultsPerPage,
+      submitNewReview
       // openFilterClick
     }}>
       {children}

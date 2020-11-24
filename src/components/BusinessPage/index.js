@@ -4,9 +4,17 @@ import { useParams } from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { Link, useHistory } from 'react-router-dom';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReviewList from './ReviewList';
 import Photos from './Photos';
 import "styles/BusinessPage.scss";
@@ -14,17 +22,46 @@ import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';
 
+const StyledRating = withStyles({
+  iconFilled: {
+    color: '#ff6d75',
+  },
+})(Rating);
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '270px',
+    float: 'center',
     '& > *': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0.5),
+      marginTop: '0px',
+      marginBottom: '0px',
     },
+  },
+  favourite: {
+    fontWeight: 'bold',
+    color: '#FF717C',
+    '&:hover': {
+      color: 'rgba(0, 0, 0, 0.54)',
+    },
+  },
+  notFavouriteIcon: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    '&:hover': {
+      color: '#FF717C',
+    },
+
   },
 }));
 
 export default function BusinessPage() {
-
+  const history = useHistory();
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
   const [bigPhoto, setBigPhoto]
     = useState({
       open: false,
@@ -60,11 +97,30 @@ export default function BusinessPage() {
     else return false;
   };
 
+  const categoryList = businessDetails.categories.map((category, index) => {
+    return (
+      <div className="category">
+        { businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
+      </div>
+    )
+  })
+
   return (
     <div className='business-page-container'>
-      <div className='loading-circle'>
-        {!businessDetails.id && <CircularProgress size={140} />}
+      <div className="back-and-message-container">
+      <Link to={'/search'}>
+          <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
+      </Link>
+        { open && (
+          <Alert severity="success" className={classes.root} onClose={() => setOpen(false)}>Thanks for leaving a review!</Alert>
+        )}
+        <div className="right-offset"></div>
       </div>
+      {!businessDetails.id && (
+        <div className='loading-circle'>
+          <CircularProgress size={140} />
+        </div>
+      )}
       {businessDetails.id &&
         <>
           <div className='images-container'>
@@ -82,10 +138,81 @@ export default function BusinessPage() {
               <div className='bus-title'>
                 {businessDetails.name}
               </div>
+              <div className="bus-data">
+                <div className="left-col">
+                  <div className="rating-outer-container">
+                    <div className="rating-title">
+                      Yelp Rating:
+                    </div>
+                    <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                      <Rating name="read-only" precision={0.5} value={businessDetails.yelpRating} readOnly size="medium" />
+                    </Box>
+                    <div className="covid_review_count">
+                      {businessDetails.yelpRatingCount} reviews
+                    </div>
+                  </div>
+                  <div className="rating-outer-container">
+                    <div className="rating-title">
+                      Safe Score:
+                    </div>
+                    <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                      { isNaN(businessDetails.overall_rating) ? "N/A" 
+                      : <StyledRating
+                          name="customized-color"
+                          size="medium"
+                          value={businessDetails.overall_rating}
+                          precision={0.5}
+                          icon={<FavoriteIcon fontSize="inherit" />}
+                          readOnly
+                        />}
+                    </Box>
+                    <div className="covid_review_count">
+                      {businessDetails.reviews.length} reviews
+                    </div>
+                  </div>
+                  <div className="rating-outer-container">
+                    <div className="bus-price">
+                      { businessDetails.price } &nbsp; &nbsp; &middot;
+                    </div>
+                    &nbsp; &nbsp; { categoryList }
+                  </div>
+                </div>
+                <div className="right-col">
+                  <div className="row">
+                    <div className="icon">
+                      <LocationOnIcon />
+                    </div>
+                    <div className="data">
+                    {businessDetails.address},
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="icon">
+                    </div>
+                    <div className="data">
+                    {businessDetails.city}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="icon">
+
+                      <PhoneIcon />
+                    </div>
+                    <div className="data">
+                    {businessDetails.phone}
+                    </div>
+                  </div>
+                </div>
+              </div>
               {appState.authorized &&
-                <div className='review'>
-                  <NewReview venue_id={id} name={businessDetails.name}
-                  />
+                <div className='bus-buttons'>
+                  <NewReview venue_id={id} name={businessDetails.name} setOpen={setOpen} />
+
+                  {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
+                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
+
+                  {/* RENDER THIS BUTTON WHEN A USER HAS NOT YET FAVOURITED THE VENUE */}
+                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon}>Favourite</Button>
                 </div>
               }
 
@@ -95,11 +222,6 @@ export default function BusinessPage() {
                     <b>Location &amp; Hours</b></label>
                   <div className='static-map-container'>
                     <StaticMap {...businessDetails} />
-                  </div>
-                  <div className='contact-info'>
-                    <span>{businessDetails.address}</span>
-                    <span>{businessDetails.city}</span>
-                    <span>{businessDetails.phone}</span>
                   </div>
                 </div>
                 {businessDetails.hours &&
