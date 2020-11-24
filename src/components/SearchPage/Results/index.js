@@ -41,8 +41,9 @@ const Results = props => {
     maxPageNumber,
     handlePageChange,
     applyPriceFilter,
-    filters
-  } = useContext(YelpContext);
+    filters,
+    appState } = useContext(YelpContext);
+
 
   const handleSort = (property) => {
     sortBy(results, property, false, 'search')
