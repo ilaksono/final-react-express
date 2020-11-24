@@ -89,7 +89,8 @@ const Home = () => {
 
   const classes = useStyles();
   const { tops, yelpSearch, appState,
-    resetFilters
+    resetFilters,
+    setLoadingSearch
   } = useContext(YelpContext);
 
   let parsedTopList = [];
@@ -102,8 +103,10 @@ const Home = () => {
             className={classes.image}
             focusVisibleClassName={classes.focusVisible}
             onClick={() => {
+              setLoadingSearch(true)
               resetFilters();
-              yelpSearch(image.title, appState.center.city);
+              yelpSearch(image.title, appState.center.city)
+              
             }}
             style={{
               width: image.width,

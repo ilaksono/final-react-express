@@ -49,50 +49,6 @@ const useRefinedData = () => {
 
   const applyPriceFilter = (filters, results) => {
     return new Promise((res, rej) => {
-      // if (filters.isOpen) {
-      //   if (filters.categories.length > 0
-      //     && results.some((res) => res.price)) {
-      //     const filteredCopy = [];
-      //     results.forEach((biz) => {
-      //       if (filters.catsSelected.length < 1) {
-      //         if (filters.price.includes(biz.price)
-      //           && biz.distance < filters.distance 
-      //           && !biz.is_closed)
-      //           filteredCopy.push(biz);
-      //         else if (biz.price === undefined
-      //           && biz.distance < filters.distance
-      //           && !biz.is_closed)
-      //           filteredCopy.push(biz);
-      //       }
-      //       else if (filters.price.includes(biz.price)
-      //         && biz.distance < filters.distance
-      //         && filters.catsSelected.some(cat =>
-      //           biz.categories.includes(cat))
-      //         && !biz.is_closed)
-      //         filteredCopy.push(biz);
-      //       else if (biz.price === undefined &&
-      //         filters.price.length > 3 &&
-      //         filters.catsSelected.some(cat =>
-      //           biz.categories.includes(cat)) &&
-      //         biz.distance < filters.distance
-      //         && !biz.is_closed)
-      //         filteredCopy.push(biz);
-      //     });
-      //     res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
-      //   } else {
-      //     const filteredCopy = [];
-      //     results.forEach((biz) => {
-      //       if (filters.catsSelected.length < 1) {
-      //         if (biz.distance < filters.distance && !biz.is_closed)
-      //           filteredCopy.push(biz);
-      //       } else if (biz.distance < filters.distance
-      //         && filters.catsSelected.some(cat =>
-      //           biz.categories.includes(cat)) && !biz.is_closed)
-      //         filteredCopy.push(biz);
-      //     });
-      //     res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
-      //   }
-      // } else {
       if (filters.categories.length > 0
         && results.some((res) => res.price)) {
         const filteredCopy = [];
@@ -162,30 +118,29 @@ const useRefinedData = () => {
     });
   };
 
-  const sortBy = (results, property, ascending) => {
-    return new Promise((res, rej) => {
-      let filteredCopy = [];
-      if (ascending) {
-        filteredCopy = results.sort((a, b) => {
-          if (isFinite(a[property] - b[property])) {
-            return a[property] - b[property];
-          } else {
-            return isFinite(a[property]) ? -1 : 1;
-          }
-        });
-      } else {
-        filteredCopy = results.sort((a, b) => {
-          if (isFinite(b[property] - a[property])) {
-            return b[property] - a[property];
-          } else {
-            return isFinite(a[property]) ? -1 : 1;
-          }
-        });
-      }
-      
-      res(dispatch({ type: 'SORT', filteredCopy }));
-    });
-  };
+  // const sortBy = (results, property, ascending) => {
+  //   return new Promise((res, rej) => {
+  //     let filteredCopy = [];
+  //     if (ascending) {
+  //       filteredCopy = results.sort((a, b) => {
+  //         if (isFinite(a[property] - b[property])) {
+  //           return a[property] - b[property];
+  //         } else {
+  //           return isFinite(a[property]) ? -1 : 1;
+  //         }
+  //       });
+  //     } else {
+  //       filteredCopy = results.sort((a, b) => {
+  //         if (isFinite(b[property] - a[property])) {
+  //           return b[property] - a[property];
+  //         } else {
+  //           return isFinite(a[property]) ? -1 : 1;
+  //         }
+  //       });
+  //     }
+  //     res(dispatch({ type: 'SORT', filteredCopy }));
+  //   });
+  // };
 
   return {
     refinedResults,
@@ -193,7 +148,7 @@ const useRefinedData = () => {
     setRefinedSeed,
     applyDistanceFilter,
     applyAllFilters,
-    sortBy
+    // sortBy
   };
 };
 export default useRefinedData;

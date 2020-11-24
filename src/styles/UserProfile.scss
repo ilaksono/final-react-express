@@ -1,0 +1,9 @@
+@import './helper';
+
+
+.user-profile-layout {
+  @include flexbox(row, flex-start, center);
+  border: 5px solid red;
+  background-color: skyblue;
+  height: calc(100vh - 60px - 10px);
+}

@@ -20,7 +20,8 @@ const initTops = {
 const initApp = {
   authorized: false,
   name: '',
-  center: {}
+  center: {},
+  profile_pic:''
 };
 
 const initReg = {
@@ -28,7 +29,7 @@ const initReg = {
   email: '',
   password: '',
   errMsg: '',
-  likes: []
+  
 };
 const useApplicationData = () => { // login and user state information
   const [appState, dispatch] = useReducer(appReducer, initApp);
@@ -74,13 +75,7 @@ const useApplicationData = () => { // login and user state information
       dispatch({ type: DELETE });
     }
   };
-  const loginSubmit = ({ email, password }, users) => {
-    for (const user of users) {
-      if (user.email === email && user.password === password)
-        return user.username;
-    }
-    return false;
-  };
+ 
   const logout = () => {
     dispatch({ type: LOGOUT });
   };
@@ -95,8 +90,8 @@ const useApplicationData = () => { // login and user state information
   //       }
   //     });
   // };
-  const authorizeUser = (name) => {
-    dispatch({ type: AUTHORIZE, name });
+  const authorizeUser = (name, profile_pic) => {
+    dispatch({ type: AUTHORIZE, name, profile_pic });
   };
   const getTops = () => {
     const width = '60%';
@@ -135,11 +130,13 @@ const useApplicationData = () => { // login and user state information
       .then((all) => {
         all.forEach((each, index) => {
           example[index].location = tops.city;
-          example[index].url = each.data[0].image_url;
+          example[index].url = each.data;
         });
         return setTops({ ...tops, show: example });
       });
   };
+
+  
 
   return {
     // submitHandle,
@@ -151,8 +148,7 @@ const useApplicationData = () => { // login and user state information
     tops,
     getTops,
     authorizeUser,
-    loginSubmit,
-    logout,
+    logout
   };
 };
 

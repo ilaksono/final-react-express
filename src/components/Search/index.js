@@ -46,9 +46,10 @@ const Search = props => {
     populateCategories(results);
     addResults(results);
     getPriceFilterMode(results);
-    setRefinedSeed(results);
+    // setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
+  
 
   useEffect(() => {
     setLocation(appState.center.city);

@@ -1,6 +1,6 @@
 import PlaceList from './PlaceList';
 import 'styles/Results.scss';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { YelpContext } from 'YelpContext';
 import Sort from 'components/Sort';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,38 +36,51 @@ const Results = props => {
     loadingSearch,
     sortBy,
     results,
+    setRefinedSeed,
+    addResults,
     maxPageNumber,
-    handlePageChange } = useContext(YelpContext);
+    handlePageChange,
+    applyPriceFilter,
+    filters,
+    appState } = useContext(YelpContext);
 
 
   const handleSort = (property) => {
-    sortBy(results, property, false);
-  }
+    sortBy(results, property, false, 'search')
+      .then(() => {
+        
+        applyPriceFilter(filters, results);
+        addResults(results);
+      });
+  };
 
   return (
     <div className='results-container'>
-      { loadingSearch ? (
-      <div className='progress-bar-container'>
-        <div className="progress-bar-container">
-          <CircularProgress />
-        </div>
-      </div>
-      ) : (
-      <div className="articles-pagination-container">
-        <div className="search-title-container">
-          <h2>Search Results</h2>
-          <Sort sortOptions={sortOptions} defaultOption={sortOptions[0].id} onClick={handleSort} />
-        </div>
-        <PlaceList />
-        <div className="pagination-container">
-          <div className={classes.root}>
-            <Pagination count={maxPageNumber} color="primary" onChange={handlePageChange} />
+      {loadingSearch ? (
+        <div className='progress-bar-container'>
+          <div className="progress-bar-container">
+            <CircularProgress size={110} disableShrink/>
           </div>
         </div>
-      </div>
-      )}
+      ) : (
+          <div className="articles-pagination-container">
+            <div className="search-title-container">
+              <h2>Search Results</h2>
+              <Sort sortOptions={sortOptions}
+                defaultOption={sortOptions[0].id}
+                onClick={handleSort}
+              />
+            </div>
+            <PlaceList />
+            <div className="pagination-container">
+              <div className={classes.root}>
+                <Pagination count={maxPageNumber} color="primary" onChange={handlePageChange} />
+              </div>
+            </div>
+          </div>
+        )}
     </div>
   );
-}
+};
 
 export default Results;

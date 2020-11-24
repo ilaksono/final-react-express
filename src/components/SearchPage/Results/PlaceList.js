@@ -16,6 +16,7 @@ const PlaceList = (props) => {
     resultsPerPage,
   } = useContext(YelpContext);
   
+
   useEffect(() => {
     setMaxPageNumber(Math.ceil(refinedResults.length / resultsPerPage));
   }, [refinedResults]);

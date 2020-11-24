@@ -6,6 +6,7 @@ import usePagination from 'hooks/usePagination';
 import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
+import useSort from 'hooks/useSort';
 
 export const YelpContext = React.createContext();
 
@@ -29,9 +30,7 @@ export function YelpProvider({ children }) {
     getTops,
     authorizeUser,
     loginSubmit,
-    logout,
-    userDetails,
-    setUserDetails,
+    logout
   } = useApplicationData();
   const { results,
     setResults,
@@ -41,14 +40,21 @@ export function YelpProvider({ children }) {
     getIndividualBusinessData,
     loadingSearch,
     setLoadingSearch,
-    submitNewReview } = useYelpData();
+    submitNewReview,
+    sortBy
+  } = useYelpData();
 
+  const {
+    sort,
+    setSort
+  } = useSort();
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter,
-    sortBy } = useRefinedData();
+    // sortBy 
+  } = useRefinedData();
   const { mapState,
     addResults,
     hoverMarker,
@@ -59,7 +65,7 @@ export function YelpProvider({ children }) {
     getCenterPan,
     populateCenter } = useMapData();
   const { autoComplete, resetAutoComplete, yelpAutoComplete } = useAutoComplete();
-  const { 
+  const {
     currentPage,
     setCurrentPage,
     maxPageNumber,
@@ -111,6 +117,8 @@ export function YelpProvider({ children }) {
       loginSubmit,
       loadingSearch,
       setLoadingSearch,
+      sort,
+      setSort,
       currentPage,
       setCurrentPage,
       maxPageNumber,

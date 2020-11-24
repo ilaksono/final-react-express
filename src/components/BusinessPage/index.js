@@ -18,9 +18,12 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReviewList from './ReviewList';
 import Photos from './Photos';
 import "styles/BusinessPage.scss";
+import 'styles/ChartSection.scss';
 import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';
+import ChartSection from 'components/UserProfile/ChartSection';
+import ChartTab from './ChartTab';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -57,6 +60,37 @@ const useStyles = makeStyles((theme) => ({
 
   },
 }));
+const initPhoto = {
+  open: false,
+  url: ''
+};
+const initData = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [{
+    label: 'Andrew\'s body fat % ',
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    data: [0, 10, 5, 2, 20, 30, 45]
+  }],
+  ready: null
+};
+
+const initOptions = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        min: 0,
+        max: 5
+      }
+    }]
+  }
+};
+
+const initChartSelect = {
+  options: ['Overall', 'Clean', 'Distancing', 'Process'],
+  select: 'Overall',
+  perDay: false
+};
 
 export default function BusinessPage() {
   const history = useHistory();
@@ -64,20 +98,72 @@ export default function BusinessPage() {
   const [open, setOpen] = React.useState(false);
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null});
   const [bigPhoto, setBigPhoto]
-    = useState({
-      open: false,
-      url: ''
-    });
+    = useState(initPhoto);
+  const [chartData, setChartData] = useState(initData);
+  const [chartOptions, setChartOptions] = useState(initOptions);
+  const [chartSelect, setChartSelect] = useState(initChartSelect);
 
+  const clickChartTab = (value) => {
+    setChartSelect({ ...chartSelect, select: value });
+  };
   const {
     businessDetails,
     getIndividualBusinessData,
     appState
   } = useContext(YelpContext);
 
+
   const { id } = useParams();
-  const clickPhoto = () => {
-    setBigPhoto(true);
+  const clickPhoto = (url) => {
+    setBigPhoto({ open: true, url });
+  };
+  const changePerDay = () => {
+    setChartSelect({
+      ...chartSelect,
+      perDay: !chartSelect.perDay
+    });
+  };
+
+  const hideBigPhoto = () => {
+    setBigPhoto(initPhoto);
+  };
+  const primeChartData = (reviews, type) => {
+    if (reviews) {
+      const key = {
+        'overall_rating': 'Overall Rating',
+        'cleanliness': 'Cleanliness',
+        'socialdistancing': 'Social Distancing',
+        'transactionprocess': 'Transaction Process'
+      };
+      const keyIndex = chartSelect.options.indexOf(type);
+      const k = Object.keys(key)[keyIndex];
+      let cpy = [...reviews];
+      cpy = cpy.sort((a, b) => {
+        const leftP = new Date(a.date).getTime();
+        const rightP = new Date(b.date).getTime();
+        if (isFinite(rightP - leftP)) {
+          return leftP - rightP;
+        } else {
+          return isFinite(leftP) ? -1 : 1;
+        }
+
+      });
+      const primedLabels = cpy.map(rev => {
+        return new Date(rev.date).toUTCString().split('')
+          .slice(5, 10).join('').replace(' ', '-');
+      });
+      const primedVal = cpy.map(rev => rev[k]);
+      setChartData({
+        labels: primedLabels,
+        datasets: [{
+          label: key[k],
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: primedVal
+        }],
+        ready: true
+      });
+    }
   };
 
   useEffect(() => {
@@ -85,6 +171,10 @@ export default function BusinessPage() {
       getIndividualBusinessData(id);
     }
   }, []);
+
+  useEffect(() => {
+    primeChartData(businessDetails.reviews, chartSelect.select);
+  }, [businessDetails, chartSelect]);
 
   const now = new Date();
   let dayNum = now.getDay() - 1; // 1 is monday
@@ -125,6 +215,7 @@ export default function BusinessPage() {
       {businessDetails.id &&
         <>
           <div className='images-container'>
+            
             {businessDetails.photos.map(review => {
               return (
                 <Photos photos={review} clickPhoto={clickPhoto} />
@@ -132,7 +223,10 @@ export default function BusinessPage() {
             })}
           </div>
           {bigPhoto.open &&
-            <PhotoModal 
+            <PhotoModal
+              url={bigPhoto.url}
+              bigPhoto={bigPhoto}
+              hideBigPhoto={hideBigPhoto}
             />}
           <div className='business-container'>
             <div className='info-section'>
@@ -265,54 +359,21 @@ export default function BusinessPage() {
                   />}
               </div>
             </div>
+            <div className='business-chart-container'>
+              {chartData.ready &&
+                <>
+                  <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
+                  {/* {parsedCharts} */}
+
+                  <ChartSection data={chartData} options={chartOptions} />
+
+
+                </>
+              }
+            </div>
           </div>
         </>}
+
     </div >
   );
 }
-
-/* <table>
-  {businessDetails.hours[0].open[0] &&
-    <tr>
-      <td>Mon</td>
-      <td>{`${businessDetails.hours[0].open[0].start} -
-                        ${businessDetails.hours[0].open[0].end}`}</td>
-    </tr>}
-  {businessDetails.hours[0].open[1] &&
-    <tr>
-      <td>Tue</td><td>{`${businessDetails.hours[0].open[1].start} -
-                        ${businessDetails.hours[0].open[1].end}`}
-      </td>
-    </tr>}
-  {businessDetails.hours[0].open[2] &&
-    <tr>
-      <td>Wed</td>
-      <td>{`${businessDetails.hours[0].open[2].start} -
-                  ${businessDetails.hours[0].open[2].end}`}</td>
-    </tr>}
-  {businessDetails.hours[0].open[3] &&
-    <tr>
-      <td>Thu</td>
-      <td>{`${businessDetails.hours[0].open[3].start} -
-                      ${businessDetails.hours[0].open[3].end}`}
-      </td>
-    </tr>}
-  {businessDetails.hours[0].open[4] && <tr>
-    <td>Fri</td>
-    <td>{`${businessDetails.hours[0].open[4].start} -
-                      ${businessDetails.hours[0].open[4].end}`}
-    </td>
-
-  </tr>}
-  {businessDetails.hours[0].open[5] &&
-    <tr>
-      <td>Sat</td>
-      <td>{`${businessDetails.hours[0].open[5].start} -  ${businessDetails.hours[0].open[5].end}`}</td>
-
-    </tr>}
-  {businessDetails.hours[0].open[6] &&
-    <tr>
-      <td>Sun</td>
-      <td>{`${businessDetails.hours[0].open[6].start} -  ${businessDetails.hours[0].open[6].end}`}</td>
-    </tr>}
-</table> */

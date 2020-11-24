@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { YelpContext } from 'YelpContext';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,15 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Sort = props => {
   const classes = useStyles();
-  const [sortBy, setSortBy] =
-    React.useState(props.defaultOption);
+  const {sort, setSort} = useContext(YelpContext)
+  // const [sortBy, setSortBy] =
+  //   React.useState(props.defaultOption);
+
 
   const handleChange = (event) => {
-    setSortBy(event.target.value);
+    setSort(event.target.value);
   };
 
   const items = props.sortOptions.map(option => {
-    return <MenuItem value={option.id} onClick={() => props.onClick(option.id)}>{option.value}</MenuItem>;
+    return <MenuItem value={option.id} onClick={() =>
+      props.onClick(option.id)}>{option.value}
+    </MenuItem>;
   });
 
 
@@ -41,7 +46,7 @@ const Sort = props => {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           className={classes.select}
-          value={sortBy}
+          value={sort}
           onChange={handleChange}
           label="Sort By"
         >
