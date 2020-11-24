@@ -28,13 +28,13 @@ module.exports = (db) => {
       });
   };
   
-  const submitReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
+  const submitReview = (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
     const queryString = `
-    INSERT INTO reviews (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO reviews (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *;
     `;
-    const queryParams = [user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
+    const queryParams = [user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows;
@@ -82,7 +82,7 @@ module.exports = (db) => {
 
   const getAllUsersImages = () => {
     const queryString = `
-    SELECT id, username, image_url 
+    SELECT id, username, profile_pic, city 
     FROM users 
     `;
     return db.query(queryString, [])
@@ -96,7 +96,7 @@ module.exports = (db) => {
     WHERE user_id = $1  
     `;
     const queryParams = [Number(id)];
-    db
+    return db
       .query(queryString, queryParams)
       .then(res => res.rows);
   };
@@ -107,7 +107,7 @@ module.exports = (db) => {
     WHERE user_id = $1  
     `;
     const queryParams = [Number(id)];
-    db
+    return db
       .query(queryString, queryParams)
       .then(res => res.rows);
   };
@@ -125,13 +125,13 @@ module.exports = (db) => {
       })
   }
 
-  const registration = (username, email, password) => {
+  const registration = (username, email, password, city) => {
     const queryString = `
-    INSERT INTO users (username, email, password)
-    VALUES($1, $2, $3)
+    INSERT INTO users (username, email, password , city)
+    VALUES($1, $2, $3, $4)
     RETURNING *;
     `;
-    const queryParams = [username, email, password];
+    const queryParams = [username, email, password, city];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows

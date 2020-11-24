@@ -9,13 +9,15 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   profile_pic VARCHAR(255) DEFAULT 'https://britarchschools.com/img/founder.png',
-  created_at timestamp NOT NULL DEFAULT Now()
+  created_at timestamp NOT NULL DEFAULT Now(),
+  city VARCHAR(255) NOT NULL DEFAULT 'Toronto'
 );
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   venue_id VARCHAR(255) NOT NULL,
+  venue_name VARCHAR(255) NOT NULL,
   date timestamp NOT NULL DEFAULT Now(),
   helpful_count INTEGER DEFAULT 0,
   cleanliness  NUMERIC(3, 1),

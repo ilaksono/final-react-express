@@ -2,8 +2,54 @@
 
 
 .user-profile-layout {
-  @include flexbox(row, flex-start, center);
-  border: 5px solid red;
-  background-color: skyblue;
-  height: calc(100vh - 60px - 10px);
+  @include flexbox(row, flex-start, flex-start);
+  background-color: $white;
+  height: calc(100vh - 60px);
+}
+.profile-reviews {
+  border-left: 2.5px solid rgb(230, 226, 226);
+  border-right: 2.5px solid rgb(230, 226, 226);
+  margin-top: 75px;
+  margin-bottom: 15px;
+  height: calc(100vh - 60px- - 30px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
+  width: 45%;
+  @include flexbox(column, center, center);
+}
+
+.profile-container {
+  @include flexbox(column, flex-start, center);
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+
+.user-chart-container {
+  @include flexbox(column, center, center);
+  height: calc(100vh - 60px);
+  width: 36.7%;
+}
+
+.city-container {
+  font-size: 20px;
+  font-weight: bold;  
+  @include flexbox(column, center, center)
+}
+.profile-header {
+  margin-top: 60px;
+  font-size: 40px;
+  font-weight: bold;
+  @include flexbox(column, center, center)
+
+}
+.profile-picture-container {
+  height: 200px;
+  width: 180px;
+  margin-top: 60px;
+}
+.profile-picture {
+  max-width: 180px;
+  border-radius: 50%;
 }

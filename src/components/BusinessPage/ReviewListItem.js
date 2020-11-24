@@ -4,6 +4,7 @@ import 'styles/ReviewListItem.scss';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
 import 'styles/Register.scss';
+import { Link } from 'react-router-dom';
 
 
 export default function ReviewListItem(props) {
@@ -20,29 +21,29 @@ export default function ReviewListItem(props) {
   };
 
   const updateHelpfulCount = (id, name) => {
-    
-    return axios.post('/reviews/helpful', { id, username: name})
+
+    return axios.post('/reviews/helpful', { id, username: name })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         if (response.data === "add") {
-        const updatedBusinessDetails = { ...businessDetails };
-        updatedBusinessDetails.reviews.map
-          (review => review.id === id ?
-            review.helpful_count += 1
-            : "");
-        setBusinessDetails(updatedBusinessDetails);
-          }
-          if(response.data === "delete") {
-            const updatedBusinessDetails = { ...businessDetails };
-        updatedBusinessDetails.reviews.map
-          (review => review.id === id && review.helpful_count > 0 ?
-            review.helpful_count -= 1
-            : "");
-        setBusinessDetails(updatedBusinessDetails);
-          };
+          const updatedBusinessDetails = { ...businessDetails };
+          updatedBusinessDetails.reviews.map
+            (review => review.id === id ?
+              review.helpful_count += 1
+              : "");
+          setBusinessDetails(updatedBusinessDetails);
+        }
+        if (response.data === "delete") {
+          const updatedBusinessDetails = { ...businessDetails };
+          updatedBusinessDetails.reviews.map
+            (review => review.id === id && review.helpful_count > 0 ?
+              review.helpful_count -= 1
+              : "");
+          setBusinessDetails(updatedBusinessDetails);
+        };
       });
   };
- 
+
   const convertTime = (date) => {
     const time = new Date(date).getTime();
     let unit = "second";
@@ -76,15 +77,20 @@ export default function ReviewListItem(props) {
     diff = parseInt(diff);
     if (diff !== 1) unit += "s";
     return `${diff} ${unit} ago`;
-  }
+  };
 
 
   return (
     <div className='review-container'>
       <div className='user'>
-        {console.log(appState)}
-        <span>{props.username}</span>
-        <img className='profile-img' src={props.picture} alt='no img found' />
+        <span>{props.isProfile ? props.venue_name : props.username}</span>
+        {
+          props.picture &&
+          <Link to={`/users/${props.user_id}`} >
+
+            <img className='profile-img' src={props.picture} alt='no img found' />
+          </Link>
+        }
       </div>
       <div className='review-content'>
         <div className='review-numbers'>
@@ -132,7 +138,7 @@ export default function ReviewListItem(props) {
         {/*eslint-disable-next-line */}
         <div className='helpful-count'
           onClick={appState.authorized
-            ? () => {updateHelpfulCount(props.id, appState.name)} : showErr}>
+            ? () => { updateHelpfulCount(props.id, appState.name); } : showErr}>
           <i className="far fa-thumbs-up">{props.helpful_count}
           </i>
         </div>

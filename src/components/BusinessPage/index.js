@@ -17,6 +17,8 @@ import PhotoModal from './PhotoModal.js';
 import ChartSection from 'components/UserProfile/ChartSection';
 import ChartTab from './ChartTab';
 import TogglePerDay from './TogglePerDay';
+import useChartData from 'hooks/useChartData';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,43 +31,52 @@ const initPhoto = {
   open: false,
   url: ''
 };
-const initData = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [{
-    label: 'Andrew\'s body fat % ',
-    backgroundColor: '#1E0253',
-    // backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45]
-  }],
-  ready: null
-};
+// const initData = {
+//   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+//   datasets: [{
+//     label: 'Andrew\'s body fat % ',
+//     backgroundColor: '#1E0253',
+//     // backgroundColor: 'rgb(255, 99, 132)',
+//     borderColor: 'rgb(255, 99, 132)',
+//     data: [0, 10, 5, 2, 20, 30, 45]
+//   }],
+//   ready: null
+// };
 
-const initOptions = {
-  scales: {
-    yAxes: [{
-      ticks: {
-        min: 0,
-        max: 5
-      }
-    }]
-  }
-};
+// const initOptions = {
+//   scales: {
+//     yAxes: [{
+//       ticks: {
+//         min: 0,
+//         max: 5
+//       }
+//     }]
+//   }
+// };
 
-const initChartSelect = {
-  options: ['Overall', 'Clean', 'Distancing', 'Process'],
-  select: 'Overall',
-  perDay: false
-};
+// const initChartSelect = {
+//   options: ['Overall', 'Clean', 'Distancing', 'Process'],
+//   select: 'Overall',
+//   perDay: false
+// };
 
 export default function BusinessPage() {
 
   const classes = useStyles();
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
-  const [chartData, setChartData] = useState(initData);
-  const [chartOptions, setChartOptions] = useState(initOptions);
-  const [chartSelect, setChartSelect] = useState(initChartSelect);
+  // const [chartData, setChartData] = useState(initData);
+  // const [chartOptions, setChartOptions] = useState(initOptions);
+  // const [chartSelect, setChartSelect] = useState(initChartSelect);
+
+  const {
+    chartSelect,
+    setChartSelect,
+    chartOptions,
+    setChartOptions,
+    chartData,
+    setChartData
+  } = useChartData();
 
   const clickChartTab = (value) => {
     setChartSelect({ ...chartSelect, select: value });
@@ -175,8 +186,10 @@ export default function BusinessPage() {
   }, []);
 
   useEffect(() => {
-    if (businessDetails.reviews.length)
-      primeChartData(businessDetails.reviews, chartSelect.select);
+    if (businessDetails.reviews) {
+      if (businessDetails.reviews.length)
+        primeChartData(businessDetails.reviews, chartSelect.select);
+    }
   }, [businessDetails, chartSelect]);
 
   const now = new Date();

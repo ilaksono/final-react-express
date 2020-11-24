@@ -117,7 +117,8 @@ const RegisterForm = (props) => {
   const [state, setState] = useState(initReg);
   const classes = useStyles();
   const {
-    authorizeUser
+    authorizeUser,
+    appState
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -146,7 +147,7 @@ const RegisterForm = (props) => {
   const handleClick = () => {
 
     if (validate(state))
-       axios.post("/register", {username:state.username, email: state.email, password:state.password})
+       axios.post("/register", {username:state.username, email: state.email, password:state.password, city: appState.center.city || 'Toronto'})
         .then((res) => {
           console.log("data", res.data)
           if (res.data.username) {

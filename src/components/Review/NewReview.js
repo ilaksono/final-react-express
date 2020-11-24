@@ -145,7 +145,8 @@ const NewReview = props => {
       socialDistancing,
       transactionProcess,
       overall_rating: overallComfort,
-      description
+      description,
+      venue_name: businessDetails.name
     }).then(review => {
       if (review.data === "can't make another review for the same venue") {
         return handleClose();

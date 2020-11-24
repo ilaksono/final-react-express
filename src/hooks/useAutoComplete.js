@@ -11,18 +11,18 @@ export default function useAutoComplete() {
   const [autoComplete, setAutoComplete] = useState(initState);
 
   const yelpAutoComplete = (venue, latitude, longitude) => {
-    return axios.post('/api/autocomplete_yelp', {venue, latitude, longitude })
-    .then((response) => {
-    setAutoComplete(response.data);
-  })
-  .catch((err) => {
-    console.log (err)
-    }) 
-  }
+    return axios.post('/api/autocomplete_yelp', { venue, latitude, longitude })
+      .then((response) => {
+        setAutoComplete(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const resetAutoComplete = () => {
     setAutoComplete(initState);
-  }
-  
-return { autoComplete, resetAutoComplete, yelpAutoComplete }
+  };
+
+  return { autoComplete, resetAutoComplete, yelpAutoComplete };
 }
