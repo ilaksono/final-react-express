@@ -16,6 +16,7 @@ import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';
 import ChartSection from 'components/UserProfile/ChartSection';
 import ChartTab from './ChartTab';
+import TogglePerDay from './TogglePerDay';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,8 @@ const initData = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [{
     label: 'Andrew\'s body fat % ',
-    backgroundColor: 'rgb(255, 99, 132)',
+    backgroundColor: '#1E0253',
+    // backgroundColor: 'rgb(255, 99, 132)',
     borderColor: 'rgb(255, 99, 132)',
     data: [0, 10, 5, 2, 20, 30, 45]
   }],
@@ -110,22 +112,59 @@ export default function BusinessPage() {
         }
 
       });
-      const primedLabels = cpy.map(rev => {
-        return new Date(rev.date).toUTCString().split('')
-          .slice(5, 10).join('').replace(' ', '-');
-      });
-      const primedVal = cpy.map(rev => rev[k]);
+      let primedLabels = [];
+      let primedVal = [];
+      let prevDay = formatDateString(cpy[0].date);
+      let acc = 0;
+      let count = 0;
+      if (chartSelect.perDay) {
+        cpy.forEach(rev => {
+          if (!primedLabels
+            .includes(formatDateString(rev.date)))
+            primedLabels.push(formatDateString(rev.date));
+        });
+        cpy.forEach((rev, index) => {
+          if (formatDateString(rev.date) === prevDay && !(index === cpy.length - 1)) {
+            acc += Number(rev[k]);
+            count++;
+          } else {
+            prevDay = formatDateString(rev.date);
+            primedVal.push(acc / count);
+            acc = Number(rev[k]);
+            count = 1;
+            if (index === cpy.length - 1) {
+              if (prevDay === formatDateString(rev.date))
+                primedVal.push((acc + Number(rev[k])) / (count + 1));
+              else primedVal.push(Number(rev[k]));
+            }
+
+          }
+        });
+
+      } else {
+        primedLabels = cpy.map(rev => {
+          return formatDateString(rev.date);
+        });
+        primedVal = cpy.map(rev => rev[k]);
+      }
+
+
       setChartData({
         labels: primedLabels,
         datasets: [{
           label: key[k],
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: '#1E0253',
+          borderColor: '#1E0253',
           data: primedVal
         }],
         ready: true
       });
     }
+  };
+
+  const formatDateString = date => {
+    return new Date(date).toUTCString().split('')
+      .slice(5, 10).join('').replace(' ', '-');
   };
 
   useEffect(() => {
@@ -223,6 +262,7 @@ export default function BusinessPage() {
               {chartData.ready &&
                 <>
                   <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
+                  <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day'/>
                   {/* {parsedCharts} */}
 
                   <ChartSection data={chartData} options={chartOptions} />
