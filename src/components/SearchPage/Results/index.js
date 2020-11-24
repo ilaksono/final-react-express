@@ -39,13 +39,16 @@ const Results = props => {
     setRefinedSeed,
     addResults,
     maxPageNumber,
-    handlePageChange
+    handlePageChange,
+    applyPriceFilter,
+    filters
   } = useContext(YelpContext);
 
   const handleSort = (property) => {
     sortBy(results, property, false, 'search')
       .then(() => {
-        setRefinedSeed(results);
+        
+        applyPriceFilter(filters, results);
         addResults(results);
       });
   };
