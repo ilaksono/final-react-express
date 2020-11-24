@@ -43,7 +43,7 @@
 
 .bus-data-row {
   @include flexbox(row, flex-start, center);
-  width: 400px;
+  width: 500px;
   font-size: 18px;
   height: 35px;
 }
@@ -97,7 +97,7 @@
   cursor:pointer;
 }
 .static-map-container {
-  margin-top: 5%;
+  margin-top: 30px;
   margin-bottom: 5%;
 }
 .bus-title {
@@ -167,7 +167,7 @@
 .location-hours {
   @include flexbox(row, flex-start, flex-start);
   margin-top: 50px;
-
+  margin-bottom: 50px;
 }
 .map-label-group {
   margin-right: 60px;
@@ -187,8 +187,7 @@
 }
 
 .table-container {
-  margin-top: 5%;
-  margin-bottom: 10%;
+  margin-top: 50px;
 }
 
 

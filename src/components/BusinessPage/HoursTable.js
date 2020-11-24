@@ -1,4 +1,5 @@
 import 'styles/BusinessPage.scss';
+import { useEffect } from 'react';
 const Hours = (props) => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -32,28 +33,25 @@ const Hours = (props) => {
     dayNum += 7;
   }
 
+  let nextOpenStart = null;
+  let nextOpenEnd = null;
+  let nextOpenDay = null;
   const parsedRows = hoursDayArray.map((day, index) => {
     const results = [];
-    console.log(day);
-    let nextOpenStart = null;
-    let nextOpenEnd = null;
-    let nextOpenDay = null;
     const currentTime = now.getHours() * 100 + now.getMinutes();
-    let msg = null;
     for(const index in day) {
       if (day[index].day === props.dayNum) {
         if (currentTime < day[index].start) {
-          msg = msg ? null : "Closed now";
-          nextOpenStart = day[index].start;
-          nextOpenEnd = day[index].start;
-          nextOpenDay = day[index].day;
+          nextOpenDay = days[(day[index].day) % 7];
+          nextOpenStart = formatAMPM(day[index].start);
+          nextOpenEnd = formatAMPM(day[index].end);
         } if (currentTime >= day[index].start && currentTime <= day[index].end) {
-          msg = msg ? null : "Open now";
         } if (currentTime > day[index].end) {
-          msg = msg ? null : "Closed now";
-          nextOpenDay = (day[index].day + 1) % 7;
-          nextOpenStart = hoursDayArray[nextOpenDay][0].start;
-          nextOpenEnd = hoursDayArray[nextOpenDay][0].end;
+          if (!nextOpenDay && !nextOpenStart && !nextOpenEnd) {
+            nextOpenDay = days[(day[index].day + 1) % 7];
+            nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
+            nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
+          }
         }
       }
       results.push((
@@ -65,17 +63,21 @@ const Hours = (props) => {
           </td>
           <td>&nbsp;  - </td>
           <td className='time-block'>&nbsp; {formatAMPM(day[index].end)}</td>
-          {msg &&
+          {/* {msg &&
             <td className={`${msg === 'Open now'
               ? 'is-open' : 'is-closed'}`}>
               &nbsp; {msg}
-            </td>}
+            </td>} */}
         </tr>
       ));
     }
+
     return results;
   });
 
+  useEffect(() => {
+    props.setNextOpen({day: nextOpenDay, start: nextOpenStart, end: nextOpenEnd });
+  }, [nextOpenDay, nextOpenStart, nextOpenEnd]);
 
   return (
     <table>

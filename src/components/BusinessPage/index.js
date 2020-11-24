@@ -62,6 +62,7 @@ export default function BusinessPage() {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null});
   const [bigPhoto, setBigPhoto]
     = useState({
       open: false,
@@ -96,10 +97,6 @@ export default function BusinessPage() {
         return businessDetails.hours[0].open[dayNum];
       }
   };
-
-  const nextOpen = () => {
-
-  }
 
   const categoryList = businessDetails.categories.map((category, index) => {
     return (
@@ -176,9 +173,9 @@ export default function BusinessPage() {
                   </div>
                   <div className="bus-data-row">
                     <div className="bus-price">
-                      { businessDetails.price } &nbsp; &nbsp; &middot;
+                      { businessDetails.price } &nbsp; &middot;
                     </div>
-                    &nbsp; &nbsp; { categoryList }
+                    &nbsp; { categoryList }
                   </div>
                   <div className="bus-data-row">
                     { openNow() ? (
@@ -186,10 +183,15 @@ export default function BusinessPage() {
                         Open Now
                       </div>
                     ) : (
-                      <div className="closed">
-                        Closed Now
-                      </div>
-                    )} &nbsp; &nbsp; &middot;
+                      <>
+                        <div className="closed">
+                          Closed Now &nbsp; &middot;
+                        </div>
+                        <div className="category">
+                          &nbsp; { `Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}` }
+                        </div>
+                      </>
+                    )} 
                   </div>
                 </div>
                 <div className="right-col">
@@ -241,7 +243,7 @@ export default function BusinessPage() {
                 </div>
                 {businessDetails.hours &&
                   <div className='table-container'>
-                    <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} />
+                    <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} setNextOpen={setNextOpen} />
                   </div>
                 }
               </div>
