@@ -92,6 +92,7 @@ export default function BusinessPage() {
     setBigPhoto(initPhoto);
   };
   const primeChartData = (reviews, type) => {
+    console.log(reviews, 'rev');
     if (reviews) {
       const key = {
         'overall_rating': 'Overall Rating',
@@ -174,7 +175,8 @@ export default function BusinessPage() {
   }, []);
 
   useEffect(() => {
-    primeChartData(businessDetails.reviews, chartSelect.select);
+    if (businessDetails.reviews.length)
+      primeChartData(businessDetails.reviews, chartSelect.select);
   }, [businessDetails, chartSelect]);
 
   const now = new Date();
@@ -197,7 +199,7 @@ export default function BusinessPage() {
       {businessDetails.id &&
         <>
           <div className='images-container'>
-            
+
             {businessDetails.photos.map(review => {
               return (
                 <Photos photos={review} clickPhoto={clickPhoto} />
@@ -263,7 +265,7 @@ export default function BusinessPage() {
               {chartData.ready &&
                 <>
                   <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
-                  <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day'/>
+                  <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
                   {/* {parsedCharts} */}
 
                   <ChartSection data={chartData} options={chartOptions} />
