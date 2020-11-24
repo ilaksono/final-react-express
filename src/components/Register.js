@@ -149,12 +149,12 @@ const RegisterForm = (props) => {
        axios.post("/register", {username:state.username, email: state.email, password:state.password})
         .then((res) => {
           console.log("data", res.data)
-          if (res.data === "success") {
+          if (res.data.username) {
           const currentUser = {
-            username: state.username,
-            email: state.email
+            username: res.data.username,
+            profile_pic: res.data.profile_pic
           }
-          authorizeUser(state.username);
+          authorizeUser(res.data.username, res.data.profile_pic);
           setState(currentUser);
           console.log("great")
           props.setModal(prev => ({ ...prev, regOpen: false }));

@@ -1,8 +1,7 @@
 const request = require('request-promise-native');
 
 module.exports = (db) => {
-  // search page
-  // review count for given venue -- select * from reviews, where venue id is business id, group by venue id  (will need to be done in a function)
+  
   const getAllReviews = () => {
     const queryString = `
     SELECT *
@@ -19,25 +18,16 @@ module.exports = (db) => {
     const queryString = `
     SELECT *
     FROM reviews
+    JOIN users ON users.id = user_id
     WHERE venue_id = $1;
-    `
+    `;
     const queryParams = [id]
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows
       })
   };
-  // average rating for given venue ISSUE IS THAT WE MAY NOT BE ABLE TO PASS THE ARGUMENT TO THE BACKEND, MAYBE NEED TO FILTER WHAT WE RETURN FROM getallReviews
-
-
-  // on business show page
-  // get all reviews -- select * from reviewers, where venue id is business id, sort by helpful count
-
-  // get avg rating (prop?)
-  // get user data for each of the reviews 
-
-  // specific user page
-  // all reviews by given user
+  
   const submitReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
     const queryString = `
     INSERT INTO reviews (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
@@ -49,6 +39,32 @@ module.exports = (db) => {
       .then(response => {
         return response.rows;
       });
+  };
+
+  const getIdByUsername = (username) => {
+    const queryString = `
+    SELECT id 
+    FROM users
+    WHERE username = $1;
+    `;
+    const queryParams = [username];
+    return db.query(queryString, queryParams)
+      .then (response => {
+        return response.rows
+      });
+  };
+
+  const hasUserMadeAPreviousReview = (id, venue_id) => {
+    const queryString = `
+    SELECT user_id
+    FROM reviews 
+    WHERE user_id = $1 AND venue_id = $2;
+    `;
+    const queryParams = [id, venue_id]
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows[0]
+      })
   };
 
   const updateHelpfulCount = (id) => {
@@ -90,7 +106,7 @@ module.exports = (db) => {
 
   const serverLoginValidation = () => {
     const queryString = `
-    SELECT email, password, username
+    SELECT *
     FROM users;
     `;
     return db.query(queryString)
@@ -99,14 +115,60 @@ module.exports = (db) => {
     })
   };
 
+  const checkIfLikesExist = (id, reviewId) => {
+    const queryString = `
+    SELECT * 
+    FROM liked_reviews
+    WHERE user_id = $1 AND review_id = $2;
+    `
+    const queryParams = [id, reviewId];
+
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows
+    })
+  };
+
+  const getReviewIdByVenueAndUser = (userId, venue_id) => {
+    const queryString = `
+    SELECT id 
+    FROM reviews
+    WHERE user_id = $1 AND venue_id = $2;
+    `
+    const queryParams = [userId, venue_id]
+
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows
+    })
+  };
+
+  const addLikes = (reviewId, userId) => {
+    const queryString = `
+    INSERT INTO liked_reviews (user_id, review_id)
+    VALUES($1, $2);
+    `
+    const queryParams = [reviewId, userId];
+
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows[0]
+    })
+  }
+
 
   return {
     getAllReviews,
     submitReview,
+    getIdByUsername,
     getReviewsPerBusiness,
     updateHelpfulCount,
     registration,
     serverRegistrationValidation,
-    serverLoginValidation
+    serverLoginValidation,
+    hasUserMadeAPreviousReview,
+    checkIfLikesExist,
+    getReviewIdByVenueAndUser,
+    addLikes
   };
 };

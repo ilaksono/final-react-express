@@ -34,8 +34,7 @@ const LoginForm = props => {
   const classes = useStyles();
   const [login, setLogin] = useState(initLogin);
   const {
-    authorizeUser,
-    loginSubmit
+    authorizeUser
   } = useContext(YelpContext);
   const handleChange = (val, type) => {
     setLogin({ ...login, errMsg: '', [type]: val, errType:'' });
@@ -65,10 +64,10 @@ const LoginForm = props => {
     axios.post("/login", {email, password})
     .then((response) => {
       if (response.data.username) {
-        authorizeUser(response.data.username)
+        authorizeUser(response.data.username, response.data.profile_pic)
         const currentUser = {
-          email: response.data.email,
-          username: response.data.username
+          username: response.data.username,
+          profile_pic: response.data.profile_pic
         };
         setLogin(currentUser);
         props.setModal(prev => ({ ...prev, logOpen: false }));

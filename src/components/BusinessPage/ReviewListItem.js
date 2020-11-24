@@ -4,17 +4,12 @@ import 'styles/ReviewListItem.scss';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
 import 'styles/Register.scss';
-import { userData } from 'components/Register';
+
 
 export default function ReviewListItem(props) {
 
   const { businessDetails, setBusinessDetails, appState } = useContext(YelpContext);
 
-  const user = userData.find((user) => {
-    if (user.username === props.username)
-      return true;
-    else return false;
-  });
   const [err, setErr] = useState('');
 
   const showErr = () => {
@@ -24,15 +19,10 @@ export default function ReviewListItem(props) {
     }, 2000);
   };
 
-  const updateHelpfulCount = (id) => {
+  const updateHelpfulCount = (id, name) => {
     
-    if (appState.likes.includes(id)) {
-      console.log("can't push it again");
-      return false;
-    }
-    return axios.post('/reviews/helpful', { id })
+    return axios.post('/reviews/helpful', { id, username: name})
       .then(() => {
-        appState.likes.push(id);
         const updatedBusinessDetails = { ...businessDetails };
         updatedBusinessDetails.reviews.map
           (review => review.id === id ?
@@ -81,8 +71,9 @@ export default function ReviewListItem(props) {
   return (
     <div className='review-container'>
       <div className='user'>
+        {console.log(appState)}
         <span>{props.username}</span>
-        {user && <img className='profile-img' src={user.img} alt='no img found' />}
+        <img className='profile-img' src={props.picture} alt='no img found' />
       </div>
       <div className='review-content'>
         <div className='review-numbers'>
@@ -130,7 +121,7 @@ export default function ReviewListItem(props) {
         {/*eslint-disable-next-line */}
         <div className='helpful-count'
           onClick={appState.authorized
-            ? () => {updateHelpfulCount(props.id)} : showErr}>
+            ? () => {updateHelpfulCount(props.id, appState.name)} : showErr}>
           <i className="far fa-thumbs-up">{props.helpful_count}
           </i>
         </div>

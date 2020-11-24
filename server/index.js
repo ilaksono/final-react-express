@@ -95,25 +95,31 @@ const cleanAutoComplete = (data, keyword) => {
 
 app.post("/register", (req, res) => {
   const password = bcrpyt.hashSync(req.body.password, salt)
-  console.log(req.body.email)
+  let exists = false;
   dbHelpers.serverRegistrationValidation()
   .then((userData) => {
     userData.some(user => {
       if (user.username === req.body.username) {
+        exists = true;
          return res.send("username exists")
       } else if (user.email === req.body.email) {
+        exists = true;
           return res.send("email exists")
       } 
     })
-    return res.send("success")
   })
   .then (() => {
+    if (exists === false) {
     dbHelpers.registration(req.body.username, req.body.email, password)
     .then(response => {
       console.log(response)
+      res.json({
+        username: response[0].username,
+        profile_pic: response[0].profile_pic
+      })
     })
     .catch(err => { console.log(err) })
-  })
+  }})
   .catch(error => {console.log(error)})
 
 });
@@ -125,8 +131,8 @@ app.post("/login", (req, res) => {
       if (user.email === req.body.email) {
         if (bcrpyt.compareSync(req.body.password, user.password)) {
          return res.json({
-           email: user.email,
-           username: user.username
+           username: user.username,
+           profile_pic: user.profile_pic 
          })
         } else {
           return res.send("password incorrect")
@@ -161,24 +167,61 @@ app.listen(PORT, () => {
 });
 
 app.post("/reviews/new", (req, res) => {
-  dbHelpers.submitReview(
-    req.body.user_id,
-    req.body.venue_id,
-    req.body.cleanliness,
-    req.body.socialDistancing,
-    req.body.transactionProcess,
-    req.body.description,
-    req.body.overall_rating)
-  .then(review => {
-      res.send(review);
-  })
-  .catch(error => console.log(error));
+  let userId;
+  let exists = false
+  dbHelpers.getIdByUsername(req.body.username)
+    .then (response => {
+      userId = response[0].id
+    })
+    .then (() => {
+      dbHelpers.hasUserMadeAPreviousReview(userId, req.body.venue_id)
+      .then (response => {
+        console.log(response)
+        if (response) {
+          exists = true;
+          res.send("can't make another review for the same venue")
+        }
+      })
+      .then (() => {
+        if (exists === false) {
+        dbHelpers.submitReview(
+          userId,
+          req.body.venue_id,
+          req.body.cleanliness,
+          req.body.socialDistancing,
+          req.body.transactionProcess,
+          req.body.description,
+          req.body.overall_rating)
+        .then(review => {
+            res.send(review);
+        })
+        .catch(error => console.log(error));
+      }})
+    })
 })
 
 app.post("/reviews/helpful", (req, res) => {
-  dbHelpers.updateHelpfulCount(req.body.id)
-    .then(response => {
-      res.send(response)
+    let userId;
+    let exists = false;
+    dbHelpers.getIdByUsername(req.body.username)
+    .then (response => {
+      userId = response[0].id
     })
-    .catch(err => {console.log(err)})
+    .then(() => {
+      dbHelpers.checkIfLikesExist(req.body.id, userId)
+      .then(response => {
+        if (response) {
+          console.log("validation ---->",response)
+          exists = true;
+        }
+      })
+      .then(() => {
+        if (exists === false) {
+          dbHelpers.addLikes(req.body.id, userId)
+          .then(response => {
+            console.log("howdy")
+          })
+        }
+      })
+    })
   })

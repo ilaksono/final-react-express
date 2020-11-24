@@ -60,6 +60,7 @@ export default function BusinessPage() {
       {businessDetails.id &&
         <>
           <div className='images-container'>
+            
             {businessDetails.photos.map(review => {
               return (
                 <Photos photos={review} />

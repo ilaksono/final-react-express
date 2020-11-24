@@ -139,7 +139,7 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     axios.post('/reviews/new', {
-      user_name: appState.name,
+      username: appState.name,
       venue_id: props.venue_id,
       cleanliness,
       socialDistancing,
@@ -147,6 +147,9 @@ const NewReview = props => {
       overall_rating: overallComfort,
       description
     }).then(review => {
+      if (review.data === "can't make another review for the same venue") {
+        return handleClose();
+      }
       handleClose();
       resetState();
       const updatedBusinessDetails = {...businessDetails};
