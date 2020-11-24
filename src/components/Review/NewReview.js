@@ -139,7 +139,7 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     axios.post('/reviews/new', {
-      user_id: appState.name,
+      user_name: appState.name,
       venue_id: props.venue_id,
       cleanliness,
       socialDistancing,

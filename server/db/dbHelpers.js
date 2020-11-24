@@ -77,7 +77,7 @@ module.exports = (db) => {
       })
   };
 
-  const serverRegistrationValidation = (username, email) => {
+  const serverRegistrationValidation = () => {
     const queryString = `
     SELECT username, email 
     FROM users;
@@ -88,12 +88,25 @@ module.exports = (db) => {
       })
   }
 
+  const serverLoginValidation = () => {
+    const queryString = `
+    SELECT email, password, username
+    FROM users;
+    `;
+    return db.query(queryString)
+    .then(response => {
+      return response.rows
+    })
+  };
+
+
   return {
     getAllReviews,
     submitReview,
     getReviewsPerBusiness,
     updateHelpfulCount,
     registration,
-    serverRegistrationValidation
+    serverRegistrationValidation,
+    serverLoginValidation
   };
 };

@@ -148,8 +148,8 @@ const RegisterForm = (props) => {
     if (validate(state))
        axios.post("/register", {username:state.username, email: state.email, password:state.password})
         .then((res) => {
-          console.log(res.data)
-          if (res.data === true) {
+          console.log("data", res.data)
+          if (res.data === "success") {
           const currentUser = {
             username: state.username,
             email: state.email

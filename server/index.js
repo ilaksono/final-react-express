@@ -97,18 +97,15 @@ app.post("/register", (req, res) => {
   const password = bcrpyt.hashSync(req.body.password, salt)
   console.log(req.body.email)
   dbHelpers.serverRegistrationValidation()
-  .then((query) => {
-    query.some(user => {
+  .then((userData) => {
+    userData.some(user => {
       if (user.username === req.body.username) {
-        return res.send("username exists")
+         return res.send("username exists")
       } else if (user.email === req.body.email) {
-        console.log(user.email)
-         return res.send("email exists")
-      } else {
-        return res.send("true")
+          return res.send("email exists")
       } 
     })
-    
+    return res.send("success")
   })
   .then (() => {
     dbHelpers.registration(req.body.username, req.body.email, password)
@@ -120,6 +117,26 @@ app.post("/register", (req, res) => {
   .catch(error => {console.log(error)})
 
 });
+
+app.post("/login", (req, res) => {
+  dbHelpers.serverLoginValidation()
+  .then((userData) => {
+    userData.some(user => {
+      if (user.email === req.body.email) {
+        if (bcrpyt.compareSync(req.body.password, user.password)) {
+         return res.json({
+           email: user.email,
+           username: user.username
+         })
+        } else {
+          return res.send("password incorrect")
+        }
+      }
+    })
+    return res.send("email does not exist");
+  })
+  .catch(err => {console.log(err)})
+})
 
 
 

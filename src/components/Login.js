@@ -1,6 +1,6 @@
 import { Fragment, useState, useContext } from 'react';
+import axios from 'axios';
 import { YelpContext } from 'YelpContext';
-import { userData } from './Register.js';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -10,11 +10,11 @@ import { Button } from '@material-ui/core';
 
 
 const initLogin = {
+  username: '',
   email: '',
   password: '',
   errMsg: '',
-  errType: '',
-  likes: []
+  errType: ''
 };
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -62,15 +62,24 @@ const LoginForm = props => {
         });
       }
     }
-    if (loginSubmit(login, userData)) {
-      authorizeUser(loginSubmit(login, userData));
-      setLogin(initLogin);
-      props.setModal(prev => ({ ...prev, logOpen: false }));
-    } else if (!re.test(String(login.email).toLowerCase())) {
-      setLogin({ ...login, errMsg: 'Invalid email', errType:'email' });
-    }
-    else setLogin({ ...login, errMsg: 'Failed login attempt!' });
+    axios.post("/login", {email, password})
+    .then((response) => {
+      if (response.data.username) {
+        authorizeUser(response.data.username)
+        const currentUser = {
+          email: response.data.email,
+          username: response.data.username
+        };
+        setLogin(currentUser);
+        props.setModal(prev => ({ ...prev, logOpen: false }));
+      } else if (response.data === "email does not exist") {
+        setLogin({ ...login, errMsg: 'Invalid email', errType:'email' });
+      } else if (response.data === "password incorrect") {
+        setLogin({ ...login, errMsg: 'password is incorrect!', errType:'password' })
+      }
+    })
   };
+
   const handleClose = () => {
     props.setModal(prev => ({ ...prev, logOpen: false }));
   };
