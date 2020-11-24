@@ -92,10 +92,14 @@ export default function BusinessPage() {
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
     if (businessDetails.hours[0].open[dayNum].end > time
-      && businessDetails.hours[0].open[dayNum].start < time)
-      return true;
-    else return false;
+      && businessDetails.hours[0].open[dayNum].start < time) {
+        return businessDetails.hours[0].open[dayNum];
+      }
   };
+
+  const nextOpen = () => {
+
+  }
 
   const categoryList = businessDetails.categories.map((category, index) => {
     return (
@@ -140,7 +144,7 @@ export default function BusinessPage() {
               </div>
               <div className="bus-data">
                 <div className="left-col">
-                  <div className="rating-outer-container">
+                  <div className="bus-data-row">
                     <div className="rating-title">
                       Yelp Rating:
                     </div>
@@ -151,7 +155,7 @@ export default function BusinessPage() {
                       {businessDetails.yelpRatingCount} reviews
                     </div>
                   </div>
-                  <div className="rating-outer-container">
+                  <div className="bus-data-row">
                     <div className="rating-title">
                       Safe Score:
                     </div>
@@ -170,11 +174,22 @@ export default function BusinessPage() {
                       {businessDetails.reviews.length} reviews
                     </div>
                   </div>
-                  <div className="rating-outer-container">
+                  <div className="bus-data-row">
                     <div className="bus-price">
                       { businessDetails.price } &nbsp; &nbsp; &middot;
                     </div>
                     &nbsp; &nbsp; { categoryList }
+                  </div>
+                  <div className="bus-data-row">
+                    { openNow() ? (
+                      <div className="open">
+                        Open Now
+                      </div>
+                    ) : (
+                      <div className="closed">
+                        Closed Now
+                      </div>
+                    )} &nbsp; &nbsp; &middot;
                   </div>
                 </div>
                 <div className="right-col">

@@ -6,7 +6,7 @@ import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
-  width: '400px',
+  width: '30vw',
   height: 'calc(100vh - 60px)'
 };
 

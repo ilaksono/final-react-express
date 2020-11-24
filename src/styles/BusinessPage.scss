@@ -20,7 +20,7 @@
 .row {
   @include flexbox(row, flex-start, center);
   width: 100%;
-  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .icon {
@@ -41,9 +41,9 @@
   @include flexbox(row, space-between, center);
 }
 
-.rating-outer-container {
+.bus-data-row {
   @include flexbox(row, flex-start, center);
-  width: 350px;
+  width: 400px;
   font-size: 18px;
   height: 35px;
 }
@@ -71,7 +71,7 @@
 }
 
 .bus-data {
-  @include flexbox(row, center, center);
+  @include flexbox(row, center, flex-start);
   margin-left: 10px;
 }
 
@@ -111,6 +111,7 @@
   padding-top: 6px;
   text-align: left;
   margin-top: 5px;
+  margin-bottom: 15px;
 }
 
 .bus-images:hover {
@@ -119,7 +120,7 @@
 }
 
 .time-block {
-  text-align: center;
+  text-align: right;
 }
 
 .rating {
@@ -155,21 +156,21 @@
 }
 
 .is-open {
+  font-weight: bold;
   color: green;
 }
 .is-closed {
+  font-weight: bold;
   color: red;
 }
 
 .location-hours {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 5%;
+  @include flexbox(row, flex-start, flex-start);
+  margin-top: 50px;
 
 }
 .map-label-group {
-  margin-top: 10%;
+  margin-right: 60px;
 }
 
 .reviews {
@@ -204,4 +205,14 @@
 
 .right-offset {
   width: 64px;
+}
+
+.open {
+  font-weight: bold;
+  color: green;
+}
+
+.closed {
+  font-weight: bold;
+  color: red;
 }

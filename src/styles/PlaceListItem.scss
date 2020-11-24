@@ -31,7 +31,8 @@
 }
 
 .img-general-info-container {
-  width: 580px;
+  max-width: 580px;
+  width: calc(100% - 140px);
   height: 100%;
   @include flexbox(row, flex-start, center);
 }

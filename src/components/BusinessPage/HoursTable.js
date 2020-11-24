@@ -16,31 +16,66 @@ const Hours = (props) => {
     return `${Math.floor(num / 100)}:${mins} ${pm ? 'PM' : 'AM'}`;
   };
 
+  const hoursDayArray = [[]];
+  props.businessDetails.hours[0].open.map((time, index) => {
+    if (hoursDayArray[time.day]) {
+      hoursDayArray[time.day].push(time);
+    } else {
+      hoursDayArray[time.day] = [time];
+    }
+  });
 
-  const parsedRows = props.businessDetails.hours[0]
-    .open.map((time, index) => {
-      let msg = null;
-      if (index === props.dayNum) {
-        if (props.openNow()) {
-          msg = 'Open now';
-        } else msg = 'Closed now';
+
+  const now = new Date();
+  let dayNum = now.getDay() - 1; // 1 is monday
+  if (dayNum < 0) {
+    dayNum += 7;
+  }
+
+  const parsedRows = hoursDayArray.map((day, index) => {
+    const results = [];
+    console.log(day);
+    let nextOpenStart = null;
+    let nextOpenEnd = null;
+    let nextOpenDay = null;
+    const currentTime = now.getHours() * 100 + now.getMinutes();
+    let msg = null;
+    for(const index in day) {
+      if (day[index].day === props.dayNum) {
+        if (currentTime < day[index].start) {
+          msg = msg ? null : "Closed now";
+          nextOpenStart = day[index].start;
+          nextOpenEnd = day[index].start;
+          nextOpenDay = day[index].day;
+        } if (currentTime >= day[index].start && currentTime <= day[index].end) {
+          msg = msg ? null : "Open now";
+        } if (currentTime > day[index].end) {
+          msg = msg ? null : "Closed now";
+          nextOpenDay = (day[index].day + 1) % 7;
+          nextOpenStart = hoursDayArray[nextOpenDay][0].start;
+          nextOpenEnd = hoursDayArray[nextOpenDay][0].end;
+        }
       }
-
-      return (
+      results.push((
         <tr>
           <td>
-            {days[index]}
+            { index == 0 ? days[day[index].day] : null }
           </td>
-          <td className='time-block'>{formatAMPM(time.start)} - {formatAMPM(time.end)}
+          <td className='time-block'>&nbsp; {formatAMPM(day[index].start)}
           </td>
+          <td>&nbsp;  - </td>
+          <td className='time-block'>&nbsp; {formatAMPM(day[index].end)}</td>
           {msg &&
             <td className={`${msg === 'Open now'
               ? 'is-open' : 'is-closed'}`}>
-              {msg}
+              &nbsp; {msg}
             </td>}
         </tr>
-      );
-    });
+      ));
+    }
+    return results;
+  });
+
 
   return (
     <table>
