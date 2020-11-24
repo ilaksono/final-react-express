@@ -82,16 +82,16 @@ const FilterBar = (props) => {
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
         <FilterItem type='price' name='priceLeft' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
-          message='$' filters={filters} />
+          message='$' filters={filters} selectItems={filters.price}/>
         <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$` })
-        } message='$$' filters={filters} />
+        } message='$$' filters={filters} selectItems={filters.price}/>
         <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$` })
-        } message='$$$' filters={filters} />
+        } message='$$$' filters={filters} selectItems={filters.price}/>
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$$` })
-        } message='$$$$' name='priceRight' filters={filters} />
+        } message='$$$$' name='priceRight' filters={filters} selectItems={filters.price}/>
       </div>)}
       {/* <div className='open-filter-container'>
         <span><b>Suggested</b></span>

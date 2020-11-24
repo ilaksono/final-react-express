@@ -1,13 +1,5 @@
+const day = new Date("2020-11-23T19:55:23.327Z").toUTCString().split('')
+.slice(5, 11).join('').replace(' ', '-')
+// .splice(3,0,'-').join('');
 
-const convertDate = date => {
-
-  return (new Date(date)
-    .toISOString().slice(0, 10).replace('T', ' '));
-};
-
-
-console.log(convertDate('2020-11-23T02:47:17.661Z'));
-console.log(new Date('2020-11-23T02:47:17.661Z').getTime());
-
-console.log(new Date('2020-11-23T02:47:17.661Z').getDay());
-console.log(new Date('2020-11-23T02:47:17.661Z').getHours())
+console.log(day);

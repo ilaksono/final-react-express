@@ -10,6 +10,8 @@ import { YelpProvider } from './YelpContext';
 import BusinessPage from "components/BusinessPage/index";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
+import UserProfile from 'components/UserProfile';
+
 const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
@@ -62,6 +64,9 @@ function App() {
               </Route>
               <Route path='/search/:id'>
                 <BusinessPage />
+              </Route>
+              <Route path='/users/:id'>
+                <UserProfile />
               </Route>
             </Switch>
           </Router>

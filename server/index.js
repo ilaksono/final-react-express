@@ -40,9 +40,9 @@ app.post("/api/search_yelp", (req, res) => {
       console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
       let bus = response.jsonBody.businesses;
       bus = bus.map((biz) => {
-        biz.categories = cleanAutoComplete(biz.categories,'title');
-        return biz
-      })
+        biz.categories = cleanAutoComplete(biz.categories, 'title');
+        return biz;
+      });
       res.json(bus);
     }).catch(e => {
       console.log(e);
@@ -63,7 +63,7 @@ app.post("/api/search_one", (req, res) => {
 });
 
 app.post("/api/search_yelp/:id", (req, res) => {
-  client 
+  client
     .business(req.params.id).then(response => {
       res.json(response.jsonBody);
     }).catch(e => {
@@ -83,18 +83,18 @@ app.post("/api/autocomplete_yelp", (req, res) => {
       const categories = cleanAutoComplete(response.jsonBody.categories, "title").slice(0, 5);
       const obj = { businesses, categories };
       res.json(obj);
-      
+
     }).catch(e => {
       console.log(e);
-    })
-})
+    });
+});
 
 
 
 const cleanAutoComplete = (data, keyword) => {
   const result = data.map(item => item[keyword]);
   return result;
-}
+};
 
 
 app.get("/api/reviews", (req, res) => {
@@ -107,11 +107,11 @@ app.get("/api/reviews", (req, res) => {
 
 app.post("/api/reviews/:id", (req, res) => {
   dbHelpers.getReviewsPerBusiness(req.params.id)
-  .then(reviews => {
-    res.send(reviews);
-  })
-  .catch(error => { console.log(error); });
-})
+    .then(reviews => {
+      res.send(reviews);
+    })
+    .catch(error => { console.log(error); });
+});
 
 app.listen(PORT, () => {
   console.log('listening on ', PORT);
@@ -126,16 +126,38 @@ app.post("/reviews/new", (req, res) => {
     req.body.transactionProcess,
     req.body.description,
     req.body.overall_rating)
-  .then(review => {
+    .then(review => {
       res.send(review);
-  })
-  .catch(error => console.log(error));
-})
+    })
+    .catch(error => console.log(error));
+});
 
 app.post("/reviews/helpful", (req, res) => {
   dbHelpers.updateHelpfulCount(req.body.id)
     .then(response => {
-      res.send(response)
+      res.send(response);
     })
-    .catch(err => {console.log(err)})
-  })
+    .catch(err => { console.log(err); });
+});
+
+app.get('/api/users/public', (req, res) => {
+  dbHelpers
+    .getAllUsersImages()
+    .then(response => {
+      return res.json({ data: response });
+    });
+});
+
+app.get('/api/users/:id/rating_chart', (req, res) => {
+
+  dbHelpers
+    .getUserRatingChart(req.params.id)
+    .then(response => res.json({ data: response }));
+});
+
+app.get('/api/reviews/users/:id', (req, res) => {
+  dbHelpers
+    .getProfileReviews(req.params.id)
+    .then(response =>
+      res.json({ data: response }));
+});

@@ -20,12 +20,12 @@ module.exports = (db) => {
     SELECT *
     FROM reviews
     WHERE venue_id = $1;
-    `
-    const queryParams = [id]
+    `;
+    const queryParams = [id];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
-      })
+        return response.rows;
+      });
   };
   // average rating for given venue ISSUE IS THAT WE MAY NOT BE ABLE TO PASS THE ARGUMENT TO THE BACKEND, MAYBE NEED TO FILTER WHAT WE RETURN FROM getallReviews
 
@@ -57,17 +57,55 @@ module.exports = (db) => {
     SET helpful_count = helpful_count + 1
     where id = $1;
     `;
-    const queryParams = [id]
+    const queryParams = [id];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
-      })
+        return response.rows;
+      });
   };
+
+  const getAllUsersImages = () => {
+    const queryString = `
+    SELECT id, username, image_url 
+    FROM users 
+    `;
+    return db.query(queryString, [])
+      .then(response => response.rows);
+
+  };
+  const getUserRatingChart = (id) => {
+    const queryString = `
+    SELECT overall_rating 
+    FROM reviews 
+    WHERE user_id = $1  
+    `;
+    const queryParams = [Number(id)];
+    db
+      .query(queryString, queryParams)
+      .then(res => res.rows);
+  };
+  const getProfileReviews = (id) => {
+    const queryString = `
+    SELECT * 
+    FROM reviews 
+    WHERE user_id = $1  
+    `;
+    const queryParams = [Number(id)];
+    db
+      .query(queryString, queryParams)
+      .then(res => res.rows);
+  };
+
+
 
   return {
     getAllReviews,
     submitReview,
     getReviewsPerBusiness,
-    updateHelpfulCount
+    updateHelpfulCount,
+    getAllUsersImages,
+    getUserRatingChart,
+    getProfileReviews
+
   };
 };

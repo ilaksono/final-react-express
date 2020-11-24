@@ -116,6 +116,16 @@ export default function useYelpData() {
             return isFinite(a[property]) ? -1 : 1;
           }
         });
+      } else if (property === 'date') {
+        filteredCopy = results.sort((a, b) => {
+          const leftP = new Date(a[property]).getTime();
+          const rightP = new Date(b[property]).getTime();
+          if (isFinite(rightP - leftP)) {
+            return rightP - leftP;
+          } else {
+            return isFinite(leftP) ? -1 : 1;
+          }
+        });
       } else {
         filteredCopy = results.sort((a, b) => {
           if (isFinite(b[property] - a[property])) {
@@ -127,8 +137,8 @@ export default function useYelpData() {
       }
       if (type === 'search')
         res(setResults(filteredCopy));
-      else if(type === 'review')
-        res(setBusinessDetails({...businessDetails, reviews:[...filteredCopy]}))
+      else if (type === 'review')
+        res(setBusinessDetails({ ...businessDetails, reviews: [...filteredCopy] }));
     });
   };
 

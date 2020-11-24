@@ -6,11 +6,10 @@ import Sort from 'components/Sort';
 
 export default function ReviewList(props) {
 
-  const { sortBy, businessDetails } = useContext(YelpContext);
-
-
+  const { sortBy } = useContext(YelpContext);
 
   const reviews = props.reviews.map(review => {
+
     return <ReviewListItem
       username={review.user_id}
       social_distancing={review.socialdistancing}
@@ -32,11 +31,15 @@ export default function ReviewList(props) {
     {
       id: "helpful_count",
       value: "Helpful Count"
+    },
+    {
+      id:'date',
+      value: 'Date'
     }
   ];
 
   const handleSort = (property) => {
-    sortBy(businessDetails.reviews,
+    sortBy(props.reviews,
       property,
       false, 'review');
   };

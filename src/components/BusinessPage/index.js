@@ -10,9 +10,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewList from './ReviewList';
 import Photos from './Photos';
 import "styles/BusinessPage.scss";
+import 'styles/ChartSection.scss';
 import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';
+import ChartSection from 'components/UserProfile/ChartSection';
+import ChartTab from './ChartTab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,18 +28,51 @@ const initPhoto = {
   open: false,
   url: ''
 };
+const initData = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [{
+    label: 'Andrew\'s body fat % ',
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgb(255, 99, 132)',
+    data: [0, 10, 5, 2, 20, 30, 45]
+  }],
+  ready: null
+};
+
+const initOptions = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        min: 0,
+        max: 5
+      }
+    }]
+  }
+};
+
+const initChartSelect = {
+  options: ['Overall', 'Clean', 'Distancing', 'Process'],
+  select: 'Overall'
+};
 
 export default function BusinessPage() {
 
   const classes = useStyles();
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
+  const [chartData, setChartData] = useState(initData);
+  const [chartOptions, setChartOptions] = useState(initOptions);
+  const [chartSelect, setChartSelect] = useState(initChartSelect);
 
+  const clickChartTab = (value) => {
+    setChartSelect({...chartSelect, select:value});
+  };
   const {
     businessDetails,
     getIndividualBusinessData,
     appState
   } = useContext(YelpContext);
+
 
   const { id } = useParams();
   const clickPhoto = (url) => {
@@ -46,12 +82,54 @@ export default function BusinessPage() {
   const hideBigPhoto = () => {
     setBigPhoto(initPhoto);
   };
+  const primeChartData = (reviews, type) => {
+    if (reviews) {
+      const key = {
+        'overall_rating': 'Overall Rating',
+        'cleanliness': 'Cleanliness',
+        'socialdistancing': 'Social Distancing',
+        'transactionprocess': 'Transaction Process'
+      };
+      const keyIndex = chartSelect.options.indexOf(type);
+      const k = Object.keys(key)[keyIndex];
+      let cpy = [...reviews];
+      cpy = cpy.sort((a, b) => {
+        const leftP = new Date(a.date).getTime();
+        const rightP = new Date(b.date).getTime();
+        if (isFinite(rightP - leftP)) {
+          return leftP - rightP;
+        } else {
+          return isFinite(leftP) ? -1 : 1;
+        }
+
+      });
+      const primedLabels = cpy.map(rev => {
+        return new Date(rev.date).toUTCString().split('')
+          .slice(5, 10).join('').replace(' ', '-');
+      });
+      const primedVal = cpy.map(rev => rev[k]);
+      setChartData({
+        labels: primedLabels,
+        datasets: [{
+          label: key[k],
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: primedVal
+        }],
+        ready: true
+      });
+    }
+  };
 
   useEffect(() => {
     if (!businessDetails.id) {
       getIndividualBusinessData(id);
     }
   }, []);
+
+  useEffect(() => {
+    primeChartData(businessDetails.reviews, chartSelect.select);
+  }, [businessDetails, chartSelect]);
 
   const now = new Date();
   let dayNum = now.getDay() - 1; // 1 is monday
@@ -134,8 +212,21 @@ export default function BusinessPage() {
                   />}
               </div>
             </div>
+            <div className='business-chart-container'>
+              {chartData.ready &&
+                <>
+                  <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
+                  {/* {parsedCharts} */}
+
+                  <ChartSection data={chartData} options={chartOptions} />
+
+
+                </>
+              }
+            </div>
           </div>
         </>}
+
     </div >
   );
 }

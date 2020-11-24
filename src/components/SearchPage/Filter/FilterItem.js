@@ -16,11 +16,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const classNames = require('classnames');
 const useStyles = makeStyles((theme) => ({
-/*   muiButton: {
-    label: {
-      width: '10px',
-    }
-  }, */
+  /*   muiButton: {
+      label: {
+        width: '10px',
+      }
+    }, */
   root: {
     width: '15px',
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FilterItem = props => {
-  
+
   const classes = useStyles();
   let val = false;
   if (props.type === 'price'
@@ -66,8 +66,11 @@ const FilterItem = props => {
     && props.filters.catsSelected.includes(props.message)
     && !props.filters.allCats)
     val = true;
+  else if (props.type === 'chart-tab'
+    && props.selectItems.includes(props.message))
+    val = true;
 
-  if (props.type !== 'price') {
+  if (props.type === 'categories' || props.type === 'distance') {
     const clr = val ? 'primary' : 'default';
     return (
       <div className='each-filter'>
@@ -80,7 +83,7 @@ const FilterItem = props => {
           onClick={props.handleClick}>{props.message}</Switch>
       </div>
     );
-  } 
+  }
   // else if (props.type === 'open') {
   //   const clr = val ? 'primary' : 'default';
   //   return (
@@ -97,22 +100,38 @@ const FilterItem = props => {
   //     </div>
   //   );
   // }
-  else {
+  else if (props.type === 'price') {
 
-    const color = props.filters.price
+    const color = props.selectItems
       .includes(props.message) ? val ?
-      'primary' : 'default' : 'default';
+        'primary' : 'default' : 'default';
     return (
       <div >
         <Button
           color={color}
           variant='contained'
-          style={{maxWidth: '30px'}}
+          style={{ maxWidth: '30px' }}
           className={classes[props.name]}
           name={props.message}
           onClick={props.handleClick}>{props.message}</Button>
       </div>
     );
+  } else if (props.type === 'chart-tab') {
+    const color = props.selectItems
+      .includes(props.message) ? val ?
+        'primary' : 'default' : 'default';
+    return (
+      <div >
+        <Button
+          color={color}
+          variant='contained'
+          className={classes[props.name]}
+          name={props.message}
+          onClick={props.handleClick}>{props.message}</Button>
+      </div>
+    );
+
   }
+
 };
 export default FilterItem;

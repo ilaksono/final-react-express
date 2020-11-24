@@ -141,6 +141,8 @@ const useApplicationData = () => { // login and user state information
       });
   };
 
+  
+
   return {
     // submitHandle,
     appState,
