@@ -101,16 +101,17 @@ const LoginForm = props => {
         open={props.modal.logOpen}
       >
         <Fade in={props.modal.logOpen}>
-          <div className='register-container'>
+          <form className='register-container'>
             <input type='email' placeholder='Email@gmail.com' value={login.email} onChange={(event) =>
               handleChange(event.target.value, 'email')} className={`user-input-item${login.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={login.password} onChange={(event) =>
               handleChange(event.target.value, 'password')} className={`user-input-item${login.errType === 'password' ? ' error-input' : ''}`} />
             <Button onClick={validate}
               variant='contained' color='primary'
+              type='submit'
               className='user-input-btn'>Login</Button>
             <div className='error'> {login.errMsg && login.errMsg}</div>
-          </div>
+          </form>
         </Fade>
       </Modal>
     </>

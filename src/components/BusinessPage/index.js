@@ -184,12 +184,13 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
+      const clr = chartSelect.perDay ? '#800020' :'#1E0253';
       setChartData({
         labels: primedLabels,
         datasets: [{
           label: key[k],
-          backgroundColor: '#1E0253',
-          borderColor: '#1E0253',
+          backgroundColor: clr,
+          borderColor: clr,
           data: primedVal
         }],
         ready: true
@@ -205,14 +206,14 @@ export default function BusinessPage() {
   useEffect(() => {
     if (!businessDetails.id) {
       getIndividualBusinessData(id);
-    }
+    } // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (businessDetails.reviews) {
       if (businessDetails.reviews.length)
         primeChartData(businessDetails.reviews, chartSelect.select);
-    }
+    }// eslint-disable-next-line
   }, [businessDetails, chartSelect]);
 
   const now = new Date();
@@ -234,11 +235,11 @@ export default function BusinessPage() {
     categoryList = businessDetails.categories.map((category, index) => {
       return (
         <div className="category">
-          { businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
+          {businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
         </div>
-      )
+      );
     });
-  } 
+  }
 
   return (
     <div className='business-page-container'>
@@ -292,8 +293,8 @@ export default function BusinessPage() {
                       Safe Score:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
-                      { isNaN(Number(businessDetails.overall_rating)) ? "N/A" 
-                      : <StyledRating
+                      {isNaN(Number(businessDetails.overall_rating)) ? "N/A"
+                        : <StyledRating
                           name="customized-color"
                           size="medium"
                           value={Number(businessDetails.overall_rating)}
@@ -391,19 +392,24 @@ export default function BusinessPage() {
                   <ReviewList reviews={businessDetails.reviews} />
                 )}
               </div>
-              <div className='business-chart-container'>
-                {chartData.ready &&
-                  <>
-                    <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
-                    <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
-                    {/* {parsedCharts} */}
+            </div>
+            <div className='business-chart-container'>
+              {chartData.ready &&
+                <>
+                  <ChartTab
+                    chartSelect={chartSelect}
+                    clickChartTab={clickChartTab} />
+                  <TogglePerDay
+                    chartSelect={chartSelect}
+                    changePerDay={changePerDay}
+                    message='per Day' />
+                  {/* {parsedCharts} */}
 
-                    <ChartSection data={chartData} options={chartOptions} />
-
-
-                  </>
-                }
-              </div>
+                  <ChartSection
+                    data={chartData}
+                    options={chartOptions} />
+                </>
+              }
             </div>
           </div>
         </>}
