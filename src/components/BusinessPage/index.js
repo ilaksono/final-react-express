@@ -392,24 +392,24 @@ export default function BusinessPage() {
                   <ReviewList reviews={businessDetails.reviews} />
                 )}
               </div>
-            </div>
-            <div className='business-chart-container'>
-              {chartData.ready &&
-                <>
-                  <ChartTab
-                    chartSelect={chartSelect}
-                    clickChartTab={clickChartTab} />
-                  <TogglePerDay
-                    chartSelect={chartSelect}
-                    changePerDay={changePerDay}
-                    message='per Day' />
-                  {/* {parsedCharts} */}
+              <div className='business-chart-container'>
+                {chartData.ready &&
+                  <>
+                    <ChartTab
+                      chartSelect={chartSelect}
+                      clickChartTab={clickChartTab} />
+                    <TogglePerDay
+                      chartSelect={chartSelect}
+                      changePerDay={changePerDay}
+                      message='per Day' />
+                    {/* {parsedCharts} */}
 
-                  <ChartSection
-                    data={chartData}
-                    options={chartOptions} />
-                </>
-              }
+                    <ChartSection
+                      data={chartData}
+                      options={chartOptions} />
+                  </>
+                }
+              </div>
             </div>
           </div>
         </>}
