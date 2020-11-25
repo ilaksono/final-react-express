@@ -85,9 +85,7 @@
   width: 100%;
   @include flexbox(row, center, center);
 }
-.review-container {
-  align-self: center;
-}
+
 .bus-images {
   height: 200px;
   width: 60%;
@@ -173,10 +171,6 @@
   margin-right: 60px;
 }
 
-.reviews {
-    
-}
-
 .bus-price {
   margin-right: 10px;
 }
@@ -214,4 +208,16 @@
 .closed {
   font-weight: bold;
   color: red;
+}
+
+.review-chart-container {
+  box-sizing: border;
+  @include flexbox(row, flex-start, flex-start);
+  width: 100%;
+}
+
+#reviews-container {
+  width: 60%;
+  margin-left: 20px;
+  margin-right: 30px;
 }

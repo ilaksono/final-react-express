@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
 import Sort from 'components/Sort';
@@ -50,7 +50,7 @@ export default function ReviewList(props) {
       false, 'review');
   };
   return (
-    <div>
+    <div className="reviews-list-container">
       <div className='sort-group'>
         <h3><strong>Reviews</strong></h3>
         <Sort sortOptions={sortOptions}

@@ -112,7 +112,7 @@ export default function ReviewListItem(props) {
           <table className='review-table'>
             <tr>
               <td>
-                Clealiness
+                Cleanliness
               </td>
               <td>
                 {props.cleanliness}
