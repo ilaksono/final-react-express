@@ -3,7 +3,9 @@ import axios from 'axios';
 
 const initProfile = {
   all: [],
-  reviews: []
+  reviews: [],
+  favs: [],
+  avgCoords: { lat: 43, lng: -79 }
 };
 
 const useProfileData = () => {
@@ -23,30 +25,56 @@ const useProfileData = () => {
         // setAllUsers({ ...allUsers, reviews: [...res.data.data] });
         getUsersAPI()
           .then(response => {
-            setAllUsers({
-              all: response.data.data,
-              reviews: res.data.data
-            });
+            getUsersFavs(id)
+              .then(rez => {
+                const { lat, lng } = {
+                };
+                setAllUsers({
+                  all: response.data.data,
+                  reviews: res.data.data,
+                  favs: rez.data.data
+                });
+              });
           });
       });
   };
 
+  const getUsersFavs = (id) => {
+    return axios
+      .get(`/api/favs/users/${id}`)
+      .then(res => res)
+      .catch(er => console.log(er));
+  };
   const profileHelpCount = (reviewID, term) => {
     let cpy = [...allUsers.reviews];
+    let cpyAll = [...allUsers.all];
+    let revOwnerID = -1;
     if (term === 'add') {
       cpy
         .forEach((review, index) => {
-          if (review.id === reviewID)
+          if (review.id === reviewID) {
             cpy[index].helpful_count += 1;
+            revOwnerID = review.user_id;
+          }
         });
     } else if (term === 'delete') {
       cpy
         .forEach((review, index) => {
-          if (review.id === reviewID)
+          if (review.id === reviewID) {
             cpy[index].helpful_count -= 1;
+            revOwnerID = review.user_id;
+          }
         });
     }
-    return setAllUsers({ ...allUsers, reviews: [...cpy] });
+    cpyAll.forEach((user, index) => {
+      if (user.id === revOwnerID) {
+        if (term === 'add')
+          cpyAll[index].total++;
+        else if (term === 'delete')
+          cpyAll[index].total--;
+      }
+    });
+    return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
   };
   // review id
   // my name

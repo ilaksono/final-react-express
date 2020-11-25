@@ -82,8 +82,10 @@ module.exports = (db) => {
 
   const getAllUsersImages = () => {
     const queryString = `
-    SELECT id, username, profile_pic, city 
-    FROM users 
+      SELECT users.id, username, profile_pic, city, SUM(reviews.helpful_count) as total, users.created_at
+      FROM users 
+      LEFT JOIN reviews ON users.id = user_id
+      GROUP BY users.id; 
     `;
     return db.query(queryString, [])
       .then(response => response.rows);
@@ -102,13 +104,24 @@ module.exports = (db) => {
   };
   const getProfileReviews = (id) => {
     const queryString = `
-    SELECT * 
-    FROM reviews 
-    WHERE user_id = $1  
-    `;
+      SELECT * FROM reviews
+      WHERE user_id = $1;
+      `;
     const queryParams = [Number(id)];
     return db
       .query(queryString, queryParams)
+      .then(res => res.rows);
+  };
+
+  const getProfileFavs = (id) => {
+    const qs = `
+    SELECT favourited_businesses.*, reviews.venue_name 
+    FROM favourited_businesses
+    JOIN reviews ON reviews.venue_id = favourited_businesses.venue_id 
+    WHERE favourited_businesses.user_id = $1;
+    `;
+    return db
+      .query(qs, [Number(id)])
       .then(res => res.rows);
   };
 
@@ -247,6 +260,7 @@ module.exports = (db) => {
     addLikes,
     deleteLikes,
     descreaseHelpfulCount,
-    getNewReviews
+    getNewReviews,
+    getProfileFavs
   };
 };

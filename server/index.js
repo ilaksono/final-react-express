@@ -117,7 +117,7 @@ app.post("/register", (req, res) => {
               username: response[0].username,
               profile_pic: response[0].profile_pic,
               user_id: response[0].id
-            
+
             });
           })
           .catch(err => {
@@ -244,7 +244,7 @@ app.post("/reviews/helpful", (req, res) => {
           if (exists === false) {
             dbHelpers.addLikes(req.body.id, userId)
               .then(() => {
-                console.log("heyyyyyyy")
+                console.log("heyyyyyyy");
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
                     return res.send("add");
@@ -292,5 +292,13 @@ app.get('/api/reviews/users/:id', (req, res) => {
     .then(response => {
       res.json({ data: response });
     })
+    .catch(er => console.log(er));
+});
+
+app.get('/api/favs/users/:id', (req, res) => {
+  dbHelpers
+    .getProfileFavs(req.params.id)
+    .then(response =>
+      res.json({ data: response }))
     .catch(er => console.log(er));
 });

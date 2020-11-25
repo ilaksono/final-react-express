@@ -21,9 +21,9 @@ const data = {
 };
 const UserProfile = () => {
   const { id } = useParams();
-  const { allUsers, 
-    getTimeRating, 
-    profileHelpCount 
+  const { allUsers,
+    getTimeRating,
+    profileHelpCount
   } = useProfileData();
   const { chartSelect,
     setChartSelect,
@@ -123,7 +123,7 @@ const UserProfile = () => {
     <div className='user-profile-layout'>
       {
         !chartData.ready ?
-          <div className='loading-circle' style={{marginLeft: '45%'}}>
+          <div className='loading-circle' style={{ marginLeft: '45%' }}>
             <CircularProgress size={140} color="secondary" />
           </div>
           :
@@ -150,9 +150,14 @@ const UserProfile = () => {
                 <>
                   <div className='chart-title'>Trends</div>
                   <div className='chart-switch-container'>
-                    <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
-                    <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
-
+                    <ChartTab
+                      chartSelect={chartSelect}
+                      clickChartTab={clickChartTab}
+                    />
+                    <TogglePerDay
+                      chartSelect={chartSelect}
+                      changePerDay={changePerDay}
+                      message='per Day' />
                   </div>
                   <ChartSection data={chartData} options={chartOptions} />
                 </>
