@@ -9,6 +9,7 @@ import useChartData from 'hooks/useChartData';
 import ChartTab from 'components/BusinessPage/ChartTab';
 import TogglePerDay from 'components/BusinessPage/TogglePerDay';
 import { CircularProgress } from '@material-ui/core';
+import FavSection from './FavSection';
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -136,13 +137,13 @@ const UserProfile = () => {
           :
           <>
             <div className='profile-container'>
-              <Profile 
-              whom={whom || {}} 
-              length={allUsers.reviews.length} 
-              setFocus={setFocus}/>
+              <Profile
+                whom={whom || {}}
+                length={allUsers.reviews.length}
+                setFocus={setFocus} />
             </div>
             {allUsers.reviews &&
-              <div className={`profile-reviews${focus.rev ? '-hover': ''}`}>
+              <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
 
                 <div className='review-big-container'>
                   <div classname='reviews'>
@@ -156,22 +157,20 @@ const UserProfile = () => {
               </div>
             }
             <div className='user-chart-container'>
-              {chartData.ready &&
-                <>
-                  <div className='chart-title'>Trends</div>
-                  <div className='chart-switch-container'>
-                    <ChartTab
-                      chartSelect={chartSelect}
-                      clickChartTab={clickChartTab}
-                    />
-                    <TogglePerDay
-                      chartSelect={chartSelect}
-                      changePerDay={changePerDay}
-                      message='per Day' />
+              {
+                allUsers.favs.length ?
+                  <>
+                    <div className='chart-title'>Favourite Places</div>
+
+                    <FavSection favs={allUsers.favs} />
+                  </>
+                  :
+                  <div className='no-places-info'>
+                    {`${whom.username || 'This User'} has no favourite places.`}
                   </div>
-                  <ChartSection data={chartData} options={chartOptions} />
-                </>
+
               }
+
             </div>
           </>
       }
@@ -180,3 +179,22 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+
+// {
+//   chartData.ready &&
+//   <>
+//     <div className='chart-title'>Trends</div>
+//     <div className='chart-switch-container'>
+//       <ChartTab
+//         chartSelect={chartSelect}
+//         clickChartTab={clickChartTab}
+//       />
+//       <TogglePerDay
+//         chartSelect={chartSelect}
+//         changePerDay={changePerDay}
+//         message='per Day' />
+//     </div>
+//     <ChartSection data={chartData} options={chartOptions} />
+//   </>;
+// }

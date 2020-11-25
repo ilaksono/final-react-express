@@ -167,7 +167,7 @@ module.exports = (db) => {
     SELECT *
     FROM users;
     `;
-    return db.query(queryString)
+    return db.query(queryString, [])
       .then(response => {
         return response.rows;
       });

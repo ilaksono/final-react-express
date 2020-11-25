@@ -194,7 +194,10 @@ const RegisterForm = (props) => {
         open={props.modal.regOpen}
       >
         <Fade in={props.modal.regOpen}>
-          <form className='register-container' onSubmit={handleClick}>
+          <form className='register-container' onSubmit={event => {
+            event.preventDefault();
+            handleClick()
+          }}>
             <input placeholder='Username' type='text' value={state.username} onChange={(event) =>
               handleChange(event, 'username')} className={`user-input-item${state.errType === 'username' ? ' error-input' : ''}`} />
             <input type='email' placeholder='Email@gmail.com' value={state.email} onChange={(event) =>

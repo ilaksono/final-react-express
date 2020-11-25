@@ -184,7 +184,7 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
-      const clr = chartSelect.perDay ? '#800020' :'#1E0253';
+      const clr = chartSelect.perDay ? '#800020' : '#1E0253';
       setChartData({
         labels: primedLabels,
         datasets: [{
@@ -245,7 +245,9 @@ export default function BusinessPage() {
     <div className='business-page-container'>
       <div className="back-and-message-container">
         <Link to={'/search'}>
-          <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
+          <Button variant="contained" /* onClick={backButton} */>
+            <KeyboardBackspaceIcon />
+          </Button>
         </Link>
         <div className="right-offset"></div>
       </div>
@@ -360,7 +362,7 @@ export default function BusinessPage() {
               {appState.authorized &&
                 <div className='bus-buttons'>
                   <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
-                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar}/>
+                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                   {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
 
@@ -389,8 +391,8 @@ export default function BusinessPage() {
                 {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
                   <span>Be the first to write a review!</span>
                 ) : (
-                  <ReviewList reviews={businessDetails.reviews} />
-                )}
+                    <ReviewList reviews={businessDetails.reviews} />
+                  )}
               </div>
               <div className='business-chart-container'>
                 {chartData.ready &&

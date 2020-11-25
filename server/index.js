@@ -13,8 +13,8 @@ const yelp = require('yelp-fusion');
 const {
   resolveNaptr
 } = require('dns');
-const bcrpyt = require("bcrypt");
-const salt = bcrpyt.genSaltSync(10);
+const bcrypt = require("bcrypt");
+const salt = bcrypt.genSaltSync(10);
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
@@ -94,7 +94,7 @@ const cleanAutoComplete = (data, keyword) => {
 };
 
 app.post("/register", (req, res) => {
-  const password = bcrpyt.hashSync(req.body.password, salt);
+  const password = bcrypt.hashSync(req.body.password, salt);
   let exists = false;
   dbHelpers.serverRegistrationValidation()
     .then((userData) => {
@@ -130,13 +130,32 @@ app.post("/register", (req, res) => {
     });
 
 });
+// app.post('/login', (req, res) => {
+//   dbHelpers
+//     .serverLoginValidation()
+//     .then(data => {
+//       const user = [];
+//       data.forEach(can => {
+//         if (can.email === req.body.email
+//           && bcrypt.compareSync(req.body.password,
+//             can.password))
+//           user.push(can);
+//         return false;
+//       });
+//       return user;
+//     }).then((response) => {
+//       res.json({ data: response });
+//     })
+//     .catch(er => console.log(er));
+// });
+
 
 app.post("/login", (req, res) => {
   dbHelpers.serverLoginValidation()
     .then((userData) => {
       userData.some(user => {
         if (user.email === req.body.email) {
-          if (bcrpyt.compareSync(req.body.password, user.password)) {
+          if (bcrypt.compareSync(req.body.password, user.password)) {
             return res.json({
               username: user.username,
               profile_pic: user.profile_pic,
@@ -244,7 +263,6 @@ app.post("/reviews/helpful", (req, res) => {
           if (exists === false) {
             dbHelpers.addLikes(req.body.id, userId)
               .then(() => {
-                console.log("heyyyyyyy");
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
                     return res.send("add");
@@ -254,7 +272,6 @@ app.post("/reviews/helpful", (req, res) => {
                   });
               });
           } else if (exists === true) {
-            console.log("did it work?");
             dbHelpers.deleteLikes(req.body.id, userId)
               .then(() => {
                 dbHelpers.descreaseHelpfulCount(req.body.id)

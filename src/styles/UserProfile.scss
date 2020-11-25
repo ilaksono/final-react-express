@@ -48,7 +48,11 @@
   @include flexbox(column, flex-start, center);
   height: calc(100vh - 60px - 70px);
   margin-top: 70px;
-  width: 36.7%; 
+  width: 36.7%;
+  max-height: calc(100vh - 130px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
 }
 
 .city-container {
@@ -94,3 +98,29 @@
   margin-right: 6px;
 }
 
+.fav-item {
+  color: #363f47;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 0 grey;
+  margin-bottom: 10px;
+  border: rgb(187, 187, 187) 1px solid;
+  padding: 5px;
+}
+
+.fav-item:hover {
+  color: $purple;
+    box-shadow: 3px 3px 0 0 grey;
+
+
+}
+
+.no-places-info {
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 24px;
+  margin-top: 10%;
+}

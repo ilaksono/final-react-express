@@ -40,9 +40,9 @@ const LoginForm = props => {
     setLogin({ ...login, errMsg: '', [type]: val, errType: '' });
   };
   const validate = () => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(String(login.email).toLowerCase()))
-      return setLogin({ ...login, errMsg: 'Invalid email', password: '', errType: 'email' });
+    // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // if (!re.test(String(login.email).toLowerCase()))
+    //   return setLogin({ ...login, errMsg: 'Invalid email', password: '', errType: 'email' });
     const { email, password } = login;
     if (!email || !password) {
       if (!email) {
@@ -63,10 +63,33 @@ const LoginForm = props => {
         });
       }
     }
+
+    // axios
+    //   .post('/login', { email, password })
+    //   .then(res => {
+    //     const user = res.data.data[0];
+    //     if (user) {
+    //       props.closeSnackBar("logout");
+    //       props.closeSnackBar("register");
+    //       props.setSnackBar(true);
+    //       setLogin(initLogin);
+    //       return authorizeUser(user.username, user.profile_pic, user.id);
+    //     }
+    //     else return setLogin({
+    //       ...login,
+    //       errMsg: 'password is incorrect!',
+    //       errType: 'password'
+    //     });
+    //   })
+    //   .catch(er => console.log(er));
+
+
     axios.post("/login", { email, password })
       .then((response) => {
         if (response.data.username) {
-          authorizeUser(response.data.username, response.data.profile_pic, response.data.user_id);
+          authorizeUser(response.data.username, 
+            response.data.profile_pic, 
+            response.data.user_id);
           const currentUser = {
             username: response.data.username,
             profile_pic: response.data.profile_pic
@@ -103,7 +126,11 @@ const LoginForm = props => {
         open={props.modal.logOpen}
       >
         <Fade in={props.modal.logOpen}>
-          <form onSubmit={validate}
+          <form onSubmit={event => {
+            event.preventDefault();
+            validate();
+          }
+          }
             className='register-container'>
             <input type='email' placeholder='Email@gmail.com' value={login.email} onChange={(event) =>
               handleChange(event.target.value, 'email')} className={`user-input-item${login.errType === 'email' ? ' error-input' : ''}`} />
