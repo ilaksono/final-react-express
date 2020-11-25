@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
-import axios from 'axios';
 import 'styles/BusinessPage.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,11 +94,8 @@ const NewReview = props => {
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
   const { businessDetails,
-    setBusinessDetails,
     appState,
     submitNewReview,
-    results,
-    setResults,
     setNewReview
   } = useContext(YelpContext);
 

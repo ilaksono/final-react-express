@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 const StyledRating = withStyles({

@@ -1,4 +1,4 @@
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
 import Sort from 'components/Sort';
@@ -6,7 +6,7 @@ import Sort from 'components/Sort';
 
 export default function ReviewList(props) {
 
-  const { sortBy, appState } = useContext(YelpContext);
+  const { sortBy } = useContext(YelpContext);
 
   const reviews = props.reviews.map(review => {
 

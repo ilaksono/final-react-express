@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { PowerOffSharp } from "@material-ui/icons";
 import 'styles/ReviewListItem.scss';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';

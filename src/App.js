@@ -12,7 +12,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
 import UserProfile from 'components/UserProfile';
 
-const libraries = ["places"];
 
 // export const YelpContext = React.createContext();
 
@@ -40,9 +39,6 @@ function App() {
   // if (loadError) return 'Error loading maps';
   // if (!isLoaded) return "loading maps";
 
-  // MOCK DATA TO TEST NEWREVIEW COMPONENT
-  const id = '7hcxAsYC5R8BIcm1xQ_1_Q';
-  const name = 'Birria Catrina';
   
   return (
     <div className="layout">

@@ -1,4 +1,3 @@
-import { Divider } from "@material-ui/core";
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { YelpContext } from 'YelpContext';
@@ -97,7 +96,7 @@ const initPhoto = {
 // };
 
 export default function BusinessPage() {
-  const history = useHistory();
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
@@ -111,7 +110,6 @@ export default function BusinessPage() {
     chartSelect,
     setChartSelect,
     chartOptions,
-    setChartOptions,
     chartData,
     setChartData
   } = useChartData();

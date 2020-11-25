@@ -1,7 +1,6 @@
 import { useContext, useCallback, useEffect, useState } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
-import { Link } from 'react-router-dom';
 import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
 
@@ -14,9 +13,7 @@ const Map = props => {
 
   const {
     mapState,
-    refinedResults,
     appState,
-    panTo,
     onMapLoad,
     mapRef,
     setLoadingSearch,
@@ -29,11 +26,7 @@ const Map = props => {
     setMap(null);
   }, []);
 
-  const showCenter = useCallback((t) => {
-    console.log(mapRef.current.getCenter().lat());
-    // console.log(mapRef.current.getCenter());
-    console.log({ lat: mapRef.current.getCenter().lat(), lng: mapRef.current.getCenter().lng() });
-  }, []);
+
 
   const center = {
     lat: mapState.center.lat || appState.center.lat || 43,
