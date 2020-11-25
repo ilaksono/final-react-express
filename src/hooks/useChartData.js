@@ -31,8 +31,6 @@ const useChartData = () => {
   const [chartOptions, setChartOptions] = useState(initOptions);
   const [chartSelect, setChartSelect] = useState(initChartSelect);
 
-
-
   return {
     chartSelect,
     setChartSelect,

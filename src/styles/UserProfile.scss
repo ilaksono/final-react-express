@@ -15,21 +15,29 @@
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
-  width: 45%;
+  width: 40%;
+  font-size: 20px;
   @include flexbox(column, center, center);
 }
 
 .profile-container {
   @include flexbox(column, flex-start, center);
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  
 
+}
+.chart-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 40px;
 }
 
 .user-chart-container {
-  @include flexbox(column, center, center);
+  @include flexbox(column, flex-start, center);
   height: calc(100vh - 60px);
-  width: 36.7%;
+  margin-top: 70px;
+  width: 36.7%; 
 }
 
 .city-container {

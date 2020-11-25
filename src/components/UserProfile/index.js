@@ -83,20 +83,20 @@ const UserProfile = () => {
             primedLabels.push(formatDateString(rev.date));
         });
         cpy.forEach((rev, index) => {
-          if (formatDateString(rev.date) === prevDay && !(index === cpy.length - 1)) {
+          if (formatDateString(rev.date) === prevDay
+            && !(index === cpy.length - 1)) {
             acc += Number(rev[k]);
             count++;
           } else {
             prevDay = formatDateString(rev.date);
-            primedVal.push(acc / count);
+            primedVal.push(acc / count || 1);
             acc = Number(rev[k]);
             count = 1;
-            if (index === cpy.length - 1) {
+            if (index === cpy.length - 1 && cpy.length > 1) {
               if (prevDay === formatDateString(rev.date))
                 primedVal.push((acc + Number(rev[k])) / (count + 1));
               else primedVal.push(Number(rev[k]));
             }
-
           }
         });
 
@@ -148,6 +148,7 @@ const UserProfile = () => {
       <div className='user-chart-container'>
         {chartData.ready &&
           <>
+            <div className='chart-title'>Trends</div>
             <div className='chart-switch-container'>
               <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
               <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />

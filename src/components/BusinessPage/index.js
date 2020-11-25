@@ -141,10 +141,10 @@ export default function BusinessPage() {
             count++;
           } else {
             prevDay = formatDateString(rev.date);
-            primedVal.push(acc / count);
+            primedVal.push(acc / count || 1);
             acc = Number(rev[k]);
             count = 1;
-            if (index === cpy.length - 1) {
+            if (index === cpy.length - 1 && cpy.length > 1) {
               if (prevDay === formatDateString(rev.date))
                 primedVal.push((acc + Number(rev[k])) / (count + 1));
               else primedVal.push(Number(rev[k]));
