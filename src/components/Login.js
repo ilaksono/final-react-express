@@ -69,6 +69,9 @@ const LoginForm = props => {
           username: response.data.username,
           profile_pic: response.data.profile_pic
         };
+        props.closeSnackBar("logout");
+        props.closeSnackBar("register");
+        props.setSnackBar(true);
         setLogin(currentUser);
         props.setModal(prev => ({ ...prev, logOpen: false }));
       } else if (response.data === "email does not exist") {

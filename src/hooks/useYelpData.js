@@ -254,6 +254,7 @@ export default function useYelpData() {
         }
       });
       setResults(updatedSearchResults);
+      return review;
     });
   }
 

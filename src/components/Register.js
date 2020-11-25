@@ -154,8 +154,10 @@ const RegisterForm = (props) => {
           }
           authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
           setState(currentUser);
-          console.log("great")
           props.setModal(prev => ({ ...prev, regOpen: false }));
+          props.closeSnackBar("login");
+          props.closeSnackBar("logout");
+          props.setSnackBar(true);
         } else if (res.data === "email exists") {
           setState({ ...state, errMsg: 'Email already in use!', errType: 'email' });
           return false;
