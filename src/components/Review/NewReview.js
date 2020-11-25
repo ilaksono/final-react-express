@@ -138,22 +138,13 @@ const NewReview = props => {
   };
 
   const handleSubmit = () => {
-    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
-    .then(() => {
+    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
+    .then(response => {
+      if (!response) {
+        return handleClose();
+      }
       handleClose();
       resetState();
-
- /*      const updatedBusinessDetails = {...businessDetails};
-      console.log(updatedBusinessDetails);
-      updatedBusinessDetails.reviews.unshift(review.data[0]);
-      updatedBusinessDetails.reviewCount++;
-      setBusinessDetails(updatedBusinessDetails);
-
-      const updatedSearchResults = { ...results};
-      console.log(updatedSearchResults);
-      updatedSearchResults.reviews.unshift(review.data[0]);
-      updatedSearchResults.reviewCount++;
-      setResults(updatedSearchResults); */
 
       props.setOpen(true);
     }).catch(err => console.log(err));

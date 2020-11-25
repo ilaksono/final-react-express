@@ -180,6 +180,8 @@ app.post("/reviews/new", (req, res) => {
   let exists = false;
   dbHelpers.getIdByUsername(req.body.username)
     .then(response => {
+      console.log("username", req.body.username);
+      console.log('response', response);
       userId = response[0].id;
     })
     .then(() => {

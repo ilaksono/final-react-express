@@ -212,17 +212,21 @@ export default function useYelpData() {
     });
   };
 
-  const submitNewReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+  const submitNewReview = (username, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description, venue_name) => {
     return axios.post('/reviews/new', {
-      user_id,
+      username,
       venue_id,
       cleanliness,
       socialDistancing,
       transactionProcess,
       overall_rating,
-      description
+      description,
+      venue_name
     })
     .then(review => {
+      if (review.data === "can't make another review for the same venue") {
+        return null;
+      }
       const updatedBusinessDetails = {...businessDetails};
       if (isNaN(updatedBusinessDetails.overall_rating)) {
         updatedBusinessDetails.overall_rating = review.data[0].overall_rating;
