@@ -242,13 +242,16 @@ export default function BusinessPage() {
       }
   };
 
-  const categoryList = businessDetails.categories.map((category, index) => {
-    return (
-      <div className="category">
-        { businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
-      </div>
-    )
-  })
+  let categoryList = null;
+  if (businessDetails.categories) {
+    categoryList = businessDetails.categories.map((category, index) => {
+      return (
+        <div className="category">
+          { businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
+        </div>
+      )
+    });
+  } 
 
   return (
     <div className='business-page-container'>
@@ -294,7 +297,7 @@ export default function BusinessPage() {
                       Yelp Rating:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
-                      <Rating name="read-only" precision={0.5} value={businessDetails.yelpRating} readOnly size="medium" />
+                      <Rating name="read-only" precision={0.5} value={Number(businessDetails.yelpRating)} readOnly size="medium" />
                     </Box>
                     <div className="covid_review_count">
                       {businessDetails.yelpRatingCount} reviews
@@ -305,11 +308,11 @@ export default function BusinessPage() {
                       Safe Score:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
-                      { isNaN(businessDetails.overall_rating) ? "N/A" 
+                      { isNaN(Number(businessDetails.overall_rating)) ? "N/A" 
                       : <StyledRating
                           name="customized-color"
                           size="medium"
-                          value={businessDetails.overall_rating}
+                          value={Number(businessDetails.overall_rating)}
                           precision={0.5}
                           icon={<FavoriteIcon fontSize="inherit" />}
                           readOnly

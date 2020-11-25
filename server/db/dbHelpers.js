@@ -195,6 +195,7 @@ module.exports = (db) => {
     RETURNING *;
     `
     const queryParams = [reviewId, userId];
+    console.log("trying to run addLikes with ", reviewId, userId);
 
     return db.query(queryString, queryParams)
     .then(response => {

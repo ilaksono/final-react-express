@@ -231,6 +231,7 @@ app.post("/reviews/helpful", (req, res) => {
           if (exists === false) {
             dbHelpers.addLikes(req.body.id, userId)
               .then(() => {
+                console.log("heyyyyyyy")
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
                     res.send("add");

@@ -38,18 +38,18 @@ const PlaceListItem = (props) => {
   return (
     <div>
       {props.name === "" && ""}
-      {props.name && <div class='result-container'
+      {props.name && <div className='result-container'
         onClick={moveToNextPage}
         onMouseOver={() =>
           props.hoverMarker({id:props.id, lat: props.latitude, lng: props.longitude})}
         onMouseOut={() =>
           props.notHoverMarker()}>
-        <div class="img-general-info-container">
-          <div class='img-container'>
-            <img src={props.image} alt="Logo" class='venue-image' />
+        <div className="img-general-info-container">
+          <div className='img-container'>
+            <img src={props.image} alt="Logo" className='venue-image' />
           </div>
-          <div class='general-info'>
-          <h3 class="venue_name">{props.label}. {props.name}</h3>
+          <div className='general-info'>
+          <h3 className="venue_name">{props.label}. {props.name}</h3>
           <div className="rating-outer-container">
             <div className="rating-title">
               Yelp Rating:
@@ -89,7 +89,7 @@ const PlaceListItem = (props) => {
         </div>
         
       </div>
-      <div class='location'> 
+      <div className='location'> 
         {props.phone}<br />
         {props.address}<br />
         {props.city}

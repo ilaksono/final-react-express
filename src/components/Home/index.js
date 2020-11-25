@@ -148,7 +148,7 @@ const Home = () => {
       <div className='search-home-container'>
         <Search
           isHome={true}
-          buttonMessage={<i class="fas fa-search"></i>}
+          buttonMessage={<i className="fas fa-search"></i>}
         />
       </div>
       <div className='top-container'>
