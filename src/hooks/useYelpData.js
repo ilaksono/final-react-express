@@ -212,6 +212,47 @@ export default function useYelpData() {
     });
   };
 
+  const submitNewReview = (user_id, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+    return axios.post('/reviews/new', {
+      user_id,
+      venue_id,
+      cleanliness,
+      socialDistancing,
+      transactionProcess,
+      overall_rating,
+      description
+    })
+    .then(review => {
+      const updatedBusinessDetails = {...businessDetails};
+      if (isNaN(updatedBusinessDetails.overall_rating)) {
+        updatedBusinessDetails.overall_rating = review.data[0].overall_rating;
+      } else {
+        updatedBusinessDetails.overall_rating = (updatedBusinessDetails.overall_rating * updatedBusinessDetails.reviewCount + Number(review.data[0].overall_rating))/(updatedBusinessDetails.reviewCount + 1);
+      }
+      updatedBusinessDetails.reviews.unshift(review.data[0]);
+      updatedBusinessDetails.reviewCount++;
+      setBusinessDetails(updatedBusinessDetails);
+
+      const searchResults = [...results];
+      const updatedSearchResults = searchResults.map(venue => {
+        if (venue.id === venue_id) {
+          const updatedVenue = { ...venue };
+          if (isNaN(updatedVenue.overall_rating)) {
+            updatedVenue.overall_rating = review.data[0].overall_rating;
+          } else {
+            updatedVenue.overall_rating = (updatedVenue.overall_rating * updatedVenue.reviewCount + Number(review.data[0].overall_rating))/(updatedVenue.reviewCount + 1);
+          }
+          updatedVenue.reviews.unshift(review.data[0]);
+          updatedVenue.reviewCount++;
+          return updatedVenue;
+        } else {
+          return venue;
+        }
+      });
+      setResults(updatedSearchResults);
+    });
+  }
+
   return {
     results,
     setResults,
@@ -219,6 +260,7 @@ export default function useYelpData() {
     businessDetails,
     setBusinessDetails,
     loadingSearch,
+    submitNewReview,
     setLoadingSearch,
     getIndividualBusinessData,
     sortBy
