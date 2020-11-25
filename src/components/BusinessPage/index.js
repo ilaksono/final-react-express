@@ -100,7 +100,7 @@ export default function BusinessPage() {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null});
+  const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
   // const [chartData, setChartData] = useState(initData);
@@ -141,7 +141,6 @@ export default function BusinessPage() {
     setBigPhoto(initPhoto);
   };
   const primeChartData = (reviews, type) => {
-    console.log(reviews, 'rev');
     if (reviews) {
       const key = {
         'overall_rating': 'Overall Rating',
@@ -164,40 +163,28 @@ export default function BusinessPage() {
       });
       let primedLabels = [];
       let primedVal = [];
-      let prevDay = formatDateString(cpy[0].date);
-      let acc = 0;
-      let count = 0;
+      let normObj = {};
       if (chartSelect.perDay) {
-        cpy.forEach(rev => {
-          if (!primedLabels
-            .includes(formatDateString(rev.date)))
-            primedLabels.push(formatDateString(rev.date));
-        });
         cpy.forEach((rev, index) => {
-          if (formatDateString(rev.date) === prevDay && !(index === cpy.length - 1)) {
-            acc += Number(rev[k]);
-            count++;
-          } else {
-            prevDay = formatDateString(rev.date);
-            primedVal.push(acc / count || 1);
-            acc = Number(rev[k]);
-            count = 1;
-            if (index === cpy.length - 1 && cpy.length > 1) {
-              if (prevDay === formatDateString(rev.date))
-                primedVal.push((acc + Number(rev[k])) / (count + 1));
-              else primedVal.push(Number(rev[k]));
-            }
-
-          }
+          if (!primedLabels
+            .includes(formatDateString(rev.date))) {
+            primedLabels.push(formatDateString(rev.date));
+            normObj[formatDateString(rev.date)] = [Number(rev[k])];
+          } else
+            normObj[formatDateString(rev.date)].push(Number(rev[k]));
         });
-
+        primedVal = Object.values(normObj).map(ar => {
+          return ar.reduce((acc, v) => acc + v, 0) / ar.length;
+        });
       } else {
-        primedLabels = cpy.map(rev => {
-          return formatDateString(rev.date);
-        });
+        primedLabels = cpy.map(rev =>
+          formatDateString(rev.date));
         primedVal = cpy.map(rev => rev[k]);
       }
-
+      if (primedLabels.length === 1)
+        primedLabels.push(primedLabels[0]);
+      if (primedVal.length === 1)
+        primedVal.push(primedVal[0]);
 
       setChartData({
         labels: primedLabels,
@@ -238,11 +225,10 @@ export default function BusinessPage() {
     const time = now.getHours() * 100 + now.getMinutes();
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {
-        return businessDetails.hours[0].open[dayNum];
-      }
+      return businessDetails.hours[0].open[dayNum];
+    }
   };
-
-  let categoryList = null;
+  let categoryList = [];
   if (businessDetails.categories) {
     categoryList = businessDetails.categories.map((category, index) => {
       return (
@@ -256,10 +242,10 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
-      <Link to={'/search'}>
+        <Link to={'/search'}>
           <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
-      </Link>
-        { open && (
+        </Link>
+        {open && (
           <Alert severity="success" className={classes.root} onClose={() => setOpen(false)}>Thanks for leaving a review!</Alert>
         )}
         <div className="right-offset"></div>
@@ -324,25 +310,25 @@ export default function BusinessPage() {
                   </div>
                   <div className="bus-data-row">
                     <div className="bus-price">
-                      { businessDetails.price } &nbsp; &middot;
+                      {businessDetails.price} &nbsp; &middot;
                     </div>
-                    &nbsp; { categoryList }
+                    &nbsp; {categoryList}
                   </div>
                   <div className="bus-data-row">
-                    { openNow() ? (
+                    {openNow() ? (
                       <div className="open">
                         Open Now
                       </div>
                     ) : (
-                      <>
-                        <div className="closed">
-                          Closed Now &nbsp; &middot;
+                        <>
+                          <div className="closed">
+                            Closed Now &nbsp; &middot;
                         </div>
-                        <div className="category">
-                          &nbsp; { `Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}` }
-                        </div>
-                      </>
-                    )} 
+                          <div className="category">
+                            &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
+                          </div>
+                        </>
+                      )}
                   </div>
                 </div>
                 <div className="right-col">
@@ -351,14 +337,14 @@ export default function BusinessPage() {
                       <LocationOnIcon />
                     </div>
                     <div className="data">
-                    {businessDetails.address},
+                      {businessDetails.address},
                     </div>
                   </div>
                   <div className="row">
                     <div className="icon">
                     </div>
                     <div className="data">
-                    {businessDetails.city}
+                      {businessDetails.city}
                     </div>
                   </div>
                   <div className="row">
@@ -367,7 +353,7 @@ export default function BusinessPage() {
                       <PhoneIcon />
                     </div>
                     <div className="data">
-                    {businessDetails.phone}
+                      {businessDetails.phone}
                     </div>
                   </div>
                 </div>

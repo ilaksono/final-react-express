@@ -64,7 +64,7 @@ const LoginForm = props => {
     axios.post("/login", {email, password})
     .then((response) => {
       if (response.data.username) {
-        authorizeUser(response.data.username, response.data.profile_pic)
+        authorizeUser(response.data.username, response.data.profile_pic, response.data.user_id)
         const currentUser = {
           username: response.data.username,
           profile_pic: response.data.profile_pic

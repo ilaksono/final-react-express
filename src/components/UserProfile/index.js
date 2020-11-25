@@ -8,6 +8,7 @@ import ChartSection from './ChartSection';
 import useChartData from 'hooks/useChartData';
 import ChartTab from 'components/BusinessPage/ChartTab';
 import TogglePerDay from 'components/BusinessPage/TogglePerDay';
+import { CircularProgress } from '@material-ui/core';
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -20,7 +21,10 @@ const data = {
 };
 const UserProfile = () => {
   const { id } = useParams();
-  const { allUsers, getTimeRating } = useProfileData();
+  const { allUsers, 
+    getTimeRating, 
+    profileHelpCount 
+  } = useProfileData();
   const { chartSelect,
     setChartSelect,
     chartOptions,
@@ -73,40 +77,28 @@ const UserProfile = () => {
       });
       let primedLabels = [];
       let primedVal = [];
-      let prevDay = formatDateString(cpy[0].date);
-      let acc = 0;
-      let count = 0;
+      let normObj = {};
       if (chartSelect.perDay) {
-        cpy.forEach(rev => {
-          if (!primedLabels
-            .includes(formatDateString(rev.date)))
-            primedLabels.push(formatDateString(rev.date));
-        });
         cpy.forEach((rev, index) => {
-          if (formatDateString(rev.date) === prevDay
-            && !(index === cpy.length - 1)) {
-            acc += Number(rev[k]);
-            count++;
-          } else {
-            prevDay = formatDateString(rev.date);
-            primedVal.push(acc / count || 1);
-            acc = Number(rev[k]);
-            count = 1;
-            if (index === cpy.length - 1 && cpy.length > 1) {
-              if (prevDay === formatDateString(rev.date))
-                primedVal.push((acc + Number(rev[k])) / (count + 1));
-              else primedVal.push(Number(rev[k]));
-            }
-          }
+          if (!primedLabels
+            .includes(formatDateString(rev.date))) {
+            primedLabels.push(formatDateString(rev.date));
+            normObj[formatDateString(rev.date)] = [Number(rev[k])];
+          } else
+            normObj[formatDateString(rev.date)].push(Number(rev[k]));
         });
-
+        primedVal = Object.values(normObj).map(ar => {
+          return ar.reduce((acc, v) => acc + v, 0) / ar.length;
+        });
       } else {
-        primedLabels = cpy.map(rev => {
-          return formatDateString(rev.date);
-        });
+        primedLabels = cpy.map(rev =>
+          formatDateString(rev.date));
         primedVal = cpy.map(rev => rev[k]);
       }
-
+      if (primedLabels.length === 1)
+        primedLabels.push(primedLabels[0]);
+      if (primedVal.length === 1)
+        primedVal.push(primedVal[0]);
 
       setChartData({
         labels: primedLabels,
@@ -114,7 +106,7 @@ const UserProfile = () => {
           label: key[k],
           backgroundColor: '#1E0253',
           borderColor: '#1E0253',
-          data: primedVal
+          data: primedVal,
         }],
         ready: true
       });
@@ -129,36 +121,45 @@ const UserProfile = () => {
 
   return (
     <div className='user-profile-layout'>
-      <div className='profile-container'>
-        <Profile whom={whom || {}} />
-      </div>
-      {allUsers.reviews &&
-        <div className='profile-reviews'>
-
-          <div className='review-big-container'>
-            <div classname='reviews'>
-              <ReviewList
-                reviews={allUsers.reviews}
-                isProfile={true}
-              />
-            </div>
+      {
+        !chartData.ready ?
+          <div className='loading-circle' style={{marginLeft: '45%'}}>
+            <CircularProgress size={140} color="secondary" />
           </div>
-        </div>
-      }
-      <div className='user-chart-container'>
-        {chartData.ready &&
+          :
           <>
-            <div className='chart-title'>Trends</div>
-            <div className='chart-switch-container'>
-              <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
-              <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
-
+            <div className='profile-container'>
+              <Profile whom={whom || {}} />
             </div>
-            <ChartSection data={chartData} options={chartOptions} />
-          </>
-        }
-      </div>
+            {allUsers.reviews &&
+              <div className='profile-reviews'>
 
+                <div className='review-big-container'>
+                  <div classname='reviews'>
+                    <ReviewList
+                      reviews={allUsers.reviews}
+                      isProfile={true}
+                      profileHelpCount={profileHelpCount}
+                    />
+                  </div>
+                </div>
+              </div>
+            }
+            <div className='user-chart-container'>
+              {chartData.ready &&
+                <>
+                  <div className='chart-title'>Trends</div>
+                  <div className='chart-switch-container'>
+                    <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
+                    <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
+
+                  </div>
+                  <ChartSection data={chartData} options={chartOptions} />
+                </>
+              }
+            </div>
+          </>
+      }
     </div>
   );
 };

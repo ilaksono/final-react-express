@@ -115,7 +115,9 @@ app.post("/register", (req, res) => {
             console.log(response);
             res.json({
               username: response[0].username,
-              profile_pic: response[0].profile_pic
+              profile_pic: response[0].profile_pic,
+              user_id: response[0].id
+            
             });
           })
           .catch(err => {
@@ -137,7 +139,8 @@ app.post("/login", (req, res) => {
           if (bcrpyt.compareSync(req.body.password, user.password)) {
             return res.json({
               username: user.username,
-              profile_pic: user.profile_pic
+              profile_pic: user.profile_pic,
+              user_id: user.id
             });
           } else {
             return res.send("password incorrect");
@@ -157,6 +160,16 @@ app.get("/api/reviews", (req, res) => {
   dbHelpers.getAllReviews()
     .then(reviews => {
       res.send(reviews);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+app.get("/api/reviews/home", (req, res) => {
+  dbHelpers
+    .getNewReviews()
+    .then(response => {
+      res.json({ data: response });
     })
     .catch(error => {
       console.log(error);
@@ -234,7 +247,7 @@ app.post("/reviews/helpful", (req, res) => {
                 console.log("heyyyyyyy")
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
-                    res.send("add");
+                    return res.send("add");
                   })
                   .catch(err => {
                     console.log(err);
