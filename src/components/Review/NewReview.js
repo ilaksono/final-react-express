@@ -94,7 +94,7 @@ const NewReview = props => {
   const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
-  const {businessDetails, setBusinessDetails, appState } = useContext(YelpContext);
+  const {businessDetails, setBusinessDetails, appState, submitNewReview, results, setResults } = useContext(YelpContext);
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -138,24 +138,15 @@ const NewReview = props => {
   };
 
   const handleSubmit = () => {
-    axios.post('/reviews/new', {
-      username: appState.name,
-      venue_id: props.venue_id,
-      cleanliness,
-      socialDistancing,
-      transactionProcess,
-      overall_rating: overallComfort,
-      description,
-      venue_name: businessDetails.name
-    }).then(review => {
-      if (review.data === "can't make another review for the same venue") {
+    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
+    .then(response => {
+      if (!response) {
         return handleClose();
       }
       handleClose();
       resetState();
-      const updatedBusinessDetails = {...businessDetails};
-      updatedBusinessDetails.reviews.unshift(review.data[0]);
-      setBusinessDetails(updatedBusinessDetails);
+
+      props.setOpen(true);
     }).catch(err => console.log(err));
   }
 
