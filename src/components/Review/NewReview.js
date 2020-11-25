@@ -143,14 +143,15 @@ const NewReview = props => {
   const handleSubmit = () => {
     submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
       .then(response => {
+        console.log("getting response", response);
         setNewReview(true);
         if (!response) {
           return handleClose();
         }
+        console.log('trying to set to true...');
+        props.setReviewSnackBar(true);
         handleClose();
         resetState();
-
-        props.setOpen(true);
       }).catch(err => console.log(err));
   };
 
@@ -179,6 +180,7 @@ const NewReview = props => {
       >
         Write A Review
       </Button>
+
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'

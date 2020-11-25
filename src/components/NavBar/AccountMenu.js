@@ -61,7 +61,6 @@ export default function AccountMenu(props) {
 
   return (
     <div className="user-nav-container">
-      {props.appState.user_id}
       { props.appState.name }
       <div className="profile-icon-container">
         <AccountCircleIcon

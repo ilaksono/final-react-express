@@ -12,6 +12,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MuiAlert from '@material-ui/lab/Alert';
+import SnackBar from 'components/SnackBar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReviewList from './ReviewList';
@@ -98,8 +99,8 @@ const initPhoto = {
 export default function BusinessPage() {
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
+  const [reviewSnackBar, setReviewSnackBar] = useState(false);
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
   // const [chartData, setChartData] = useState(initData);
@@ -122,7 +123,6 @@ export default function BusinessPage() {
     getIndividualBusinessData,
     appState
   } = useContext(YelpContext);
-
 
   const { id } = useParams();
   const clickPhoto = (url) => {
@@ -221,6 +221,9 @@ export default function BusinessPage() {
     dayNum += 7;
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
+    if (!businessDetails.hours) {
+      return null;
+    }
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {
       return businessDetails.hours[0].open[dayNum];
@@ -243,9 +246,6 @@ export default function BusinessPage() {
         <Link to={'/search'}>
           <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
         </Link>
-        {open && (
-          <Alert severity="success" className={classes.root} onClose={() => setOpen(false)}>Thanks for leaving a review!</Alert>
-        )}
         <div className="right-offset"></div>
       </div>
       {!businessDetails.id && (
@@ -358,8 +358,8 @@ export default function BusinessPage() {
               </div>
               {appState.authorized &&
                 <div className='bus-buttons'>
-                  <NewReview venue_id={id} name={businessDetails.name} setOpen={setOpen} />
-
+                  <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
+                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar}/>
                   {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
 
