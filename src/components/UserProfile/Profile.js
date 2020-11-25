@@ -16,6 +16,10 @@ const Profile = (props) => {
     return `${months[date.getMonth()]}, ${date.getFullYear()}`;
   };
 
+  const reviewTableHover = () => {
+
+  }
+
   return (
     <>
       <div className='profile-header'>
@@ -32,11 +36,26 @@ const Profile = (props) => {
         <img src="https://www.countryflags.io/ca/shiny/32.png" alt='flag not found' />
       </div>
       <div className='help-count'>
-        <label className='acc-created-label'>
-          Number of Likes
-        </label>
-        {Number(props.whom.total) || 0}
+        <table className='profile-info-table'>
+          <thead>
+            <th>
+              <i class="far fa-thumbs-up review-table-icon"></i>
+              Score
+            </th>
+            <th>
+              <i className="fas fa-feather-alt review-table-icon"></i>
+              Reviews
+            </th>
+          </thead>
+          <tr>
+            <td>
+              {Number(props.whom.total) || 0}
+            </td>
 
+            <td> {props.length || 0}
+            </td>
+          </tr>
+        </table>
       </div>
       <div className='account-created'>
         <label className='acc-created-label'>

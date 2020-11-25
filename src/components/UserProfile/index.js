@@ -129,7 +129,7 @@ const UserProfile = () => {
           :
           <>
             <div className='profile-container'>
-              <Profile whom={whom || {}} />
+              <Profile whom={whom || {}} length={allUsers.reviews.length}/>
             </div>
             {allUsers.reviews &&
               <div className='profile-reviews'>
