@@ -25,6 +25,7 @@ export default function ReviewList(props) {
       venue_name={review.venue_name || ''}
       isProfile={props.isProfile}
       profileHelpCount={props.profileHelpCount}
+      venue_id={review.venue_id || ''}
     />;
   });
 

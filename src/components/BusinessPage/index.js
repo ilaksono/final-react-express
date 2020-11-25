@@ -100,7 +100,7 @@ export default function BusinessPage() {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null});
+  const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
   // const [chartData, setChartData] = useState(initData);
@@ -225,25 +225,27 @@ export default function BusinessPage() {
     const time = now.getHours() * 100 + now.getMinutes();
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {
-        return businessDetails.hours[0].open[dayNum];
-      }
+      return businessDetails.hours[0].open[dayNum];
+    }
   };
-
-  const categoryList = businessDetails.categories.map((category, index) => {
-    return (
-      <div className="category">
-        { businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
-      </div>
-    )
-  })
+  let categoryList = [];
+  if (businessDetails.categories) {
+    categoryList = businessDetails.categories.map((category, index) => {
+      return (
+        <div className="category">
+          {businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
+        </div>
+      );
+    });
+  }
 
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
-      <Link to={'/search'}>
+        <Link to={'/search'}>
           <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
-      </Link>
-        { open && (
+        </Link>
+        {open && (
           <Alert severity="success" className={classes.root} onClose={() => setOpen(false)}>Thanks for leaving a review!</Alert>
         )}
         <div className="right-offset"></div>
@@ -292,8 +294,8 @@ export default function BusinessPage() {
                       Safe Score:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
-                      { isNaN(businessDetails.overall_rating) ? "N/A" 
-                      : <StyledRating
+                      {isNaN(businessDetails.overall_rating) ? "N/A"
+                        : <StyledRating
                           name="customized-color"
                           size="medium"
                           value={businessDetails.overall_rating}
@@ -308,25 +310,25 @@ export default function BusinessPage() {
                   </div>
                   <div className="bus-data-row">
                     <div className="bus-price">
-                      { businessDetails.price } &nbsp; &middot;
+                      {businessDetails.price} &nbsp; &middot;
                     </div>
-                    &nbsp; { categoryList }
+                    &nbsp; {categoryList}
                   </div>
                   <div className="bus-data-row">
-                    { openNow() ? (
+                    {openNow() ? (
                       <div className="open">
                         Open Now
                       </div>
                     ) : (
-                      <>
-                        <div className="closed">
-                          Closed Now &nbsp; &middot;
+                        <>
+                          <div className="closed">
+                            Closed Now &nbsp; &middot;
                         </div>
-                        <div className="category">
-                          &nbsp; { `Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}` }
-                        </div>
-                      </>
-                    )} 
+                          <div className="category">
+                            &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
+                          </div>
+                        </>
+                      )}
                   </div>
                 </div>
                 <div className="right-col">
@@ -335,14 +337,14 @@ export default function BusinessPage() {
                       <LocationOnIcon />
                     </div>
                     <div className="data">
-                    {businessDetails.address},
+                      {businessDetails.address},
                     </div>
                   </div>
                   <div className="row">
                     <div className="icon">
                     </div>
                     <div className="data">
-                    {businessDetails.city}
+                      {businessDetails.city}
                     </div>
                   </div>
                   <div className="row">
@@ -351,7 +353,7 @@ export default function BusinessPage() {
                       <PhoneIcon />
                     </div>
                     <div className="data">
-                    {businessDetails.phone}
+                      {businessDetails.phone}
                     </div>
                   </div>
                 </div>

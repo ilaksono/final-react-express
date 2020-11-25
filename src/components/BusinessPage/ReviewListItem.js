@@ -87,12 +87,19 @@ export default function ReviewListItem(props) {
     if (diff !== 1) unit += "s";
     return `${diff} ${unit} ago`;
   };
+  const pageRedirect = () => {
+    if(props.isProfile) {
+
+    }
+  }
 
 
   return (
     <div className='review-container'>
       <div className='user'>
-        <span>{props.isProfile ? props.venue_name : props.username}</span>
+        <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+        <span className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+        </Link>
         {
           props.picture &&
           <Link to={`/users/${props.user_id}`} >

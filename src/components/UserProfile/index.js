@@ -8,6 +8,7 @@ import ChartSection from './ChartSection';
 import useChartData from 'hooks/useChartData';
 import ChartTab from 'components/BusinessPage/ChartTab';
 import TogglePerDay from 'components/BusinessPage/TogglePerDay';
+import { CircularProgress } from '@material-ui/core';
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -102,7 +103,7 @@ const UserProfile = () => {
           label: key[k],
           backgroundColor: '#1E0253',
           borderColor: '#1E0253',
-          data: primedVal
+          data: primedVal,
         }],
         ready: true
       });
@@ -117,37 +118,45 @@ const UserProfile = () => {
 
   return (
     <div className='user-profile-layout'>
-      <div className='profile-container'>
-        <Profile whom={whom || {}} />
-      </div>
-      {allUsers.reviews &&
-        <div className='profile-reviews'>
-
-          <div className='review-big-container'>
-            <div classname='reviews'>
-              <ReviewList
-                reviews={allUsers.reviews}
-                isProfile={true}
-                profileHelpCount={profileHelpCount}
-              />
-            </div>
+      {
+        !chartData.ready ?
+          <div className='loading-circle' style={{marginLeft: '45%'}}>
+            <CircularProgress size={140} color="secondary" />
           </div>
-        </div>
-      }
-      <div className='user-chart-container'>
-        {chartData.ready &&
+          :
           <>
-            <div className='chart-title'>Trends</div>
-            <div className='chart-switch-container'>
-              <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
-              <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
-
+            <div className='profile-container'>
+              <Profile whom={whom || {}} />
             </div>
-            <ChartSection data={chartData} options={chartOptions} />
-          </>
-        }
-      </div>
+            {allUsers.reviews &&
+              <div className='profile-reviews'>
 
+                <div className='review-big-container'>
+                  <div classname='reviews'>
+                    <ReviewList
+                      reviews={allUsers.reviews}
+                      isProfile={true}
+                      profileHelpCount={profileHelpCount}
+                    />
+                  </div>
+                </div>
+              </div>
+            }
+            <div className='user-chart-container'>
+              {chartData.ready &&
+                <>
+                  <div className='chart-title'>Trends</div>
+                  <div className='chart-switch-container'>
+                    <ChartTab chartSelect={chartSelect} clickChartTab={clickChartTab} />
+                    <TogglePerDay chartSelect={chartSelect} changePerDay={changePerDay} message='per Day' />
+
+                  </div>
+                  <ChartSection data={chartData} options={chartOptions} />
+                </>
+              }
+            </div>
+          </>
+      }
     </div>
   );
 };

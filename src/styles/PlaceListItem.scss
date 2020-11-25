@@ -133,3 +133,9 @@
   @include flexbox(row, center, flex-start);
   margin-top: 30px;
 }
+.review-header-link {
+  color: $purple;
+}
+.review-header-link:hover {
+  color: purple;
+}
