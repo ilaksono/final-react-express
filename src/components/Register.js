@@ -140,9 +140,6 @@ const RegisterForm = (props) => {
     return true;
   };
   
-  const cancel = () => {
-    setState(initReg);
-  };
 
   const handleClick = () => {
 

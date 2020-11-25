@@ -5,22 +5,18 @@ import Results from "./Results";
 import Map from "./Map";
 import { YelpContext } from 'YelpContext.js';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 
 
 const SearchPage = props => {
   const { filters, toggleFilterShow,
-    results, refinedResults, setRefinedSeed } = useContext(YelpContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [maxPageNumber, setMaxPageNumber] = useState(1);
+    results, setRefinedSeed } = useContext(YelpContext);
+ 
 
   useEffect(() => {
     setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value);
-  };
+ 
 
   return (
     <div className="search-page-layout">

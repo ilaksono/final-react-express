@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({

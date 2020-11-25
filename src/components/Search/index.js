@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import 'styles/Search.scss';
 import Venue from "components/Search/Venue/";
 import VenueAutoComplete from "components/Search/VenueAutoComplete/";
@@ -13,7 +13,6 @@ import 'styles/Home.scss'
 const Search = props => {
   const history = useHistory();
   const {
-    setRefinedSeed,
     results,
     appState,
     yelpSearch,
@@ -24,7 +23,6 @@ const Search = props => {
     populateCategories,
     addResults,
     getPriceFilterMode,
-    loadingSearch,
     setLoadingSearch,
     handlePageChange
   } = useContext(YelpContext);

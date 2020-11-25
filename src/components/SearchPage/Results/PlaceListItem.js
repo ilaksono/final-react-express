@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 })); */
 
 const PlaceListItem = (props) => {
-  const [value, setValue] = React.useState(2);
-  const { getIndividualBusinessData, businessDetails } = useContext(YelpContext);
+
+  const { getIndividualBusinessData } = useContext(YelpContext);
 
   const history = useHistory();
   const moveToNextPage = () => {

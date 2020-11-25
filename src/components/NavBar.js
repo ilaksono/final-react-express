@@ -14,15 +14,6 @@ const initMod = {
 const NavBar = (props) => {
   const location = useLocation();
   const [modal, setModal] = useState(initMod);
-
-
-  const backdropClick = () => {
-    setModal({
-      regopen: false,
-      logOpen: false
-    });
-  };
-
   const [isHome, setIsHome] = useState(false);
   const { appState, logout } = useContext(YelpContext);
   useEffect(() => {

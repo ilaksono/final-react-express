@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';

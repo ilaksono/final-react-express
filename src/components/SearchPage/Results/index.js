@@ -1,6 +1,6 @@
 import PlaceList from './PlaceList';
 import 'styles/Results.scss';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import Sort from 'components/Sort';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,13 +36,11 @@ const Results = props => {
     loadingSearch,
     sortBy,
     results,
-    setRefinedSeed,
     addResults,
     maxPageNumber,
     handlePageChange,
     applyPriceFilter,
-    filters,
-    appState } = useContext(YelpContext);
+    filters } = useContext(YelpContext);
 
 
   const handleSort = (property) => {

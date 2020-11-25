@@ -1,10 +1,10 @@
 import { Marker } from '@react-google-maps/api';
-import {useContext, useEffect} from 'react';
+import {useContext} from 'react';
 import { YelpContext } from 'YelpContext';
 import { useHistory } from 'react-router-dom';
 
 const MarkerComponent = props => {
-  const { getIndividualBusinessData, setBusinessDetails} = useContext(YelpContext);
+  const { setBusinessDetails} = useContext(YelpContext);
   const history = useHistory();
   const { lat, lng, hover, id, label } = props;
   
