@@ -21,7 +21,8 @@ const initApp = {
   authorized: false,
   name: '',
   center: {},
-  profile_pic:''
+  profile_pic:'',
+  user_id: null
 };
 
 const initReg = {
@@ -90,32 +91,32 @@ const useApplicationData = () => { // login and user state information
   //       }
   //     });
   // };
-  const authorizeUser = (name, profile_pic) => {
-    dispatch({ type: AUTHORIZE, name, profile_pic });
+  const authorizeUser = (name, profile_pic, user_id) => {
+    dispatch({ type: AUTHORIZE, name, profile_pic, user_id });
   };
   const getTops = () => {
-    const width = '60%';
+    const width = '100%';
     const example = [];
     example.push({
-      venue: 'Andrew',
-      title: 'Andrew',
+      venue: 'Delivery',
+      title: 'Delivery',
       width
     });
     example.push({
-      venue: 'Daniel',
-      title: 'Daniel',
-      width
-
-    });
-    example.push({
-      venue: 'Safe',
-      title: 'Safe',
+      venue: 'Restaurant',
+      title: 'Restaurant',
       width
 
     });
     example.push({
-      venue: 'Space',
-      title: 'Space',
+      venue: 'Patio',
+      title: 'Patio',
+      width
+
+    });
+    example.push({
+      venue: 'Toilet Paper',
+      title: 'Toilet Paper',
       width
 
     });

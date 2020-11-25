@@ -217,6 +217,16 @@ module.exports = (db) => {
 
   };
 
+  const getNewReviews = () => {
+    const qs = `
+    SELECT * FROM reviews
+    ORDER BY date DESC
+    LIMIT 4;`;
+    return db
+      .query(qs, [])
+      .then(res => res.rows);
+  };
+
 
   return {
     getAllReviews,
@@ -235,6 +245,7 @@ module.exports = (db) => {
     getReviewIdByVenueAndUser,
     addLikes,
     deleteLikes,
-    descreaseHelpfulCount
+    descreaseHelpfulCount,
+    getNewReviews
   };
 };

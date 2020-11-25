@@ -1,29 +1,45 @@
 @import './helper.scss';
 
 .home-layout {
-background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%)
+  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  max-height: calc(100vh - 60px);
+}
+
+.home-widget-review-container {
+  @include flexbox(row, space-around, flex-start);
+  padding-top: 40px;
+   overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
+  max-height: calc(100vh - 210px);
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
 .widget-container {
-  display: grid;
-  grid-template-columns: [col1-start] 50% [col1-end col2-start] 50% [col2-end];
-  grid-template-rows: [row1-start] 50% [row1-end row2-start] 50% [row2-end];
-  justify-content: space-evenly;
-  align-content: stretch;
-  position: relative;
-  margin-top: 10px;
+  @include flexbox(column, flex-start, center);
+  margin-top: 0;
+ 
 
+}
+.home-reviews-container {
+  @include flexbox(column, flex-start, center);
+  margin-top: 10px;
+ 
 }
 
 .search-home-container {
   padding-top: 50px;
   width: 100%;
-  @include flexbox(row, space-around, center)
+  @include flexbox(row, space-around, center);
+  padding-bottom: 10px;
 }
 .top-label{
   text-align: center;
   font: $font-stack;
-  font-size: 1.5em;
+  font-size: 1.6em;
+  font-weight: bold;
+  padding-bottom: 20px;
 }
 .top-container {
   margin-top: 40px;
@@ -44,7 +60,9 @@ background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%)
   @include flexbox(row, flex-end, center);
   padding-right: 4px;
   
-  }
+}
+
+
 .home-search-v {
   height: 100%;
   width: 100%;
@@ -116,4 +134,15 @@ box-shadow: 0px 0px 0px 2px $light-purple;
   background-color: $salmon;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+@media screen and (max-width: 760px) {
+  .home-widget-review-container {
+    @include flexbox(column, flex-start, center);    
+  }
+}
+
+.home-loading {
+  margin-top: 45%;
+  align-self: center;
 }

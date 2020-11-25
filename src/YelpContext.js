@@ -7,6 +7,7 @@ import useApplicationData from 'hooks/useApplicationData';
 import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
 import useSort from 'hooks/useSort';
+import useNewReview from 'hooks/useNewReview';
 
 export const YelpContext = React.createContext();
 
@@ -73,6 +74,9 @@ export function YelpProvider({ children }) {
     resultsPerPage,
     handlePageChange } = usePagination();
 
+    const {
+      newReview, setNewReview
+    } = useNewReview();
   return (
     <YelpContext.Provider value={{
       results,
@@ -125,7 +129,9 @@ export function YelpProvider({ children }) {
       setMaxPageNumber,
       handlePageChange,
       resultsPerPage,
-      submitNewReview
+      submitNewReview,
+      newReview,
+      setNewReview
       // openFilterClick
     }}>
       {children}

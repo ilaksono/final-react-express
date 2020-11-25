@@ -21,7 +21,10 @@ const data = {
 };
 const UserProfile = () => {
   const { id } = useParams();
-  const { allUsers, getTimeRating, profileHelpCount } = useProfileData();
+  const { allUsers, 
+    getTimeRating, 
+    profileHelpCount 
+  } = useProfileData();
   const { chartSelect,
     setChartSelect,
     chartOptions,

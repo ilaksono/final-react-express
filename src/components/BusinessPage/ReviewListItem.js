@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 export default function ReviewListItem(props) {
 
-  const { businessDetails, setBusinessDetails, appState } = useContext(YelpContext);
+  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
 
   const [err, setErr] = useState('');
 
@@ -98,7 +98,7 @@ export default function ReviewListItem(props) {
     <div className='review-container'>
       <div className='user'>
         <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-        <span className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
         </Link>
         {
           props.picture &&
