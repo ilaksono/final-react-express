@@ -384,40 +384,32 @@ export default function BusinessPage() {
                 }
               </div>
             </div>
-            <div className='review-big-container'>
-
-              <div className='rating'>
-                <strong>Safe Score:</strong> {businessDetails.overall_rating}
-                <strong>Yelp Rating:</strong> {businessDetails.yelpRating}
+            <div className='review-chart-container'>
+              <div id="reviews-container" >
+                {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
+                  <span>Be the first to write a review!</span>
+                ) : (
+                  <ReviewList reviews={businessDetails.reviews} />
+                )}
               </div>
+              <div className='business-chart-container'>
+                {chartData.ready &&
+                  <>
+                    <ChartTab
+                      chartSelect={chartSelect}
+                      clickChartTab={clickChartTab} />
+                    <TogglePerDay
+                      chartSelect={chartSelect}
+                      changePerDay={changePerDay}
+                      message='per Day' />
+                    {/* {parsedCharts} */}
 
-              <div className='reviews'>
-                {(businessDetails.reviews
-                  && businessDetails.reviews.length === 0)
-                  && <span>Be the first to write a review!</span>}
-                {(businessDetails.reviews
-                  && businessDetails.reviews.length > 0)
-                  && <ReviewList reviews={businessDetails.reviews}
-                  />}
+                    <ChartSection
+                      data={chartData}
+                      options={chartOptions} />
+                  </>
+                }
               </div>
-            </div>
-            <div className='business-chart-container'>
-              {chartData.ready &&
-                <>
-                  <ChartTab
-                    chartSelect={chartSelect}
-                    clickChartTab={clickChartTab} />
-                  <TogglePerDay
-                    chartSelect={chartSelect}
-                    changePerDay={changePerDay}
-                    message='per Day' />
-                  {/* {parsedCharts} */}
-
-                  <ChartSection
-                    data={chartData}
-                    options={chartOptions} />
-                </>
-              }
             </div>
           </div>
         </>}
