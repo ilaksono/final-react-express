@@ -94,38 +94,38 @@ const cleanAutoComplete = (data, keyword) => {
 };
 
 app.post("/register", (req, res) => {
-  const password = bcrpyt.hashSync(req.body.password, salt)
+  const password = bcrpyt.hashSync(req.body.password, salt);
   let exists = false;
   dbHelpers.serverRegistrationValidation()
     .then((userData) => {
       userData.some(user => {
         if (user.username === req.body.username) {
           exists = true;
-          return res.send("username exists")
+          return res.send("username exists");
         } else if (user.email === req.body.email) {
           exists = true;
-          return res.send("email exists")
+          return res.send("email exists");
         }
-      })
+      });
     })
     .then(() => {
       if (exists === false) {
-        dbHelpers.registration(req.body.username, req.body.email, password)
+        dbHelpers.registration(req.body.username, req.body.email, password, req.body.city)
           .then(response => {
-            console.log(response)
+            console.log(response);
             res.json({
               username: response[0].username,
               profile_pic: response[0].profile_pic
-            })
+            });
           })
           .catch(err => {
-            console.log(err)
-          })
+            console.log(err);
+          });
       }
     })
     .catch(error => {
-      console.log(error)
-    })
+      console.log(error);
+    });
 
 });
 
@@ -138,18 +138,18 @@ app.post("/login", (req, res) => {
             return res.json({
               username: user.username,
               profile_pic: user.profile_pic
-            })
+            });
           } else {
-            return res.send("password incorrect")
+            return res.send("password incorrect");
           }
         }
-      })
+      });
       return res.send("email does not exist");
     })
     .catch(err => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
 
 
@@ -177,45 +177,46 @@ app.listen(PORT, () => {
 
 app.post("/reviews/new", (req, res) => {
   let userId;
-  let exists = false
+  let exists = false;
   dbHelpers.getIdByUsername(req.body.username)
     .then(response => {
-      userId = response[0].id
+      userId = response[0].id;
     })
     .then(() => {
       dbHelpers.hasUserMadeAPreviousReview(userId, req.body.venue_id)
         .then(response => {
-          console.log(response)
+          console.log(response);
           if (response) {
             exists = true;
-            res.send("can't make another review for the same venue")
+            res.send("can't make another review for the same venue");
           }
         })
         .then(() => {
           if (exists === false) {
             dbHelpers.submitReview(
-                userId,
-                req.body.venue_id,
-                req.body.cleanliness,
-                req.body.socialDistancing,
-                req.body.transactionProcess,
-                req.body.description,
-                req.body.overall_rating)
+              userId,
+              req.body.venue_id,
+              req.body.venue_name,
+              req.body.cleanliness,
+              req.body.socialDistancing,
+              req.body.transactionProcess,
+              req.body.description,
+              req.body.overall_rating)
               .then(review => {
                 res.send(review);
               })
               .catch(error => console.log(error));
           }
-        })
-    })
-})
+        });
+    });
+});
 
 app.post("/reviews/helpful", (req, res) => {
   let userId;
   let exists = false;
   dbHelpers.getIdByUsername(req.body.username)
     .then(response => {
-      userId = response[0].id
+      userId = response[0].id;
     })
     .then(() => {
       dbHelpers.checkIfLikesExist(req.body.id, userId)
@@ -230,35 +231,36 @@ app.post("/reviews/helpful", (req, res) => {
               .then(() => {
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
-                    res.send("add")
+                    res.send("add");
                   })
                   .catch(err => {
-                    console.log(err)
-                  })
-              })
+                    console.log(err);
+                  });
+              });
           } else if (exists === true) {
-            console.log("did it work?")
+            console.log("did it work?");
             dbHelpers.deleteLikes(req.body.id, userId)
               .then(() => {
                 dbHelpers.descreaseHelpfulCount(req.body.id)
                   .then(() => {
-                    res.send("delete")
-                  })
+                    res.send("delete");
+                  });
               })
               .catch(err => {
-                console.log(err)
-              })
+                console.log(err);
+              });
           }
-        })
-    })
-})
+        });
+    });
+});
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers
     .getAllUsersImages()
     .then(response => {
       return res.json({ data: response });
-    });
+    })
+    .catch(er => console.log(er));
 });
 
 app.get('/api/users/:id/rating_chart', (req, res) => {
@@ -271,6 +273,8 @@ app.get('/api/users/:id/rating_chart', (req, res) => {
 app.get('/api/reviews/users/:id', (req, res) => {
   dbHelpers
     .getProfileReviews(req.params.id)
-    .then(response =>
-      res.json({ data: response }));
+    .then(response => {
+      res.json({ data: response });
+    })
+    .catch(er => console.log(er));
 });

@@ -23,6 +23,9 @@ export default function ReviewList(props) {
       description={review.description}
       id={review.id}
       picture={review.profile_pic}
+      user_id={review.user_id}
+      venue_name={review.venue_name || ''}
+      isProfile={props.isProfile}
     />;
   });
 
@@ -50,7 +53,6 @@ export default function ReviewList(props) {
     <div>
       <div className='sort-group'>
         <h3><strong>Reviews</strong></h3>
-        {console.log(props)}
         <Sort sortOptions={sortOptions}
           defaultOption={sortOptions[0].id}
           onClick={handleSort} />

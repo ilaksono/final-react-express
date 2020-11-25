@@ -4,32 +4,39 @@ import axios from 'axios';
 const initProfile = {
   all: [],
   reviews: []
-}
+};
 
 const useProfileData = () => {
   const [allUsers, setAllUsers] = useState(initProfile);
 
-  // useEffect(() => {
-  //   getUsersAPI();
-  // });
+
 
   const getUsersAPI = () => {
-    axios
-      .get('api/users/public')
-      .then((res) => setAllUsers({...allUsers, all:[res.data.data]}));
+    return axios
+      .get('/api/users/public')
+      .then(res => res)
+      .catch(er => console.log(er));
   };
-  
+
   const getTimeRating = (id) => {
-    axios
-    .get(`api/reviews/users/${id}`)
-    .then(res => {
-      setAllUsers({...allUsers, reviews:[...res]})
-    })
+    return axios
+      .get(`/api/reviews/users/${id}`)
+      .then(res => {
+        // setAllUsers({ ...allUsers, reviews: [...res.data.data] });
+        getUsersAPI()
+          .then(response => {
+            setAllUsers({
+              all: response.data.data,
+              reviews: res.data.data
+            });
+          });
+      });
   };
 
   return {
     allUsers,
-    getTimeRating
+    getTimeRating,
+    getUsersAPI
   };
 
 };
