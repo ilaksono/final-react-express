@@ -103,7 +103,6 @@ export default function BusinessPage() {
     setBigPhoto(initPhoto);
   };
   const primeChartData = (reviews, type) => {
-    console.log(reviews, 'rev');
     if (reviews) {
       const key = {
         'overall_rating': 'Overall Rating',
@@ -126,40 +125,28 @@ export default function BusinessPage() {
       });
       let primedLabels = [];
       let primedVal = [];
-      let prevDay = formatDateString(cpy[0].date);
-      let acc = 0;
-      let count = 0;
+      let normObj = {};
       if (chartSelect.perDay) {
-        cpy.forEach(rev => {
-          if (!primedLabels
-            .includes(formatDateString(rev.date)))
-            primedLabels.push(formatDateString(rev.date));
-        });
         cpy.forEach((rev, index) => {
-          if (formatDateString(rev.date) === prevDay && !(index === cpy.length - 1)) {
-            acc += Number(rev[k]);
-            count++;
-          } else {
-            prevDay = formatDateString(rev.date);
-            primedVal.push(acc / count || 1);
-            acc = Number(rev[k]);
-            count = 1;
-            if (index === cpy.length - 1 && cpy.length > 1) {
-              if (prevDay === formatDateString(rev.date))
-                primedVal.push((acc + Number(rev[k])) / (count + 1));
-              else primedVal.push(Number(rev[k]));
-            }
-
-          }
+          if (!primedLabels
+            .includes(formatDateString(rev.date))) {
+            primedLabels.push(formatDateString(rev.date));
+            normObj[formatDateString(rev.date)] = [Number(rev[k])];
+          } else
+            normObj[formatDateString(rev.date)].push(Number(rev[k]));
         });
-
+        primedVal = Object.values(normObj).map(ar => {
+          return ar.reduce((acc, v) => acc + v, 0) / ar.length;
+        });
       } else {
-        primedLabels = cpy.map(rev => {
-          return formatDateString(rev.date);
-        });
+        primedLabels = cpy.map(rev =>
+          formatDateString(rev.date));
         primedVal = cpy.map(rev => rev[k]);
       }
-
+      if (primedLabels.length === 1)
+        primedLabels.push(primedLabels[0]);
+      if (primedVal.length === 1)
+        primedVal.push(primedVal[0]);
 
       setChartData({
         labels: primedLabels,

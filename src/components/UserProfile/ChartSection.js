@@ -6,8 +6,6 @@ import 'styles/ChartSection.scss';
 
 const ChartSection = (props) => {
 
-  
-
   return (
     <div className='line-graph-container' style={{ backgroundColor: 'white' }}>
       <Line data={props.data} options={props.options || null} />

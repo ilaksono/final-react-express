@@ -8,8 +8,6 @@ export default function ReviewList(props) {
 
   const { sortBy, appState } = useContext(YelpContext);
 
-
-
   const reviews = props.reviews.map(review => {
 
     return <ReviewListItem
@@ -26,6 +24,7 @@ export default function ReviewList(props) {
       user_id={review.user_id}
       venue_name={review.venue_name || ''}
       isProfile={props.isProfile}
+      profileHelpCount={props.profileHelpCount}
     />;
   });
 
