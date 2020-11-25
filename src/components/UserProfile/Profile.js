@@ -1,13 +1,10 @@
 import 'styles/UserProfile.scss';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
-const initUserPro = {
-  username: '',
-  img: '',
 
-};
 
 const Profile = (props) => {
+  
   const formatDateYM = (timeStp) => {
     const months = ['January', 'February', 'March',
       'April', 'May', 'June', 'July', "August", 'September'
@@ -17,7 +14,16 @@ const Profile = (props) => {
   };
 
   const reviewTableHover = () => {
-
+    props.setFocus(prev => ({
+      ...prev,
+      rev: true
+    }))
+  }
+  const notReviewTableHover = () => {
+    props.setFocus(prev => ({
+      ...prev,
+      rev: false
+    }))
   }
 
   return (
@@ -42,7 +48,10 @@ const Profile = (props) => {
               <i class="far fa-thumbs-up review-table-icon"></i>
               Score
             </th>
-            <th>
+            <th
+            onMouseOver={reviewTableHover}
+            onMouseOut={notReviewTableHover}
+            >
               <i className="fas fa-feather-alt review-table-icon"></i>
               Reviews
             </th>
@@ -52,7 +61,8 @@ const Profile = (props) => {
               {Number(props.whom.total) || 0}
             </td>
 
-            <td> {props.length || 0}
+            <td onMouseOver={reviewTableHover}
+              onMouseOut={notReviewTableHover}> {props.length || 0}
             </td>
           </tr>
         </table>

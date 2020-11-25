@@ -1,5 +1,5 @@
 import 'styles/UserProfile.scss';
-import { useEffect, Fragment } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import Profile from './Profile';
 import { useParams } from 'react-router-dom';
@@ -19,7 +19,14 @@ const data = {
     data: [0, 10, 5, 2, 20, 30, 45, 1, 2, 23, 4, 5, 6, 2]
   }]
 };
+const initFocus = {
+  like: false,
+  rev: false
+};
 const UserProfile = () => {
+
+  const [focus, setFocus] = useState(initFocus);
+
   const { id } = useParams();
   const { allUsers,
     getTimeRating,
@@ -129,10 +136,13 @@ const UserProfile = () => {
           :
           <>
             <div className='profile-container'>
-              <Profile whom={whom || {}} length={allUsers.reviews.length}/>
+              <Profile 
+              whom={whom || {}} 
+              length={allUsers.reviews.length} 
+              setFocus={setFocus}/>
             </div>
             {allUsers.reviews &&
-              <div className='profile-reviews'>
+              <div className={`profile-reviews${focus.rev ? '-hover': ''}`}>
 
                 <div className='review-big-container'>
                   <div classname='reviews'>
