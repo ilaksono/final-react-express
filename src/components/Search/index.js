@@ -59,7 +59,7 @@ const Search = props => {
     setVenue(text);
     setAutoCompleteFalse();
     handleSearch(text);
-    history.push('/search')
+    history.push('/search');
   };
 
   const setVenueAndAutoComplete = (text) => {

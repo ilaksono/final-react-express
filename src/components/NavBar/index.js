@@ -45,12 +45,7 @@ const NavBar = (props) => {
         )}
       {appState.authorized ?
         <>
-          <div>
-            Hello, {appState.name}
-          </div>
-          <div>
-            <AccountMenu appState={appState} logout={logout}> </AccountMenu>
-          </div>
+          <AccountMenu appState={appState} logout={logout}> </AccountMenu>
         </>
         :
         <div className="user-container">

@@ -4,12 +4,16 @@
   @include flexbox(column, flex-start, flex-start);
   position: fixed; /* Stay in place */
   z-index: 2; /* Sit on top */
-  left: calc((180.16px + (100% - 836.75px) / 2) + 8px);
-  top: 48px;
-  border-top: 1px solid $gray-line;
-  width: 264px;
+  left: calc((180.16px + (100% - 836.75px) / 2) + 2px);
+  top: 47px;
+  border: 1px solid $gray-line;
+  border-radius: 2px;
+  width: 262px;
   height: auto;
-  background-color: black/*#FFFFFF;*/
+  background-color: black;
+  -moz-box-shadow:    1px 1px 5px 1px rgb(192, 192, 192);
+  -webkit-box-shadow: 1px 1px 5px 1px rgb(192, 192, 192);
+  box-shadow:         1px 1px 5px 1px rgb(192, 192, 192);
 }
 
 .autocomplete-list {

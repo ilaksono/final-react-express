@@ -1,0 +1,27 @@
+@import './helper.scss';
+
+.profile-icon-container {
+  @include flexbox(row, center, center);
+  background-color: $salmon;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.profile-icon-container:hover {
+  cursor: pointer;
+}
+
+.user-nav-container {
+  @include flexbox(row, flex-end, center);
+  height: 46px;
+  min-width: 200px;
+  padding: 0;
+}
+
+.username {
+  height: 100%;
+  width: 60px;
+}

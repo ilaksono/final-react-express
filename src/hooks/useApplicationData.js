@@ -92,6 +92,7 @@ const useApplicationData = () => { // login and user state information
   //     });
   // };
   const authorizeUser = (name, profile_pic, user_id) => {
+    console.log("authorizing", user_id)
     dispatch({ type: AUTHORIZE, name, profile_pic, user_id });
   };
   const getTops = () => {
