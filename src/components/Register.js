@@ -152,7 +152,7 @@ const RegisterForm = (props) => {
             username: res.data.username,
             profile_pic: res.data.profile_pic
           }
-          authorizeUser(res.data.username, res.data.profile_pic, res.user_id);
+          authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
           setState(currentUser);
           props.setModal(prev => ({ ...prev, regOpen: false }));
           props.closeSnackBar("login");
