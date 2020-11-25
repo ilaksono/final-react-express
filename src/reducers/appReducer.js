@@ -11,7 +11,8 @@ const appReducer = (appState, action) => {
         ...appState,
         authorized: true,
         name: action.name,
-        profile_pic: action.profile_pic
+        profile_pic: action.profile_pic,
+        user_id: action.user_id
       };
     }
     case LOGOUT: {

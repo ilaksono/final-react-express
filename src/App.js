@@ -43,7 +43,7 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <Router>
             <NavBar loadSearch />
-            <div class='spacer'> 
+            <div className='spacer'> 
             </div>
             <Switch>
               <Route exact path='/' >

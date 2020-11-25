@@ -46,7 +46,7 @@ const Map = props => {
   if (mapState.places.length) {
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
+        <MarkerComponent key={ind} label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
       );
     });
   }

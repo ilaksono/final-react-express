@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext, Fragment } from "react";
-import logo from "./logo.png";
+import logo from "../logo.png";
 import 'styles/NavBar.scss';
 import Search from "components/Search";
 import Button from "components/Button";
 import { Link, useLocation } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import RegisterForm from './Register';
-import LoginForm from './Login';
+import RegisterForm from '../Register';
+import LoginForm from '../Login';
+import AccountMenu from './AccountMenu';
 const initMod = {
   regOpen: false,
   logOpen: false
@@ -30,7 +31,7 @@ const NavBar = (props) => {
       </div>
       {!isHome &&
         props.loadSearch && (
-          <Search isHome={false} buttonMessage={<i class="fas fa-search"></i>}
+          <Search isHome={false} buttonMessage={<i className="fas fa-search"></i>}
           />
         )}
       {appState.authorized ?
@@ -39,9 +40,7 @@ const NavBar = (props) => {
             Hello, {appState.name}
           </div>
           <div>
-            <Link to='/'>
-              <Button message='Logout' onClick={logout} nav />
-            </Link>
+            <AccountMenu appState={appState} logout={logout}> </AccountMenu>
           </div>
         </>
         :

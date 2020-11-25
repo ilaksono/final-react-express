@@ -93,7 +93,11 @@ const NewReview = props => {
   const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
-  const {businessDetails, appState, submitNewReview } = useContext(YelpContext);
+  const { businessDetails,
+    appState,
+    submitNewReview,
+    setNewReview
+  } = useContext(YelpContext);
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -138,16 +142,17 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
-    .then(response => {
-      if (!response) {
-        return handleClose();
-      }
-      handleClose();
-      resetState();
+      .then(response => {
+        setNewReview(true);
+        if (!response) {
+          return handleClose();
+        }
+        handleClose();
+        resetState();
 
-      props.setOpen(true);
-    }).catch(err => console.log(err));
-  }
+        props.setOpen(true);
+      }).catch(err => console.log(err));
+  };
 
   const resetState = () => {
     setCleanliness(INIT_RATING);
@@ -155,13 +160,13 @@ const NewReview = props => {
     setTransactionProcess(INIT_RATING);
     setOverallComfort(INIT_RATING);
     setDescription(INIT_DESCRIPTION);
-  }
+  };
 
   const questions = questionData.map(question => {
     if (question.title !== 'Description') {
-      return <QuestionRating id={question.id} description={question.description} title={question.title} onChange={handleChange}/>
+      return <QuestionRating id={question.id} description={question.description} title={question.title} onChange={handleChange} />;
     } else {
-      return <QuestionDescription id={question.id} description={question.description} title={question.title} onChange={handleChange}/>
+      return <QuestionDescription id={question.id} description={question.description} title={question.title} onChange={handleChange} />;
     }
   });
 
@@ -191,9 +196,9 @@ const NewReview = props => {
 
             <Box component='fieldset' mb={3} borderColor='transparent' className={classes.box}>
               <h3 id='transition-modal-title'>New Review</h3>
-              <p id='transition-modal-description' className={classes.businessName}>{ props.name }</p>
+              <p id='transition-modal-description' className={classes.businessName}>{props.name}</p>
               <form className={classes.root} noValidate autoComplete='off'>
-                { questions }
+                {questions}
                 <Button
                   variant='contained'
                   size='large'
@@ -218,6 +223,6 @@ const NewReview = props => {
       </Modal>
     </div>
   );
-}
+};
 
 export default NewReview;

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 export default function ReviewListItem(props) {
 
-  const { businessDetails, setBusinessDetails, appState } = useContext(YelpContext);
+  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
 
   const [err, setErr] = useState('');
 
@@ -21,26 +21,35 @@ export default function ReviewListItem(props) {
 
   const updateHelpfulCount = (id, name) => {
 
-    return axios.post('/reviews/helpful', { id, username: name })
-      .then((response) => {
-        console.log(response);
-        if (response.data === "add") {
-          const updatedBusinessDetails = { ...businessDetails };
-          updatedBusinessDetails.reviews.map
-            (review => review.id === id ?
-              review.helpful_count += 1
-              : "");
-          setBusinessDetails(updatedBusinessDetails);
-        }
-        if (response.data === "delete") {
-          const updatedBusinessDetails = { ...businessDetails };
-          updatedBusinessDetails.reviews.map
-            (review => review.id === id && review.helpful_count > 0 ?
-              review.helpful_count -= 1
-              : "");
-          setBusinessDetails(updatedBusinessDetails);
-        };
-      });
+    if (props.isProfile) {
+      return axios.post('/reviews/helpful', { id, username: name })
+        .then((response) => {
+          props.profileHelpCount(id, response.data);
+          return;
+        });
+    } else {
+
+      return axios.post('/reviews/helpful', { id, username: name })
+        .then((response) => {
+          console.log(response);
+          if (response.data === "add") {
+            const updatedBusinessDetails = { ...businessDetails };
+            updatedBusinessDetails.reviews.map
+              (review => review.id === id ?
+                review.helpful_count += 1
+                : "");
+            setBusinessDetails(updatedBusinessDetails);
+          }
+          if (response.data === "delete") {
+            const updatedBusinessDetails = { ...businessDetails };
+            updatedBusinessDetails.reviews.map
+              (review => review.id === id && review.helpful_count > 0 ?
+                review.helpful_count -= 1
+                : "");
+            setBusinessDetails(updatedBusinessDetails);
+          };
+        });
+    }
   };
 
   const convertTime = (date) => {
@@ -77,12 +86,19 @@ export default function ReviewListItem(props) {
     if (diff !== 1) unit += "s";
     return `${diff} ${unit} ago`;
   };
+  const pageRedirect = () => {
+    if(props.isProfile) {
+
+    }
+  }
 
 
   return (
     <div className='review-container'>
       <div className='user'>
-        <span>{props.isProfile ? props.venue_name : props.username}</span>
+        <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+        </Link>
         {
           props.picture &&
           <Link to={`/users/${props.user_id}`} >

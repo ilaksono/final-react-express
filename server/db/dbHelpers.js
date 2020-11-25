@@ -1,7 +1,7 @@
 const request = require('request-promise-native');
 
 module.exports = (db) => {
-  
+
   const getAllReviews = () => {
     const queryString = `
     SELECT *
@@ -21,13 +21,13 @@ module.exports = (db) => {
     JOIN users ON users.id = user_id
     WHERE venue_id = $1;
     `;
-    const queryParams = [id]
+    const queryParams = [id];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows;
       });
   };
-  
+
   const submitReview = (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
     const queryString = `
     INSERT INTO reviews (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
@@ -49,8 +49,8 @@ module.exports = (db) => {
     `;
     const queryParams = [username];
     return db.query(queryString, queryParams)
-      .then (response => {
-        return response.rows
+      .then(response => {
+        return response.rows;
       });
   };
 
@@ -60,11 +60,11 @@ module.exports = (db) => {
     FROM reviews 
     WHERE user_id = $1 AND venue_id = $2;
     `;
-    const queryParams = [id, venue_id]
+    const queryParams = [id, venue_id];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows[0]
-      })
+        return response.rows[0];
+      });
   };
 
   const increaseHelpfulCount = (id) => {
@@ -118,12 +118,12 @@ module.exports = (db) => {
     SET helpful_count = helpful_count - 1
     where id = $1;
     `;
-    const queryParams = [id]
+    const queryParams = [id];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
-      })
-  }
+        return response.rows;
+      });
+  };
 
   const registration = (username, email, password, city) => {
     const queryString = `
@@ -134,8 +134,8 @@ module.exports = (db) => {
     const queryParams = [username, email, password, city];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
-      })
+        return response.rows;
+      });
   };
 
   const serverRegistrationValidation = () => {
@@ -145,9 +145,9 @@ module.exports = (db) => {
     `;
     return db.query(queryString)
       .then(response => {
-        return response.rows
-      })
-  }
+        return response.rows;
+      });
+  };
 
   const serverLoginValidation = () => {
     const queryString = `
@@ -155,9 +155,9 @@ module.exports = (db) => {
     FROM users;
     `;
     return db.query(queryString)
-    .then(response => {
-      return response.rows
-    })
+      .then(response => {
+        return response.rows;
+      });
   };
 
   const checkIfLikesExist = (reviewId, userId) => {
@@ -165,13 +165,13 @@ module.exports = (db) => {
     SELECT * 
     FROM liked_reviews
     WHERE review_id = $1 AND user_id = $2;
-    `
+    `;
     const queryParams = [reviewId, userId];
 
     return db.query(queryString, queryParams)
-    .then(response => {
-      return response.rows
-    })
+      .then(response => {
+        return response.rows;
+      });
   };
 
   const getReviewIdByVenueAndUser = (userId, venue_id) => {
@@ -179,13 +179,13 @@ module.exports = (db) => {
     SELECT id 
     FROM reviews
     WHERE user_id = $1 AND venue_id = $2;
-    `
-    const queryParams = [userId, venue_id]
+    `;
+    const queryParams = [userId, venue_id];
 
     return db.query(queryString, queryParams)
-    .then(response => {
-      return response.rows
-    })
+      .then(response => {
+        return response.rows;
+      });
   };
 
   const addLikes = (reviewId, userId) => {
@@ -193,14 +193,15 @@ module.exports = (db) => {
     INSERT INTO liked_reviews (review_id, user_id)
     VALUES($1, $2)
     RETURNING *;
-    `
+    `;
     const queryParams = [reviewId, userId];
+    console.log("trying to run addLikes with ", reviewId, userId);
 
     return db.query(queryString, queryParams)
-    .then(response => {
-      return response.rows[0]
-    })
-  }; 
+      .then(response => {
+        return response.rows[0];
+      });
+  };
 
   const deleteLikes = (reviewId, userId) => {
     const queryString = `
@@ -208,14 +209,24 @@ module.exports = (db) => {
     FROM liked_reviews
     WHERE review_id = $1 AND user_id = $2
     RETURNING *;
-    `
+    `;
     const queryParams = [reviewId, userId];
     return db.query(queryString, queryParams)
-    .then(response => {
-      return response.rows;
-    })
+      .then(response => {
+        return response.rows;
+      });
 
-  }
+  };
+
+  const getNewReviews = () => {
+    const qs = `
+    SELECT * FROM reviews
+    ORDER BY date DESC
+    LIMIT 4;`;
+    return db
+      .query(qs, [])
+      .then(res => res.rows);
+  };
 
 
   return {
@@ -235,6 +246,7 @@ module.exports = (db) => {
     getReviewIdByVenueAndUser,
     addLikes,
     deleteLikes,
-    descreaseHelpfulCount
+    descreaseHelpfulCount,
+    getNewReviews
   };
 };

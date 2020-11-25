@@ -30,8 +30,8 @@ const Sort = props => {
     setSort(event.target.value);
   };
 
-  const items = props.sortOptions.map(option => {
-    return <MenuItem value={option.id} onClick={() =>
+  const items = props.sortOptions.map((option, index) => {
+    return <MenuItem value={option.id} key={index} onClick={() =>
       props.onClick(option.id)}>{option.value}
     </MenuItem>;
   });

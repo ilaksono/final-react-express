@@ -9,14 +9,12 @@
 .profile-reviews {
   border-left: 2.5px solid rgb(230, 226, 226);
   border-right: 2.5px solid rgb(230, 226, 226);
-  margin-top: 75px;
-  margin-bottom: 15px;
-  height: calc(100vh - 60px- - 30px);
+  padding-top: 300px;
+  max-height: calc(100vh - 360px);
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
   width: 40%;
-  font-size: 20px;
   @include flexbox(column, center, center);
 }
 
@@ -35,7 +33,7 @@
 
 .user-chart-container {
   @include flexbox(column, flex-start, center);
-  height: calc(100vh - 60px);
+  height: calc(100vh - 60px - 70px);
   margin-top: 70px;
   width: 36.7%; 
 }

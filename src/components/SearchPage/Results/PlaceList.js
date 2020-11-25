@@ -26,6 +26,7 @@ const PlaceList = (props) => {
     return <PlaceListItem {...place}
       hoverMarker={hoverMarker}
       notHoverMarker={notHoverMarker}
+      key={index}
       label={((currentPage - 1) * resultsPerPage) + index + 1}
     />;
   });

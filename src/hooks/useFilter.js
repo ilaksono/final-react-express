@@ -69,7 +69,7 @@ const useFilter = () => {
       return setFilters({ ...filters, price: [value], allPrice: false });
     else if (type === 'catsSelected' && filters.allCats)
       return setFilters({ ...filters, catSelected: [value], allCats: false });
-    if (type === 'price' && filters.price.length === 3)
+    if (type === 'price' && filters.price.length === 3 && !filters.price.includes(value))
       return setFilters({ ...filters, price: [...filters.price, value], allPrice: true });
     if (type === 'price' && filters.price.length === 4)
       return setFilters({ ...filters, price: [value], allPrice: false });

@@ -54,7 +54,7 @@ const useRefinedData = () => {
         const filteredCopy = [];
         results.forEach((biz) => {
 
-          if (filters.allCats && filters.allPrice)
+          if (filters.allCats && filters.allPrice && biz.distance < filters.distance)
             filteredCopy.push(biz);
           else if (filters.allPrice
             && biz.categories.some(cat => filters.catsSelected.includes(cat))
@@ -102,15 +102,20 @@ const useRefinedData = () => {
       .then(applyDistanceFilter(filters, results));
   };
   const applyDistanceFilter = (filters, results) => {
+    let filteredCopy = [];
     // distanceFilter is integer datatype
     return new Promise((res, rej) => {
-      if (filters.price.length < 1) {
-        const filteredCopy = results.filter((biz, index) =>
+      if (filters.allPrice && filters.allCats) {
+        filteredCopy = results.filter(biz =>
+          biz.distance < filters.distance
+        );
+      }
+      else if (filters.price.length < 1) {
+        filteredCopy = results.filter((biz, index) =>
           biz.distance < filters.distance && biz
         );
-        res(dispatch({ type: 'DIST_FILTER', filteredCopy }));
       } else {
-        const filteredCopy = refinedResults.filter((biz, index) =>
+        filteredCopy = refinedResults.filter((biz, index) =>
           biz.distance < filters.distance && biz
         );
         res(dispatch({ type: 'DIST_FILTER', filteredCopy }));

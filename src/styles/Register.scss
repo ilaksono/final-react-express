@@ -8,7 +8,7 @@
   // padding-right: 20px;
   background-color: $white;
   border-radius: 15px;
-  border: solid rgb(109, 177, 233) 2px;
+  border: solid $purple 2px;
   outline: none;
   width: 280px;
 }
@@ -19,6 +19,7 @@
   border: none;
   width: 80%;
   height: 20px;
+  font-size: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: inherit;
