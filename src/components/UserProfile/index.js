@@ -20,7 +20,8 @@ const UserProfile = (props) => {
     getTimeRating,
     profileHelpCount,
     getUsersAPI,
-    setAllUsers
+    setAllUsers,
+    profileDeleteReview
   } = useProfileData();
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const UserProfile = (props) => {
                       reviews={allUsers.reviews}
                       isProfile={true}
                       profileHelpCount={profileHelpCount}
+                      profileDeleteReview={profileDeleteReview}
                     />
                   </div>
                 </div>

@@ -117,11 +117,10 @@ app.post("/register", (req, res) => {
               username: response[0].username,
               profile_pic: response[0].profile_pic,
               user_id: response[0].id
-
             });
           })
           .catch(err => {
-            console.log(err);
+            console.log("this is the err",err);
           });
       }
     })
@@ -172,6 +171,16 @@ app.post("/login", (req, res) => {
       console.log(err);
     });
 });
+
+// app.post("/login", (req, res) => {
+//   dbHelpers.serverLoginValidation()
+//     .then((userData) => {
+      
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
 
 
 
@@ -286,6 +295,33 @@ app.post("/reviews/helpful", (req, res) => {
         });
     });
 });
+
+
+app.post("/reviews/delete", (req, res) => {
+  dbHelpers.deleteReviews(req.body.id, req.body.user_id)
+  .then((response) => {
+    return res.json(response)
+  })
+  .catch (err => {console.log("error:", err)});
+});
+
+app.post("/reviews/edit", (req, res) => {
+  dbHelpers.editReviews(
+    req.body.id,
+    req.body.user_id,
+    req.body.venue_id,
+    req.body.venue_name,
+    req.body.cleanliness,
+    req.body.socialDistancing,
+    req.body.transactionProcess,
+    req.body.description,
+    req.body.overall_rating
+  )
+  .then((response) => {
+    return res.send(response)
+  })
+  .catch(err => {console.log(err)})
+})
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers

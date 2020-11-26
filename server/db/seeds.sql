@@ -21,4 +21,4 @@ VALUES (1, '1Hvm57g7zTpBR2hhFg8awQ', 'La Touche','Hot and cheesy', 5, 5, 5, 5),
 
 INSERT INTO favourited_businesses (venue_id, user_id)
 VALUES ('1Hvm57g7zTpBR2hhFg8awQ', 1),
-VALUES('J6qWt6XIUmIGFHX5rQJA-w', 1);
+('J6qWt6XIUmIGFHX5rQJA-w', 1);

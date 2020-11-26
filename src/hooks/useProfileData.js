@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { PowerOffSharp } from '@material-ui/icons';
 
 const initProfile = {
   all: [],
@@ -77,6 +78,18 @@ const useProfileData = () => {
     });
     return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
   };
+
+  const profileDeleteReview = (reviewID) => {
+    let copiedReviews = [...allUsers.reviews]
+    copiedReviews.forEach(review => {
+      if (review.id === reviewID) {
+        const indexOfReview =copiedReviews.indexOf(review)
+        copiedReviews.splice(indexOfReview, 1);
+        setAllUsers({...allUsers, reviews: [...copiedReviews]})
+      }
+    })
+  }
+  
   // review id
   // my name
 
@@ -85,7 +98,8 @@ const useProfileData = () => {
     getTimeRating,
     getUsersAPI,
     profileHelpCount,
-    setAllUsers
+    setAllUsers,
+    profileDeleteReview
   };
 
 };

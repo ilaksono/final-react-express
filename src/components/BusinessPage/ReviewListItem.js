@@ -2,13 +2,32 @@ import { useContext, useState } from 'react';
 import 'styles/ReviewListItem.scss';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
+import NewReview from '../Review/NewReview'
 import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
+import AlertDialog from '../AlertDialog'
+
 
 
 export default function ReviewListItem(props) {
 
   const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
+  const [openAlert, setOpenAlert] = useState(false); 
+
+  const [open, setOpen] = useState(false);
+
+
+  const handleAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const closeAlert = () => {
+    setOpenAlert(false)
+  }
+
+  const handleEdit = () => {
+    setOpen(true)
+  }
 
   const [err, setErr] = useState('');
 
@@ -31,7 +50,6 @@ export default function ReviewListItem(props) {
 
       return axios.post('/reviews/helpful', { id, username: name })
         .then((response) => {
-          console.log(response);
           if (response.data === "add") {
             const updatedBusinessDetails = { ...businessDetails };
             updatedBusinessDetails.reviews.map
@@ -51,6 +69,36 @@ export default function ReviewListItem(props) {
         });
     }
   };
+
+  const deleteReview = () => {
+    if (props.isProfile) {
+      return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
+      .then(() => {
+        props.profileDeleteReview(props.id)
+        closeAlert()
+      })
+      .catch(err => {console.log(err)})
+    };
+
+    return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
+    .then(() => {
+      const updatedBusinessDetails = {...businessDetails};
+      console.log(updatedBusinessDetails.reviews)
+      updatedBusinessDetails.reviews.map(review => {
+        if (review.id === props.id) {
+          const indexOfReview =updatedBusinessDetails.reviews.indexOf(review)
+          updatedBusinessDetails.reviews.splice(indexOfReview, 1);
+          setBusinessDetails(updatedBusinessDetails)
+          closeAlert()
+        }
+      })
+    })
+    .catch( err => { console.log(err) })
+  }
+
+  
+
+  
 
   const convertTime = (date) => {
     const time = new Date(date).getTime();
@@ -86,15 +134,18 @@ export default function ReviewListItem(props) {
     if (diff !== 1) unit += "s";
     return `${diff} ${unit} ago`;
   };
-  const pageRedirect = () => {
-    if(props.isProfile) {
+  // const pageRedirect = () => {
+  //   if(props.isProfile) {
 
-    }
-  }
+  //   }
+  // }
 
+ 
 
   return (
     <div className='review-container'>
+         {console.log("this is props", props)}
+      <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/> 
       <div className='user'>
         <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
           <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
@@ -151,12 +202,39 @@ export default function ReviewListItem(props) {
       </div>
       <div className='review-footer'>
         {/*eslint-disable-next-line */}
+        {props.user_id !== appState.user_id &&
         <div className='helpful-count'
           onClick={appState.authorized
             ? () => { updateHelpfulCount(props.id, appState.name); } : showErr}>
           <i className="far fa-thumbs-up">{props.helpful_count}
           </i>
+        </div>}
+        {props.user_id === appState.user_id && 
+        <div>
+         <div className='helpful-count-user'>
+         <i className="far fa-thumbs-up">{props.helpful_count}
+         </i>
+         </div>
+         <div className='delete-button'
+          onClick = {handleAlert}
+         >
+         <i class="fas fa-trash-alt"></i>
         </div>
+        <div className='edit-button'
+        onClick={handleEdit}>
+          <NewReview 
+          review_id={props.id}
+          user_id={props.user_id}
+          cleanliness={props.cleanliness}
+          socialDistancing={props.social_distancing}
+          transaction={props.transaction_process}
+          description={props.description}
+          overall_rating={props.overall_rating}
+          venue_name={props.venue_name}
+          venue_id={props.venue_id}
+          />
+        </div>
+       </div>}
         <div className='error-container'>
           <div className='error'>
             {err && err}

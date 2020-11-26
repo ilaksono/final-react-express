@@ -26,7 +26,7 @@ const QuestionDescription = props => {
             id="outlined-multiline-static"
             multiline
             rows={4}
-            defaultValue=""
+            defaultValue={props.reviewDescription}
             fullWidth
             onChange={(event) => props.onChange(props.title, event.target.value)}
             inputProps={{ maxLength: 150 }}
