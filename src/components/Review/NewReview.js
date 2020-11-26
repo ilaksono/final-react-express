@@ -167,7 +167,7 @@ const NewReview = props => {
         resetState();
       }).catch(err => console.log(err));
     } else {
-    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
+    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
       .then(response => {
         setNewReview(true);
         if (!response) {
