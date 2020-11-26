@@ -258,7 +258,11 @@ export default function useYelpData() {
     });
   }
 
-  const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+  const submitEditReview = (id, 
+    user_id, 
+    venue_id, 
+    venue_name, 
+    cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
     return axios.post("/reviews/edit", {id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating})
     .then(response => {
       if (response) {

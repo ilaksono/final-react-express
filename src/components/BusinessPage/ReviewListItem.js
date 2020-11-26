@@ -119,10 +119,6 @@ export default function ReviewListItem(props) {
       .catch(err => { console.log(err); });
   };
 
-
-
-
-
   const convertTime = (date) => {
     const time = new Date(date).getTime();
     let unit = "second";
