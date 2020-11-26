@@ -103,7 +103,6 @@ const NewReview = props => {
   const [overallComfort, setOverallComfort] = useState(INIT_RATING);
   const [description, setDescription] = useState(INIT_DESCRIPTION);
   const { businessDetails,
-    setBusinessDetails,
     appState,
     submitNewReview,
     setNewReview,

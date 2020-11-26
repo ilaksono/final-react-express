@@ -83,7 +83,6 @@ export default function ReviewListItem(props) {
     return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
     .then(() => {
       const updatedBusinessDetails = {...businessDetails};
-      console.log(updatedBusinessDetails.reviews)
       updatedBusinessDetails.reviews.map(review => {
         if (review.id === props.id) {
           const indexOfReview =updatedBusinessDetails.reviews.indexOf(review)
@@ -144,7 +143,6 @@ export default function ReviewListItem(props) {
 
   return (
     <div className='review-container'>
-         {console.log("this is props", props)}
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/> 
       <div className='user'>
         <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
