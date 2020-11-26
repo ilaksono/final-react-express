@@ -183,10 +183,18 @@
   margin-left: 5px;
 }
 
+.hours-table {
+  width: 100%;
+}
 .table-container {
   margin-top: 50px;
+  width: 250px;
 }
 
+.hours-table-row {
+  @include flexbox(row, flex-start, center);
+  width: 100% ;
+}
 
 .loading-circle {
   align-self: center;

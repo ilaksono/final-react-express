@@ -90,7 +90,7 @@
   width: 130px;
 }
 
-tr {
+.table-row {
   @include flexbox(row, flex-start, center);
 }
 
