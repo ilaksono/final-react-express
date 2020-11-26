@@ -69,7 +69,7 @@ export default function ReviewList(props) {
           defaultOption={sortOptions[0].id}
           onClick={handleSort} />
       </div>
-      { !props.isProfile && !props.isHome && (
+      { (!props.isProfile && !props.isHome) && (
         <div className="venue-avg-ratings">
           <div className="overall-rating-container">
             <div className="rating-label">

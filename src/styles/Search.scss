@@ -4,3 +4,9 @@
   @include flexbox(row, space-around, center);
   height: 40px;
 }
+
+.loc-auto-comp {
+  z-index: 3;
+  position: relative;
+  top: 100px;
+}

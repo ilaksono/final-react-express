@@ -2,10 +2,12 @@ import 'styles/UserProfile.scss';
 import { useEffect, useState } from 'react';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import Profile from './Profile';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import useProfileData from 'hooks/useProfileData';
 import { CircularProgress } from '@material-ui/core';
 import FavSection from './FavSection';
+import { Button } from '@material-ui/core';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const initFocus = {
   like: false,
@@ -14,7 +16,7 @@ const initFocus = {
 const UserProfile = (props) => {
 
   const [focus, setFocus] = useState(initFocus);
-
+  const history = useHistory();
   const { id } = useParams();
   const { allUsers,
     getTimeRating,
@@ -49,6 +51,13 @@ const UserProfile = (props) => {
           :
           <>
             <div className='profile-container'>
+            <div className='back-arrow-fixed'>
+              <Button variant="contained"
+                onClick={() => history.goBack()}>
+                <KeyboardBackspaceIcon />
+              </Button>
+              <div className=""></div>
+            </div>
               <Profile
                 whom={whom || {}}
                 length={allUsers.reviews.length}

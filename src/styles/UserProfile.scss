@@ -93,6 +93,7 @@
 .profile-info-table {
   text-align: center;
   border-spacing: 16px;
+  border-collapse: separate;
 }
 .review-table-icon {
   margin-right: 6px;
@@ -123,4 +124,16 @@
   text-overflow: ellipsis;
   font-size: 24px;
   margin-top: 10%;
+}
+
+.back-arrow-fixed {
+  position: fixed;
+  opacity: 0.7;
+  top: 70px;
+  left: 40px;
+
+}
+.back-arrow-fixed:hover {
+  opacity: 1.0;
+
 }

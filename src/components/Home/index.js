@@ -141,7 +141,6 @@ const Home = () => {
     return axios
       .get('/api/reviews/home')
       .then(res => {
-        console.log(res);
         setHomeReviews([...res.data.data]);
       })
       .catch(er => console.log(er));

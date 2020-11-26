@@ -61,7 +61,7 @@ const Profile = (props) => {
               {Number(props.whom.total) || 0}
             </td>
 
-            <td onMouseOver={reviewTableHover}
+            <td className='review-table-doc' onMouseOver={reviewTableHover}
               onMouseOut={notReviewTableHover}> {props.length || 0}
             </td>
           </tr>

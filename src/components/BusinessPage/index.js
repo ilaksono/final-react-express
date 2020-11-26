@@ -213,7 +213,7 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
-      const clr = chartSelect.perDay ? '#800020' : '#1E0253';
+      const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
       setChartData({
         labels: primedLabels,
         datasets: [{
