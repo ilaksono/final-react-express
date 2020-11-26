@@ -1,7 +1,7 @@
 @import './helper.scss';
 
 .home-layout {
-  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  background: $white;
   max-height: calc(100vh - 60px);
 }
 
@@ -25,14 +25,21 @@
 .home-reviews-container {
   @include flexbox(column, flex-start, center);
   margin-top: 10px;
- 
+}
+
+.site-description {
+  height: 40px;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 50px;
 }
 
 .search-home-container {
-  padding-top: 50px;
+  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  padding-top: 60px;
   width: 100%;
-  @include flexbox(row, space-around, center);
-  padding-bottom: 10px;
+  @include flexbox(column, flex-start, center);
+  padding-bottom: 110px;
 }
 .top-label{
   text-align: center;

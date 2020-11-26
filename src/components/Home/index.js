@@ -200,6 +200,9 @@ const Home = () => {
   return (
     <div className='home-layout'>
       <div className='search-home-container'>
+        < div className='site-description'>
+          Find places to shop and hangout that take pandemics seriously
+        </div>
         <Search
           isHome={true}
           buttonMessage={<i className="fas fa-search"></i>}
