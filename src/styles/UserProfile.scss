@@ -18,12 +18,25 @@
   @include flexbox(column, center, center);
 }
 
+.profile-reviews-hover {
+  border-left: 2.5px solid rgb(230, 226, 226);
+  border-right: 2.5px solid rgb(230, 226, 226);
+  padding-top: 300px;
+  max-height: calc(100vh - 360px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
+  width: 40%;
+  @include flexbox(column, center, center);
+  background-color: rgb(248, 245, 245);
+  box-shadow: 2px 2px 0 0 rgb(235, 229, 229);
+
+}
+
 .profile-container {
   @include flexbox(column, flex-start, center);
   padding-left: 40px;
   padding-right: 40px;
-  
-
 }
 .chart-title {
   font-size: 30px;
@@ -35,7 +48,11 @@
   @include flexbox(column, flex-start, center);
   height: calc(100vh - 60px - 70px);
   margin-top: 70px;
-  width: 36.7%; 
+  width: 36.7%;
+  max-height: calc(100vh - 130px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 4px;
 }
 
 .city-container {
@@ -44,7 +61,7 @@
   @include flexbox(column, center, center)
 }
 .profile-header {
-  margin-top: 60px;
+  margin-top: 40px;
   font-size: 40px;
   font-weight: bold;
   @include flexbox(column, center, center)
@@ -53,9 +70,57 @@
 .profile-picture-container {
   height: 200px;
   width: 180px;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 .profile-picture {
   max-width: 180px;
   border-radius: 50%;
+}
+
+.help-count {
+  @include flexbox(column,flex-start, center);
+}
+
+.account-created {
+  @include flexbox(column,flex-start, center);
+}
+.acc-created-label {
+  margin-bottom: 10px;
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-info-table {
+  text-align: center;
+  border-spacing: 16px;
+}
+.review-table-icon {
+  margin-right: 6px;
+}
+
+.fav-item {
+  color: #363f47;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 0 grey;
+  margin-bottom: 10px;
+  border: rgb(187, 187, 187) 1px solid;
+  padding: 5px;
+}
+
+.fav-item:hover {
+  color: $purple;
+    box-shadow: 3px 3px 0 0 grey;
+
+
+}
+
+.no-places-info {
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 24px;
+  margin-top: 10%;
 }

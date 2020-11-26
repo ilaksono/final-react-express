@@ -13,8 +13,8 @@ const yelp = require('yelp-fusion');
 const {
   resolveNaptr
 } = require('dns');
-const bcrpyt = require("bcrypt");
-const salt = bcrpyt.genSaltSync(10);
+const bcrypt = require("bcrypt");
+const salt = bcrypt.genSaltSync(10);
 app.use(bodyParser.json());
 app.use(cookieSession({
   name: 'session',
@@ -94,7 +94,7 @@ const cleanAutoComplete = (data, keyword) => {
 };
 
 app.post("/register", (req, res) => {
-  const password = bcrpyt.hashSync(req.body.password, salt);
+  const password = bcrypt.hashSync(req.body.password, salt);
   let exists = false;
   dbHelpers.serverRegistrationValidation()
     .then((userData) => {
@@ -117,11 +117,10 @@ app.post("/register", (req, res) => {
               username: response[0].username,
               profile_pic: response[0].profile_pic,
               user_id: response[0].id
-            
             });
           })
           .catch(err => {
-            console.log(err);
+            console.log("this is the err",err);
           });
       }
     })
@@ -130,13 +129,32 @@ app.post("/register", (req, res) => {
     });
 
 });
+// app.post('/login', (req, res) => {
+//   dbHelpers
+//     .serverLoginValidation()
+//     .then(data => {
+//       const user = [];
+//       data.forEach(can => {
+//         if (can.email === req.body.email
+//           && bcrypt.compareSync(req.body.password,
+//             can.password))
+//           user.push(can);
+//         return false;
+//       });
+//       return user;
+//     }).then((response) => {
+//       res.json({ data: response });
+//     })
+//     .catch(er => console.log(er));
+// });
+
 
 app.post("/login", (req, res) => {
   dbHelpers.serverLoginValidation()
     .then((userData) => {
       userData.some(user => {
         if (user.email === req.body.email) {
-          if (bcrpyt.compareSync(req.body.password, user.password)) {
+          if (bcrypt.compareSync(req.body.password, user.password)) {
             return res.json({
               username: user.username,
               profile_pic: user.profile_pic,
@@ -153,6 +171,16 @@ app.post("/login", (req, res) => {
       console.log(err);
     });
 });
+
+// app.post("/login", (req, res) => {
+//   dbHelpers.serverLoginValidation()
+//     .then((userData) => {
+      
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
 
 
 
@@ -244,7 +272,6 @@ app.post("/reviews/helpful", (req, res) => {
           if (exists === false) {
             dbHelpers.addLikes(req.body.id, userId)
               .then(() => {
-                console.log("heyyyyyyy")
                 dbHelpers.increaseHelpfulCount(req.body.id)
                   .then(() => {
                     return res.send("add");
@@ -254,7 +281,6 @@ app.post("/reviews/helpful", (req, res) => {
                   });
               });
           } else if (exists === true) {
-            console.log("did it work?");
             dbHelpers.deleteLikes(req.body.id, userId)
               .then(() => {
                 dbHelpers.descreaseHelpfulCount(req.body.id)
@@ -269,6 +295,33 @@ app.post("/reviews/helpful", (req, res) => {
         });
     });
 });
+
+
+app.post("/reviews/delete", (req, res) => {
+  dbHelpers.deleteReviews(req.body.id, req.body.user_id)
+  .then((response) => {
+    return res.json(response)
+  })
+  .catch (err => {console.log("error:", err)});
+});
+
+app.post("/reviews/edit", (req, res) => {
+  dbHelpers.editReviews(
+    req.body.id,
+    req.body.user_id,
+    req.body.venue_id,
+    req.body.venue_name,
+    req.body.cleanliness,
+    req.body.socialDistancing,
+    req.body.transactionProcess,
+    req.body.description,
+    req.body.overall_rating
+  )
+  .then((response) => {
+    return res.send(response)
+  })
+  .catch(err => {console.log(err)})
+})
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers
@@ -292,5 +345,13 @@ app.get('/api/reviews/users/:id', (req, res) => {
     .then(response => {
       res.json({ data: response });
     })
+    .catch(er => console.log(er));
+});
+
+app.get('/api/favs/users/:id', (req, res) => {
+  dbHelpers
+    .getProfileFavs(req.params.id)
+    .then(response =>
+      res.json({ data: response }))
     .catch(er => console.log(er));
 });

@@ -36,6 +36,7 @@ export default function ReviewList(props) {
       isProfile={props.isProfile}
       profileHelpCount={props.profileHelpCount}
       venue_id={review.venue_id || ''}
+      profileDeleteReview={props.profileDeleteReview}
     />;
   });
 

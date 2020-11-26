@@ -118,7 +118,7 @@ const RegisterForm = (props) => {
   const classes = useStyles();
   const {
     authorizeUser,
-    appState
+    appState,
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -136,6 +136,7 @@ const RegisterForm = (props) => {
     }
     if (!re.test(String(state.email).toLowerCase())) {
       setState({ ...state, errMsg: 'Invalid email', errType: 'email' });
+      return false;
     }
     return true;
   };
@@ -152,6 +153,7 @@ const RegisterForm = (props) => {
               username: res.data.username,
               profile_pic: res.data.profile_pic
             };
+            props.setNewRegister(true);
             authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));
@@ -193,7 +195,10 @@ const RegisterForm = (props) => {
         open={props.modal.regOpen}
       >
         <Fade in={props.modal.regOpen}>
-          <form className='register-container' onSubmit={handleClick}>
+          <form className='register-container' onSubmit={event => {
+            event.preventDefault();
+            handleClick()
+          }}>
             <input placeholder='Username' type='text' value={state.username} onChange={(event) =>
               handleChange(event, 'username')} className={`user-input-item${state.errType === 'username' ? ' error-input' : ''}`} />
             <input type='email' placeholder='Email@gmail.com' value={state.email} onChange={(event) =>

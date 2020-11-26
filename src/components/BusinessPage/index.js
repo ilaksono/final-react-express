@@ -213,7 +213,7 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
-      const clr = chartSelect.perDay ? '#800020' :'#1E0253';
+      const clr = chartSelect.perDay ? '#800020' : '#1E0253';
       setChartData({
         labels: primedLabels,
         datasets: [{
@@ -232,11 +232,24 @@ export default function BusinessPage() {
       .slice(5, 10).join('').replace(' ', '-');
   };
 
+  
+  
   useEffect(() => {
     if (!businessDetails.id) {
       getIndividualBusinessData(id);
     } // eslint-disable-next-line
   }, []);
+  
+  const checkIfHasReviewedPreviously = (bizReviews) => {
+    const check = bizReviews.some(reviews => {
+      if (reviews.user_id === appState.user_id) {
+        return true;
+      }
+    });
+    if (check) {
+      return true;
+    }
+  }
 
   useEffect(() => {
     if (businessDetails.reviews) {
@@ -384,17 +397,22 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              {appState.authorized &&
+              {appState.authorized && (
                 <div className='bus-buttons'>
-                  <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
-                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar}/>
+                  {!checkIfHasReviewedPreviously(businessDetails.reviews) &&  
+                  <>
+                  <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar}/> 
+                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
+                  </>
+                  }
+                  
                   {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
 
                   {/* RENDER THIS BUTTON WHEN A USER HAS NOT YET FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon}>Favourite</Button>
                 </div>
-              }
+              )}
 
               <div className='location-hours'>
                 <div className='map-label-group'>

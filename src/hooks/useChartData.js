@@ -15,7 +15,17 @@ const initOptions = {
     yAxes: [{
       ticks: {
         min: 0,
-        max: 5
+        max: 5,
+      },
+      scaleLabel: {
+        labelString:'Rating',
+        display: true
+      }
+    }],
+    xAxes:[{
+      scaleLabel: {
+        labelString: 'Date',
+        display: true
       }
     }]
   }

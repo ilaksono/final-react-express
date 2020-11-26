@@ -30,7 +30,7 @@ const NavBar = (props) => {
     closeSnackBar("login");
     closeSnackBar("register");
     setLogoutSnackBar(true);
-  }
+  };
 
   const closeSnackBar = name => {
     if (name === "login") {
@@ -40,7 +40,7 @@ const NavBar = (props) => {
     } else if (name === "register") {
       setRegisterSnackBar(false);
     }
-  }
+  };
   return (
     <nav className="nav-bar">
 
@@ -49,7 +49,7 @@ const NavBar = (props) => {
       <SnackBar message="You have successfully registered!" open={registerSnackBar} setSnackBar={setRegisterSnackBar} />
       <div className="logo-container">
         <Link to={'/'}>
-          <img src={logo} alt="Logo" className='nav-icon'/>
+          <img src={logo} alt="Logo" className='nav-icon' />
               SafeSpace
         </Link>
       </div>
@@ -60,7 +60,11 @@ const NavBar = (props) => {
         )}
       {appState.authorized ?
         <>
-          <AccountMenu appState={appState} closeSnackBar={closeSnackBar} setSnackBar={setLogoutSnackBar} logout={handleLogout}> </AccountMenu>
+          <AccountMenu appState={appState}
+            closeSnackBar={closeSnackBar}
+            setSnackBar={setLogoutSnackBar}
+            logout={handleLogout}>
+          </AccountMenu>
         </>
         :
         <div className="user-container">
@@ -83,14 +87,17 @@ const NavBar = (props) => {
           </div>
           <div className="register">
             {/* <Link to={'/register'}> */}
-            <Button message="Register" onClick={() => 
-              setModal({ ...modal, 
-              regOpen: true })} nav />
-            {modal.regOpen && <RegisterForm 
-            modal={modal}
-            setModal={setModal} 
-            setSnackBar={setRegisterSnackBar}
-            closeSnackBar={closeSnackBar}
+            <Button message="Register" onClick={() =>
+              setModal({
+                ...modal,
+                regOpen: true
+              })} nav />
+            {modal.regOpen && <RegisterForm
+              modal={modal}
+              setModal={setModal}
+              setSnackBar={setRegisterSnackBar}
+              closeSnackBar={closeSnackBar}
+              setNewRegister={props.setNewRegister}
             />}
             {/* </Link> */}
           </div>

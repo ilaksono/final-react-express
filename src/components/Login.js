@@ -37,10 +37,12 @@ const LoginForm = props => {
     authorizeUser
   } = useContext(YelpContext);
   const handleChange = (val, type) => {
-    setLogin({ ...login, errMsg: '', [type]: val, errType:'' });
+    setLogin({ ...login, errMsg: '', [type]: val, errType: '' });
   };
   const validate = () => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(String(login.email).toLowerCase()))
+      return setLogin({ ...login, errMsg: 'Invalid email', password: '', errType: 'email' });
     const { email, password } = login;
     if (!email || !password) {
       if (!email) {
@@ -61,25 +63,48 @@ const LoginForm = props => {
         });
       }
     }
-    axios.post("/login", {email, password})
-    .then((response) => {
-      if (response.data.username) {
-        authorizeUser(response.data.username, response.data.profile_pic, response.data.user_id)
-        const currentUser = {
-          username: response.data.username,
-          profile_pic: response.data.profile_pic
-        };
-        props.closeSnackBar("logout");
-        props.closeSnackBar("register");
-        props.setSnackBar(true);
-        setLogin(currentUser);
-        props.setModal(prev => ({ ...prev, logOpen: false }));
-      } else if (response.data === "email does not exist") {
-        setLogin({ ...login, errMsg: 'Invalid email', errType:'email' });
-      } else if (response.data === "password incorrect") {
-        setLogin({ ...login, errMsg: 'password is incorrect!', errType:'password' })
-      }
-    })
+
+    // axios
+    //   .post('/login', { email, password })
+    //   .then(res => {
+    //     const user = res.data.data[0];
+    //     if (user) {
+    //       props.closeSnackBar("logout");
+    //       props.closeSnackBar("register");
+    //       props.setSnackBar(true);
+    //       setLogin(initLogin);
+    //       return authorizeUser(user.username, user.profile_pic, user.id);
+    //     }
+    //     else return setLogin({
+    //       ...login,
+    //       errMsg: 'password is incorrect!',
+    //       errType: 'password'
+    //     });
+    //   })
+    //   .catch(er => console.log(er));
+
+
+    axios.post("/login", { email, password })
+      .then((response) => {
+        if (response.data.username) {
+          authorizeUser(response.data.username, 
+            response.data.profile_pic, 
+            response.data.user_id);
+          const currentUser = {
+            username: response.data.username,
+            profile_pic: response.data.profile_pic
+          };
+          props.closeSnackBar("logout");
+          props.closeSnackBar("register");
+          props.setSnackBar(true);
+          setLogin(currentUser);
+          props.setModal(prev => ({ ...prev, logOpen: false }));
+        } else if (response.data === "email does not exist") {
+          setLogin({ ...login, errMsg: 'Invalid email', errType: 'email' });
+        } else if (response.data === "password incorrect") {
+          setLogin({ ...login, errMsg: 'password is incorrect!', errType: 'password' });
+        }
+      });
   };
 
   const handleClose = () => {
@@ -101,7 +126,12 @@ const LoginForm = props => {
         open={props.modal.logOpen}
       >
         <Fade in={props.modal.logOpen}>
-          <form className='register-container'>
+          <form onSubmit={event => {
+            event.preventDefault();
+            validate();
+          }
+          }
+            className='register-container'>
             <input type='email' placeholder='Email@gmail.com' value={login.email} onChange={(event) =>
               handleChange(event.target.value, 'email')} className={`user-input-item${login.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={login.password} onChange={(event) =>

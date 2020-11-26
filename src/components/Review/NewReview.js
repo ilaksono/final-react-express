@@ -7,10 +7,12 @@ import QuestionRating from 'components/Review/QuestionRating/';
 import QuestionDescription from 'components/Review/QuestionDescription/';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
 import 'styles/BusinessPage.scss';
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -56,38 +58,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const questionData = [
-  {
-    id: 1,
-    title: 'Cleanliness',
-    description: 'Cleanliness and availability of hand sanitizer:'
-  },
-  {
-    id: 2,
-    title: 'Social Distancing',
-    description: 'Appropriate social distancing and mask wearing:'
-  },
-  {
-    id: 3,
-    title: 'Transaction Process',
-    description: 'Safe payment, seating, and/or pickup process:'
-  },
-  {
-    id: 4,
-    title: 'Overall Comfort',
-    description: 'Overall feeling of comfort and safety:'
-  },
-  {
-    id: 5,
-    title: 'Description',
-    description: 'Additional information (optional):'
-  }
-];
-
 const INIT_RATING = 3;
 const INIT_DESCRIPTION = "";
 
+
+
 const NewReview = props => {
+
+  const questionData = [
+    {
+      id: 1,
+      title: 'Cleanliness',
+      description: 'Cleanliness and availability of hand sanitizer:',
+      value: props.cleanliness || INIT_RATING
+    },
+    {
+      id: 2,
+      title: 'Social Distancing',
+      description: 'Appropriate social distancing and mask wearing:',
+      value: props.socialDistancing || INIT_RATING
+    },
+    {
+      id: 3,
+      title: 'Transaction Process',
+      description: 'Safe payment, seating, and/or pickup process:',
+      value: props.transaction || INIT_RATING
+    },
+    {
+      id: 4,
+      title: 'Overall Comfort',
+      description: 'Overall feeling of comfort and safety:',
+      value: props.overall_rating || INIT_RATING
+    },
+    {
+      id: 5,
+      title: 'Description',
+      description: 'Additional information (optional):'
+    }
+  ];
+  
+  console.log("review --->", props)
   const [cleanliness, setCleanliness] = useState(INIT_RATING);
   const [socialDistancing, setSocialDistancing] = useState(INIT_RATING);
   const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
@@ -96,7 +106,8 @@ const NewReview = props => {
   const { businessDetails,
     appState,
     submitNewReview,
-    setNewReview
+    setNewReview,
+    submitEditReview
   } = useContext(YelpContext);
 
   const [open, setOpen] = useState(false);
@@ -141,11 +152,13 @@ const NewReview = props => {
   };
 
   const handleSubmit = () => {
-    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name)
+    if (props.overall_rating) {
+      submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
       .then(response => {
         console.log("getting response", response);
         setNewReview(true);
         if (!response) {
+          console.log("is there a response?")
           return handleClose();
         }
         console.log('trying to set to true...');
@@ -153,34 +166,51 @@ const NewReview = props => {
         handleClose();
         resetState();
       }).catch(err => console.log(err));
+    } else {
+    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
+      .then(response => {
+        setNewReview(true);
+        if (!response) {
+          return handleClose();
+        }
+        handleClose();
+        resetState();
+        props.setOpen(true);
+      }).catch(err => console.log(err));
+    }
   };
 
   const resetState = () => {
-    setCleanliness(INIT_RATING);
-    setSocialDistancing(INIT_RATING);
-    setTransactionProcess(INIT_RATING);
-    setOverallComfort(INIT_RATING);
-    setDescription(INIT_DESCRIPTION);
+    setCleanliness(props.cleanliness || INIT_RATING);
+    setSocialDistancing(props.socialDistancing || INIT_RATING);
+    setTransactionProcess(props.transactionProcess || INIT_RATING);
+    setOverallComfort(props.overall_rating || INIT_RATING);
+    setDescription(props.description || INIT_DESCRIPTION);
   };
 
   const questions = questionData.map(question => {
     if (question.title !== 'Description') {
-      return <QuestionRating id={question.id} description={question.description} title={question.title} onChange={handleChange} />;
+      return <QuestionRating id={question.id}  value={question.value} description={question.description} title={question.title} onChange={handleChange} />;
     } else {
-      return <QuestionDescription id={question.id} description={question.description} title={question.title} onChange={handleChange} />;
+      return <QuestionDescription id={question.id} description={question.description} reviewDescription={props.description} title={question.title} onChange={handleChange} />;
     }
   });
 
   return (
     <div>
-      <Button
+      {props.overall_rating && (
+        <div className="edit-button">
+          <EditIcon onClick={handleOpen} />
+        </div>
+      )
+      }
+      {!props.overall_rating && <Button
         variant="contained"
         className={classes.new_review}
         onClick={handleOpen}
       >
         Write A Review
-      </Button>
-
+      </Button>}
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
