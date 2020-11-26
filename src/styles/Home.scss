@@ -1,7 +1,7 @@
 @import './helper.scss';
 
 .home-layout {
-  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  background: $white;
   max-height: calc(100vh - 60px);
 }
 
@@ -25,14 +25,22 @@
 .home-reviews-container {
   @include flexbox(column, flex-start, center);
   margin-top: 10px;
- 
+}
+
+.site-description {
+  height: 40px;
+  color: $purple;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 50px;
 }
 
 .search-home-container {
-  padding-top: 50px;
+  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  padding-top: 60px;
   width: 100%;
-  @include flexbox(row, space-around, center);
-  padding-bottom: 10px;
+  @include flexbox(column, flex-start, center);
+  padding-bottom: 110px;
 }
 .top-label{
   text-align: center;
@@ -48,6 +56,8 @@
 .home-search-l-container {
   @include flexbox(row, center, center);
   height: 50px;
+  width: 24%;
+  margin-right: 5px;
 }
 .home-search {
   @include flexbox(row, center, center);
@@ -62,7 +72,6 @@
   
 }
 
-
 .home-search-v {
   height: 100%;
   width: 100%;
@@ -70,14 +79,21 @@
   outline: none;    
   border-left: none;
   border: none;
+  margin: 0px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 
 
 }
-.home-search-v:hover {
-  box-shadow: 0px 0px 2px 2px $light-purple;
+
+.home-search-v-container:hover > .search-prompt {
+  box-shadow: -2px 2px 6px 0px $light-purple;
 }
+
+.home-search-v-container:hover > .home-search-v {
+  box-shadow: 2px 2px 6px 0px $light-purple;
+}
+
 .home-search-l {
   height: 50px;
   width: 100%;
@@ -86,15 +102,20 @@
   border: none;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
 
+.home-search-l-container:hover > .search-prompt-l {
+  box-shadow: -2px 2px 6px 0px $light-purple;
 }
-.home-search-l:hover {
-box-shadow: 0px 0px 0px 2px $light-purple;
+
+.home-search-l-container:hover .home-search-l {
+  box-shadow: 2px 2px 6px 0px $light-purple;
 }
+
 
 .home-search-l:focus,
 .home-search-v:focus {
-  box-shadow: 0px 0px 2px 2px $salmon;
+  box-shadow: 2px 2px 6px 0px $salmon;
 }
 .search-prompt {
   @include flexbox(row, center, center);
@@ -102,6 +123,7 @@ box-shadow: 0px 0px 0px 2px $light-purple;
   font-weight: bold;
   background-color: white;
   height: 100%;
+  border-right: none;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   padding: 1px;
