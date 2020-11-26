@@ -196,7 +196,7 @@ export default function ReviewListItem(props) {
         </div>
         <table className='review-table'>
           <tbody>
-            <tr>
+            <tr className="table-row">
               <td className="left">
                 Cleanliness
               </td>
@@ -210,7 +210,7 @@ export default function ReviewListItem(props) {
                 {props.social_distancing} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
-            <tr>
+            <tr className="table-row">
               <td className="left">
                 Transaction
               </td>

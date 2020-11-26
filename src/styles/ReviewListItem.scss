@@ -92,11 +92,11 @@
 
 .review-table {
   width: 130px;
-  tr {
-    @include flexbox(row, flex-start, center);
-  }
 }
 
+.table-row {
+  @include flexbox(row, flex-start, center);
+}
 
 .left {
   @include flexbox(row, flex-start, center);

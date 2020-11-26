@@ -55,7 +55,7 @@ const Hours = (props) => {
         }
       }
       results.push((
-        <tr>
+        <tr className="hours-table-row">
           <td className="td-day">
             { index == 0 ? days[day[index].day] : null }
           </td>
@@ -80,7 +80,7 @@ const Hours = (props) => {
   }, [nextOpenDay, nextOpenStart, nextOpenEnd]);
 
   return (
-    <table>
+    <table className="hours-table">
       <tbody>
         {parsedRows}
       </tbody>
