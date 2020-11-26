@@ -31,7 +31,8 @@ const UserProfile = () => {
   const { id } = useParams();
   const { allUsers,
     getTimeRating,
-    profileHelpCount
+    profileHelpCount,
+    profileDeleteReview
   } = useProfileData();
   const { chartSelect,
     setChartSelect,
@@ -151,6 +152,7 @@ const UserProfile = () => {
                       reviews={allUsers.reviews}
                       isProfile={true}
                       profileHelpCount={profileHelpCount}
+                      profileDeleteReview={profileDeleteReview}
                     />
                   </div>
                 </div>

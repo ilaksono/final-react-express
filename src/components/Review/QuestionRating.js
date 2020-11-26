@@ -35,7 +35,7 @@ const QuestionRating = props => {
         <p id="transition-modal-description" className={classes.descriptionName}>{ props.description }</p>
           <StyledRating
             name={props.id}
-            defaultValue={3}
+            defaultValue={props.value}
             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
             precision={0.5}
             onChange={(event) => props.onChange(props.title, event.target.value)}

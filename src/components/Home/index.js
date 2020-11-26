@@ -126,6 +126,17 @@ const Home = () => {
     return setHomeReviews([...cpy]);
   };
 
+  const homeDeleteReview = (reviewID) => {
+    let copiedReviews = [...homeReviews]
+    copiedReviews.map(review => {
+      if (review.id === reviewID) {
+        const indexOfReview =homeReviews.indexOf(review)
+        copiedReviews.splice(indexOfReview, 1);
+        setHomeReviews( [...copiedReviews])
+      }
+    })
+  }
+
   const getNewReviews = () => {
     return axios
       .get('/api/reviews/home')
@@ -214,6 +225,7 @@ const Home = () => {
               <ReviewList
                 reviews={homeReviews}
                 profileHelpCount={homeHelpCount}
+                profileDeleteReview={homeDeleteReview}
                 isProfile={true}
               />
               :
