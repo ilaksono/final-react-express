@@ -46,6 +46,7 @@ const useProfileData = () => {
       .then(res => res)
       .catch(er => console.log(er));
   };
+  
   const profileHelpCount = (reviewID, term) => {
     let cpy = [...allUsers.reviews];
     let cpyAll = [...allUsers.all];
@@ -80,7 +81,7 @@ const useProfileData = () => {
 
   const profileDeleteReview = (reviewID) => {
     let copiedReviews = [...allUsers.reviews]
-    copiedReviews.map(review => {
+    copiedReviews.forEach(review => {
       if (review.id === reviewID) {
         const indexOfReview =copiedReviews.indexOf(review)
         copiedReviews.splice(indexOfReview, 1);
@@ -97,6 +98,7 @@ const useProfileData = () => {
     getTimeRating,
     getUsersAPI,
     profileHelpCount,
+    setAllUsers,
     profileDeleteReview
   };
 

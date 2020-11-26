@@ -40,9 +40,9 @@ const LoginForm = props => {
     setLogin({ ...login, errMsg: '', [type]: val, errType: '' });
   };
   const validate = () => {
-    // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // if (!re.test(String(login.email).toLowerCase()))
-    //   return setLogin({ ...login, errMsg: 'Invalid email', password: '', errType: 'email' });
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(String(login.email).toLowerCase()))
+      return setLogin({ ...login, errMsg: 'Invalid email', password: '', errType: 'email' });
     const { email, password } = login;
     if (!email || !password) {
       if (!email) {

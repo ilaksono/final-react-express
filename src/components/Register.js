@@ -118,7 +118,7 @@ const RegisterForm = (props) => {
   const classes = useStyles();
   const {
     authorizeUser,
-    appState
+    appState,
   } = useContext(YelpContext);
   const validate = ({ username, email, password }) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -153,6 +153,7 @@ const RegisterForm = (props) => {
               username: res.data.username,
               profile_pic: res.data.profile_pic
             };
+            props.setNewRegister(true);
             authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));

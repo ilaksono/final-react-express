@@ -97,6 +97,7 @@ const NavBar = (props) => {
               setModal={setModal}
               setSnackBar={setRegisterSnackBar}
               closeSnackBar={closeSnackBar}
+              setNewRegister={props.setNewRegister}
             />}
             {/* </Link> */}
           </div>
