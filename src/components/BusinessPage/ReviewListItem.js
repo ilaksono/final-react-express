@@ -156,20 +156,21 @@ export default function ReviewListItem(props) {
           <div>
             <p>{props.description}</p>
           </div>
-
         </div>
       </div>
       <div className='review-footer'>
         {/*eslint-disable-next-line */}
-        { appState.authorized ? (
-          <div className='helpful-count'>
-            <ThumbUpAltIcon onClick={updateHelpfulCount(props.id, appState.name)} style={{ color: '#1E0253' }} />
-          </div>
-        ) : (
-          <div className='helpful-count-read-only'>
-            <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-          </div>
-        )}
+        <div className='helpful'>
+          { appState.authorized && (appState.user_id !== props.id) ? (
+            <div className='helpful-count editable' onClick={() => updateHelpfulCount(props.id, appState.name)}>
+              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+            </div>
+          ) : (
+            <div className='helpful-count'>
+              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+            </div>
+          )}
+        </div>
         {props.helpful_count}
         <div className='error-container'>
           <div className='error'>

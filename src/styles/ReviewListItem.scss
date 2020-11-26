@@ -19,6 +19,7 @@
 
 .review-footer {
   @include flexbox(row, flex-start, center);
+  margin-left: 10px;
   width: 100%;
 }
 .user {
@@ -33,13 +34,19 @@
   cursor: pointer;
 }
 .helpful-count {
+  @include flexbox(row, center, center);
   left: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: rgb(189, 189, 189);
+  margin-right: 5px;
+}
+
+.editable {
   cursor: pointer;
 }
 
-.helpful-count-read-only {
-  left: 10px;
-}
 .review-numbers {
   @include flexbox(row, flex-start, flex-start);
   margin-top: 10px;
