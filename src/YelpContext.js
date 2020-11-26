@@ -24,6 +24,7 @@ export function YelpProvider({ children }) {
     // openFilterClick 
   } = useFilter();
 
+  
   const {
     appState,
     submitHandle,
@@ -74,9 +75,9 @@ export function YelpProvider({ children }) {
     resultsPerPage,
     handlePageChange } = usePagination();
 
-    const {
-      newReview, setNewReview
-    } = useNewReview();
+  const {
+    newReview, setNewReview
+  } = useNewReview();
   return (
     <YelpContext.Provider value={{
       results,
@@ -131,7 +132,8 @@ export function YelpProvider({ children }) {
       resultsPerPage,
       submitNewReview,
       newReview,
-      setNewReview
+      setNewReview,
+      
       // openFilterClick
     }}>
       {children}

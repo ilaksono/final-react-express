@@ -45,6 +45,7 @@ const useProfileData = () => {
       .then(res => res)
       .catch(er => console.log(er));
   };
+  
   const profileHelpCount = (reviewID, term) => {
     let cpy = [...allUsers.reviews];
     let cpyAll = [...allUsers.all];
@@ -83,7 +84,8 @@ const useProfileData = () => {
     allUsers,
     getTimeRating,
     getUsersAPI,
-    profileHelpCount
+    profileHelpCount,
+    setAllUsers
   };
 
 };
