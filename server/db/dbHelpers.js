@@ -4,8 +4,9 @@ module.exports = (db) => {
 
   const getAllReviews = () => {
     const queryString = `
-    SELECT *
+    SELECT reviews.*, users.username
     FROM reviews
+    JOIN users ON (users.id = reviews.user_id)
     WHERE deleted = false;
     `;
     const queryParams = [];
