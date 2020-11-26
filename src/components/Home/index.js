@@ -226,7 +226,7 @@ const Home = () => {
                 reviews={homeReviews}
                 profileHelpCount={homeHelpCount}
                 profileDeleteReview={homeDeleteReview}
-                isProfile={true}
+                isHome={true}
               />
               :
               <CircularProgress size={65} className='home-loading'/>

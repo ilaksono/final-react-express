@@ -247,10 +247,11 @@ module.exports = (db) => {
 
   const getNewReviews = () => {
     const qs = `
-    SELECT * FROM reviews
-    WHERE deleted = FALSE
-    ORDER BY date DESC
-    LIMIT 4;`;
+      SELECT reviews.*, users.username, users.profile_pic FROM reviews
+      JOIN users on users.id = reviews.user_id
+      WHERE deleted = FALSE
+      ORDER BY date DESC
+      LIMIT 4;`;
     return db
       .query(qs, [])
       .then(res => res.rows);

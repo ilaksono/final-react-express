@@ -33,7 +33,8 @@ export default function ReviewList(props) {
       picture={review.profile_pic}
       user_id={review.user_id}
       venue_name={review.venue_name || ''}
-      isProfile={props.isProfile}
+      isProfile={props.isProfile || null}
+      isHome={props.isHome || null}
       profileHelpCount={props.profileHelpCount}
       venue_id={review.venue_id || ''}
       profileDeleteReview={props.profileDeleteReview}

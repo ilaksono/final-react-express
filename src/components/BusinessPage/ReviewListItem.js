@@ -157,16 +157,23 @@ export default function ReviewListItem(props) {
       <div className='header-container'>
         <div className='user'>
           {
-            props.picture &&
+            (props.picture && !(props.isProfile || props.isHome)) &&
             <Link to={`/users/${props.user_id}`} >
-
               <img className='profile-img' src={props.picture} alt='no img found' />
             </Link>
           }
           <div className="username-date">
-            <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-              <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+            <Link to={(props.isProfile || props.isHome) ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+              <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{(props.isProfile || props.isHome) ? props.venue_name : props.username}</span>
             </Link>
+            
+            {
+              props.isHome &&
+              <Link to={`/users/${props.user_id}`} >
+
+                <span className='review-header-link'>{props.username}</span>
+              </Link>
+            }
             <span class="date">{formatDateString(props.date)}</span>
             <div className='time-ago'>
               {convertTime(props.date)}
