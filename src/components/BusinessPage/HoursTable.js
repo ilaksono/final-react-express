@@ -56,13 +56,13 @@ const Hours = (props) => {
       }
       results.push((
         <tr>
-          <td>
+          <td className="td-day">
             { index == 0 ? days[day[index].day] : null }
           </td>
           <td className='time-block'>&nbsp; {formatAMPM(day[index].start)}
           </td>
-          <td>&nbsp;  - </td>
-          <td className='time-block'>&nbsp; {formatAMPM(day[index].end)}</td>
+          <td className="td-separator">&nbsp;  - </td>
+          <td className='time-block'>{formatAMPM(day[index].end)}</td>
           {/* {msg &&
             <td className={`${msg === 'Open now'
               ? 'is-open' : 'is-closed'}`}>

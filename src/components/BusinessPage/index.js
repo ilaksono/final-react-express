@@ -318,7 +318,7 @@ export default function BusinessPage() {
               <div className="bus-data">
                 <div className="left-col">
                   <div className="bus-data-row">
-                    <div className="rating-title">
+                    <div className="rating-title-bus">
                       Yelp Rating:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
@@ -329,7 +329,7 @@ export default function BusinessPage() {
                     </div>
                   </div>
                   <div className="bus-data-row">
-                    <div className="rating-title">
+                    <div className="rating-title-bus">
                       Safe Score:
                     </div>
                     <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
