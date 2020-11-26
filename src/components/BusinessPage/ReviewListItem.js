@@ -173,20 +173,22 @@ export default function ReviewListItem(props) {
 
   return (
     <div className='review-container'>
-      <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/> 
+      <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/>
       <div className='header-container'>
         <div className='user'>
-          {
-            (props.picture && !(props.isProfile || props.isHome)) &&
-            <Link to={`/users/${props.user_id}`} >
-              <img className='profile-img' src={props.picture} alt='no img found' />
-            </Link>
-          }
+        {
+        (props.picture && !(props.isProfile)) &&
+          <Link to={`/users/${props.user_id}`} >
+            <img className='profile-img' src={props.picture} alt='no img found' />
+          </Link>
+        }
           <div className="username-date">
-            <Link to={(props.isProfile || props.isHome) ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-              <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{(props.isProfile || props.isHome) ? props.venue_name : props.username}</span>
-            </Link>
-            
+            { !(props.isProfile || props.isHome) && (
+              <Link to={`/users/${props.user_id}`}>
+              <span className='review-header-link'>{ props.username }</span>
+              </Link>
+            )}
+
             {
               props.isHome &&
               <Link to={`/users/${props.user_id}`} >
@@ -194,7 +196,7 @@ export default function ReviewListItem(props) {
                 <span className='review-header-link'>{props.username}</span>
               </Link>
             }
-            <span className="date">{formatDateString(props.date)}</span>
+            <span className="review-date">{formatDateString(props.date)}</span>
             <div className='time-ago'>
               {convertTime(props.date)}
             </div>

@@ -110,8 +110,8 @@ const useApplicationData = () => { // login and user state information
 
     });
     example.push({
-      venue: 'Patio',
-      title: 'Patio',
+      venue: 'Patios',
+      title: 'Patios',
       width
 
     });

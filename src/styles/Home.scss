@@ -25,6 +25,7 @@
 .home-reviews-container {
   @include flexbox(column, flex-start, center);
   margin-top: 10px;
+  max-width: 500px;
 }
 
 .site-description {

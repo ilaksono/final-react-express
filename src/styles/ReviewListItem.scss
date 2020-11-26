@@ -112,13 +112,10 @@
   width: 100%;
 }
 
-.date {
-  font-size: 0.9em;
-}
 .error-container {
   width: 92px;
 }
-.date {
+.review-date {
   font-size: 14px;
   font-weight: normal;
   font-style: italic;
@@ -144,9 +141,17 @@
   @include flexbox(column, flex-start, flex-start);
   height: 100%;
   margin-left: 10px;
+  width: 120px;
 }
 
 p {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.venue {
+  width: 100%;
+  font-weight: bold;
+  @include flexbox(row, flex-start, center);
+  margin-left: 5px;
 }
