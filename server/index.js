@@ -228,7 +228,6 @@ app.post("/reviews/new", (req, res) => {
     .then(() => {
       dbHelpers.hasUserMadeAPreviousReview(userId, req.body.venue_id)
         .then(response => {
-          console.log(response);
           if (response) {
             exists = true;
             res.send("can't make another review for the same venue");
