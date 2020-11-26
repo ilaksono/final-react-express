@@ -145,14 +145,20 @@ export default function ReviewListItem(props) {
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/> 
       <div className='user'>
-        <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+        <Link to={(props.isProfile || props.isHome) ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{(props.isProfile || props.isHome) ? props.venue_name : props.username}</span>
         </Link>
         {
-          props.picture &&
+          (props.picture && !(props.isProfile || props.isHome)) &&
+          <Link to={`/users/${props.user_id}`} >
+            <img className='profile-img' src={props.picture} alt='no img found' />
+          </Link>
+        }
+        {
+          props.isHome &&
           <Link to={`/users/${props.user_id}`} >
 
-            <img className='profile-img' src={props.picture} alt='no img found' />
+            <span className='review-header-link'>{props.username}</span>
           </Link>
         }
       </div>
