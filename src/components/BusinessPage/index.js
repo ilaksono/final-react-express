@@ -101,6 +101,7 @@ export default function BusinessPage() {
   const classes = useStyles();
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [reviewSnackBar, setReviewSnackBar] = useState(false);
+  const history = useHistory();
   const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
@@ -186,7 +187,6 @@ export default function BusinessPage() {
         } else {
           return isFinite(leftP) ? -1 : 1;
         }
-
       });
       let primedLabels = [];
       let primedVal = [];
@@ -272,9 +272,7 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
-        <Link to={'/search'}>
-          <Button variant="contained" /* onClick={backButton} */><KeyboardBackspaceIcon /></Button>
-        </Link>
+        <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
       {!businessDetails.id && (
