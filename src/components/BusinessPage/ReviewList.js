@@ -21,6 +21,7 @@ export default function ReviewList(props) {
   const reviews = props.reviews.map(review => {
 
     return <ReviewListItem
+      key={review.id}
       username={review.username}
       social_distancing={review.socialdistancing}
       transaction_process={review.socialdistancing}

@@ -174,13 +174,14 @@ export default function ReviewListItem(props) {
                 <span className='review-header-link'>{props.username}</span>
               </Link>
             }
-            <span class="date">{formatDateString(props.date)}</span>
+            <span className="date">{formatDateString(props.date)}</span>
             <div className='time-ago'>
               {convertTime(props.date)}
             </div>
           </div>
         </div>
         <table className='review-table'>
+          <tbody>
             <tr>
               <td className="left">
                 Cleanliness
@@ -209,7 +210,8 @@ export default function ReviewListItem(props) {
                 {props.overall_rating} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
-          </table>
+          </tbody>
+        </table>
       </div>
       <div className='review-content'>
         <div className='review-numbers'>
