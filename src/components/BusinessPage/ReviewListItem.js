@@ -50,7 +50,17 @@ export default function ReviewListItem(props) {
           props.profileHelpCount(id, response.data);
           return;
         });
-    } else {
+    }
+    
+    else if (props.isHome) {
+      return axios.post('/reviews/helpful', { id, username: name })
+        .then((response) => {
+          props.profileHelpCount(id, response.data);
+          return;
+        });
+    }
+    
+    else {
 
       return axios.post('/reviews/helpful', { id, username: name })
         .then((response) => {
@@ -233,21 +243,20 @@ export default function ReviewListItem(props) {
       <div className='review-footer'>
         {/*eslint-disable-next-line */}
         <div className='helpful-container'>
+        {(appState.authorized && !props.isHome) &&
           <div className='helpful'>
-            { appState.authorized && (appState.user_id !== props.id) ? (
-              <div className='helpful-count editable' onClick={() => updateHelpfulCount(props.id, appState.name)}>
+            { appState.user_id !== props.user_id && 
+              <div className='helpful-count editable' onClick={() => {updateHelpfulCount(props.id, appState.name)}}>
                 <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-              </div>
-            ) : (
-              <div className='helpful-count'>
-                <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-              </div>
-            )}
-          </div>
+              </div>}
           {props.helpful_count}
-        </div>
+          </div>}
+          </div>
         { props.user_id === appState.user_id && (
           <>
+          <div className='helpful-count'>
+                <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+              </div>
           <div className='delete-button'
             onClick = {handleAlert}
           >

@@ -120,7 +120,7 @@ module.exports = (db) => {
   const getProfileReviews = (id) => {
     const queryString = `
       SELECT * FROM reviews
-      WHERE user_id = $1;
+      WHERE user_id = $1 AND deleted = FALSE;
       `;
     const queryParams = [Number(id)];
     return db
@@ -223,7 +223,6 @@ module.exports = (db) => {
     RETURNING *;
     `;
     const queryParams = [reviewId, userId];
-    console.log("trying to run addLikes with ", reviewId, userId);
 
     return db.query(queryString, queryParams)
       .then(response => {
