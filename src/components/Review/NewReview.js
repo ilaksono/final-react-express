@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -11,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
+import useProfileData from '../../hooks/useProfileData';
 import 'styles/BusinessPage.scss';
 
 
@@ -65,6 +67,9 @@ const INIT_DESCRIPTION = "";
 
 const NewReview = props => {
 
+  
+  
+
   const questionData = [
     {
       id: 1,
@@ -97,18 +102,21 @@ const NewReview = props => {
     }
   ];
   
-  console.log("review --->", props)
-  const [cleanliness, setCleanliness] = useState(INIT_RATING);
-  const [socialDistancing, setSocialDistancing] = useState(INIT_RATING);
-  const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
-  const [overallComfort, setOverallComfort] = useState(INIT_RATING);
-  const [description, setDescription] = useState(INIT_DESCRIPTION);
+ 
+  const [cleanliness, setCleanliness] = useState(props.cleanliness || INIT_RATING);
+  const [socialDistancing, setSocialDistancing] = useState(props.socialDistancing || INIT_RATING);
+  const [transactionProcess, setTransactionProcess] = useState(props.transaction || INIT_RATING);
+  const [overallComfort, setOverallComfort] = useState(props.overall_rating ||INIT_RATING);
+  const [description, setDescription] = useState(props.description || INIT_DESCRIPTION);
   const { businessDetails,
     appState,
     submitNewReview,
     setNewReview,
-    submitEditReview
+    setBusinessDetails  
   } = useContext(YelpContext);
+
+  const { allUsers, setAllUsers} = useProfileData();
+
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -120,6 +128,43 @@ const NewReview = props => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+
+    if (props.isProfile) {
+      return axios.post("/reviews/edit", {id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating})
+    .then(response => {
+      if (response) {
+      const updatedBusinessDetails = {...allUsers};
+      const findReview = updatedBusinessDetails.reviews.find(review => review.id === id)
+      findReview.cleanliness = cleanliness;
+      findReview.socialDistancing = socialDistancing;
+      findReview.transactionProcess = transactionProcess;
+      findReview.overall_rating = overall_rating;
+      findReview.description = description;
+      updatedBusinessDetails.reviews.map(review => review.user_id === user_id ? findReview : review);
+      return setAllUsers(updatedBusinessDetails)
+      } 
+    })
+    }
+    else {
+    return axios.post("/reviews/edit", {id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating})
+    .then(response => {
+      if (response) {
+      const updatedBusinessDetails = {...businessDetails};
+      const findReview = updatedBusinessDetails.reviews.find(review => review.user_id === user_id)
+      findReview.cleanliness = cleanliness;
+      findReview.socialDistancing = socialDistancing;
+      findReview.transactionProcess = transactionProcess;
+      findReview.overall_rating = overall_rating;
+      findReview.description = description;
+      updatedBusinessDetails.reviews.map(review => review.user_id === user_id ? findReview : review);
+      return setBusinessDetails(updatedBusinessDetails)
+      }
+    })
+    .catch (err => console.log(err))
+  }
+  }
 
   const handleChange = (title, value) => {
     if (title === 'Cleanliness') {
@@ -153,7 +198,7 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     if (props.overall_rating) {
-      submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
+      submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
       .then(response => {
         console.log("getting response", response);
         setNewReview(true);
@@ -162,11 +207,11 @@ const NewReview = props => {
           return handleClose();
         }
         console.log('trying to set to true...');
-        props.setReviewSnackBar(true);
+        // props.setReviewSnackBar(true);
         handleClose();
-        resetState();
       }).catch(err => console.log(err));
-    } else {
+    } 
+    else {
     submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
       .then(response => {
         setNewReview(true);
@@ -181,11 +226,11 @@ const NewReview = props => {
   };
 
   const resetState = () => {
-    setCleanliness(props.cleanliness || INIT_RATING);
-    setSocialDistancing(props.socialDistancing || INIT_RATING);
-    setTransactionProcess(props.transactionProcess || INIT_RATING);
-    setOverallComfort(props.overall_rating || INIT_RATING);
-    setDescription(props.description || INIT_DESCRIPTION);
+    setCleanliness(INIT_RATING);
+    setSocialDistancing(INIT_RATING);
+    setTransactionProcess(INIT_RATING);
+    setOverallComfort(INIT_RATING);
+    setDescription(INIT_DESCRIPTION);
   };
 
   const questions = questionData.map(question => {
