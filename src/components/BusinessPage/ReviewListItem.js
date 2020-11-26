@@ -75,6 +75,16 @@ export default function ReviewListItem(props) {
   };
 
   const deleteReview = () => {
+
+    if (props.isHome) {
+      return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
+      .then(() => {
+        props.profileDeleteReview(props.id)
+        closeAlert()
+      })
+      .catch(err => {console.log(err)})
+    };
+
     if (props.isProfile) {
       return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
       .then(() => {
