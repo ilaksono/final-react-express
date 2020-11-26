@@ -73,6 +73,10 @@ const FilterBar = (props) => {
         endIcon={<CloseIcon />}
         color="primary"
         size="large"
+        style={{
+          left: '35%',
+          paddingRight:20
+        }}
         onClick={toggleFilterShow}>
       </Button>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
