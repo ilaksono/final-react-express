@@ -1,0 +1,36 @@
+@import './helper';
+
+
+.overall-rating-container {
+  width: 100%;
+  @include flexbox(row, flex-start, center);
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.other-rating-container {
+  width: 100%;
+  @include flexbox(row, flex-start, center);
+  margin-bottom: 5px;
+}
+
+.rating-label {
+  width: 170px;
+  font-size: 15px;
+  padding-bottom: 5px;
+}
+
+
+.rating-data {
+  @include flexbox(row, flex-start, center);
+}
+
+.review-count {
+  @include flexbox(row, flex-start, center);
+  padding-bottom: 5px;
+  height: 100%;
+}
+
+.venue-avg-ratings {
+  margin-bottom: 20px;
+}

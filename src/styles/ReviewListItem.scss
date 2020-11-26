@@ -6,7 +6,7 @@
   flex-direction: column;
   border: none;
   border: 1px solid $gray-line;
-  background-color: rgb(228, 227, 227);
+  background-color: rgb(245, 243, 243);
   border-radius: 15px;
   padding: 2%;
   width: 100%;
@@ -14,37 +14,77 @@
 }
 
 .review-container:hover {
-  box-shadow: 0 0 2px 2px salmon;
+  box-shadow: 0 0 2px 2px $gray-line;
 }
 
 .review-footer {
-  @include flexbox(row, space-around, center);
+  @include flexbox(row, flex-start, center);
+  margin-left: 10px;
   width: 100%;
 }
 .user {
-  @include flexbox(row, space-around, center);
+  @include flexbox(row, flex-start, center);
   font-size: 18px;
   font-weight: bold;
 }
 .profile-img {
-  height: 35px;
-  width: 35px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   cursor: pointer;
 }
 .helpful-count {
+  @include flexbox(row, center, center);
   left: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: rgb(189, 189, 189);
+  margin-right: 5px;
+}
+
+.editable {
   cursor: pointer;
 }
+
+.header-container {
+  width: 100%;
+  @include flexbox(row, space-between, center);
+}
+
 .review-numbers {
-  @include flexbox(row, flex-start, flex-start)
+  @include flexbox(row, space-between, flex-start);
+  margin-top: 10px;
 }
 .review {
 
 }
 .review-table {
-  width: 200px;
+  width: 130px;
 }
+
+tr {
+  @include flexbox(row, flex-start, center);
+}
+
+.left {
+  @include flexbox(row, flex-start, center);
+  width: 85px;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.right {
+  @include flexbox(row, flex-end, center);
+  width: 45px;
+  margin-right: 12px;
+  font-size: 14px;
+}
+
+.review-description {
+  width: 100%;
+}
+
 .date {
   font-size: 0.9em;
 }
@@ -52,16 +92,34 @@
   width: 92px;
 }
 .date {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+}
 
+.time-ago {
+  font-size: 12px;
+  font-weight: normal;
+  font-style: italic;
 }
 
 .sort-group {
   @include flexbox(row, space-between, center);
-  margin-bottom: 20px;
   width: 100%;
 }
 
 
 .reviews-list-container {
   width: 100%;
+}
+
+.username-date {
+  @include flexbox(column, flex-start, flex-start);
+  height: 100%;
+  margin-left: 10px;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

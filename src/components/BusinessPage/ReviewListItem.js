@@ -1,8 +1,10 @@
 import { useContext, useState } from 'react';
+import 'styles/Register.scss';
 import 'styles/ReviewListItem.scss';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
-import 'styles/Register.scss';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Link } from 'react-router-dom';
 
 
@@ -93,77 +95,89 @@ export default function ReviewListItem(props) {
   }
 
 
+  const formatDateString = date => {
+    const newDate = new Date(date);
+    const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+    return dateShortened
+  };
+
   return (
     <div className='review-container'>
-      <div className='user'>
-        <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
-        </Link>
-        {
-          props.picture &&
-          <Link to={`/users/${props.user_id}`} >
+      <div className="header-container">
+        <div className='user'>
+          {
+            props.picture &&
+            <Link to={`/users/${props.user_id}`} >
 
-            <img className='profile-img' src={props.picture} alt='no img found' />
-          </Link>
-        }
-      </div>
-      <div className='review-content'>
-        <div className='review-numbers'>
-          <table className='review-table'>
+              <img className='profile-img' src={props.picture} alt='no img found' />
+            </Link>
+          }
+          <div className="username-date">
+            <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+              <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+            </Link>
+            <span class="date">{formatDateString(props.date)}</span>
+            <div className='time-ago'>
+              {convertTime(props.date)}
+            </div>
+          </div>
+        </div>
+        <table className='review-table'>
             <tr>
-              <td>
+              <td className="left">
                 Cleanliness
               </td>
-              <td>
-                {props.cleanliness}
+              <td className="right">
+                {props.cleanliness} &nbsp; <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
-            </tr>
-            <tr>
-              <td>
+              <td className="left">
                 Distancing
               </td>
-              <td>
-                {props.social_distancing}
+              <td className="right">
+                {props.social_distancing} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="left">
                 Transaction
               </td>
-              <td>
-                {props.transaction_process}
+              <td className="right">
+                {props.transaction_process} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
-            </tr>
-            <tr>
-              <td>
+              <td className="left">
                 Overall
               </td>
-              <td>
-                {props.overall_rating}
+              <td className="right">
+                {props.overall_rating} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
           </table>
-          <div>
+      </div>
+      <div className='review-content'>
+        <div className='review-numbers'>
+          <div className="review-description">
             <p>{props.description}</p>
           </div>
-
         </div>
       </div>
       <div className='review-footer'>
         {/*eslint-disable-next-line */}
-        <div className='helpful-count'
-          onClick={appState.authorized
-            ? () => { updateHelpfulCount(props.id, appState.name); } : showErr}>
-          <i className="far fa-thumbs-up">{props.helpful_count}
-          </i>
+        <div className='helpful'>
+          { appState.authorized && (appState.user_id !== props.id) ? (
+            <div className='helpful-count editable' onClick={() => updateHelpfulCount(props.id, appState.name)}>
+              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+            </div>
+          ) : (
+            <div className='helpful-count'>
+              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+            </div>
+          )}
         </div>
+        {props.helpful_count}
         <div className='error-container'>
           <div className='error'>
             {err && err}
           </div>
-        </div>
-        <div className='date'>
-          {convertTime(props.date)}
         </div>
       </div>
 

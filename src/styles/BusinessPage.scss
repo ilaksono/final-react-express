@@ -138,7 +138,9 @@
 
 .info-section {
   width: 100%;
+  border-bottom: 1px solid $gray-line;
 }
+
 .write-review-btn {
   position: -webkit-sticky;
   position: sticky;   
@@ -165,7 +167,7 @@
 .location-hours {
   @include flexbox(row, flex-start, flex-start);
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .map-label-group {
   margin-right: 60px;
@@ -211,6 +213,7 @@
 }
 
 .review-chart-container {
+  margin-top: 40px;
   box-sizing: border;
   @include flexbox(row, flex-start, flex-start);
   width: 100%;

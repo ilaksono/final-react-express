@@ -2,7 +2,17 @@ import { Fragment, useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
 import Sort from 'components/Sort';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import "styles/ReviewList.scss";
 
+const StyledRating = withStyles({
+  iconFilled: {
+    color: '#ff6d75',
+  },
+})(Rating);
 
 export default function ReviewList(props) {
 
@@ -57,6 +67,79 @@ export default function ReviewList(props) {
           defaultOption={sortOptions[0].id}
           onClick={handleSort} />
       </div>
+      { !props.isProfile && (
+        <div className="venue-avg-ratings">
+          <div className="overall-rating-container">
+            <div className="rating-label">
+              Overall Rating 
+            </div>
+            <div className="rating-data">
+              <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                { isNaN(Number(props.avgRatings.overall_rating)) ? "N/A" 
+                : <StyledRating
+                    name="customized-color"
+                    size="small"
+                    value={Number(props.avgRatings.overall_rating)}
+                    precision={0.5}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    readOnly
+                  />}
+              </Box>
+            <div className="review-count">
+              ({ props.reviews && props.reviews.length } reviews)
+            </div>
+            </div>
+          </div>
+          <div className="other-rating-container">
+            <div className="rating-label">
+              Cleanliness
+            </div>
+              <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                { isNaN(Number(props.avgRatings.cleanliness)) ? "N/A" 
+                : <StyledRating
+                    name="customized-color"
+                    size="small"
+                    value={Number(props.avgRatings.cleanliness)}
+                    precision={0.5}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    readOnly
+                  />}
+              </Box>
+          </div>
+          <div className="other-rating-container">
+            <div className="rating-label">
+              Transaction Process
+            </div>
+              <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                { isNaN(Number(props.avgRatings.transactionprocess)) ? "N/A" 
+                : <StyledRating
+                    name="customized-color"
+                    size="small"
+                    value={Number(props.avgRatings.transactionprocess)}
+                    precision={0.5}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    readOnly
+                  />}
+              </Box>
+          </div>
+          <div className="other-rating-container">
+            <div className="rating-label">
+              Social Distancing
+            </div>
+              <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                { isNaN(Number(props.avgRatings.socialdistancing)) ? "N/A" 
+                : <StyledRating
+                    name="customized-color"
+                    size="small"
+                    value={Number(props.avgRatings.socialdistancing)}
+                    precision={0.5}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    readOnly
+                  />}
+              </Box>
+          </div>
+        </div>
+      )}
       {reviews}
     </div>
   );
