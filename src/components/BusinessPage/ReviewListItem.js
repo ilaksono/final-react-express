@@ -1,8 +1,9 @@
 import { useContext, useState } from 'react';
+import 'styles/Register.scss';
 import 'styles/ReviewListItem.scss';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
-import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
 
 
@@ -93,12 +94,15 @@ export default function ReviewListItem(props) {
   }
 
 
+  const formatDateString = date => {
+    const newDate = new Date(date);
+    const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+    return dateShortened
+  };
+
   return (
     <div className='review-container'>
       <div className='user'>
-        <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
-          <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
-        </Link>
         {
           props.picture &&
           <Link to={`/users/${props.user_id}`} >
@@ -106,6 +110,12 @@ export default function ReviewListItem(props) {
             <img className='profile-img' src={props.picture} alt='no img found' />
           </Link>
         }
+        <div className="username-date">
+          <Link to={props.isProfile ? `/search/${props.venue_id}`: `/users/${props.user_id}`}> 
+            <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null}className='review-header-link'>{props.isProfile ? props.venue_name : props.username}</span>
+          </Link>
+          <span class="date">{formatDateString(props.date)}</span>
+        </div>
       </div>
       <div className='review-content'>
         <div className='review-numbers'>
@@ -151,12 +161,16 @@ export default function ReviewListItem(props) {
       </div>
       <div className='review-footer'>
         {/*eslint-disable-next-line */}
-        <div className='helpful-count'
-          onClick={appState.authorized
-            ? () => { updateHelpfulCount(props.id, appState.name); } : showErr}>
-          <i className="far fa-thumbs-up">{props.helpful_count}
-          </i>
-        </div>
+        { appState.authorized ? (
+          <div className='helpful-count'>
+            <ThumbUpAltIcon onClick={updateHelpfulCount(props.id, appState.name)} style={{ color: '#1E0253' }} />
+          </div>
+        ) : (
+          <div className='helpful-count-read-only'>
+            <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+          </div>
+        )}
+        {props.helpful_count}
         <div className='error-container'>
           <div className='error'>
             {err && err}

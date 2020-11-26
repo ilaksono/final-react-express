@@ -8,9 +8,9 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import MuiAlert from '@material-ui/lab/Alert';
 import SnackBar from 'components/SnackBar';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -101,6 +101,7 @@ export default function BusinessPage() {
   const classes = useStyles();
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [reviewSnackBar, setReviewSnackBar] = useState(false);
+  const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
   // const [chartData, setChartData] = useState(initData);
@@ -124,6 +125,10 @@ export default function BusinessPage() {
     appState
   } = useContext(YelpContext);
 
+  useEffect(() => {
+    venueAvgRatings();
+  }, [businessDetails]);
+  
   const { id } = useParams();
   const clickPhoto = (url) => {
     setBigPhoto({ open: true, url });
@@ -138,6 +143,30 @@ export default function BusinessPage() {
   const hideBigPhoto = () => {
     setBigPhoto(initPhoto);
   };
+
+  const venueAvgRatings = () => {
+    if (businessDetails.reviews) {
+      const reviews = businessDetails.reviews;
+      const avgCleanliness = getAvgRating(reviews, "cleanliness");
+      const avgOverall = getAvgRating(reviews, "overall_rating");
+      const avgTransactionProcess = getAvgRating(reviews, "transactionprocess");
+      const avgSocialDistancing = getAvgRating(reviews, "socialdistancing");
+      return setAvgRatings({ overall_rating: avgOverall, cleanliness: avgCleanliness, transactionprocess: avgTransactionProcess, socialdistancing: avgSocialDistancing })
+    }
+  }
+
+  const getAvgRating = (data, property) => {
+    let count = 0;
+    const sum = data.reduce((acc, review) => {
+      if (review[property]) {
+        count++;
+      }
+      return acc + Number(review[property]);
+    }, 0);
+    return sum / count;
+  }
+  
+
   const primeChartData = (reviews, type) => {
     if (reviews) {
       const key = {
@@ -388,7 +417,7 @@ export default function BusinessPage() {
                 {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
                   <span>Be the first to write a review!</span>
                 ) : (
-                  <ReviewList reviews={businessDetails.reviews} />
+                  <ReviewList reviews={businessDetails.reviews} avgRatings={avgRatings} />
                 )}
               </div>
               <div className='business-chart-container'>

@@ -6,7 +6,7 @@
   flex-direction: column;
   border: none;
   border: 1px solid $gray-line;
-  background-color: rgb(228, 227, 227);
+  background-color: rgb(245, 243, 243);
   border-radius: 15px;
   padding: 2%;
   width: 100%;
@@ -14,15 +14,15 @@
 }
 
 .review-container:hover {
-  box-shadow: 0 0 2px 2px salmon;
+  box-shadow: 0 0 2px 2px $gray-line;
 }
 
 .review-footer {
-  @include flexbox(row, space-around, center);
+  @include flexbox(row, flex-start, center);
   width: 100%;
 }
 .user {
-  @include flexbox(row, space-around, center);
+  @include flexbox(row, flex-start, center);
   font-size: 18px;
   font-weight: bold;
 }
@@ -36,8 +36,13 @@
   left: 10px;
   cursor: pointer;
 }
+
+.helpful-count-read-only {
+  left: 10px;
+}
 .review-numbers {
-  @include flexbox(row, flex-start, flex-start)
+  @include flexbox(row, flex-start, flex-start);
+  margin-top: 10px;
 }
 .review {
 
@@ -52,16 +57,23 @@
   width: 92px;
 }
 .date {
-
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
 }
 
 .sort-group {
   @include flexbox(row, space-between, center);
-  margin-bottom: 20px;
   width: 100%;
 }
 
 
 .reviews-list-container {
   width: 100%;
+}
+
+.username-date {
+  @include flexbox(column, flex-start, flex-start);
+  height: 100%;
+  margin-left: 10px;
 }
