@@ -81,7 +81,9 @@ const Hours = (props) => {
 
   return (
     <table>
-      {parsedRows}
+      <tbody>
+        {parsedRows}
+      </tbody>
     </table>
 
   );

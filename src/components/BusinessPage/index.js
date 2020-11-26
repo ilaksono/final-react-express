@@ -298,9 +298,9 @@ export default function BusinessPage() {
         <>
           <div className='images-container'>
 
-            {businessDetails.photos.map(review => {
+            {businessDetails.photos.map((review, index) => {
               return (
-                <Photos photos={review} clickPhoto={clickPhoto} />
+                <Photos key={index} photos={review} clickPhoto={clickPhoto} />
               );
             })}
           </div>

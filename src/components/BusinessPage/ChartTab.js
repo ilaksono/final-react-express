@@ -44,7 +44,7 @@ const ChartTab = (props) => {
   const buttons = props.chartSelect.options
     .map((select, index) => {
       return (
-        <div >
+        <div key={index} >
           <Button
             color={select === props.chartSelect.select 
               ? 'primary' : 'default'}

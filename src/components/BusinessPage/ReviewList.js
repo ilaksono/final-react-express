@@ -1,8 +1,8 @@
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import ReviewListItem from './ReviewListItem';
 import Sort from 'components/Sort';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import FavoriteIcon from '@material-ui/icons/Favorite';
