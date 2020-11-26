@@ -406,8 +406,6 @@ export default function BusinessPage() {
             </div>
             <div className='review-chart-container'>
               <div id="reviews-container" >
-              {console.log(appState)};
-                {console.log(businessDetails.reviews)}
                 {(businessDetails.reviews
                   && businessDetails.reviews.length === 0)
                   && <span>Be the first to write a review!</span>}
