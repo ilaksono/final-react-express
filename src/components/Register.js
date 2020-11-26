@@ -150,11 +150,11 @@ const RegisterForm = (props) => {
           if (res.data.username) {
           const currentUser = {
             username: res.data.username,
-            profile_pic: res.data.profile_pic
+            profile_pic: res.data.profile_pic,
+            user_id: res.data.user_id
           }
-          authorizeUser(res.data.username, res.data.profile_pic, res.user_id);
+          authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
           setState(currentUser);
-          console.log("great")
           props.setModal(prev => ({ ...prev, regOpen: false }));
         } else if (res.data === "email exists") {
           setState({ ...state, errMsg: 'Email already in use!', errType: 'email' });

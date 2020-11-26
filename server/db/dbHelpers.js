@@ -5,7 +5,8 @@ module.exports = (db) => {
   const getAllReviews = () => {
     const queryString = `
     SELECT *
-    FROM reviews;
+    FROM reviews
+    WHERE deleted = false;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
@@ -19,7 +20,7 @@ module.exports = (db) => {
     SELECT *
     FROM reviews
     JOIN users ON users.id = user_id
-    WHERE venue_id = $1;
+    WHERE venue_id = $1 AND deleted = FALSE;
     `;
     const queryParams = [id];
     return db.query(queryString, queryParams)
@@ -41,6 +42,19 @@ module.exports = (db) => {
       });
   };
 
+  const editReviews = (reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
+    const queryString = `
+    UPDATE reviews
+    SET venue_id = $3, venue_name = $4, cleanliness = $5, socialDistancing = $6, transactionProcess = $7, description = $8, overall_rating = $9
+    WHERE id = $1 and user_id = $2;
+    `
+    const queryParams = [reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows[0];
+      });
+  }
+
   const getIdByUsername = (username) => {
     const queryString = `
     SELECT id 
@@ -58,7 +72,7 @@ module.exports = (db) => {
     const queryString = `
     SELECT user_id
     FROM reviews 
-    WHERE user_id = $1 AND venue_id = $2;
+    WHERE user_id = $1 AND venue_id = $2 AND deleted = FALSE;
     `;
     const queryParams = [id, venue_id];
     return db.query(queryString, queryParams)
@@ -93,7 +107,7 @@ module.exports = (db) => {
     const queryString = `
     SELECT overall_rating 
     FROM reviews 
-    WHERE user_id = $1  
+    WHERE user_id = $1 AND deleted = FALSE
     `;
     const queryParams = [Number(id)];
     return db
@@ -104,7 +118,7 @@ module.exports = (db) => {
     const queryString = `
     SELECT * 
     FROM reviews 
-    WHERE user_id = $1  
+    WHERE user_id = $1 AND deleted = FALSE 
     `;
     const queryParams = [Number(id)];
     return db
@@ -221,12 +235,27 @@ module.exports = (db) => {
   const getNewReviews = () => {
     const qs = `
     SELECT * FROM reviews
+    WHERE deleted = FALSE
     ORDER BY date DESC
     LIMIT 4;`;
     return db
       .query(qs, [])
       .then(res => res.rows);
   };
+
+  const deleteReviews = (reviewId, userId) => {
+    console.log("request received?")
+    const queryString = `
+    UPDATE reviews
+    SET deleted = true
+    WHERE id = $1 AND user_id = $2;
+    `
+    const queryParams = [reviewId, userId]
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows;
+      });
+  }
 
 
   return {
@@ -247,6 +276,8 @@ module.exports = (db) => {
     addLikes,
     deleteLikes,
     descreaseHelpfulCount,
-    getNewReviews
+    getNewReviews,
+    deleteReviews,
+    editReviews
   };
 };

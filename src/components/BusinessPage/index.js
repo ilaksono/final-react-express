@@ -202,11 +202,24 @@ export default function BusinessPage() {
       .slice(5, 10).join('').replace(' ', '-');
   };
 
+  
+  
   useEffect(() => {
     if (!businessDetails.id) {
       getIndividualBusinessData(id);
     }
   }, []);
+  
+  const checkIfHasReviewedPreviously = (bizReviews) => {
+    const check = bizReviews.some(reviews => {
+      if (reviews.user_id === appState.user_id) {
+        return true;
+      }
+    });
+    if (check) {
+      return true;
+    }
+  }
 
   useEffect(() => {
     if (businessDetails.reviews) {
@@ -358,7 +371,7 @@ export default function BusinessPage() {
               </div>
               {appState.authorized &&
                 <div className='bus-buttons'>
-                  <NewReview venue_id={id} name={businessDetails.name} setOpen={setOpen} />
+                  {!checkIfHasReviewedPreviously(businessDetails.reviews) &&  <NewReview venue_id={id} name={businessDetails.name} setOpen={setOpen} /> }
 
                   {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
@@ -391,6 +404,8 @@ export default function BusinessPage() {
               </div>
 
               <div className='reviews'>
+                {console.log(appState)};
+                {console.log(businessDetails.reviews)}
                 {(businessDetails.reviews
                   && businessDetails.reviews.length === 0)
                   && <span>Be the first to write a review!</span>}

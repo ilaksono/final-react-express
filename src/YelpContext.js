@@ -42,6 +42,7 @@ export function YelpProvider({ children }) {
     loadingSearch,
     setLoadingSearch,
     submitNewReview,
+    submitEditReview,
     sortBy
   } = useYelpData();
 
@@ -131,7 +132,8 @@ export function YelpProvider({ children }) {
       resultsPerPage,
       submitNewReview,
       newReview,
-      setNewReview
+      setNewReview,
+      submitEditReview
       // openFilterClick
     }}>
       {children}
