@@ -213,7 +213,7 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
-      const clr = chartSelect.perDay ? '#800020' : '#1E0253';
+      const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
       setChartData({
         labels: primedLabels,
         datasets: [{
@@ -298,9 +298,9 @@ export default function BusinessPage() {
         <>
           <div className='images-container'>
 
-            {businessDetails.photos.map(review => {
+            {businessDetails.photos.map((review, index) => {
               return (
-                <Photos photos={review} clickPhoto={clickPhoto} />
+                <Photos key={index} photos={review} clickPhoto={clickPhoto} />
               );
             })}
           </div>

@@ -8,6 +8,7 @@ import useAutoComplete from 'hooks/useAutoComplete';
 import useFilter from 'hooks/useFilter';
 import useSort from 'hooks/useSort';
 import useNewReview from 'hooks/useNewReview';
+import { useLoadScript } from '@react-google-maps/api';
 
 export const YelpContext = React.createContext();
 
@@ -24,7 +25,10 @@ export function YelpProvider({ children }) {
     // openFilterClick 
   } = useFilter();
 
-  
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries: ["places"]
+  });
   const {
     appState,
     submitHandle,
@@ -134,7 +138,9 @@ export function YelpProvider({ children }) {
       submitNewReview,
       newReview,
       setNewReview,
-      submitEditReview
+      submitEditReview,
+      isLoaded, 
+      loadError
       // openFilterClick
     }}>
       {children}

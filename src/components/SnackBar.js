@@ -11,9 +11,11 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '0',
+    width: '0px',
+    maxWidth: '0px',
     '& > * + *': {
-      marginTop: theme.spacing(2),
+      margin: theme.spacing(0),
+      padding: theme.spacing(0),
     },
   },
 }));
@@ -36,7 +38,7 @@ const SnackBar = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div /* className={classes.root} */>
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={props.open}

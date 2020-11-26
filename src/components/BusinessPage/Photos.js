@@ -1,7 +1,7 @@
 import "styles/BusinessPage.scss";
 export default function Photos(props) {
   return (
-    <div class='photos'>
+    <div className='photos'>
       <img src={props.photos}
         onClick={(event) =>
           props.clickPhoto(event.target.getAttribute('src'))}

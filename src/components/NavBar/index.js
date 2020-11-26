@@ -42,11 +42,13 @@ const NavBar = (props) => {
     }
   };
   return (
-    <nav className="nav-bar">
-
+    <>
+    <div className="hidden">
       <SnackBar message="You have successfully logged in!" open={loginSnackBar} setSnackBar={setLoginSnackBar} />
       <SnackBar message="You have successfully logged out!" open={logoutSnackBar} setSnackBar={setLogoutSnackBar} />
       <SnackBar message="You have successfully registered!" open={registerSnackBar} setSnackBar={setRegisterSnackBar} />
+    </div>
+    <nav className="nav-bar">
       <div className="logo-container">
         <Link to={'/'}>
           <img src={logo} alt="Logo" className='nav-icon' />
@@ -104,6 +106,7 @@ const NavBar = (props) => {
         </div>
       }
     </nav>
+    </>
   );
 
 };

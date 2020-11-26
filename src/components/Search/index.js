@@ -8,7 +8,9 @@ import 'styles/Venue.scss';
 import 'styles/Location.scss';
 import { YelpContext } from 'YelpContext.js';
 import { Link, useHistory } from 'react-router-dom';
-import 'styles/Home.scss'
+import 'styles/Home.scss';
+import usePlacesAutocomplete from 'use-places-autocomplete';
+
 
 const Search = props => {
   const history = useHistory();
@@ -24,17 +26,39 @@ const Search = props => {
     addResults,
     getPriceFilterMode,
     setLoadingSearch,
-    handlePageChange
+    handlePageChange,
+    isLoaded
   } = useContext(YelpContext);
-  const [location, setLocation] = useState("");
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-
+  // const [location, setLocation] = useState('')
+  const { ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions } = usePlacesAutocomplete({
+      requestOptions: {
+        location: {
+          lat: () => appState.center.lat,
+          lng: () => appState.center.lng
+        },
+        radius: 200 * 1000,
+      },
+      debounce: 200,
+      defaultValue: appState.center.city || ''
+    });
   // function validate() {
   //   if (location == "") {
 
   //   }
   // }
+  useEffect(() => {
+    setValue(appState.center.city, false);
+  }, [appState]);
+
+  // useEffect(() => {
+  //   setLocation(appState.center.city)
+  // }, [appState])
 
   // function reset() {
   //   // resets the text data
@@ -47,11 +71,6 @@ const Search = props => {
     // setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
-  
-
-  useEffect(() => {
-    setLocation(appState.center.city);
-  }, [appState]);
 
   const setVenueAndHandleSearch = (text) => {
     setVenue(text);
@@ -83,9 +102,9 @@ const Search = props => {
   const handleSearch = (name) => {
     setLoadingSearch(true);
     if (name) {
-      yelpSearch(name, location);
+      yelpSearch(name, value); // value = location
     } else {
-      yelpSearch(venue, location);
+      yelpSearch(venue, value); // value = location
     }
     handlePageChange(null, 1);
     resetFilters();
@@ -94,8 +113,8 @@ const Search = props => {
 
   return (
     <div className={props.isHome ? 'home-search' : "search-container"}>
-      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete} 
-      isHome={props.isHome}/>
+      <Venue venue={venue} onChange={setVenueAndAutoComplete} onClick={setVenueAndAutoComplete}
+        isHome={props.isHome} />
       {showAutoComplete &&
         <VenueAutoComplete
           data={autoComplete}
@@ -104,9 +123,21 @@ const Search = props => {
           isHome={props.isHome}
         />
       }
-      <Location location={location} onChange={setLocation} isHome={props.isHome}/>
+      <Location
+        ready={ready}
+        value={value}
+        status={status}
+        data={data}
+        // location={location}
+        // setLocation={setLocation}
+        setValue={setValue}
+        clearSuggestions={clearSuggestions}
+        appState={appState}
+        isHome={props.isHome}
+
+      />
       <Link to={'/search'}>
-        <Button onClick={() => handleSearch()} message={props.buttonMessage} search isHome={props.isHome}/>
+        <Button onClick={() => handleSearch()} message={props.buttonMessage} search isHome={props.isHome} />
       </Link>
     </div>
   );

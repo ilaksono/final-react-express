@@ -1,5 +1,5 @@
 import { useContext, useCallback, useEffect, useState } from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
@@ -18,7 +18,10 @@ const Map = props => {
     mapRef,
     setLoadingSearch,
     currentPage,
-    resultsPerPage
+    resultsPerPage,
+    isLoaded,
+    loadError
+    
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
 
@@ -57,7 +60,6 @@ const Map = props => {
   };
   return (
     <div className="map-container">
-      <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           options={options}
@@ -70,7 +72,6 @@ const Map = props => {
           {parsedMarkers}
           <></>
         </GoogleMap>
-      </LoadScript>
     </div>
   );
 };

@@ -168,7 +168,6 @@ export default function useYelpData() {
       axios.get('/api/reviews')
     ]).then((all) => {
       const yelpData = all[0].data;
-      console.log("yelp", yelpData);
       const parsedYelpData = getCoreYelpData(yelpData);
       all[1].data.forEach((data) => {
         reviewArr.push(data);
