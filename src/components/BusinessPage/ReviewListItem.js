@@ -119,10 +119,6 @@ export default function ReviewListItem(props) {
       .catch(err => { console.log(err); });
   };
 
-
-
-
-
   const convertTime = (date) => {
     const time = new Date(date).getTime();
     let unit = "second";
@@ -250,13 +246,12 @@ export default function ReviewListItem(props) {
           {props.description}
         </div>
       </div>
-      { props.isHome && (
-        <Link to={`/search/${props.venue_id}`} className="link-to-review">
-          Read Review
-        </Link>
-      )}
-      { !props.isHome && (
         <div className='review-footer'>
+          { props.isHome && (
+            <Link to={`/search/${props.venue_id}`} className="link-to-review">
+              Read Review
+            </Link>
+          )}
           <div className='helpful-container'>
             {(appState.authorized && !props.isHome) &&
               <div className='helpful'>
@@ -302,7 +297,6 @@ export default function ReviewListItem(props) {
             </div>
           </div>
         </div>
-      )}
       {/* 
       <div className='home-name-label'>
       </div> */}

@@ -50,6 +50,7 @@ const ChartTab = (props) => {
               ? 'primary' : 'default'}
             variant='contained'
             className={classes[arr[index]]}
+            key={index}
             name={select}
             onClick={() => 
             props.clickChartTab(select)}>

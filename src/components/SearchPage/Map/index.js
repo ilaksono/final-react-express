@@ -38,6 +38,7 @@ const Map = props => {
 
   useEffect(() => {
     setLoadingSearch(false);
+    // eslint-disable-next-line
   }, [mapState.places])
 
   const indexOfLastResult = currentPage * resultsPerPage;

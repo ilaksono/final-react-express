@@ -1,5 +1,5 @@
 import 'styles/UserProfile.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import Profile from './Profile';
 import { useParams, useHistory } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { CircularProgress } from '@material-ui/core';
 import FavSection from './FavSection';
 import { Button } from '@material-ui/core';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { YelpContext } from 'YelpContext';
 
 const initFocus = {
   like: false,
@@ -23,9 +24,11 @@ const UserProfile = (props) => {
     profileHelpCount,
     getUsersAPI,
     setAllUsers,
-    profileDeleteReview
+    profileDeleteReview,
+    profileEditReview
   } = useProfileData();
 
+  const { newReview } = useContext(YelpContext);
   useEffect(() => {
     getTimeRating(id);
     // eslint-disable-next-line
@@ -38,6 +41,10 @@ const UserProfile = (props) => {
       });
     // eslint-disable-next-line
   }, [props.newRegister]);
+  useEffect(() => {
+    if (id)
+      getTimeRating(id);
+  }, [newReview]);
 
   // eslint-disable-next-line
   const whom = allUsers.all.find(user => user.id == id) || null;
@@ -51,13 +58,13 @@ const UserProfile = (props) => {
           :
           <>
             <div className='profile-container'>
-            <div className='back-arrow-fixed'>
-              <Button variant="contained"
-                onClick={() => history.goBack()}>
-                <KeyboardBackspaceIcon />
-              </Button>
-              <div className=""></div>
-            </div>
+              <div className='back-arrow-fixed'>
+                <Button variant="contained"
+                  onClick={() => history.goBack()}>
+                  <KeyboardBackspaceIcon />
+                </Button>
+                <div className=""></div>
+              </div>
               <Profile
                 whom={whom || {}}
                 length={allUsers.reviews.length}
@@ -73,6 +80,7 @@ const UserProfile = (props) => {
                       isProfile={true}
                       profileHelpCount={profileHelpCount}
                       profileDeleteReview={profileDeleteReview}
+                      profileEditReview={profileEditReview}
                     />
                   </div>
                 </div>
