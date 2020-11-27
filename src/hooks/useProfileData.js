@@ -10,7 +10,8 @@ const initProfile = {
 };
 
 const useProfileData = () => {
-  const [allUsers, setAllUsers] = useState(initProfile);
+  const [allUsers, setAllUsers]
+    = useState(initProfile);
 
   const getUsersAPI = () => {
     return axios
@@ -46,7 +47,7 @@ const useProfileData = () => {
       .then(res => res)
       .catch(er => console.log(er));
   };
-  
+
   const profileHelpCount = (reviewID, term) => {
     let cpy = [...allUsers.reviews];
     let cpyAll = [...allUsers.all];
@@ -79,21 +80,38 @@ const useProfileData = () => {
     return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
   };
 
-  const profileEditReview = () => {
-    
-  }
+  const profileEditReview = (id,
+    user_id, venue_id,
+    venue_name,
+    cleanliness, socialDistancing,
+    transactionProcess, overall_rating,
+    description) => {
+    const cpy = [...allUsers.reviews];
+    const reviewIndex = allUsers.reviews
+      .findIndex(rev => rev.id === id);
+    cpy[reviewIndex] = {
+      ...cpy[reviewIndex],
+      cleanliness,
+      socialDistancing,
+      transactionProcess,
+      overall_rating,
+      description
+    };
+    setAllUsers({ ...allUsers, reviews: cpy });
+
+  };
 
   const profileDeleteReview = (reviewID) => {
-    let copiedReviews = [...allUsers.reviews]
+    let copiedReviews = [...allUsers.reviews];
     copiedReviews.forEach(review => {
       if (review.id === reviewID) {
-        const indexOfReview =copiedReviews.indexOf(review)
+        const indexOfReview = copiedReviews.indexOf(review);
         copiedReviews.splice(indexOfReview, 1);
-        setAllUsers({...allUsers, reviews: [...copiedReviews]})
+        setAllUsers({ ...allUsers, reviews: [...copiedReviews] });
       }
-    })
-  }
-  
+    });
+  };
+
   // review id
   // my name
 
@@ -103,7 +121,8 @@ const useProfileData = () => {
     getUsersAPI,
     profileHelpCount,
     setAllUsers,
-    profileDeleteReview
+    profileDeleteReview,
+    profileEditReview
   };
 
 };

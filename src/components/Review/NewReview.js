@@ -155,13 +155,11 @@ const NewReview = props => {
     if (props.overall_rating) {
       submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
       .then(response => {
-        console.log("getting response", response);
         setNewReview(true);
+        props.profileEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
         if (!response) {
-          console.log("is there a response?")
           return handleClose();
         }
-        console.log('trying to set to true...');
         props.setReviewSnackBar(true);
         handleClose();
         resetState();
@@ -188,15 +186,16 @@ const NewReview = props => {
     setDescription(props.description || INIT_DESCRIPTION);
   };
 
-  const questions = questionData.map(question => {
+  const questions = questionData.map((question, index) => {
     if (question.title !== 'Description') {
-      return <QuestionRating id={question.id}  value={question.value} description={question.description} title={question.title} onChange={handleChange} />;
+      return <QuestionRating id={question.id} key={index} value={question.value} description={question.description} title={question.title} onChange={handleChange} />;
     } else {
-      return <QuestionDescription id={question.id} description={question.description} reviewDescription={props.description} title={question.title} onChange={handleChange} />;
+      return <QuestionDescription id={question.id} key={index} description={question.description} reviewDescription={props.description} title={question.title} onChange={handleChange} />;
     }
   });
 
   return (
+
     <div>
       {props.overall_rating && (
         <div className="edit-button">

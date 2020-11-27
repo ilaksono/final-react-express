@@ -133,7 +133,7 @@ module.exports = (db) => {
     SELECT favourited_businesses.*, reviews.venue_name 
     FROM favourited_businesses
     JOIN reviews ON reviews.venue_id = favourited_businesses.venue_id 
-    WHERE favourited_businesses.user_id = $1;
+    WHERE favourited_businesses.user_id = $1 AND deleted = false;
     `;
     return db
       .query(qs, [Number(id)])

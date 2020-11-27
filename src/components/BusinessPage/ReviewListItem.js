@@ -264,6 +264,7 @@ export default function ReviewListItem(props) {
                 overall_rating={props.overall_rating}
                 venue_name={props.venue_name}
                 venue_id={props.venue_id}
+                profileEditReview={props.profileEditReview}
               />
             </div>
           </>
