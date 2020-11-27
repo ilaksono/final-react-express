@@ -13,7 +13,6 @@ import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
 // export const YelpContext = React.createContext();
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import {YelpContext} from 'YelpContext';
 const theme = createMuiTheme({
   palette: {

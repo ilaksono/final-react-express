@@ -166,25 +166,43 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
-
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
+      {props.isHome && (
+        <div className='review-title-container'>
+          <Link to={`/search/${props.venue_id}`} className="review-title">
+            {props.venue_name}
+          </Link>
+        </div>
+      )}
       <div className='header-container'>
         <div className='user'>
-
           {
-            (props.picture && !(props.isProfile || props.isHome)) &&
+            // isProfile && isHome are both true for home page
+            (props.picture && (props.isProfile && props.isHome) || (!props.isProfile && !props.isHome)) &&
             <Link to={`/users/${props.user_id}`} >
               <img className='profile-img' src={props.picture} alt='no img found' />
             </Link>
           }
           <div className="username-date">
-            <Link to={(props.isProfile || props.isHome) ? `/search/${props.venue_id}` : `/users/${props.user_id}`}>
-              <span onClick={props.isProfile ? () => getIndividualBusinessData(props.venue_id) : null} className='review-header-link'>{(props.isProfile || props.isHome) ? props.venue_name : props.username}</span>
-            </Link>
+            {!(props.isProfile || props.isHome) && (
+              <Link to={`/users/${props.user_id}`}>
+                <span className='review-header-link'>{props.username}</span>
+              </Link>
+            )}
 
-            <span className="date">{formatDateString(props.date)}</span>
+            {
+              props.isHome &&
+              <Link to={`/users/${props.user_id}`} >
+
+                <span className='review-header-link'>{props.username}</span>
+              </Link>
+            }
+            {
+              !props.isHome &&
+              <span className="review-date">{formatDateString(props.date)}</span>
+            }
             <div className='time-ago'>
               {convertTime(props.date)}
             </div>
@@ -224,14 +242,16 @@ export default function ReviewListItem(props) {
         </table>
       </div>
       <div className='review-content'>
-        <div className='review-numbers'>
-          <div className="review-description">
-            <p className={props.toxic && 'toxic-review'}>{props.description}</p>
-          </div>
+        <div className={!props.isHome ? "review-list-description" : "review-list-description-short"}>
+          <div className={props.toxic && 'toxic-review'}>{props.description}</div>
         </div>
       </div>
-
       <div className='review-footer'>
+        {props.isHome && (
+          <Link to={`/search/${props.venue_id}`} className="link-to-review">
+            Read Review
+          </Link>
+        )}
         <div className='helpful-container'>
           {(appState.authorized && !props.isHome) &&
             <div className='helpful'>
@@ -265,7 +285,7 @@ export default function ReviewListItem(props) {
                 venue_name={props.venue_name}
                 venue_id={props.venue_id}
                 isProfile={props.isProfile || null}
-                isHome={props.isHome}
+                isHome={props.isHome || null}
               />
             </div>
           </>
@@ -278,15 +298,9 @@ export default function ReviewListItem(props) {
           </div>
         </div>
       </div>
+      {/* 
       <div className='home-name-label'>
-
-        {
-          props.isHome &&
-          <Link to={`/users/${props.user_id}`} >
-            <span className='review-header-link'>- {props.username}</span>
-          </Link>
-        }
-      </div>
+      </div> */}
 
 
     </div>

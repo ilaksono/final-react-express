@@ -224,14 +224,20 @@ const Home = () => {
         </div>
         <div className='home-reviews-container'>
           {
-            homeReviews.length ?
-              <ReviewList
-                reviews={homeReviews}
-                profileHelpCount={homeHelpCount}
-                profileDeleteReview={homeDeleteReview}
-                isHome={true}
-                isProfile={true}
-              />
+            homeReviews.length ? (
+              <>
+                <div className='top-container'>
+                <span className='top-label'>Recent Reviews</span>
+                </div>
+                    <ReviewList
+                      reviews={homeReviews}
+                      profileHelpCount={homeHelpCount}
+                      profileDeleteReview={homeDeleteReview}
+                      isHome={true}
+                      isProfile={true}
+                    />
+              </>
+            )
               :
               <CircularProgress size={65} className='home-loading'/>
           }
