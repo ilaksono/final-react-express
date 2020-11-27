@@ -170,14 +170,21 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
-
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"}/>
+      { props.isHome && (
+        <div className='review-title-container'>
+          <Link to={`/search/${props.venue_id}`} className="review-title">
+            { props.venue_name }
+          </Link>
+        </div>
+      )}
       <div className='header-container'>
         <div className='user'>
         {
-        (props.picture && !(props.isProfile)) &&
+          // isProfile && isHome are both true for home page
+        (props.picture && (props.isProfile && props.isHome) || (!props.isProfile && !props.isHome)) &&
           <Link to={`/users/${props.user_id}`} >
             <img className='profile-img' src={props.picture} alt='no img found' />
           </Link>
@@ -196,7 +203,10 @@ export default function ReviewListItem(props) {
                 <span className='review-header-link'>{props.username}</span>
               </Link>
             }
-            <span className="review-date">{formatDateString(props.date)}</span>
+            {
+              !props.isHome &&
+              <span className="review-date">{formatDateString(props.date)}</span>
+            } 
             <div className='time-ago'>
               {convertTime(props.date)}
             </div>
@@ -236,68 +246,66 @@ export default function ReviewListItem(props) {
         </table>
       </div>
       <div className='review-content'>
-        <div className='review-numbers'>
-          <div className="review-description">
-            <p>{props.description}</p>
-          </div>
+        <div className={ !props.isHome ? "review-list-description" : "review-list-description-short"}>
+          {props.description}
         </div>
       </div>
-
-      <div className='review-footer'>
-        <div className='helpful-container'>
-          {(appState.authorized && !props.isHome) &&
-            <div className='helpful'>
-              {appState.user_id !== props.user_id &&
-                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+      { props.isHome && (
+        <Link to={`/search/${props.venue_id}`} className="link-to-review">
+          Read Review
+        </Link>
+      )}
+      { !props.isHome && (
+        <div className='review-footer'>
+          <div className='helpful-container'>
+            {(appState.authorized && !props.isHome) &&
+              <div className='helpful'>
+                {appState.user_id !== props.user_id &&
+                  <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+                    <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+                  </div>}
+                {props.helpful_count}
+              </div>}
+          </div>
+          {props.user_id === appState.user_id && (
+            <>
+            <div className='helpful-count'>
                   <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-                </div>}
-              {props.helpful_count}
-            </div>}
-        </div>
-        {props.user_id === appState.user_id && (
-          <>
-          <div className='helpful-count'>
-                <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-              </div>
-          <div className='delete-button'
-            onClick = {handleAlert}
-          >
-          <DeleteIcon />
-          </div>
-          <div className='edit-button'
-            onClick={handleEdit}>
-              <NewReview 
-              review_id={props.id}
-              user_id={props.user_id}
-              cleanliness={props.cleanliness}
-              socialDistancing={props.social_distancing}
-              transaction={props.transaction_process}
-              description={props.description}
-              overall_rating={props.overall_rating}
-              venue_name={props.venue_name}
-              venue_id={props.venue_id}
-              isProfile={props.isProfile || null}
-              />
+                </div>
+            <div className='delete-button'
+              onClick = {handleAlert}
+            >
+            <DeleteIcon />
             </div>
-          </>
-        )}
+            <div className='edit-button'
+              onClick={handleEdit}>
+                <NewReview 
+                review_id={props.id}
+                user_id={props.user_id}
+                cleanliness={props.cleanliness}
+                socialDistancing={props.social_distancing}
+                transaction={props.transaction_process}
+                description={props.description}
+                overall_rating={props.overall_rating}
+                venue_name={props.venue_name}
+                venue_id={props.venue_id}
+                isProfile={props.isProfile || null}
+                />
+              </div>
+            </>
+          )}
 
 
-        <div className='error-container'>
-          <div className='error'>
-            {err && err}
+          <div className='error-container'>
+            <div className='error'>
+              {err && err}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {/* 
       <div className='home-name-label'>
-
-        {
-          props.isHome &&
-          <Link to={`/users/${props.user_id}`} >
-            <span className='review-header-link'>- {props.username}</span>
-          </Link>
-        }
-      </div>
+      </div> */}
 
 
     </div>

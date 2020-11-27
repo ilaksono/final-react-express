@@ -57,12 +57,14 @@
 .home-search-l-container {
   @include flexbox(row, center, center);
   height: 50px;
-  width: 24%;
+  max-width: 24%;
   margin-right: 5px;
 }
 .home-search {
   @include flexbox(row, center, center);
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-search-v-container {
