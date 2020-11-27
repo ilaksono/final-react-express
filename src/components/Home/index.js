@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 200
   },
   image: {
-    maxHeight: 168,
+    maxHeight: 159,
     minWidth: 300,
     margin: '9px auto',
     position: 'relative',

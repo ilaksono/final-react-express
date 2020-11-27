@@ -168,10 +168,11 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
+  console.log(props.isHome, props.isProfile, props.venue_name);
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
-      {props.isHome || props.isProfile && (
+      {(props.isHome || props.isProfile) && (
         <div className='review-title-container'>
           <Link to={`/search/${props.venue_id}`} className="review-title">
             {props.venue_name}
