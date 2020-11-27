@@ -49,6 +49,7 @@
   left: 10px;
   height: 30px;
   width: 30px;
+  min-width: 30px;
   border-radius: 50%;
   background-color: rgb(189, 189, 189);
   margin-right: 5px;
@@ -64,9 +65,15 @@
   left: 10px;
   height: 30px;
   width: 30px;
+  min-width: 30px;
   border-radius: 50%;
   background-color: rgb(189, 189, 189);
   margin-right: 5px;
+}
+
+.delete-button:hover {
+  color: $salmon;
+  cursor: pointer;
 }
 
 .editable {
@@ -82,13 +89,11 @@
   left: 10px;
 }
 
-.delete-button {
-  left: 10px;
-  cursor: pointer;
-}
 
 .edit-button {
   left: 10px;
+  height: 24px;
+  width: 24px;
   cursor: pointer;
 }
 
@@ -104,7 +109,7 @@
 }
 
 .review-table {
-  width: 130px;
+  width: 120px;
 }
 
 .table-row {
@@ -115,11 +120,11 @@
   @include flexbox(row, flex-start, center);
   width: 85px;
   font-size: 14px;
-  margin-left: 5px;
+  margin-left: 0px;
 }
 .right {
   @include flexbox(row, flex-end, center);
-  width: 45px;
+  width: 40px;
   margin-right: 12px;
   font-size: 14px;
 }
@@ -132,7 +137,8 @@
 }
 
 .review-list-description-short {
-  max-height: 20px;
+  max-height: 21px;
+  height: 21px;
   display: -webkit-box;
   margin-left: 2px;
   -webkit-line-clamp: 2;
@@ -178,8 +184,8 @@
 .username-date {
   @include flexbox(column, flex-start, flex-start);
   height: 100%;
-  margin-left: 10px;
-  width: 120px;
+  margin-left: 5px;
+  width: 150px;
 }
 
 .venue {
@@ -205,6 +211,7 @@
 
 .review-header-link {
   font-weight: bold;
+  text-align: left;
   color:  #363f47;
 }
 

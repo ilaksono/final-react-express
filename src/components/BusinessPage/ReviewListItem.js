@@ -215,13 +215,13 @@ export default function ReviewListItem(props) {
                 Cleanliness
               </td>
               <td className="right">
-                {props.cleanliness} &nbsp; <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
+                {props.cleanliness} <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
               <td className="left">
                 Distancing
               </td>
               <td className="right">
-                {props.social_distancing} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
+                {props.social_distancing} <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
             <tr className="table-row">
@@ -229,13 +229,13 @@ export default function ReviewListItem(props) {
                 Transaction
               </td>
               <td className="right">
-                {props.transaction_process} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
+                {props.transaction_process} <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
               <td className="left">
                 Overall
               </td>
               <td className="right">
-                {props.overall_rating} &nbsp;<FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
+                {props.overall_rating} <FavoriteIcon style={{ fontSize: '16px', color: '#FF717C' }} />
               </td>
             </tr>
           </tbody>

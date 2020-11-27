@@ -243,6 +243,11 @@
   background-color: rgb(189, 189, 189);
 }
 
+.edit-button:hover {
+  cursor: pointer;
+  color: $salmon;
+}
+
 .td-day {
   width: 35px;
 }
