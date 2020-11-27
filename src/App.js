@@ -11,6 +11,8 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
 import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
+  import { useCookies } from 'react-cookie';
+
 // export const YelpContext = React.createContext();
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {YelpContext} from 'YelpContext';
@@ -41,6 +43,7 @@ function App() {
   // if (loadError) return 'Error loading maps';
   // if (!isLoaded) return "loading maps";
 
+ 
 
   return (
     <div className="layout">

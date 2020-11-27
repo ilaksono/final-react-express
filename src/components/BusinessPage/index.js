@@ -244,7 +244,7 @@ export default function BusinessPage() {
 
   const checkIfHasReviewedPreviously = (bizReviews) => {
     const check = bizReviews.some(reviews => {
-      if (reviews.user_id === appState.user_id) {
+      if (reviews.user_id == appState.user_id) {
         return true;
       }
     });

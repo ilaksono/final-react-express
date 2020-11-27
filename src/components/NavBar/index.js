@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, Fragment } from "react";
 import logo from "../logo.png";
+import axios from 'axios';
 import 'styles/NavBar.scss';
 import Search from "components/Search";
 import Button from "components/Button";
@@ -9,6 +10,8 @@ import { YelpContext } from 'YelpContext.js';
 import RegisterForm from '../Register';
 import LoginForm from '../Login';
 import AccountMenu from './AccountMenu';
+import { useCookies } from 'react-cookie';
+
 const initMod = {
   regOpen: false,
   logOpen: false
@@ -20,10 +23,18 @@ const NavBar = (props) => {
   const [loginSnackBar, setLoginSnackBar] = useState(false);
   const [logoutSnackBar, setLogoutSnackBar] = useState(false);
   const [registerSnackBar, setRegisterSnackBar] = useState(false);
-  const { appState, logout } = useContext(YelpContext);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const { appState, logout, authorizeUser } = useContext(YelpContext);
+
   useEffect(() => {
     setIsHome(location.pathname === '/');
   }, [location]);
+
+  useEffect(() => {
+    if (cookies.user_id) {
+    authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id)
+    }
+  },[])
 
   const handleLogout = () => {
     logout();
@@ -41,6 +52,8 @@ const NavBar = (props) => {
       setRegisterSnackBar(false);
     }
   };
+
+
   return (
     <>
     <div className="hidden">
