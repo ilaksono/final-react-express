@@ -70,7 +70,7 @@ export default function AccountMenu(props) {
       { props.appState.name }
       <div className="profile-icon-container">
         <AccountCircleIcon
-          style={{ fontSize: 50, color: 'white' }}
+          style={{ fontSize: 45, color: 'white' }}
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
