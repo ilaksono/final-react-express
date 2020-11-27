@@ -9,6 +9,7 @@ import useFilter from 'hooks/useFilter';
 import useSort from 'hooks/useSort';
 import useNewReview from 'hooks/useNewReview';
 import { useLoadScript } from '@react-google-maps/api';
+import useLoadToxicity from 'hooks/useLoadToxicity';
 
 export const YelpContext = React.createContext();
 
@@ -49,7 +50,10 @@ export function YelpProvider({ children }) {
     submitNewReview,
     sortBy
   } = useYelpData();
-
+  const {
+    loadToxic, 
+    setLoadToxic
+  } = useLoadToxicity();
   const {
     sort,
     setSort
@@ -105,6 +109,8 @@ export function YelpProvider({ children }) {
       yelpAutoComplete,
       resetFilters,
       filters,
+      loadToxic,
+      setLoadToxic,
       filterClick,
       toggleFilterShow,
       distanceFilterClick,

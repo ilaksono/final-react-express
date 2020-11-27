@@ -25,7 +25,8 @@ CREATE TABLE reviews (
   transactionProcess NUMERIC(3, 1),
   overall_rating NUMERIC(3, 1) NOT NULL,
   description VARCHAR(255),
-  deleted BOOLEAN DEFAULT false
+  deleted BOOLEAN DEFAULT false,
+  toxic BOOLEAN default false
 );
 
 CREATE TABLE liked_reviews (

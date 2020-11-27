@@ -1,8 +1,10 @@
 import { useContext, useCallback, useEffect, useState } from 'react';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap, 
+  InfoWindow } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
+import {Fragment} from 'react';
 
 const containerStyle = {
   width: '30vw',
@@ -21,10 +23,9 @@ const Map = props => {
     resultsPerPage,
     isLoaded,
     loadError
-    
+
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
-
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
@@ -39,7 +40,7 @@ const Map = props => {
   useEffect(() => {
     setLoadingSearch(false);
     // eslint-disable-next-line
-  }, [mapState.places])
+  }, [mapState.places]);
 
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
@@ -61,18 +62,26 @@ const Map = props => {
   };
   return (
     <div className="map-container">
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          options={options}
-          center={center}
-          zoom={12}
-          onLoad={() => onMapLoad(map)}
-          onUnmount={() => onUnmount(map)}
-        >
-          { /* Child components, such as markers, info windows, etc. */}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        options={options}
+        center={center}
+        zoom={12}
+        onLoad={() => onMapLoad(map)}
+        onUnmount={() => onUnmount(map)}
+      >
+        { /* Child components, such as markers, info windows, etc. */}
           {parsedMarkers}
-          <></>
-        </GoogleMap>
+          {/* <InfoWindow 
+          position={{lat: 42, lng: -79}}>
+          <div>
+          hi
+          </div>
+          </InfoWindow> */}
+          <>
+        </>
+         
+      </GoogleMap>
     </div>
   );
 };

@@ -129,7 +129,7 @@ export default function BusinessPage() {
   useEffect(() => {
     venueAvgRatings();
   }, [businessDetails]);
-  
+
   const { id } = useParams();
   const clickPhoto = (url) => {
     setBigPhoto({ open: true, url });
@@ -152,9 +152,9 @@ export default function BusinessPage() {
       const avgOverall = getAvgRating(reviews, "overall_rating");
       const avgTransactionProcess = getAvgRating(reviews, "transactionprocess");
       const avgSocialDistancing = getAvgRating(reviews, "socialdistancing");
-      return setAvgRatings({ overall_rating: avgOverall, cleanliness: avgCleanliness, transactionprocess: avgTransactionProcess, socialdistancing: avgSocialDistancing })
+      return setAvgRatings({ overall_rating: avgOverall, cleanliness: avgCleanliness, transactionprocess: avgTransactionProcess, socialdistancing: avgSocialDistancing });
     }
-  }
+  };
 
   const getAvgRating = (data, property) => {
     let count = 0;
@@ -165,8 +165,8 @@ export default function BusinessPage() {
       return acc + Number(review[property]);
     }, 0);
     return sum / count;
-  }
-  
+  };
+
 
   const primeChartData = (reviews, type) => {
     if (reviews) {
@@ -213,7 +213,9 @@ export default function BusinessPage() {
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
-      const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
+      // const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
+      const delta = primedVal[primedVal.length - 1] - primedVal[0] 
+      const clr = delta > 0 ? '#164a18' : delta === 0 ? '#1E0253' : '#4a1626';
       setChartData({
         labels: primedLabels,
         datasets: [{
@@ -232,14 +234,14 @@ export default function BusinessPage() {
       .slice(5, 10).join('').replace(' ', '-');
   };
 
-  
-  
+
+
   useEffect(() => {
     if (!businessDetails.id) {
       getIndividualBusinessData(id);
     } // eslint-disable-next-line
   }, []);
-  
+
   const checkIfHasReviewedPreviously = (bizReviews) => {
     const check = bizReviews.some(reviews => {
       if (reviews.user_id === appState.user_id) {
@@ -249,7 +251,7 @@ export default function BusinessPage() {
     if (check) {
       return true;
     }
-  }
+  };
 
   useEffect(() => {
     if (businessDetails.reviews) {
@@ -399,13 +401,13 @@ export default function BusinessPage() {
               </div>
               {appState.authorized && (
                 <div className='bus-buttons'>
-                  {!checkIfHasReviewedPreviously(businessDetails.reviews) &&  
-                  <>
-                  <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar}/> 
-                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
-                  </>
+                  {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
+                    <>
+                      <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
+                      <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
+                    </>
                   }
-                  
+
                   {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
                   <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
 
@@ -429,13 +431,17 @@ export default function BusinessPage() {
                 }
               </div>
             </div>
+
             <div className='review-chart-container'>
               <div id="reviews-container" >
+                
                 {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
                   <span>Be the first to write a review!</span>
                 ) : (
-                  <ReviewList reviews={businessDetails.reviews} avgRatings={avgRatings} />
-                )}
+                    <ReviewList 
+                      reviews={businessDetails.reviews}
+                      avgRatings={avgRatings} />
+                  )}
               </div>
               <div className='business-chart-container'>
                 {chartData.ready &&

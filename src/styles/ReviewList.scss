@@ -20,6 +20,13 @@
   padding-bottom: 5px;
 }
 
+.load-toxicity {
+  position: fixed;
+  z-index: 5;
+  top: 37%;
+  left: 48%;
+  opacity: 0.6;
+}
 
 .rating-data {
   @include flexbox(row, flex-start, center);

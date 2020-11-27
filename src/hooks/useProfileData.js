@@ -80,26 +80,27 @@ const useProfileData = () => {
     return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
   };
 
-  const profileEditReview = (id,
-    user_id, venue_id,
-    venue_name,
-    cleanliness, socialDistancing,
-    transactionProcess, overall_rating,
-    description) => {
-    const cpy = [...allUsers.reviews];
-    const reviewIndex = allUsers.reviews
-      .findIndex(rev => rev.id === id);
-    cpy[reviewIndex] = {
-      ...cpy[reviewIndex],
-      cleanliness,
-      socialDistancing,
-      transactionProcess,
-      overall_rating,
-      description
-    };
-    setAllUsers({ ...allUsers, reviews: cpy });
+  // const profileEditReview = (id,
+  //   user_id, venue_id,
+  //   venue_name,
+  //   cleanliness, socialDistancing,
+  //   transactionProcess, overall_rating,
+  //   description, toxicity) => {
+  //   const cpy = [...allUsers.reviews];
+  //   const reviewIndex = allUsers.reviews
+  //     .findIndex(rev => rev.id === id);
+  //   cpy[reviewIndex] = {
+  //     ...cpy[reviewIndex],
+  //     cleanliness,
+  //     socialDistancing,
+  //     transactionProcess,
+  //     overall_rating,
+  //     description,
+  //     toxicity
+  //   };
+  //   // setAllUsers({ ...allUsers, reviews: cpy });
 
-  };
+  // };
 
   const profileDeleteReview = (reviewID) => {
     let copiedReviews = [...allUsers.reviews];
@@ -122,7 +123,7 @@ const useProfileData = () => {
     profileHelpCount,
     setAllUsers,
     profileDeleteReview,
-    profileEditReview
+    // profileEditReview
   };
 
 };

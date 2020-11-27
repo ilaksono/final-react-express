@@ -210,7 +210,7 @@ const RegisterForm = (props) => {
               handleChange(event, 'email')} className={`user-input-item${state.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={state.password} onChange={(event) =>
               handleChange(event, 'password')} className={`user-input-item${state.errType === 'password' ? ' error-input' : ''}`} />
-            <Button onClick={() => handleClick()}
+            <Button 
               variant='contained' color='primary'
               type='submit'
               className='user-input-btn'>Register</Button>

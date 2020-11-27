@@ -96,7 +96,8 @@ const Home = () => {
     resetFilters,
     setLoadingSearch,
     newReview,
-    setNewReview
+    setNewReview,
+    loadToxic
   } = useContext(YelpContext);
 
   const [homeReviews, setHomeReviews] = useState([]);
@@ -106,7 +107,7 @@ const Home = () => {
         setNewReview(false);
       });
     // eslint-disable-next-line
-  }, [newReview]);
+  }, [loadToxic, newReview]);
 
   const homeHelpCount = (reviewID, term) => {
     let cpy = [...homeReviews];
@@ -223,14 +224,20 @@ const Home = () => {
         </div>
         <div className='home-reviews-container'>
           {
-            homeReviews.length ?
-              <ReviewList
-                reviews={homeReviews}
-                profileHelpCount={homeHelpCount}
-                profileDeleteReview={homeDeleteReview}
-                isHome={true}
-                isProfile={true}
-              />
+            homeReviews.length ? (
+              <>
+                <div className='top-container'>
+                <span className='top-label'>Recent Reviews</span>
+                </div>
+                    <ReviewList
+                      reviews={homeReviews}
+                      profileHelpCount={homeHelpCount}
+                      profileDeleteReview={homeDeleteReview}
+                      isHome={true}
+                      isProfile={true}
+                    />
+              </>
+            )
               :
               <CircularProgress size={65} className='home-loading'/>
           }
