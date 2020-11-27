@@ -96,7 +96,8 @@ const Home = () => {
     resetFilters,
     setLoadingSearch,
     newReview,
-    setNewReview
+    setNewReview,
+    loadToxic
   } = useContext(YelpContext);
 
   const [homeReviews, setHomeReviews] = useState([]);
@@ -106,7 +107,7 @@ const Home = () => {
         setNewReview(false);
       });
     // eslint-disable-next-line
-  }, [newReview]);
+  }, [loadToxic, newReview]);
 
   const homeHelpCount = (reviewID, term) => {
     let cpy = [...homeReviews];

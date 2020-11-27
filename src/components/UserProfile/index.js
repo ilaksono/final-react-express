@@ -25,14 +25,13 @@ const UserProfile = (props) => {
     getUsersAPI,
     setAllUsers,
     profileDeleteReview,
-    profileEditReview
   } = useProfileData();
 
-  const { newReview } = useContext(YelpContext);
+  const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
   useEffect(() => {
     getTimeRating(id);
     // eslint-disable-next-line
-  }, [id]);
+  }, [id, loadToxic]);
   useEffect(() => {
     getUsersAPI()
       .then((res) => {
@@ -43,8 +42,9 @@ const UserProfile = (props) => {
   }, [props.newRegister]);
   useEffect(() => {
     if (id)
-      getTimeRating(id);
-  }, [newReview]);
+      getTimeRating(id)
+      .then(() => setNewReview(true));
+  }, [newReview, loadToxic]);
 
   // eslint-disable-next-line
   const whom = allUsers.all.find(user => user.id == id) || null;
@@ -80,7 +80,6 @@ const UserProfile = (props) => {
                       isProfile={true}
                       profileHelpCount={profileHelpCount}
                       profileDeleteReview={profileDeleteReview}
-                      profileEditReview={profileEditReview}
                     />
                   </div>
                 </div>

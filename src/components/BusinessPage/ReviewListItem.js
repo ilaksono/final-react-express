@@ -226,7 +226,7 @@ export default function ReviewListItem(props) {
       <div className='review-content'>
         <div className='review-numbers'>
           <div className="review-description">
-            <p>{props.description}</p>
+            <p className={props.toxic && 'toxic-review'}>{props.description}</p>
           </div>
         </div>
       </div>
@@ -264,9 +264,8 @@ export default function ReviewListItem(props) {
                 overall_rating={props.overall_rating}
                 venue_name={props.venue_name}
                 venue_id={props.venue_id}
-                profileEditReview={props.profileEditReview}
                 isProfile={props.isProfile || null}
-
+                isHome={props.isHome}
               />
             </div>
           </>

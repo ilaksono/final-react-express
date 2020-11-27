@@ -112,7 +112,8 @@ const NewReview = props => {
     appState,
     submitNewReview,
     setNewReview,
-    setBusinessDetails
+    setBusinessDetails,
+    setLoadToxic
   } = useContext(YelpContext);
 
   // const { allUsers, setAllUsers } = useProfileData();
@@ -130,9 +131,17 @@ const NewReview = props => {
   };
   const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
     setNewReview(true);
+    setLoadToxic(true);
     if (props.isProfile && !props.isHome) {
-      props.profileEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description);
-      return axios.post("/reviews/edit", { id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating });
+      return axios.post("/reviews/edit",
+        {
+          id, user_id, venue_id, venue_name, cleanliness,
+          socialDistancing, transactionProcess,
+          description, overall_rating
+        })
+        .then(() => {
+          setLoadToxic(false);
+        });
     }
     else {
       return axios
@@ -152,7 +161,9 @@ const NewReview = props => {
             findReview.transactionProcess = transactionProcess;
             findReview.overall_rating = overall_rating;
             findReview.description = description;
+            findReview.toxic = response.data.toxic;
             updatedBusinessDetailsReviews = updatedBusinessDetailsReviews.map(review => review.user_id === user_id ? findReview : review);
+            setLoadToxic(false);
             return setBusinessDetails(prev => ({ ...prev, reviews: updatedBusinessDetailsReviews }));
           }
         })
@@ -192,10 +203,10 @@ const NewReview = props => {
 
   const handleSubmit = () => {
     handleClose();
+    setLoadToxic(true);
     if (props.overall_rating) {
       submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
         .then(response => {
-          setNewReview(true);
 
           if (!response) {
             return handleClose();
@@ -203,6 +214,8 @@ const NewReview = props => {
           console.log('trying to set to true...');
           // props.setReviewSnackBar(true);
           handleClose();
+          setLoadToxic(false);
+
         }).catch(err => console.log(err));
     }
     else {
@@ -215,6 +228,8 @@ const NewReview = props => {
           handleClose();
           resetState();
           props.setOpen(true);
+          setLoadToxic(false);
+
         }).catch(err => console.log(err));
     }
   };
@@ -274,7 +289,11 @@ const NewReview = props => {
                 <Button
                   variant='contained'
                   size='large'
-                  onClick={handleSubmit}
+                  onClick={() => {
+
+                    setNewReview(true);
+                    handleSubmit();
+                  }}
                   className={classes.saveButton}
                   startIcon={<SaveIcon />}
                 >
@@ -293,7 +312,7 @@ const NewReview = props => {
           </div>
         </Fade>
       </Modal>
-    </div>
+    </div >
   );
 };
 
