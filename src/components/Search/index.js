@@ -27,6 +27,7 @@ const Search = props => {
     getPriceFilterMode,
     setLoadingSearch,
     handlePageChange,
+    setRefinedSeed,
     isLoaded
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
@@ -66,9 +67,9 @@ const Search = props => {
   // // }
   useEffect(() => {
     populateCategories(results);
-    addResults(results);
+    // addResults(results);
     getPriceFilterMode(results);
-    // setRefinedSeed(results);
+    setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
 

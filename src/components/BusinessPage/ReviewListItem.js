@@ -171,7 +171,7 @@ export default function ReviewListItem(props) {
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {props.isHome && (
         <div className='review-title-container'>
-          <Link to={`/search/${props.venue_id}`} className="review-title">
+          <Link to={`/search/${props.venue_id}`} className="review-title" onClick={() => getIndividualBusinessData(props.venue_id)}>
             {props.venue_name}
           </Link>
         </div>
@@ -243,7 +243,7 @@ export default function ReviewListItem(props) {
       </div>
       <div className='review-content'>
         <div className={!props.isHome ? "review-list-description" : "review-list-description-short"}>
-          <div className={props.toxic && 'toxic-review'}>{props.description}</div>
+          {props.description}
         </div>
       </div>
       <div className='review-footer'>

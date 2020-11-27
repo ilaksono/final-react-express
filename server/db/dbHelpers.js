@@ -1,8 +1,5 @@
 const request = require('request-promise-native');
-require('@tensorflow/tfjs');
-require('@tensorflow/tfjs-node');
-const toxicity = require('@tensorflow-models/toxicity');
-const threshold = 0.9;
+
 module.exports = (db) => {
 
   const getAllReviews = () => {
@@ -35,16 +32,12 @@ module.exports = (db) => {
 
   const submitReview = async (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
     const queryString = `
-    INSERT INTO reviews (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating, toxic)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    INSERT INTO reviews (user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *;
     `;
-    const model = await toxicity.load(threshold);
-    const sentences = [description];
-    const predictions = await model.classify(sentences);
-    const toxicLevel = predictions
-      .some(pre => pre.results[0].match);
-    const queryParams = [user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating, toxicLevel];
+    
+    const queryParams = [user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows;
@@ -55,16 +48,12 @@ module.exports = (db) => {
   const editReviews = async (reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating) => {
     const queryString = `
     UPDATE reviews
-    SET venue_id = $3, venue_name = $4, cleanliness = $5, socialDistancing = $6, transactionProcess = $7, description = $8, overall_rating = $9, toxic = $10
+    SET venue_id = $3, venue_name = $4, cleanliness = $5, socialDistancing = $6, transactionProcess = $7
+    , description = $8, overall_rating = $9
     WHERE id = $1 and user_id = $2
     RETURNING *;
     `;
-    const model = await toxicity.load(threshold);
-    const sentences = [description];
-    const predictions = await model.classify(sentences);
-    const toxicLevel = predictions
-      .some(pre => pre.results[0].match);
-    const queryParams = [reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating, toxicLevel];
+        const queryParams = [reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows[0];

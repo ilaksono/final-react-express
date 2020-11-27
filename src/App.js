@@ -13,7 +13,8 @@ import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
 // export const YelpContext = React.createContext();
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {YelpContext} from 'YelpContext';
+import { YelpProvider } from './YelpContext';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -29,7 +30,6 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const {loadToxic} = useContext(YelpContext);
   const {
     newRegister, setNewRegister
   } = useNewUser();
@@ -44,14 +44,10 @@ function App() {
 
   return (
     <div className="layout">
-      
+      <YelpProvider>
+
         <MuiThemeProvider theme={theme}>
-        {loadToxic &&
-          <CircularProgress
-            className='load-toxicity'
-            color='primary'
-            size={60} />
-        }
+        
           <Router>
             <NavBar loadSearch setNewRegister={setNewRegister} />
             <div className='spacer'>
@@ -81,6 +77,8 @@ function App() {
             </Switch>
           </Router>
         </MuiThemeProvider>
+      </YelpProvider>
+
     </div>
   );
 }

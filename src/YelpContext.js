@@ -12,6 +12,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import useLoadToxicity from 'hooks/useLoadToxicity';
 
 export const YelpContext = React.createContext();
+const libraries = ["places"]
 
 export function YelpProvider({ children }) {
   const { filters,
@@ -28,7 +29,7 @@ export function YelpProvider({ children }) {
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries: ["places"]
+    libraries
   });
   const {
     appState,

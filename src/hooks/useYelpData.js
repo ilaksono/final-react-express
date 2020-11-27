@@ -142,6 +142,7 @@ export default function useYelpData() {
 
 
   const addReview = (query, reviews) => {
+
     query.forEach((result, index) => {
       let ratingSum = 0;
       for (const review of reviews) {
@@ -155,6 +156,7 @@ export default function useYelpData() {
         query[index].overall_rating = (ratingSum / query[index].reviewCount).toFixed(1);
       }
     });
+    console.log(query);
     return query;
   };
 
@@ -167,6 +169,7 @@ export default function useYelpData() {
     ]).then((all) => {
       const yelpData = all[0].data;
       const parsedYelpData = getCoreYelpData(yelpData);
+      // console.log(all[1]);
       all[1].data.forEach((data) => {
         reviewArr.push(data);
       });
