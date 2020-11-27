@@ -21,6 +21,7 @@
   width: 257px;
   @include flexbox(row, center, center);
   margin-bottom: 5%;
+  margin-top: 10px;
 }
 .open-filter-container {
   width: 100%;
@@ -31,11 +32,14 @@
   width: 100%;
   @include flexbox(column, center, center);
   margin-bottom: 5%;
+  border-top: 1px solid $gray-line;
+  padding-top: 8px;
 
 }
 .category-filter-container {
   width: 100%;
   @include flexbox(column, center, center);
   margin-bottom: 5%;
-
+  border-top: 1px solid $gray-line;
+  padding-top: 8px;
 }

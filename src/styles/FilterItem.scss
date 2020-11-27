@@ -41,5 +41,20 @@
   text-overflow: ellipsis;
   width: 160px;
   text-align: left;
+  margin-left: 5px;
+}
+
+.distance-filter-label {
+  border: none;
+  border-radius: 4px;
+  background-color: inherit;
+  padding: 3px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
+  text-align: left;
+  margin-left: 5px;
 }
 

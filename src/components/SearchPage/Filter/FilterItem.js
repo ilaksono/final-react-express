@@ -74,13 +74,13 @@ const FilterItem = props => {
     const clr = val ? 'primary' : 'default';
     return (
       <div className='each-filter'>
-        <label className='filter-label'>{props.message}</label>
         <Switch
           checked={val}
           color={clr}
           size='small'
           name={props.message}
           onClick={props.handleClick}>{props.message}</Switch>
+        <label className={ props.type === 'categories' ? 'filter-label' : 'distance-filter-label'}>{props.message}</label>
       </div>
     );
   }

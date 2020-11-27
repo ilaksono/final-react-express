@@ -134,19 +134,18 @@
   @include flexbox(row, flex-start, center);
   width: 85px;
   font-size: 14px;
-  margin-left: 0px;
+  margin-left: 9px;
 }
 .right {
   @include flexbox(row, flex-end, center);
   width: 40px;
-  margin-right: 12px;
   font-size: 14px;
 }
 
 .review-list-description {
   width: 100%;
   max-height: 90px;
-  margin-left: 10px;
+  margin-left: 2px;
   text-overflow: ellipsis;
 }
 
@@ -195,7 +194,7 @@
   @include flexbox(column, flex-start, flex-start);
   height: 100%;
   margin-left: 5px;
-  width: 150px;
+  width: 145px;
 }
 
 .venue {
