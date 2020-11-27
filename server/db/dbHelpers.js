@@ -269,8 +269,7 @@ module.exports = (db) => {
       .then(response => {
         return response.rows;
       });
-  }
-
+  };
 
   return {
     getAllReviews,

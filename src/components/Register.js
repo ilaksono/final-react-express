@@ -7,6 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import 'styles/Register.scss';
 import { Button } from '@material-ui/core';
+import {useCookies} from 'react-cookie';
 
 export const userData = [
   {
@@ -115,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
 const RegisterForm = (props) => {
 
   const [state, setState] = useState(initReg);
+  const [cookies, setCookie, removeCookie] = useCookies();
   const classes = useStyles();
   const {
     authorizeUser,
@@ -154,6 +156,9 @@ const RegisterForm = (props) => {
               profile_pic: res.data.profile_pic
             };
             props.setNewRegister(true);
+          setCookie('user_id', res.data.user_id, {path: "/"})
+          setCookie('username', res.data.username, {path: "/"})
+          setCookie('profile_pic', res.data.profile_pic, {path: "/"})
             authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));

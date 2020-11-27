@@ -14,6 +14,7 @@ const {
   resolveNaptr
 } = require('dns');
 const bcrypt = require("bcrypt");
+// const { default: axiosRegister } = require('axios/register.js');
 const salt = bcrypt.genSaltSync(10);
 app.use(bodyParser.json());
 app.use(cookieSession({
@@ -98,7 +99,7 @@ app.post("/register", (req, res) => {
   let exists = false;
   dbHelpers.serverRegistrationValidation()
     .then((userData) => {
-      userData.some(user => {
+      userData.forEach(user => {
         if (user.username === req.body.username) {
           exists = true;
           return res.send("username exists");
@@ -118,9 +119,10 @@ app.post("/register", (req, res) => {
               profile_pic: response[0].profile_pic,
               user_id: response[0].id
             });
+            req.session.user_id = response[0].id
           })
           .catch(err => {
-            console.log("this is the err",err);
+            console.log("this is the err", err);
           });
       }
     })
@@ -149,11 +151,36 @@ app.post("/register", (req, res) => {
 // });
 
 
+// app.post("/login", (req, res) => {
+//   dbHelpers.serverLoginValidation()
+//     .then((userData) => {
+//       userData.forEach(user => {
+//         if (user.email === req.body.email) {
+//           if (bcrypt.compareSync(req.body.password, user.password)) {
+//             return res.json({
+//               username: user.username,
+//               profile_pic: user.profile_pic,
+//               user_id: user.id
+//             });
+//           } else {
+//             return res.send("password incorrect");
+//           }
+//         }
+//       });
+//       return res.send("email does not exist");
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
+
 app.post("/login", (req, res) => {
+  let userID;
   dbHelpers.serverLoginValidation()
     .then((userData) => {
-      userData.some(user => {
+      for (const user of userData) {
         if (user.email === req.body.email) {
+          userID = user.id
           if (bcrypt.compareSync(req.body.password, user.password)) {
             return res.json({
               username: user.username,
@@ -164,18 +191,19 @@ app.post("/login", (req, res) => {
             return res.send("password incorrect");
           }
         }
-      });
-      return res.send("email does not exist");
+      }
+      req.session.user_id = userID
     })
     .catch(err => {
       console.log(err);
     });
 });
 
+
 // app.post("/login", (req, res) => {
 //   dbHelpers.serverLoginValidation()
 //     .then((userData) => {
-      
+
 //     })
 //     .catch(err => {
 //       console.log(err);
@@ -197,7 +225,9 @@ app.get("/api/reviews/home", (req, res) => {
   dbHelpers
     .getNewReviews()
     .then(response => {
-      res.json({ data: response });
+      res.json({
+        data: response
+      });
     })
     .catch(error => {
       console.log(error);
@@ -209,7 +239,9 @@ app.post("/api/reviews/:id", (req, res) => {
     .then(reviews => {
       res.send(reviews);
     })
-    .catch(error => { console.log(error); });
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 app.listen(PORT, () => {
@@ -236,14 +268,14 @@ app.post("/reviews/new", (req, res) => {
         .then(() => {
           if (exists === false) {
             dbHelpers.submitReview(
-              userId,
-              req.body.venue_id,
-              req.body.venue_name,
-              req.body.cleanliness,
-              req.body.socialDistancing,
-              req.body.transactionProcess,
-              req.body.description,
-              req.body.overall_rating)
+                userId,
+                req.body.venue_id,
+                req.body.venue_name,
+                req.body.cleanliness,
+                req.body.socialDistancing,
+                req.body.transactionProcess,
+                req.body.description,
+                req.body.overall_rating)
               .then(review => {
                 res.send(review);
               })
@@ -298,35 +330,41 @@ app.post("/reviews/helpful", (req, res) => {
 
 app.post("/reviews/delete", (req, res) => {
   dbHelpers.deleteReviews(req.body.id, req.body.user_id)
-  .then((response) => {
-    return res.json(response)
-  })
-  .catch (err => {console.log("error:", err)});
+    .then((response) => {
+      return res.json(response)
+    })
+    .catch(err => {
+      console.log("error:", err)
+    });
 });
 
 app.post("/reviews/edit", (req, res) => {
   dbHelpers.editReviews(
-    req.body.id,
-    req.body.user_id,
-    req.body.venue_id,
-    req.body.venue_name,
-    req.body.cleanliness,
-    req.body.socialDistancing,
-    req.body.transactionProcess,
-    req.body.description,
-    req.body.overall_rating
-  )
-  .then((response) => {
-    return res.send(response)
-  })
-  .catch(err => {console.log(err)})
+      req.body.id,
+      req.body.user_id,
+      req.body.venue_id,
+      req.body.venue_name,
+      req.body.cleanliness,
+      req.body.socialDistancing,
+      req.body.transactionProcess,
+      req.body.description,
+      req.body.overall_rating
+    )
+    .then((response) => {
+      return res.send(response)
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers
     .getAllUsersImages()
     .then(response => {
-      return res.json({ data: response });
+      return res.json({
+        data: response
+      });
     })
     .catch(er => console.log(er));
 });
@@ -335,14 +373,18 @@ app.get('/api/users/:id/rating_chart', (req, res) => {
 
   dbHelpers
     .getUserRatingChart(req.params.id)
-    .then(response => res.json({ data: response }));
+    .then(response => res.json({
+      data: response
+    }));
 });
 
 app.get('/api/reviews/users/:id', (req, res) => {
   dbHelpers
     .getProfileReviews(req.params.id)
     .then(response => {
-      res.json({ data: response });
+      res.json({
+        data: response
+      });
     })
     .catch(er => console.log(er));
 });
@@ -351,6 +393,8 @@ app.get('/api/favs/users/:id', (req, res) => {
   dbHelpers
     .getProfileFavs(req.params.id)
     .then(response =>
-      res.json({ data: response }))
+      res.json({
+        data: response
+      }))
     .catch(er => console.log(er));
 });

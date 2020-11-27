@@ -12,6 +12,8 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
 import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
+  import { useCookies } from 'react-cookie';
+
 // export const YelpContext = React.createContext();
 
 const theme = createMuiTheme({
@@ -29,6 +31,8 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
+
   const {
     newRegister, setNewRegister
   } = useNewUser();
@@ -40,6 +44,7 @@ function App() {
   // if (loadError) return 'Error loading maps';
   // if (!isLoaded) return "loading maps";
 
+ 
 
   return (
     <div className="layout">

@@ -7,6 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import 'styles/Register.scss';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { useCookies } from 'react-cookie';
 
 
 const initLogin = {
@@ -31,8 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const LoginForm = props => {
+
+  
+
   const classes = useStyles();
   const [login, setLogin] = useState(initLogin);
+  const [cookies, setCookie, removeCookie] = useCookies();
   const {
     authorizeUser
   } = useContext(YelpContext);
@@ -63,7 +68,6 @@ const LoginForm = props => {
         });
       }
     }
-
     // axios
     //   .post('/login', { email, password })
     //   .then(res => {
@@ -83,10 +87,12 @@ const LoginForm = props => {
     //   })
     //   .catch(er => console.log(er));
 
-
     axios.post("/login", { email, password })
       .then((response) => {
         if (response.data.username) {
+          setCookie('user_id', response.data.user_id, {path: "/"})
+          setCookie('username', response.data.username, {path: "/"})
+          setCookie('profile_pic', response.data.profile_pic, {path: "/"})
           authorizeUser(response.data.username, 
             response.data.profile_pic, 
             response.data.user_id);
@@ -99,12 +105,11 @@ const LoginForm = props => {
           props.setSnackBar(true);
           setLogin(currentUser);
           props.setModal(prev => ({ ...prev, logOpen: false }));
-        } else if (response.data === "email does not exist") {
-          setLogin({ ...login, errMsg: 'Invalid email', errType: 'email' });
         } else if (response.data === "password incorrect") {
           setLogin({ ...login, errMsg: 'password is incorrect!', errType: 'password' });
-        }
-      });
+        } else {
+          setLogin({ ...login, errMsg: 'Invalid email!', errType: 'email' });
+      }});
   };
 
   const handleClose = () => {

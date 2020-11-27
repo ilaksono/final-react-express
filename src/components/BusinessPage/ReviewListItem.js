@@ -254,6 +254,7 @@ export default function ReviewListItem(props) {
             </div>
             <div className='edit-button'
               onClick={handleEdit}>
+
               <NewReview
                 review_id={props.id}
                 user_id={props.user_id}
