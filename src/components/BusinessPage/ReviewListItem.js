@@ -35,14 +35,14 @@ export default function ReviewListItem(props) {
     setOpen(true);
   };
 
-  const [err, setErr] = useState('');
+/*   const [err, setErr] = useState('');
 
   const showErr = () => {
     setErr('Log in first!');
     setTimeout(() => {
       setErr('');
     }, 2000);
-  };
+  }; */
 
   const updateHelpfulCount = (id, name) => {
 
@@ -171,7 +171,7 @@ export default function ReviewListItem(props) {
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
-      {props.isHome && (
+      {props.isHome || props.isProfile && (
         <div className='review-title-container'>
           <Link to={`/search/${props.venue_id}`} className="review-title">
             {props.venue_name}
@@ -182,7 +182,7 @@ export default function ReviewListItem(props) {
         <div className='user'>
           {
             // isProfile && isHome are both true for home page
-            (props.picture && (props.isProfile && props.isHome) || (props.isProfile && !props.isHome)) &&
+            (props.picture && (props.isProfile && props.isHome) || (!props.isProfile && !props.isHome)) &&
             <Link to={`/users/${props.user_id}`} >
               <img className='profile-img' src={props.picture} alt='no img found' />
             </Link>
@@ -249,26 +249,30 @@ export default function ReviewListItem(props) {
         </div>
       </div>
       <div className='review-footer'>
-        {props.isHome && (
-          <Link to={`/search/${props.venue_id}`} className="link-to-review">
-            Read Review
-          </Link>
-        )}
-        <div className='helpful-container'>
-          {(appState.authorized) &&
-            <div className='helpful'>
-              {appState.user_id != props.user_id &&
-                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
-                  <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-                </div>}
-              {props.helpful_count}
-            </div>}
+        <div className="read-review-helpful-container">
+          {props.isHome || props.isProfile && (
+            <Link to={`/search/${props.venue_id}`} className="link-to-review">
+              Read Review
+            </Link>
+          )}
+          <div className='helpful-container'>
+              <div className='helpful'>
+                {appState.authorized && appState.user_id != props.user_id ? (
+                  <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+                    <ThumbUpAltIcon />
+                  </div>
+                ) : (
+                  <div className='helpful-count'>
+                    <ThumbUpAltIcon />
+                  </div>
+                )}
+                {props.helpful_count}
+              </div>
+          </div>
         </div>
+        
         {props.user_id == appState.user_id && (
-          <>
-            <div className='helpful-count'>
-              <ThumbUpAltIcon style={{ color: '#363f47' }} />
-            </div>
+          <div className="edit-delete-container">
             <div className='delete-button'
               onClick={handleAlert}
             >
@@ -291,15 +295,15 @@ export default function ReviewListItem(props) {
                 isHome={props.isHome || null}
               />
             </div>
-          </>
+          </div>
         )}
 
 
-        <div className='error-container'>
+       {/*  <div className='error-container'>
           <div className='error'>
             {err && err}
           </div>
-        </div>
+        </div> */}
       </div>
       {/* 
       <div className='home-name-label'>

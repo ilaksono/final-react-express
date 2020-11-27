@@ -24,8 +24,10 @@
   
 }
 .each-filter {
-  width: 100%;
-  @include flexbox(row, space-around, center)
+  width: 210px;
+  @include flexbox(row, flex-start, center);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .filter-label {
@@ -38,6 +40,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 160px;
-  text-align: right;
+  text-align: left;
 }
 
