@@ -258,24 +258,6 @@ export default function useYelpData() {
     });
   }
 
-  const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
-    return axios.post("/reviews/edit", {id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating})
-    .then(response => {
-      if (response) {
-      const updatedBusinessDetails = {...businessDetails};
-      const findReview = updatedBusinessDetails.reviews.find(review => review.user_id === user_id)
-      findReview.cleanliness = cleanliness;
-      findReview.socialDistancing = socialDistancing;
-      findReview.transactionProcess = transactionProcess;
-      findReview.overall_rating = overall_rating;
-      findReview.description = description;
-      updatedBusinessDetails.reviews.map(review => review.user_id === user_id ? findReview : review);
-      return setBusinessDetails(updatedBusinessDetails)
-      }
-    })
-    .catch (err => console.log(err))
-  }
-
   return {
     results,
     setResults,
@@ -284,7 +266,6 @@ export default function useYelpData() {
     setBusinessDetails,
     loadingSearch,
     submitNewReview,
-    submitEditReview,
     setLoadingSearch,
     getIndividualBusinessData,
     sortBy

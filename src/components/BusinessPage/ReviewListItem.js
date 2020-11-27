@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, Fragment } from 'react';
 import 'styles/Register.scss';
 import 'styles/ReviewListItem.scss';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
 import axios from 'axios';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import NewReview from '../Review/NewReview'
+import NewReview from '../Review/NewReview';
 import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog';
@@ -16,7 +16,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function ReviewListItem(props) {
 
   const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
-  const [openAlert, setOpenAlert] = useState(false); 
+  const [openAlert, setOpenAlert] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -26,12 +26,12 @@ export default function ReviewListItem(props) {
   };
 
   const closeAlert = () => {
-    setOpenAlert(false)
-  }
+    setOpenAlert(false);
+  };
 
   const handleEdit = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const [err, setErr] = useState('');
 
@@ -51,7 +51,7 @@ export default function ReviewListItem(props) {
           return;
         });
     }
-    
+
     else if (props.isHome) {
       return axios.post('/reviews/helpful', { id, username: name })
         .then((response) => {
@@ -59,7 +59,7 @@ export default function ReviewListItem(props) {
           return;
         });
     }
-    
+
     else {
 
       return axios.post('/reviews/helpful', { id, username: name })
@@ -87,41 +87,41 @@ export default function ReviewListItem(props) {
   const deleteReview = () => {
 
     if (props.isHome) {
-      return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
-      .then(() => {
-        props.profileDeleteReview(props.id)
-        closeAlert()
-      })
-      .catch(err => {console.log(err)})
+      return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+        .then(() => {
+          props.profileDeleteReview(props.id);
+          closeAlert();
+        })
+        .catch(err => { console.log(err); });
     };
 
     if (props.isProfile) {
-      return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
-      .then(() => {
-        props.profileDeleteReview(props.id)
-        closeAlert()
-      })
-      .catch(err => {console.log(err)})
+      return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+        .then(() => {
+          props.profileDeleteReview(props.id);
+          closeAlert();
+        })
+        .catch(err => { console.log(err); });
     };
 
-    return axios.post("/reviews/delete", {id: props.id, user_id: appState.user_id})
-    .then(() => {
-      const updatedBusinessDetails = {...businessDetails};
-      updatedBusinessDetails.reviews.map(review => {
-        if (review.id === props.id) {
-          const indexOfReview =updatedBusinessDetails.reviews.indexOf(review)
-          updatedBusinessDetails.reviews.splice(indexOfReview, 1);
-          setBusinessDetails(updatedBusinessDetails)
-          closeAlert()
-        }
+    return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+      .then(() => {
+        const updatedBusinessDetails = { ...businessDetails };
+        updatedBusinessDetails.reviews.map(review => {
+          if (review.id === props.id) {
+            const indexOfReview = updatedBusinessDetails.reviews.indexOf(review);
+            updatedBusinessDetails.reviews.splice(indexOfReview, 1);
+            setBusinessDetails(updatedBusinessDetails);
+            closeAlert();
+          }
+        });
       })
-    })
-    .catch( err => { console.log(err) })
-  }
+      .catch(err => { console.log(err); });
+  };
 
-  
 
-  
+
+
 
   const convertTime = (date) => {
     const time = new Date(date).getTime();
@@ -163,12 +163,12 @@ export default function ReviewListItem(props) {
   //   }
   // }
 
- 
+
 
   const formatDateString = date => {
     const newDate = new Date(date);
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-    return dateShortened
+    return dateShortened;
   };
 
   return (
@@ -242,19 +242,19 @@ export default function ReviewListItem(props) {
           </div>
         </div>
       </div>
+
       <div className='review-footer'>
-        {/*eslint-disable-next-line */}
         <div className='helpful-container'>
-        {(appState.authorized && !props.isHome) &&
-          <div className='helpful'>
-            { appState.user_id !== props.user_id && 
-              <div className='helpful-count editable' onClick={() => {updateHelpfulCount(props.id, appState.name)}}>
-                <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-              </div>}
-          {props.helpful_count}
-          </div>}
-          </div>
-        { props.user_id === appState.user_id && (
+          {(appState.authorized && !props.isHome) &&
+            <div className='helpful'>
+              {appState.user_id !== props.user_id &&
+                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+                  <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+                </div>}
+              {props.helpful_count}
+            </div>}
+        </div>
+        {props.user_id === appState.user_id && (
           <>
           <div className='helpful-count'>
                 <ThumbUpAltIcon style={{ color: '#1E0253' }} />
@@ -276,17 +276,29 @@ export default function ReviewListItem(props) {
               overall_rating={props.overall_rating}
               venue_name={props.venue_name}
               venue_id={props.venue_id}
+              isProfile={props.isProfile || null}
               />
-          </div>
+            </div>
           </>
         )}
-        
+
+
         <div className='error-container'>
           <div className='error'>
             {err && err}
           </div>
         </div>
       </div>
+      <div className='home-name-label'>
+
+        {
+          props.isHome &&
+          <Link to={`/users/${props.user_id}`} >
+            <span className='review-header-link'>- {props.username}</span>
+          </Link>
+        }
+      </div>
+
 
     </div>
   );

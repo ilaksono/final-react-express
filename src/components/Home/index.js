@@ -233,6 +233,7 @@ const Home = () => {
                       profileHelpCount={homeHelpCount}
                       profileDeleteReview={homeDeleteReview}
                       isHome={true}
+                      isProfile={true}
                     />
               </>
             )

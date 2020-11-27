@@ -24,7 +24,7 @@ export default function ReviewList(props) {
       key={review.id}
       username={review.username}
       social_distancing={review.socialdistancing}
-      transaction_process={review.socialdistancing}
+      transaction_process={review.transactionprocess}
       cleanliness={review.cleanliness}
       overall_rating={review.overall_rating}
       date={review.date}
