@@ -202,7 +202,7 @@ const Home = () => {
     <div className='home-layout'>
       <div className='search-home-container'>
         < div className='site-description'>
-          Find places to shop and hangout that take pandemics seriously
+          Find places to shop, eat and hangout that take pandemics seriously
         </div>
         <Search
           isHome={true}

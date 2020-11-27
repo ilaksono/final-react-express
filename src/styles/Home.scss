@@ -1,19 +1,20 @@
 @import './helper.scss';
 
 .home-layout {
-  background: $white;
-  max-height: calc(100vh - 60px);
+  background: #FFFFFF;
+  max-height: calc(100vh);
 }
 
 .home-widget-review-container {
   @include flexbox(row, space-around, flex-start);
-  padding-top: 40px;
-  overflow-y: scroll;
+  max-width: 1000px;
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
-  max-height: calc(100vh - 210px);
-  margin-left: 8%;
-  margin-right: 8%;
+  overflow: hidden;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
 }
 
 .widget-container {
@@ -31,6 +32,7 @@
 .site-description {
   height: 40px;
   color: $purple;
+  text-align: center;
   font-weight: bold;
   font-size: 22px;
   margin-bottom: 50px;
@@ -162,12 +164,41 @@
   border-bottom-right-radius: 15px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 815px) {
   .home-widget-review-container {
     @include flexbox(column, flex-start, center);    
   }
 }
 
+@media screen and (max-width: 700px) {
+  .search-home-container {
+    padding-bottom: 50px;
+    padding-top: 30px;
+  }
+  .home-search {
+    @include flexbox(column, flex-start, center);
+  }
+  .home-search-v-container {
+    margin-bottom: 10px;
+  }
+  .home-search-l-container {
+    margin-bottom: 10px;
+    max-width: 50%;
+    width: 50%;
+  }
+  .search-prompt {
+    font-size: 18px;
+  }
+  .home-search-v {
+    font-size: 18px;
+  }
+  .search-prompt-l {
+    font-size: 18px;
+  }
+  .home-search-l {
+    font-size: 18px;
+  }
+}
 .home-loading {
   margin-top: 45%;
   align-self: center;

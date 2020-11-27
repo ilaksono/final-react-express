@@ -10,7 +10,7 @@
   border-radius: 15px;
   padding: 2%;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .review-container:hover {
@@ -117,7 +117,6 @@
   font-size: 14px;
   margin-left: 5px;
 }
-
 .right {
   @include flexbox(row, flex-end, center);
   width: 45px;
@@ -133,7 +132,7 @@
 }
 
 .review-list-description-short {
-  max-height: 40px;
+  max-height: 20px;
   display: -webkit-box;
   margin-left: 2px;
   -webkit-line-clamp: 2;
@@ -172,6 +171,7 @@
 
 
 .reviews-list-container {
+  overflow: auto;
   width: 100%;
 }
 

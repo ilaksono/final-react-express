@@ -180,7 +180,7 @@ export default function ReviewListItem(props) {
         <div className='user'>
           {
             // isProfile && isHome are both true for home page
-            (props.picture && (props.isProfile && props.isHome) || (!props.isProfile && !props.isHome)) &&
+            (props.picture && (props.isProfile && props.isHome) || (props.isProfile && !props.isHome)) &&
             <Link to={`/users/${props.user_id}`} >
               <img className='profile-img' src={props.picture} alt='no img found' />
             </Link>

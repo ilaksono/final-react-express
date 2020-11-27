@@ -27,7 +27,6 @@
   left: 48%;
   opacity: 0.6;
 }
-
 .rating-data {
   @include flexbox(row, flex-start, center);
 }
@@ -40,4 +39,11 @@
 
 .venue-avg-ratings {
   margin-bottom: 20px;
+}
+
+.hide-scrollbar {
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

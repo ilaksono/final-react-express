@@ -98,26 +98,28 @@ const useApplicationData = () => { // login and user state information
   const getTops = () => {
     const width = '100%';
     const example = [];
+
+    example.push({
+      venue: 'Parks',
+      title: 'Parks',
+      width
+    });
+
+    example.push({
+      venue: 'Patios',
+      title: 'Patios',
+      width
+    });
+
     example.push({
       venue: 'Delivery',
       title: 'Delivery',
       width
     });
+    
     example.push({
-      venue: 'Restaurant',
-      title: 'Restaurant',
-      width
-
-    });
-    example.push({
-      venue: 'Patios',
-      title: 'Patios',
-      width
-
-    });
-    example.push({
-      venue: 'Toilet Paper',
-      title: 'Toilet Paper',
+      venue: 'Restaurants',
+      title: 'Restaurants',
       width
 
     });
