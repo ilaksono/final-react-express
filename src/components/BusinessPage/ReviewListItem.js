@@ -255,7 +255,7 @@ export default function ReviewListItem(props) {
           </Link>
         )}
         <div className='helpful-container'>
-          {(appState.authorized && !props.isHome) &&
+          {(appState.authorized) &&
             <div className='helpful'>
               {appState.user_id != props.user_id &&
                 <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
@@ -267,7 +267,7 @@ export default function ReviewListItem(props) {
         {props.user_id == appState.user_id && (
           <>
             <div className='helpful-count'>
-              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+              <ThumbUpAltIcon style={{ color: '#363f47' }} />
             </div>
             <div className='delete-button'
               onClick={handleAlert}
