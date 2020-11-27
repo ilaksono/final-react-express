@@ -18,7 +18,7 @@ module.exports = (db) => {
 
   const getReviewsPerBusiness = (id) => {
     const queryString = `
-    SELECT *
+    SELECT reviews.*, username, users.profile_pic
     FROM reviews
     JOIN users ON users.id = user_id
     WHERE venue_id = $1 AND deleted = FALSE;

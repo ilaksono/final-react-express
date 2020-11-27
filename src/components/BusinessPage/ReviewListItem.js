@@ -265,6 +265,8 @@ export default function ReviewListItem(props) {
                 venue_name={props.venue_name}
                 venue_id={props.venue_id}
                 profileEditReview={props.profileEditReview}
+                isProfile={props.isProfile || null}
+
               />
             </div>
           </>

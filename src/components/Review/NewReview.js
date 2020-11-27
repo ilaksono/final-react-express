@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -11,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
+import useProfileData from '../../hooks/useProfileData';
 import 'styles/BusinessPage.scss';
 
 
@@ -65,6 +67,9 @@ const INIT_DESCRIPTION = "";
 
 const NewReview = props => {
 
+
+
+
   const questionData = [
     {
       id: 1,
@@ -96,19 +101,22 @@ const NewReview = props => {
       description: 'Additional information (optional):'
     }
   ];
-  
-  console.log("review --->", props)
-  const [cleanliness, setCleanliness] = useState(INIT_RATING);
-  const [socialDistancing, setSocialDistancing] = useState(INIT_RATING);
-  const [transactionProcess, setTransactionProcess] = useState(INIT_RATING);
-  const [overallComfort, setOverallComfort] = useState(INIT_RATING);
-  const [description, setDescription] = useState(INIT_DESCRIPTION);
+
+
+  const [cleanliness, setCleanliness] = useState(props.cleanliness || INIT_RATING);
+  const [socialDistancing, setSocialDistancing] = useState(props.socialDistancing || INIT_RATING);
+  const [transactionProcess, setTransactionProcess] = useState(props.transaction || INIT_RATING);
+  const [overallComfort, setOverallComfort] = useState(props.overall_rating || INIT_RATING);
+  const [description, setDescription] = useState(props.description || INIT_DESCRIPTION);
   const { businessDetails,
     appState,
     submitNewReview,
     setNewReview,
-    submitEditReview
+    setBusinessDetails
   } = useContext(YelpContext);
+
+  // const { allUsers, setAllUsers } = useProfileData();
+
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -119,6 +127,37 @@ const NewReview = props => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
+    setNewReview(true);
+    if (props.isProfile && !props.isHome) {
+      props.profileEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description);
+      return axios.post("/reviews/edit", { id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating });
+    }
+    else {
+      return axios
+        .post("/reviews/edit",
+          {
+            id, user_id, venue_id, venue_name,
+            cleanliness, socialDistancing,
+            transactionProcess, description,
+            overall_rating
+          })
+        .then(response => {
+          if (response) {
+            let updatedBusinessDetailsReviews = [...businessDetails.reviews];
+            const findReview = updatedBusinessDetailsReviews.find(review => review.id === id);
+            findReview.cleanliness = cleanliness;
+            findReview.socialDistancing = socialDistancing;
+            findReview.transactionProcess = transactionProcess;
+            findReview.overall_rating = overall_rating;
+            findReview.description = description;
+            updatedBusinessDetailsReviews = updatedBusinessDetailsReviews.map(review => review.user_id === user_id ? findReview : review);
+            return setBusinessDetails(prev => ({ ...prev, reviews: updatedBusinessDetailsReviews }));
+          }
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   const handleChange = (title, value) => {
@@ -152,38 +191,40 @@ const NewReview = props => {
   };
 
   const handleSubmit = () => {
+    handleClose();
     if (props.overall_rating) {
-      submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
-      .then(response => {
-        setNewReview(true);
-        props.profileEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description)
-        if (!response) {
-          return handleClose();
-        }
-        props.setReviewSnackBar(true);
-        handleClose();
-        resetState();
-      }).catch(err => console.log(err));
-    } else {
-    submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
-      .then(response => {
-        setNewReview(true);
-        if (!response) {
-          return handleClose();
-        }
-        handleClose();
-        resetState();
-        props.setOpen(true);
-      }).catch(err => console.log(err));
+      submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
+        .then(response => {
+          setNewReview(true);
+
+          if (!response) {
+            return handleClose();
+          }
+          console.log('trying to set to true...');
+          // props.setReviewSnackBar(true);
+          handleClose();
+        }).catch(err => console.log(err));
+    }
+    else {
+      submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
+        .then(response => {
+          setNewReview(true);
+          if (!response) {
+            return handleClose();
+          }
+          handleClose();
+          resetState();
+          props.setOpen(true);
+        }).catch(err => console.log(err));
     }
   };
 
   const resetState = () => {
-    setCleanliness(props.cleanliness || INIT_RATING);
-    setSocialDistancing(props.socialDistancing || INIT_RATING);
-    setTransactionProcess(props.transactionProcess || INIT_RATING);
-    setOverallComfort(props.overall_rating || INIT_RATING);
-    setDescription(props.description || INIT_DESCRIPTION);
+    setCleanliness(INIT_RATING);
+    setSocialDistancing(INIT_RATING);
+    setTransactionProcess(INIT_RATING);
+    setOverallComfort(INIT_RATING);
+    setDescription(INIT_DESCRIPTION);
   };
 
   const questions = questionData.map((question, index) => {
