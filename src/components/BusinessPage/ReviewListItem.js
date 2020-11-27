@@ -10,6 +10,7 @@ import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {useCookies} from 'react-cookie';
 
 
 
@@ -17,6 +18,7 @@ export default function ReviewListItem(props) {
 
   const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
   const [openAlert, setOpenAlert] = useState(false);
+  const [cookies] = useCookies();
 
   const [open, setOpen] = useState(false);
 
@@ -255,14 +257,14 @@ export default function ReviewListItem(props) {
         <div className='helpful-container'>
           {(appState.authorized && !props.isHome) &&
             <div className='helpful'>
-              {appState.user_id !== props.user_id &&
+              {appState.user_id != props.user_id &&
                 <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
                   <ThumbUpAltIcon style={{ color: '#1E0253' }} />
                 </div>}
-            </div>}
               {props.helpful_count}
+            </div>}
         </div>
-        {props.user_id === appState.user_id && (
+        {props.user_id == appState.user_id && (
           <>
             <div className='helpful-count'>
               <ThumbUpAltIcon style={{ color: '#1E0253' }} />
