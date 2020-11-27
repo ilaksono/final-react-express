@@ -27,7 +27,6 @@
   left: 48%;
   opacity: 0.6;
 }
-
 .rating-data {
   @include flexbox(row, flex-start, center);
 }
@@ -38,6 +37,20 @@
   height: 100%;
 }
 
+
+@media screen and (max-width: 650px) {
+  .review-count {
+    font-size: 12px;
+  }
+}
+
 .venue-avg-ratings {
   margin-bottom: 20px;
+}
+
+.hide-scrollbar {
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

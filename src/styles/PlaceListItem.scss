@@ -1,5 +1,6 @@
 @import './helper';
 
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -134,8 +135,8 @@
   margin-top: 30px;
 }
 .review-header-link {
-  color: $purple;
+  color:  #363f47;
 }
 .review-header-link:hover {
-  color: purple;
+  color: $salmon;
 }

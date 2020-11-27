@@ -8,9 +8,9 @@
   border: 1px solid $gray-line;
   background-color: rgb(245, 243, 243);
   border-radius: 15px;
-  padding: 2%;
+  padding: 12px 10px 5px 10px;
   width: 100%;
-  margin-bottom: 20px;
+  margin: 2px 2px 15px 2px;
 }
 
 .review-container:hover {
@@ -20,7 +20,12 @@
 .review-footer {
   @include flexbox(row, space-between, center);
   margin-left: 2px;
-  width: 250px;
+  margin-top: 5px;
+  width: 100%;
+}
+.read-review-helpful-container {
+  @include flexbox(row, space-between, center);
+  max-width: 180px;
 }
 .rev-footer-container {
   @include flexbox(row, space-between, center);
@@ -49,13 +54,17 @@
   left: 10px;
   height: 30px;
   width: 30px;
-  border-radius: 50%;
-  background-color: rgb(189, 189, 189);
+  min-width: 30px;
   margin-right: 5px;
 }
 
+.helpful {
+  width: 100%;
+  @include flexbox(row, flex-start, center);
+}
+
 .helpful-container {
-  width: 50px;
+  width: 80px;
   @include flexbox(row, space-between, center);
 }
 
@@ -64,31 +73,47 @@
   left: 10px;
   height: 30px;
   width: 30px;
-  border-radius: 50%;
-  background-color: rgb(189, 189, 189);
+  min-width: 30px;
   margin-right: 5px;
+}
+
+.delete-button:hover {
+  color: $salmon;
+  cursor: pointer;
 }
 
 .editable {
   cursor: pointer;
 }
 
+.editable:hover {
+  color: $salmon;
+}
+
+.edit-delete-container {
+  @include flexbox(row, flex-start, center);
+  margin-right: 5px;
+}
 .header-container {
   width: 100%;
   @include flexbox(row, space-between, center);
+}
+
+@media screen and (max-width: 845px) {
+  .header-container {
+    @include flexbox(column, flex-start, flex-start);    
+  }
 }
 
 .helpful-count-user {
   left: 10px;
 }
 
-.delete-button {
-  left: 10px;
-  cursor: pointer;
-}
 
 .edit-button {
   left: 10px;
+  height: 24px;
+  width: 24px;
   cursor: pointer;
 }
 
@@ -104,7 +129,7 @@
 }
 
 .review-table {
-  width: 130px;
+  width: 120px;
 }
 
 .table-row {
@@ -115,25 +140,24 @@
   @include flexbox(row, flex-start, center);
   width: 85px;
   font-size: 14px;
-  margin-left: 5px;
+  margin-left: 9px;
 }
-
 .right {
   @include flexbox(row, flex-end, center);
-  width: 45px;
-  margin-right: 12px;
+  width: 40px;
   font-size: 14px;
 }
 
 .review-list-description {
   width: 100%;
   max-height: 90px;
-  margin-left: 10px;
+  margin-left: 2px;
   text-overflow: ellipsis;
 }
 
 .review-list-description-short {
-  max-height: 40px;
+  max-height: 42px;
+  height: 42px;
   display: -webkit-box;
   margin-left: 2px;
   -webkit-line-clamp: 2;
@@ -142,9 +166,6 @@
   text-overflow: ellipsis;
 }
 
-.error-container {
-  width: 92px;
-}
 .review-date {
   font-size: 14px;
   font-weight: normal;
@@ -178,8 +199,8 @@
 .username-date {
   @include flexbox(column, flex-start, flex-start);
   height: 100%;
-  margin-left: 10px;
-  width: 120px;
+  margin-left: 5px;
+  max-width: 145px;
 }
 
 .venue {
@@ -191,7 +212,7 @@
 
 .link-to-review {
   font-size: 13px;
-  width: 100%;
+  width: 110px;
   color: #363f47;
   font-weight: bold;
   @include flexbox(row, flex-start, center);
@@ -205,6 +226,7 @@
 
 .review-header-link {
   font-weight: bold;
+  text-align: left;
   color:  #363f47;
 }
 

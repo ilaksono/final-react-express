@@ -234,13 +234,25 @@
   margin-right: 30px;
 }
 
+
+@media screen and (max-width: 600px) {
+  #reviews-container {
+    width: 90%;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
 .edit-button {
   @include flexbox(row, center, center);
   left: 10px;
   height: 30px;
   width: 30px;
-  border-radius: 50%;
-  background-color: rgb(189, 189, 189);
+}
+
+.edit-button:hover {
+  cursor: pointer;
+  color: $salmon;
 }
 
 .td-day {
@@ -250,4 +262,11 @@
 .td-separator {
   width: 15px;
   @include flexbox(row, flex-end, center);
+}
+
+@media screen and (max-width: 988px) {
+  .review-chart-container {
+    @include flexbox(column-reverse, flex-start, center);
+    
+  }
 }

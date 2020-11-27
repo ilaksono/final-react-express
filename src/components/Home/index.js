@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 200
   },
   image: {
-    maxHeight: 168,
-    minWidth: 300,
+    maxHeight: 189,
+    minWidth: 341,
     margin: '9px auto',
     position: 'relative',
     [theme.breakpoints.down('xs')]: {
@@ -202,7 +202,7 @@ const Home = () => {
     <div className='home-layout'>
       <div className='search-home-container'>
         < div className='site-description'>
-          Find places to shop and hangout that take pandemics seriously
+          Find places to shop, eat and hangout that take pandemics seriously
         </div>
         <Search
           isHome={true}

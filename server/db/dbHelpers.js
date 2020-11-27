@@ -275,7 +275,6 @@ module.exports = (db) => {
       });
   };
 
-
   return {
     getAllReviews,
     submitReview,

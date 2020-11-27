@@ -64,7 +64,7 @@ export default function ReviewList(props) {
       false, 'review');
   };
   return (
-    <div className="reviews-list-container">
+    <div className={ props.isHome ? "reviews-list-container" : "reviews-list-container overflow-scroll "}>
       <div className='sort-group'>
       { !props.isHome && (
         <>
@@ -148,8 +148,10 @@ export default function ReviewList(props) {
           </div>
         </div>
       )}
-      
-      {reviews}
+      <div className="hide-scrollbar">
+
+        {reviews}
+      </div>
     </div>
   );
 

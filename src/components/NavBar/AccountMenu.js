@@ -14,6 +14,7 @@ import 'styles/NavBar.scss';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import 'styles/AccountMenu.scss';
 import { Link, useHistory } from 'react-router-dom';
+import {useCookies} from 'react-cookie'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,8 @@ export default function AccountMenu(props) {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+
+  const [cookies, setCookie, removeCookie] = useCookies([0]);
   
   const handleClose = (event) => {
     console.log(props.appState.name);
@@ -50,6 +53,9 @@ export default function AccountMenu(props) {
       return;
     }
     if (event === 'logout') {
+      removeCookie('user_id')
+      removeCookie('username')
+      removeCookie('profile_pic')
       props.logout();
     }
     if (event === 'profile') {
@@ -64,7 +70,7 @@ export default function AccountMenu(props) {
       { props.appState.name }
       <div className="profile-icon-container">
         <AccountCircleIcon
-          style={{ fontSize: 50, color: 'white' }}
+          style={{ fontSize: 45, color: 'white' }}
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"

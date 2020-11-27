@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import 'index.scss';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
+import { YelpProvider } from './YelpContext';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
   <React.StrictMode>
-
+    <CookiesProvider>
+    <YelpProvider>
       <App />
-
+    </YelpProvider>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
