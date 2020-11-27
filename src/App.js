@@ -12,7 +12,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'styles/App.scss';
 import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
-
 // export const YelpContext = React.createContext();
 
 const theme = createMuiTheme({

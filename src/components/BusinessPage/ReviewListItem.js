@@ -119,10 +119,6 @@ export default function ReviewListItem(props) {
       .catch(err => { console.log(err); });
   };
 
-
-
-
-
   const convertTime = (date) => {
     const time = new Date(date).getTime();
     let unit = "second";
@@ -248,27 +244,29 @@ export default function ReviewListItem(props) {
         </div>
         {props.user_id === appState.user_id && (
           <>
-          <div className='helpful-count'>
-                <ThumbUpAltIcon style={{ color: '#1E0253' }} />
-              </div>
-          <div className='delete-button'
-            onClick = {handleAlert}
-          >
-          <DeleteIcon />
-          </div>
-          <div className='edit-button'
-            onClick={handleEdit}>
-              <NewReview 
-              review_id={props.id}
-              user_id={props.user_id}
-              cleanliness={props.cleanliness}
-              socialDistancing={props.social_distancing}
-              transaction={props.transaction_process}
-              description={props.description}
-              overall_rating={props.overall_rating}
-              venue_name={props.venue_name}
-              venue_id={props.venue_id}
-              isProfile={props.isProfile || null}
+            <div className='helpful-count'>
+              <ThumbUpAltIcon style={{ color: '#1E0253' }} />
+            </div>
+            <div className='delete-button'
+              onClick={handleAlert}
+            >
+              <DeleteIcon />
+            </div>
+            <div className='edit-button'
+              onClick={handleEdit}>
+              <NewReview
+                review_id={props.id}
+                user_id={props.user_id}
+                cleanliness={props.cleanliness}
+                socialDistancing={props.social_distancing}
+                transaction={props.transaction_process}
+                description={props.description}
+                overall_rating={props.overall_rating}
+                venue_name={props.venue_name}
+                venue_id={props.venue_id}
+                profileEditReview={props.profileEditReview}
+                isProfile={props.isProfile || null}
+
               />
             </div>
           </>
