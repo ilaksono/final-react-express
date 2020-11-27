@@ -243,8 +243,8 @@ export default function ReviewListItem(props) {
                 <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
                   <ThumbUpAltIcon style={{ color: '#1E0253' }} />
                 </div>}
-              {props.helpful_count}
             </div>}
+              {props.helpful_count}
         </div>
         {props.user_id === appState.user_id && (
           <>
