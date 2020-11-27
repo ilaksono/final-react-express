@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 200
   },
   image: {
-    maxHeight: 159,
-    minWidth: 300,
+    maxHeight: 189,
+    minWidth: 341,
     margin: '9px auto',
     position: 'relative',
     [theme.breakpoints.down('xs')]: {
