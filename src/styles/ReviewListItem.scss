@@ -99,6 +99,12 @@
   @include flexbox(row, space-between, center);
 }
 
+@media screen and (max-width: 845px) {
+  .header-container {
+    @include flexbox(column, flex-start, flex-start);    
+  }
+}
+
 .helpful-count-user {
   left: 10px;
 }
@@ -194,7 +200,7 @@
   @include flexbox(column, flex-start, flex-start);
   height: 100%;
   margin-left: 5px;
-  width: 145px;
+  max-width: 145px;
 }
 
 .venue {

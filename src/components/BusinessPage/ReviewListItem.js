@@ -174,7 +174,7 @@ export default function ReviewListItem(props) {
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
         <div className='review-title-container'>
-          <Link to={`/search/${props.venue_id}`} className="review-title">
+          <Link to={`/search/${props.venue_id}/#reviews-container`} className="review-title">
             {props.venue_name}
           </Link>
         </div>
