@@ -5,7 +5,9 @@ import appReducer, {
   CREATE,
   DELETE,
   INIT_CENTER,
-  LOGOUT
+  LOGOUT,
+  ADD_FAV,
+  REMOVE_FAV
 } from 'reducers/appReducer';
 // const socket = new WebSocket('');
 
@@ -21,10 +23,10 @@ const initApp = {
   authorized: false,
   name: '',
   center: {},
-  profile_pic:'',
+  profile_pic: '',
   user_id: null,
-  likes:'',
-  favs:'',
+  likes: [],
+  favs: [],
 };
 
 const initReg = {
@@ -32,7 +34,7 @@ const initReg = {
   email: '',
   password: '',
   errMsg: '',
-  
+
 };
 const useApplicationData = () => { // login and user state information
   const [appState, dispatch] = useReducer(appReducer, initApp);
@@ -78,7 +80,7 @@ const useApplicationData = () => { // login and user state information
       dispatch({ type: DELETE });
     }
   };
- 
+
   const logout = () => {
     dispatch({ type: LOGOUT });
   };
@@ -94,9 +96,21 @@ const useApplicationData = () => { // login and user state information
   //     });
   // };
   const authorizeUser = (name, profile_pic, user_id, likes, favs) => {
-    console.log("authorizing", user_id)
-    dispatch({ type: AUTHORIZE, name, profile_pic, user_id, likes, favs});
+    console.log("authorizing", user_id);
+    dispatch({ type: AUTHORIZE, name, profile_pic, user_id, likes, favs });
   };
+
+  const handleFav = (biz_id) => {
+    if (!appState.favs.includes(biz_id)) {
+      dispatch({type: ADD_FAV, biz_id});
+      return false;
+    }
+    const favs = [...appState.favs];
+    favs.splice(favs.indexOf(biz_id), 1);
+    dispatch({type: REMOVE_FAV, favs})
+    return true;
+  };
+
   const getTops = () => {
     const width = '100%';
     const example = [];
@@ -118,7 +132,7 @@ const useApplicationData = () => { // login and user state information
       title: 'Delivery',
       width
     });
-    
+
     example.push({
       venue: 'Restaurants',
       title: 'Restaurants',
@@ -142,7 +156,6 @@ const useApplicationData = () => { // login and user state information
       });
   };
 
-  
 
   return {
     // submitHandle,
@@ -154,7 +167,8 @@ const useApplicationData = () => { // login and user state information
     tops,
     getTops,
     authorizeUser,
-    logout
+    logout,
+    handleFav
   };
 };
 

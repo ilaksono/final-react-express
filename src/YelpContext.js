@@ -38,7 +38,8 @@ export function YelpProvider({ children }) {
     getTops,
     authorizeUser,
     loginSubmit,
-    logout
+    logout,
+    handleFav
   } = useApplicationData();
   const { results,
     setResults,
@@ -155,7 +156,8 @@ export function YelpProvider({ children }) {
       setYelpLoading,
       resetResults,
       resetRefinedResults,
-      resetPagination
+      resetPagination,
+      handleFav
       // openFilterClick
     }}>
       {children}

@@ -136,7 +136,7 @@ app.post("/register", (req, res) => {
               profile_pic: response[0].profile_pic,
               user_id: response[0].id
             });
-            req.session.user_id = response[0].id
+            req.session.user_id = response[0].id;
           })
           .catch(err => {
             console.log("this is the err", err);
@@ -198,7 +198,7 @@ app.post("/login", (req, res) => {
     .then((userData) => {
       for (const user of userData) {
         if (user.email === req.body.email) {
-          userID = user.id
+          userID = user.id;
           if (bcrypt.compareSync(req.body.password, user.password)) {
             userDetails = {
               username: user.username,
@@ -206,29 +206,29 @@ app.post("/login", (req, res) => {
               user_id: userID,
               likes: [],
               favs: []
-            }
+            };
           } else {
             return res.send("password incorrect");
           }
         }
       }
-        
+
     })
     .then(() => {
       dbHelpers.getLikesByUser(userID)
-      .then(response => {
-        userDetails.likes = response;
-        console.log(userDetails.likes)
-      })
-      .then(() => {
-        dbHelpers.getProfileFavs(userID)
         .then(response => {
-          userDetails.favs = response
-          console.log(userDetails)
+          userDetails.likes = response;
+          console.log(userDetails.likes);
         })
-        return res.send(userDetails)
-      })
-    })
+        .then(() => {
+          dbHelpers.getProfileFavs(userID)
+            .then(response => {
+              userDetails.favs = response;
+              console.log(userDetails);
+            });
+          return res.send(userDetails);
+        });
+    });
 });
 
 
@@ -301,14 +301,14 @@ app.post("/reviews/new", (req, res) => {
         .then(() => {
           if (exists === false) {
             dbHelpers.submitReview(
-                userId,
-                req.body.venue_id,
-                req.body.venue_name,
-                req.body.cleanliness,
-                req.body.socialDistancing,
-                req.body.transactionProcess,
-                req.body.description,
-                req.body.overall_rating)
+              userId,
+              req.body.venue_id,
+              req.body.venue_name,
+              req.body.cleanliness,
+              req.body.socialDistancing,
+              req.body.transactionProcess,
+              req.body.description,
+              req.body.overall_rating)
               .then(review => {
                 res.send(review);
               })
@@ -364,32 +364,32 @@ app.post("/reviews/helpful", (req, res) => {
 app.post("/reviews/delete", (req, res) => {
   dbHelpers.deleteReviews(req.body.id, req.body.user_id)
     .then((response) => {
-      return res.json(response)
+      return res.json(response);
     })
     .catch(err => {
-      console.log("error:", err)
+      console.log("error:", err);
     });
 });
 
 app.post("/reviews/edit", (req, res) => {
   dbHelpers.editReviews(
-      req.body.id,
-      req.body.user_id,
-      req.body.venue_id,
-      req.body.venue_name,
-      req.body.cleanliness,
-      req.body.socialDistancing,
-      req.body.transactionProcess,
-      req.body.description,
-      req.body.overall_rating
-    )
+    req.body.id,
+    req.body.user_id,
+    req.body.venue_id,
+    req.body.venue_name,
+    req.body.cleanliness,
+    req.body.socialDistancing,
+    req.body.transactionProcess,
+    req.body.description,
+    req.body.overall_rating
+  )
     .then((response) => {
-      return res.send(response)
+      return res.send(response);
     })
     .catch(err => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
 app.get('/api/users/public', (req, res) => {
   dbHelpers
@@ -434,10 +434,20 @@ app.get('/api/favs/users/:id', (req, res) => {
 
 app.post("/api/favs", (req, res) => {
   dbHelpers.addToFavourites(req.body.id, req.body.user_id)
-  .then(response => {
-    res.json({
-      data:response
+    .then(response => {
+      res.json({
+        data: response
+      });
     })
-  })
-  .catch(err => console.log(err))
-})
+    .catch(err => console.log(err));
+});
+
+app.delete('/api/favs', (req, res) => {
+  dbHelpers
+    .removeFromFavourites(req.body.biz_id, req.body.user_id)
+    .then(response => {
+      res.json({
+        data: response
+      });
+    });
+});

@@ -178,7 +178,6 @@ const resetResults = () => {
     ]).then((all) => {
       const yelpData = all[0].data;
       const parsedYelpData = getCoreYelpData(yelpData);
-      console.log("parsed:", parsedYelpData)
       all[1].data.forEach((data) => {
         reviewArr.push(data);
       });

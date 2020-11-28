@@ -128,7 +128,7 @@ export default function BusinessPage() {
     businessDetails,
     getIndividualBusinessData,
     appState,
-    authorizeUser
+    handleFav
   } = useContext(YelpContext);
 
   useEffect(() => {
@@ -219,7 +219,7 @@ export default function BusinessPage() {
         primedVal.push(primedVal[0]);
 
       // const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
-      const delta = primedVal[primedVal.length - 1] - primedVal[0] 
+      const delta = primedVal[primedVal.length - 1] - primedVal[0];
       const clr = delta > 0 ? '#164a18' : delta === 0 ? '#1E0253' : '#4a1626';
       setChartData({
         labels: primedLabels,
@@ -258,28 +258,27 @@ export default function BusinessPage() {
     }
   };
 
-
-  const checkFavourites = (id) => {
-    if(appState.favs.includes(id)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  const checked = checkFavourites(businessDetails.id)
-
   const addFavourites = (id) => {
-    if (!appState.favs.includes(id)) {
-      return axios.post("/api/favs", {id: businessDetails.id, user_id: appState.user_id})
-      .then(response => { 
-        console.log(response, "this is my response")
-        appState.favs.push(id);
-        authorizeUser(appState.username, appState.profile_pic, appState.user_id, appState.likes, appState.favs)
-        setCookie("favs",appState.favs,{path: "/"})
-      })
-    }
-  }
+    if (!handleFav(businessDetails.id)) {
+      return axios
+        .post("/api/favs",
+          {
+            id: businessDetails.id,
+            user_id: appState.user_id
+          })
+        .catch(er => console.log(er));
+    } else
+      return axios
+        .delete('/api/favs',
+          {
+            data:
+            {
+              biz_id: businessDetails.id,
+              user_id: appState.user_id
+            }
+          })
+        .catch(er => console.log(er));
+  };
 
   useEffect(() => {
     if (businessDetails.reviews) {
@@ -436,10 +435,14 @@ export default function BusinessPage() {
                       <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
-                  {checked && <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>}
-
-                  
-                  {!checked && <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon} onClick={() => addFavourites(businessDetails.id)}>Favourite</Button>}
+                  <Button variant="contained"
+                    startIcon={<FavoriteIcon />}
+                    className={appState.favs.includes(businessDetails.id)
+                      ? classes.favourite : classes.notFavouriteIcon}
+                    onClick={() => addFavourites(businessDetails.id)}
+                  >
+                    Favourite
+                    </Button>
                 </div>
               )}
 
@@ -461,11 +464,11 @@ export default function BusinessPage() {
 
             <div className='review-chart-container'>
               <div id="reviews-container" >
-                
+
                 {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
                   <span>Be the first to write a review!</span>
                 ) : (
-                    <ReviewList 
+                    <ReviewList
                       reviews={businessDetails.reviews}
                       avgRatings={avgRatings} />
                   )}

@@ -14,18 +14,19 @@ const Map = props => {
   const {
     mapState,
     appState,
-    onMapLoad,
     setLoadingSearch,
     currentPage,
     resultsPerPage,
-
+    panTo,
+    onMapLoad,
+    mapRef,
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 
-
+  
 
   const center = {
     lat: mapState.center.lat || appState.center.lat || 43,
@@ -45,10 +46,12 @@ const Map = props => {
 
   if (mapState.places.length) {
     const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
-    console.log(currentResults);
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent  label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
+        <MarkerComponent
+          label={((currentPage - 1) * resultsPerPage) + ind + 1}
+          {...coord}
+        />
       );
     });
   }

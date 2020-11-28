@@ -206,7 +206,6 @@ const NewReview = props => {
     if (props.overall_rating) {
       submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
       .then(response => {
-          console.log('trying to set to true...');
           // props.setReviewSnackBar(true);
           setLoadToxic(false);
         }).catch(err => console.log(err));

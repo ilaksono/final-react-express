@@ -41,7 +41,7 @@ const PhotoModal = (props) => {
         open={props.bigPhoto.open}
       >
         <Fade in={props.bigPhoto.open}>
-          <img src={props.url} alt='no img found' style={{outline: 'none'}}/>
+          <img src={props.url} alt='no img found' style={{outline: 'none', maxHeight:'500px'}}/>
         </Fade>
       </Modal>
     </div>

@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog';
 import { HashLink } from 'react-router-hash-link';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {useCookies} from 'react-cookie';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +36,6 @@ export default function ReviewListItem(props) {
 
   const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
   const [openAlert, setOpenAlert] = useState(false);
-  const [cookies] = useCookies();
 
   const [open, setOpen] = useState(false);
 
