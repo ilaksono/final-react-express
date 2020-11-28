@@ -11,11 +11,13 @@ const SearchPage = props => {
   const { filters, toggleFilterShow,
     results, setRefinedSeed } = useContext(YelpContext);
  
-
+    const [showMap, setShowMap] = useState(true); 
   useEffect(() => {
     // setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
+
+
  
 
   return (
@@ -39,9 +41,22 @@ const SearchPage = props => {
           <div className='filter-spacer'></div>
         </>}
       <Results />
-      <Map />
-      <div className='map-spacer'>
-      </div>
+      <Button name='toggle'
+        className='show-map'/* 
+        endIcon={<Icon>send</Icon>} */
+        value='toggle-switch'
+        onClick={() => setShowMap(!showMap)}
+        style={{
+          position: 'absolute',
+          fontSize: 10,
+          fontWeight: 'bold',
+          right: showMap ? '445px' : '40px'
+        }}
+        variant="outlined"
+        color="primary"
+      > {showMap ? 'Hide' : 'Show'} Map </Button>
+      {showMap && <Map />}
+      
     </div>
   );
 };

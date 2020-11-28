@@ -44,6 +44,23 @@ app.post("/api/search_yelp", (req, res) => {
       console.log(e);
     });
 });
+
+// const getOneImage = (term, location) => {
+//  return client.search({
+//     term,
+//     location,
+//     limit: 1
+//   })
+//   .then( res => {
+//     return res
+//   })
+//   .catch(er => {
+//     setTimeout(() => {
+//       getOneImage(term, location)
+//     }, 300)
+//   })
+// }
+
 app.post("/api/search_one", (req, res) => {
   client
     .search({
