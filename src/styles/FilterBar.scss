@@ -43,3 +43,8 @@
   border-top: 1px solid $gray-line;
   padding-top: 8px;
 }
+
+.filter-bar-header {
+  @include flexbox(row, space-between, flex-start);
+  width: 100%;
+}

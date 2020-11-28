@@ -24,10 +24,11 @@ const useProfileData = () => {
       const users = await getUsersAPI();
       const favs = await getUsersFavs(id);
       const uniqueArr = [];
-      favs.data.data.forEach(data =>
-        !uniqueArr.some(fav =>
-          fav.venue_id === data.venue_id)
-        && uniqueArr.push(data));
+      favs.data.data
+        .forEach(data =>
+          !uniqueArr.some(fav =>
+            fav.venue_id === data.venue_id)
+          && uniqueArr.push(data));
       setAllUsers({
         all: users.data.data,
         reviews: reviews.data.data,
@@ -64,7 +65,7 @@ const useProfileData = () => {
       cpy[index].helpful_count--;
       cpyAll[ind].total--;
     }
-    return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
+    return setAllUsers({ ...allUsers, reviews: cpy, all: cpyAll });
   };
 
   const profileDeleteReview = (reviewID) => {
@@ -73,7 +74,7 @@ const useProfileData = () => {
       if (review.id === reviewID) {
         const indexOfReview = copiedReviews.indexOf(review);
         copiedReviews.splice(indexOfReview, 1);
-        setAllUsers({ ...allUsers, reviews: [...copiedReviews] });
+        setAllUsers({ ...allUsers, reviews: copiedReviews });
       }
     });
   };

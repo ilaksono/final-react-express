@@ -39,6 +39,7 @@ const Results = props => {
     maxPageNumber,
     handlePageChange,
     applyPriceFilter,
+    currentPage,
     filters } = useContext(YelpContext);
 
 
@@ -71,7 +72,7 @@ const Results = props => {
             <PlaceList />
             <div className="pagination-container">
               <div className={classes.root}>
-                <Pagination count={maxPageNumber} color="primary" onChange={handlePageChange} />
+                <Pagination count={maxPageNumber} page={currentPage} color="primary" onChange={handlePageChange} />
               </div>
             </div>
           </div>

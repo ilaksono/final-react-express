@@ -4,7 +4,7 @@ import { useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import SquishCategory from './SquishCategory.js';
 import CloseIcon from '@material-ui/icons/Close';
-
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 
 const FilterBar = (props) => {
@@ -14,6 +14,7 @@ const FilterBar = (props) => {
     refinedResults,
     filters, filterClick,
     distanceFilterClick,
+    resetFilters,
     addResults,
     getCenterPan,
     // panTo,
@@ -21,7 +22,8 @@ const FilterBar = (props) => {
     expandCategories,
     openFilterClick,
     sort,
-    resetPagination, currentPage
+    resetPagination, currentPage,
+    resetFiltersHandle
   } = useContext(YelpContext);
 
   let parsedCategoryFilters = [];
@@ -51,10 +53,10 @@ const FilterBar = (props) => {
   useEffect(() => {
     addResults(refinedResults);
 
-    getCenterPan(refinedResults)
-      // .then(res => {
-      //   panTo(res);
-      // });
+    getCenterPan(refinedResults);
+    // .then(res => {
+    //   panTo(res);
+    // });
     // populateCenter(refinedResults);
     // eslint-disable-next-line
   }, [refinedResults, currentPage]);
@@ -70,16 +72,31 @@ const FilterBar = (props) => {
 
   return (
     <div className="filter-container">
-      <Button
-        endIcon={<CloseIcon />}
-        color="primary"
-        size="large"
-        style={{
-          left: '35%',
-          paddingRight: 20
-        }}
-        onClick={toggleFilterShow}>
-      </Button>
+      <div className='filter-bar-header'>
+        <Button
+          endIcon={<AutorenewIcon />}
+          color="primary"
+          size="large"
+          style={{
+            left: '4px',
+            paddingRight: 30
+          }}
+          onClick={() => 
+            resetFiltersHandle()
+            // resetFilters
+            }>
+        </Button>
+        <Button
+          endIcon={<CloseIcon />}
+          color="primary"
+          size="large"
+          style={{
+            textAlign: 'center',
+            paddingRight: 20
+          }}
+          onClick={toggleFilterShow}>
+        </Button>
+      </div>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
         <FilterItem type='price' name='priceLeft' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
@@ -163,7 +180,8 @@ const FilterBar = (props) => {
   );
 };
 
-export default FilterBar;// sort;
+export default FilterBar;
+// sort;
 // comfort rating;
 // yelp rating;
 // most reviewed ?

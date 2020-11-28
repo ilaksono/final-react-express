@@ -30,10 +30,14 @@ const NavBar = (props) => {
   }, [location]);
 
   useEffect(() => {
-    if (cookies.user_id) 
-    authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, cookies.likes, cookies.favs)
+    if (cookies.user_id)
+      authorizeUser(cookies.username,
+        cookies.profile_pic,
+        cookies.user_id,
+        cookies.likes,
+        cookies.favs);
     // eslint-disable-next-line
-  },[])
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -55,69 +59,69 @@ const NavBar = (props) => {
 
   return (
     <>
-    <div className="hidden">
-      <SnackBar message="You have successfully logged in!" open={loginSnackBar} setSnackBar={setLoginSnackBar} />
-      <SnackBar message="You have successfully logged out!" open={logoutSnackBar} setSnackBar={setLogoutSnackBar} />
-      <SnackBar message="You have successfully registered!" open={registerSnackBar} setSnackBar={setRegisterSnackBar} />
-    </div>
-    <nav className="nav-bar">
-      <div className="logo-container">
-        <Link to={'/'}>
-          <img src={logo} alt="Logo" className='nav-icon' />
+      <div className="hidden">
+        <SnackBar message="You have successfully logged in!" open={loginSnackBar} setSnackBar={setLoginSnackBar} />
+        <SnackBar message="You have successfully logged out!" open={logoutSnackBar} setSnackBar={setLogoutSnackBar} />
+        <SnackBar message="You have successfully registered!" open={registerSnackBar} setSnackBar={setRegisterSnackBar} />
+      </div>
+      <nav className="nav-bar">
+        <div className="logo-container">
+          <Link to={'/'}>
+            <img src={logo} alt="Logo" className='nav-icon' />
               SafeSpace
         </Link>
-      </div>
-      {!isHome &&
-        props.loadSearch && (
-          <Search isHome={false} buttonMessage={<i className="fas fa-search"></i>}
-          />
-        )}
-      {appState.authorized ?
-        <>
-          <AccountMenu appState={appState}
-            closeSnackBar={closeSnackBar}
-            setSnackBar={setLogoutSnackBar}
-            logout={handleLogout}>
-          </AccountMenu>
-        </>
-        :
-        <div className="user-container">
-          <div className="login">
-            {/* <Link to={'/login'}> */}
-            <Button message="Login"
-              onClick={() =>
+        </div>
+        {!isHome &&
+          props.loadSearch && (
+            <Search isHome={false} buttonMessage={<i className="fas fa-search"></i>}
+            />
+          )}
+        {appState.authorized ?
+          <>
+            <AccountMenu appState={appState}
+              closeSnackBar={closeSnackBar}
+              setSnackBar={setLogoutSnackBar}
+              logout={handleLogout}>
+            </AccountMenu>
+          </>
+          :
+          <div className="user-container">
+            <div className="login">
+              {/* <Link to={'/login'}> */}
+              <Button message="Login"
+                onClick={() =>
+                  setModal({
+                    ...modal,
+                    logOpen: true
+                  })}
+                nav />
+              {modal.logOpen && <LoginForm
+                modal={modal}
+                setModal={setModal}
+                setSnackBar={setLoginSnackBar}
+                closeSnackBar={closeSnackBar}
+              />}
+              {/* </Link> */}
+            </div>
+            <div className="register">
+              {/* <Link to={'/register'}> */}
+              <Button message="Register" onClick={() =>
                 setModal({
                   ...modal,
-                  logOpen: true
-                })}
-              nav />
-            {modal.logOpen && <LoginForm
-              modal={modal}
-              setModal={setModal}
-              setSnackBar={setLoginSnackBar}
-              closeSnackBar={closeSnackBar}
-            />}
-            {/* </Link> */}
+                  regOpen: true
+                })} nav />
+              {modal.regOpen && <RegisterForm
+                modal={modal}
+                setModal={setModal}
+                setSnackBar={setRegisterSnackBar}
+                closeSnackBar={closeSnackBar}
+                setNewRegister={props.setNewRegister}
+              />}
+              {/* </Link> */}
+            </div>
           </div>
-          <div className="register">
-            {/* <Link to={'/register'}> */}
-            <Button message="Register" onClick={() =>
-              setModal({
-                ...modal,
-                regOpen: true
-              })} nav />
-            {modal.regOpen && <RegisterForm
-              modal={modal}
-              setModal={setModal}
-              setSnackBar={setRegisterSnackBar}
-              closeSnackBar={closeSnackBar}
-              setNewRegister={props.setNewRegister}
-            />}
-            {/* </Link> */}
-          </div>
-        </div>
-      }
-    </nav>
+        }
+      </nav>
     </>
   );
 

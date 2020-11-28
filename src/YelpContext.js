@@ -24,6 +24,7 @@ export function YelpProvider({ children }) {
     setCategoriesSelected,
     expandCategories,
     toggleFilterShow,
+    resetFiltersHandle
     // openFilterClick 
   } = useFilter();
 
@@ -155,7 +156,8 @@ export function YelpProvider({ children }) {
       resetResults,
       resetRefinedResults,
       resetPagination,
-      handleFav
+      handleFav,
+      resetFiltersHandle
       // openFilterClick
     }}>
       {children}
