@@ -1,5 +1,4 @@
 const sortBy = (data, property, ascending) => {
-    console.log("data", data);
   if (ascending) {
     return data.sort((a, b) => Number(a[property]) - Number(b[property]));
   } else {

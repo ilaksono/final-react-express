@@ -28,7 +28,6 @@ const useProfileData = () => {
           .then(response => {
             getUsersFavs(id)
               .then(rez => {
-
                 setAllUsers({
                   all: response.data.data,
                   reviews: res.data.data,

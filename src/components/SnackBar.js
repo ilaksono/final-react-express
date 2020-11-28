@@ -32,7 +32,6 @@ const SnackBar = (props) => {
   const { vertical, horizontal, open } = state;
 
   const handleClose = () => {
-    console.log("handling close...")
     props.setSnackBar(false);
     setState({ ...state, open: false });
   };

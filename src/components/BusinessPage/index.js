@@ -1,5 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
 import React from 'react';
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
 }));
+
 const initPhoto = {
   open: false,
   url: ''
@@ -123,7 +125,8 @@ export default function BusinessPage() {
   const {
     businessDetails,
     getIndividualBusinessData,
-    appState
+    appState,
+    handleFav
   } = useContext(YelpContext);
 
   useEffect(() => {
@@ -214,7 +217,7 @@ export default function BusinessPage() {
         primedVal.push(primedVal[0]);
 
       // const clr = !chartSelect.perDay ? 'grey' : '#1E0253';
-      const delta = primedVal[primedVal.length - 1] - primedVal[0] 
+      const delta = primedVal[primedVal.length - 1] - primedVal[0];
       const clr = delta > 0 ? '#164a18' : delta === 0 ? '#1E0253' : '#4a1626';
       setChartData({
         labels: primedLabels,
@@ -253,6 +256,28 @@ export default function BusinessPage() {
     }
   };
 
+  const addFavourites = (id) => {
+    if (!handleFav(businessDetails.id)) {
+      return axios
+        .post("/api/favs",
+          {
+            id: businessDetails.id,
+            user_id: appState.user_id
+          })
+        .catch(er => console.log(er));
+    } else
+      return axios
+        .delete('/api/favs',
+          {
+            data:
+            {
+              biz_id: businessDetails.id,
+              user_id: appState.user_id
+            }
+          })
+        .catch(er => console.log(er));
+  };
+
   useEffect(() => {
     if (businessDetails.reviews) {
       if (businessDetails.reviews.length)
@@ -288,6 +313,7 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
+        {console.log(appState)}
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
@@ -407,12 +433,14 @@ export default function BusinessPage() {
                       <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
-
-                  {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
-                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
-
-                  {/* RENDER THIS BUTTON WHEN A USER HAS NOT YET FAVOURITED THE VENUE */}
-                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon}>Favourite</Button>
+                  <Button variant="contained"
+                    startIcon={<FavoriteIcon />}
+                    className={appState.favs.includes(businessDetails.id)
+                      ? classes.favourite : classes.notFavouriteIcon}
+                    onClick={() => addFavourites(businessDetails.id)}
+                  >
+                    Favourite
+                    </Button>
                 </div>
               )}
 
@@ -434,11 +462,11 @@ export default function BusinessPage() {
 
             <div className='review-chart-container'>
               <div id="reviews-container" >
-                
+
                 {(businessDetails.reviews && businessDetails.reviews.length === 0) ? (
                   <span>Be the first to write a review!</span>
                 ) : (
-                    <ReviewList 
+                    <ReviewList
                       reviews={businessDetails.reviews}
                       avgRatings={avgRatings} />
                   )}

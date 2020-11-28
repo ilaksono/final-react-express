@@ -3,6 +3,8 @@ export const CREATE = 'CREATE';
 export const DELETE = 'DELETE';
 export const INIT_CENTER = 'INIT_CENTER';
 export const LOGOUT = 'LOGOUT';
+export const ADD_FAV = 'ADD_FAV';
+export const REMOVE_FAV = 'REMOVE_FAV';
 const appReducer = (appState, action) => {
 
   switch (action.type) {
@@ -12,7 +14,9 @@ const appReducer = (appState, action) => {
         authorized: true,
         name: action.name,
         profile_pic: action.profile_pic,
-        user_id: action.user_id
+        user_id: action.user_id,
+        favs: action.favs,
+        likes: action.likes
       };
     }
     case LOGOUT: {
@@ -30,6 +34,12 @@ const appReducer = (appState, action) => {
     }
     case INIT_CENTER: {
       return { ...appState, center: action.center };
+    }
+    case ADD_FAV: {
+      return {...appState, favs: [...appState.favs, action.biz_id]}
+    }
+    case REMOVE_FAV: {
+      return {...appState, favs: action.favs}
     }
     default:
       throw new Error('Invalid action type for data');

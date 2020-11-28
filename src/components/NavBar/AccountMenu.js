@@ -47,8 +47,6 @@ export default function AccountMenu(props) {
   const [cookies, setCookie, removeCookie] = useCookies([0]);
   
   const handleClose = (event) => {
-    console.log(props.appState.name);
-    console.log(props.appState.user_id);
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -56,6 +54,8 @@ export default function AccountMenu(props) {
       removeCookie('user_id')
       removeCookie('username')
       removeCookie('profile_pic')
+      removeCookie('likes')
+      removeCookie('favs')
       props.logout();
     }
     if (event === 'profile') {

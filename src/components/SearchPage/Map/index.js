@@ -47,7 +47,6 @@ const Map = props => {
   if (mapState.places.length) {
     const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
     parsedMarkers = currentResults.map((coord, ind) => {
-      console.log('coord',coord, ind);
       return (
         <MarkerComponent
           label={((currentPage - 1) * resultsPerPage) + ind + 1}

@@ -36,7 +36,7 @@ module.exports = (db) => {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *;
     `;
-    
+
     const queryParams = [user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
     return db.query(queryString, queryParams)
       .then(response => {
@@ -53,7 +53,7 @@ module.exports = (db) => {
     WHERE id = $1 and user_id = $2
     RETURNING *;
     `;
-        const queryParams = [reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
+    const queryParams = [reviewId, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating];
     return db.query(queryString, queryParams)
       .then(response => {
         return response.rows[0];
@@ -144,6 +144,19 @@ module.exports = (db) => {
       .then(res => res.rows);
   };
 
+  const getLikesByUser = (id) => {
+    const queryString = `
+    SELECT liked_reviews.*, reviews.id
+    FROM liked_reviews
+    JOIN reviews ON reviews.id = liked_reviews.review_id
+    WHERE liked_reviews.user_id = $1;
+    `;
+    const queryParams = [Number(id)];
+    return db
+      .query(queryString, queryParams)
+      .then(res => res.rows);
+  };
+
   const descreaseHelpfulCount = (id) => {
     const queryString = `
     UPDATE reviews
@@ -186,7 +199,7 @@ module.exports = (db) => {
     SELECT *
     FROM users;
     `;
-    return db.query(queryString, [])
+    return db.query(queryString)
       .then(response => {
         return response.rows;
       });
@@ -275,6 +288,33 @@ module.exports = (db) => {
       });
   };
 
+  const addToFavourites = (venue_id, user_id) => {
+    const queryString = `
+    INSERT INTO favourited_businesses(venue_id, user_id)
+    VALUES($1, $2)
+    RETURNING *;
+    `;
+
+    const queryParams = [venue_id, user_id];
+
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows;
+      });
+  };
+  const removeFromFavourites = (biz_id, user_id) => {
+    const qs = `
+    DELETE FROM favourited_businesses
+    WHERE venue_id = $1 AND user_id = $2
+    `;
+    const qp = [biz_id, Number(user_id)];
+    return db
+      .query(qs, qp)
+      .then(res => res.rows)
+      .catch(er => console.log(er));
+  };
+
+
   return {
     getAllReviews,
     submitReview,
@@ -296,6 +336,9 @@ module.exports = (db) => {
     getNewReviews,
     getProfileFavs,
     deleteReviews,
-    editReviews
+    editReviews,
+    getLikesByUser,
+    addToFavourites,
+    removeFromFavourites
   };
 };
