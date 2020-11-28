@@ -22,9 +22,9 @@ const useMapData = () => {
 
   const addResults = (refined) => {
     // if (refined.length > 0) {
-    const results = refined.map((biz, index) =>
-      ({ lat: biz.latitude, lng: biz.longitude, id: biz.id, hover: false, label: index + 1}));
-    dispatch({ type: ADD_RESULTS, results });
+      const results = refined.map((biz, index) =>
+        ({ lat: biz.latitude, lng: biz.longitude, id: biz.id, hover: false}));
+      dispatch({ type: ADD_RESULTS, results });
     // }
   };
 
@@ -37,10 +37,7 @@ const useMapData = () => {
     dispatch({ type: HOVER, results });
   };
 
-  const mapRef = useRef();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
+  
   const hoverMarker = ({ id, lat, lng }) => {
 
     const results = mapState.places.map((marker) => {
@@ -78,7 +75,10 @@ const useMapData = () => {
       res({ lat: coords.lat, lng: coords.lng });
     });
   };
-
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
   const panTo = useCallback((center) => {
     if (center && mapRef.current) {
       mapRef.current.panTo(center);
@@ -87,6 +87,7 @@ const useMapData = () => {
       mapRef.current.panTo(mapState.center);
     }
   }, []);
+  
 
   // const onLoad = useCallback(function callback(map) {
   //   const bounds = new window.google.maps.LatLngBounds();

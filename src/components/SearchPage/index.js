@@ -10,15 +10,12 @@ import Button from '@material-ui/core/Button';
 const SearchPage = props => {
   const { filters, toggleFilterShow,
     results, setRefinedSeed } = useContext(YelpContext);
- 
-    const [showMap, setShowMap] = useState(true); 
+
+  const [showMap, setShowMap] = useState(true);
   useEffect(() => {
     // setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
-
-
- 
 
   return (
     <div className="search-page-layout">
@@ -30,6 +27,7 @@ const SearchPage = props => {
         style={{
           position: 'absolute',
           fontSize: 10,
+          fontWeight: 'bold'
         }}
         variant="outlined"
         color="primary"
@@ -56,7 +54,7 @@ const SearchPage = props => {
         color="primary"
       > {showMap ? 'Hide' : 'Show'} Map </Button>
       {showMap && <Map />}
-      
+
     </div>
   );
 };

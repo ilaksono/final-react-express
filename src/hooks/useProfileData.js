@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { PowerOffSharp } from '@material-ui/icons';
 
 const initProfile = {
   all: [],
@@ -29,8 +28,7 @@ const useProfileData = () => {
           .then(response => {
             getUsersFavs(id)
               .then(rez => {
-                const { lat, lng } = {
-                };
+
                 setAllUsers({
                   all: response.data.data,
                   reviews: res.data.data,

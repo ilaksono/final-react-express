@@ -11,7 +11,6 @@ const usePagination = () => {
 
   const resetPagination = () => {
     setCurrentPage(1);
-    setMaxPageNumber(1);
   }
 
 

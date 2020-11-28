@@ -101,7 +101,7 @@ const Search = props => {
     } else {
       yelpSearch(venue, value); // value = location
     }
-    handlePageChange(null, 1);
+    // handlePageChange(null, 1);
     resetFilters();
   };
 
@@ -133,6 +133,7 @@ const Search = props => {
       />
       <Link to={'/search'}>
         <Button onClick={() => {
+          setLoadingSearch(true);
           resetRefinedResults();
           handleSearch()
           }} message={props.buttonMessage} search isHome={props.isHome} >

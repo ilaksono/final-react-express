@@ -17,11 +17,12 @@ const FilterBar = (props) => {
     distanceFilterClick,
     addResults,
     getCenterPan,
-    panTo,
+    // panTo,
     toggleFilterShow,
     expandCategories,
     openFilterClick,
-    sort
+    sort,
+    resetPagination, currentPage
   } = useContext(YelpContext);
 
   let parsedCategoryFilters = [];
@@ -40,23 +41,24 @@ const FilterBar = (props) => {
 
   useEffect(() => {
     applyPriceFilter(filters, results);
+    resetPagination();
     // eslint-disable-next-line
   }, [filters]);
   useEffect(() => {
-    applyPriceFilter(filters, results)
-        // eslint-disable-next-line
-  }, [sort])
+    applyPriceFilter(filters, results);
+    // eslint-disable-next-line
+  }, [sort]);
 
   useEffect(() => {
     addResults(refinedResults);
-    // populateCenter(refinedResults);
+
     getCenterPan(refinedResults)
-      .then(res => {
-        panTo(res);
-      })
-      .catch(er => console.log(er));
+      // .then(res => {
+      //   panTo(res);
+      // });
+    // populateCenter(refinedResults);
     // eslint-disable-next-line
-  }, [refinedResults]);
+  }, [refinedResults, currentPage]);
 
   const handleClick = ({ type, value }) => {
     if (type === 'price' || type === 'categories')
@@ -64,7 +66,7 @@ const FilterBar = (props) => {
     if (type === 'distance')
       distanceFilterClick(value);
     if (type === 'open')
-      openFilterClick();  
+      openFilterClick();
   };
 
   return (
@@ -75,23 +77,23 @@ const FilterBar = (props) => {
         size="large"
         style={{
           left: '35%',
-          paddingRight:20
+          paddingRight: 20
         }}
         onClick={toggleFilterShow}>
       </Button>
       {(filters.price.length > 0 && filters.mode) && (<div className='price-filter-container'>
         <FilterItem type='price' name='priceLeft' handleClick={() =>
           handleClick({ type: 'price', value: `$` })}
-          message='$' filters={filters} selectItems={filters.price}/>
+          message='$' filters={filters} selectItems={filters.price} />
         <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$` })
-        } message='$$' filters={filters} selectItems={filters.price}/>
+        } message='$$' filters={filters} selectItems={filters.price} />
         <FilterItem type='price' name='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$` })
-        } message='$$$' filters={filters} selectItems={filters.price}/>
+        } message='$$$' filters={filters} selectItems={filters.price} />
         <FilterItem type='price' handleClick={() =>
           handleClick({ type: 'price', value: `$$$$` })
-        } message='$$$$' name='priceRight' filters={filters} selectItems={filters.price}/>
+        } message='$$$$' name='priceRight' filters={filters} selectItems={filters.price} />
       </div>)}
       {/* <div className='open-filter-container'>
         <span><b>Suggested</b></span>
@@ -114,7 +116,7 @@ const FilterBar = (props) => {
                   onClick={expandCategories}
                   style={{
                     fontSize: 10,
-                    marginTop:10
+                    marginTop: 10
                   }}>
                   More
               </Button>}
@@ -157,7 +159,7 @@ const FilterBar = (props) => {
           handleClick({ type: 'distance', value: 2000 })}
           filters={filters} message='< 2 km' value={2000} />
       </div>
-      
+
     </div>
   );
 };

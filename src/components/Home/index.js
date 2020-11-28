@@ -97,7 +97,10 @@ const Home = () => {
     setLoadingSearch,
     newReview,
     setNewReview,
-    loadToxic
+    loadToxic,
+    resetPagination,
+    resetResults,
+    resetRefinedResults
   } = useContext(YelpContext);
 
   const [homeReviews, setHomeReviews] = useState([]);
@@ -157,10 +160,12 @@ const Home = () => {
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           onClick={() => {
+            resetResults();
+            resetRefinedResults();
             setLoadingSearch(true);
             resetFilters();
-            yelpSearch(image.title, appState.center.city);
-
+            resetPagination();
+            yelpSearch(image.title, appState.center.city)
           }}
           style={{
             width: image.width,
