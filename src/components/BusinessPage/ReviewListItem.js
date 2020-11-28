@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ReviewListItem(props) {
 
-  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData } = useContext(YelpContext);
+  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData, handleLikes } = useContext(YelpContext);
   const [openAlert, setOpenAlert] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -48,6 +48,7 @@ export default function ReviewListItem(props) {
     setOpen(true);
   };
 
+  
   const updateHelpfulCount = (id, name) => {
 
     if (props.isProfile) {
@@ -70,14 +71,16 @@ export default function ReviewListItem(props) {
 
       return axios.post('/api/reviews/helpful', { id, username: name })
         .then((response) => {
-          if (response.data === "add") {
+          if(!handleLikes(props.id)) {
+            if (response.data === "add") {
             const updatedBusinessDetails = { ...businessDetails };
             updatedBusinessDetails.reviews.map
               (review => review.id === id ?
                 review.helpful_count += 1
                 : "");
             setBusinessDetails(updatedBusinessDetails);
-          }
+          }}
+          if (handleLikes(props.id)) {
           if (response.data === "delete") {
             const updatedBusinessDetails = { ...businessDetails };
             updatedBusinessDetails.reviews.map
@@ -86,9 +89,13 @@ export default function ReviewListItem(props) {
                 : "");
             setBusinessDetails(updatedBusinessDetails);
           };
+        }
         });
     }
   };
+
+
+
 
   const deleteReview = () => {
 
@@ -266,8 +273,9 @@ export default function ReviewListItem(props) {
           <div className='helpful-container'>
             <div className='helpful'>
               {appState.authorized && appState.user_id != props.user_id ? (
-                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
-                  <ThumbUpAltIcon />
+                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name) }}>
+                  {appState.likes.includes(props.id) ? <ThumbUpAltIcon style={{ color: '#FF717C' }} /> : <ThumbUpAltIcon />}
+         
                 </div>
               ) : (
                   <div className='helpful-count'>

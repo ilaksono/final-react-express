@@ -83,6 +83,22 @@ module.exports = (dbHelpers) => {
           });
       });
   });
+
+  router.post("/data", (req, res) => {
+    const data = {"likes": [], "favs": []}
+    dbHelpers.getLikesByUser(req.body.id)
+    .then(response => {
+      data.likes = response;
+    })
+    .then(() => {
+      dbHelpers.getProfileFavs(req.body.id)
+      .then(response => {
+        data.favs = response
+      })
+      return res.send(data)
+    })
+  });
+
   router.get('/public', (req, res) => {
     dbHelpers
       .getAllUsersImages()

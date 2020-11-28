@@ -74,15 +74,17 @@ const LoginForm = props => {
     axios.post("/api/users/login", { email, password })
       .then((response) => {
         if (response.data.username) {
-          setCookie('user_id', response.data.user_id, { path: "/" });
-          setCookie('username', response.data.username, { path: "/" });
-          setCookie('profile_pic', response.data.profile_pic, { path: "/" });
-          setCookie('likes', response.data.likes, { path: "/" });
-          setCookie('favs', response.data.favs, { path: "/" });
-          authorizeUser(response.data.username,
-            response.data.profile_pic,
+          const arrayOfLikes = [];
+          response.data.likes.forEach(like => {
+            arrayOfLikes.push(like.id)
+          })
+          setCookie('user_id', response.data.user_id, {path: "/"})
+          setCookie('username', response.data.username, {path: "/"})
+          setCookie('profile_pic', response.data.profile_pic, {path: "/"})
+          authorizeUser(response.data.username, 
+            response.data.profile_pic, 
             response.data.user_id,
-            response.data.likes,
+            arrayOfLikes,
             response.data.favs);
           const currentUser = {
             username: response.data.username,

@@ -158,10 +158,8 @@ const RegisterForm = (props) => {
             setCookie('user_id', res.data.user_id, { path: "/" });
             setCookie('username', res.data.username, { path: "/" });
             setCookie('profile_pic', res.data.profile_pic, { path: "/" });
-            setCookie('likes', [], { path: "/" });
-            setCookie('favs', [], { path: "/" });
-            authorizeUser(res.data.username,
-              res.data.profile_pic,
+            authorizeUser(res.data.username, 
+              res.data.profile_pic, 
               res.data.user_id, [], []);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));

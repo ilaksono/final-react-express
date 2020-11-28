@@ -1,4 +1,5 @@
 import { useReducer, useEffect, useState } from 'react';
+import {useCookies} from 'react-cookie';
 import axios from 'axios';
 import appReducer, {
   AUTHORIZE,
@@ -7,7 +8,9 @@ import appReducer, {
   INIT_CENTER,
   LOGOUT,
   ADD_FAV,
-  REMOVE_FAV
+  REMOVE_FAV,
+  ADD_LIKES,
+  REMOVE_LIKES
 } from 'reducers/appReducer';
 // const socket = new WebSocket('');
 
@@ -40,6 +43,7 @@ const useApplicationData = () => {
   const [appState, dispatch] = useReducer(appReducer, initApp);
   const [tops, setTops] = useState(initTops);
   const [userDetails, setUserDetails] = useState(initReg);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   useEffect(() => {
     axios.get(GET_IP)
@@ -82,6 +86,17 @@ const useApplicationData = () => {
     dispatch({type: REMOVE_FAV, favs})
     return true;
   };
+
+  const handleLikes = (review_id) => {
+    if (!appState.likes.includes(review_id)) {
+      dispatch({type: ADD_LIKES, review_id})
+      return false;
+    } 
+    const likes = [...appState.likes]
+    likes.splice(likes.indexOf(review_id), 1)
+    dispatch({type: REMOVE_LIKES, likes})
+    return true;
+  }
 
   const getTops = () => {
     const width = '100%';
@@ -138,7 +153,8 @@ const useApplicationData = () => {
     getTops,
     authorizeUser,
     logout,
-    handleFav
+    handleFav,
+    handleLikes
   };
 };
 

@@ -50,11 +50,9 @@ export default function AccountMenu(props) {
       return;
     }
     if (event === 'logout') {
-      removeCookie('user_id');
-      removeCookie('username');
-      removeCookie('profile_pic');
-      removeCookie('likes');
-      removeCookie('favs');
+      removeCookie('user_id')
+      removeCookie('username')
+      removeCookie('profile_pic')
       props.logout();
     }
     if (event === 'profile') {

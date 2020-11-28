@@ -5,6 +5,9 @@ export const INIT_CENTER = 'INIT_CENTER';
 export const LOGOUT = 'LOGOUT';
 export const ADD_FAV = 'ADD_FAV';
 export const REMOVE_FAV = 'REMOVE_FAV';
+export const  ADD_LIKES = "ADD_LIKES";
+export const REMOVE_LIKES = "REMOVE_LIKES";
+
 const appReducer = (appState, action) => {
 
   switch (action.type) {
@@ -40,6 +43,12 @@ const appReducer = (appState, action) => {
     }
     case REMOVE_FAV: {
       return {...appState, favs: action.favs}
+    }
+    case ADD_LIKES: {
+      return {...appState, likes: [...appState.likes, action.review_id]}
+    }
+    case REMOVE_LIKES: {
+      return {...appState, likes: action.likes}
     }
     default:
       throw new Error('Invalid action type for data');
