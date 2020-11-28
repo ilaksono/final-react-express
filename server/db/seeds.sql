@@ -14,9 +14,6 @@ VALUES (1, '1Hvm57g7zTpBR2hhFg8awQ', 'La Touche','Hot and cheesy', 5, 5, 5, 5, '
 (3, '7hcxAsYC5R8BIcm1xQ_1_Q', 'Birria Catrina', 'not bad',5, 5, 5, 5, 'f'),
 (4,'o6Yor6ofIw2TqM3mN28Kzg', 'Tacos El Asador', 'not bad',3, 2, 5, 4, 'f'),
 (5,'O_UC_izJXcAmkm6HlEyGSA', 'Playa Cabana', 'not bad',4, 3, 4, 5, 'f'),
-(6,'O_UC_izJXcAmkm6HlEyGSA','Playa Cabana', 'bad',4, 3, 4, 5, 'f'),
-(7,'O_UC_izJXcAmkm6HlEyGSA','Playa Cabana', 'not bad',1, 4, 4,3, 'f'),
-(8,'eYeFOcNJO2iTNPCPi8XAxw','El Pocho Antojitos Bar', 'not bad',2, 1, 4, 1, 'f'),
 (1,'eYeFOcNJO2iTNPCPi8XAxw','El Pocho Antojitos Bar', 'this isn''t even a toxic review' ,2, 1, 4, 1, 't');
 
 

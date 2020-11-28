@@ -22,7 +22,7 @@ const initApp = {
   name: '',
   center: {},
   profile_pic:'',
-  user_id: null
+  user_id: null,
 };
 
 const initReg = {
@@ -93,7 +93,7 @@ const useApplicationData = () => { // login and user state information
   // };
   const authorizeUser = (name, profile_pic, user_id) => {
     console.log("authorizing", user_id)
-    dispatch({ type: AUTHORIZE, name, profile_pic, user_id });
+    dispatch({ type: AUTHORIZE, name, profile_pic, user_id});
   };
   const getTops = () => {
     const width = '100%';

@@ -42,14 +42,6 @@ module.exports = (db) => {
     const model = await toxicity.load(threshold);
     const sentences = [description];
     const predictions = await model.classify(sentences);
-    console.log("predictions", predictions);
-    console.log("identity_attack", predictions[0].results);
-    console.log("insult", predictions[1].results);
-    console.log("obscene", predictions[2].results);
-    console.log("severe toxicity", predictions[3].results);
-    console.log("sexual_explicit", predictions[4].results);
-    console.log("threat", predictions[5].results);
-    console.log("toxicity", predictions[6].results);
     const toxicLevel = predictions
       .some(pre => pre.results[0].match);
     const queryParams = [user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, description, overall_rating, toxicLevel];
@@ -163,6 +155,19 @@ module.exports = (db) => {
       .then(res => res.rows);
   };
 
+  const getLikesByUser = (id) => {
+    const queryString = `
+    SELECT liked_reviews.*, reviews.id
+    FROM liked_reviews
+    JOIN reviews ON reviews.id = liked_reviews.review_id
+    WHERE liked_reviews.user_id = $1;
+    `
+    const queryParams = [Number(id)]
+    return db
+      .query(queryString, queryParams)
+      .then(res => res.rows);
+  };
+
   const descreaseHelpfulCount = (id) => {
     const queryString = `
     UPDATE reviews
@@ -202,10 +207,10 @@ module.exports = (db) => {
 
   const serverLoginValidation = () => {
     const queryString = `
-    SELECT *
+    SELECT id, username, profile_pic
     FROM users;
     `;
-    return db.query(queryString, [])
+    return db.query(queryString)
       .then(response => {
         return response.rows;
       });
@@ -315,6 +320,7 @@ module.exports = (db) => {
     getNewReviews,
     getProfileFavs,
     deleteReviews,
-    editReviews
+    editReviews,
+    getLikesByUser
   };
 };

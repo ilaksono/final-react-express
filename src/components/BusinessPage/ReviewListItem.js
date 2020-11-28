@@ -3,6 +3,7 @@ import 'styles/Register.scss';
 import 'styles/ReviewListItem.scss';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import NewReview from '../Review/NewReview';
@@ -13,6 +14,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {useCookies} from 'react-cookie';
 
 
+const useStyles = makeStyles((theme) => ({
+
+  liked: {
+    fontWeight: 'bold',
+    color: '#FF717C',
+    '&:hover': {
+      color: 'rgba(0, 0, 0, 0.54)',
+    },
+  },
+  notliked: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    '&:hover': {
+      color: '#FF717C',
+    },
+
+  },
+}));
 
 export default function ReviewListItem(props) {
 
@@ -169,6 +187,7 @@ export default function ReviewListItem(props) {
     return dateShortened;
   };
   console.log(props.isHome, props.isProfile, props.venue_name);
+  
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
@@ -260,14 +279,13 @@ export default function ReviewListItem(props) {
               <div className='helpful'>
                 {appState.authorized && appState.user_id != props.user_id ? (
                   <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
-                    <ThumbUpAltIcon />
+                    <ThumbUpAltIcon/>
                   </div>
                 ) : (
                   <div className='helpful-count'>
                     <ThumbUpAltIcon />
                   </div>
                 )}
-                {props.helpful_count}
               </div>
           </div>
         </div>

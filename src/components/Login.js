@@ -39,11 +39,13 @@ const LoginForm = props => {
   const [login, setLogin] = useState(initLogin);
   const [cookies, setCookie, removeCookie] = useCookies();
   const {
-    authorizeUser
+    authorizeUser,
+    appState
   } = useContext(YelpContext);
   const handleChange = (val, type) => {
     setLogin({ ...login, errMsg: '', [type]: val, errType: '' });
   };
+
   const validate = () => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(login.email).toLowerCase()))
@@ -68,27 +70,10 @@ const LoginForm = props => {
         });
       }
     }
-    // axios
-    //   .post('/login', { email, password })
-    //   .then(res => {
-    //     const user = res.data.data[0];
-    //     if (user) {
-    //       props.closeSnackBar("logout");
-    //       props.closeSnackBar("register");
-    //       props.setSnackBar(true);
-    //       setLogin(initLogin);
-    //       return authorizeUser(user.username, user.profile_pic, user.id);
-    //     }
-    //     else return setLogin({
-    //       ...login,
-    //       errMsg: 'password is incorrect!',
-    //       errType: 'password'
-    //     });
-    //   })
-    //   .catch(er => console.log(er));
-
+ 
     axios.post("/login", { email, password })
       .then((response) => {
+        console.log(response)
         if (response.data.username) {
           setCookie('user_id', response.data.user_id, {path: "/"})
           setCookie('username', response.data.username, {path: "/"})
