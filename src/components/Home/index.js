@@ -99,7 +99,8 @@ const Home = () => {
     loadToxic,
     resetPagination,
     resetResults,
-    resetRefinedResults
+    resetRefinedResults,
+    handleLikes
   } = useContext(YelpContext);
 
   const [homeReviews, setHomeReviews] = useState([]);
@@ -113,19 +114,21 @@ const Home = () => {
 
   const homeHelpCount = (reviewID, term) => {
     let cpy = [...homeReviews];
+    if(!handleLikes(reviewID)) {
     if (term === 'add') {
       cpy
         .forEach((review, index) => {
           if (review.id === reviewID)
             cpy[index].helpful_count += 1;
         });
-    } else if (term === 'delete') {
+    }} else if (handleLikes(reviewID)){
+      if (term === 'delete') {
       cpy
         .forEach((review, index) => {
           if (review.id === reviewID)
             cpy[index].helpful_count -= 1;
         });
-    }
+    }}
     return setHomeReviews([...cpy]);
   };
 

@@ -25,7 +25,7 @@ import ChartSection from 'components/UserProfile/ChartSection';
 import ChartTab from './ChartTab';
 import TogglePerDay from './TogglePerDay';
 import useChartData from 'hooks/useChartData';
-import {useCookies} from 'react-cookie';
+
 
 
 const StyledRating = withStyles({
@@ -103,7 +103,6 @@ export default function BusinessPage() {
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [reviewSnackBar, setReviewSnackBar] = useState(false);
   const history = useHistory();
-  const [cookies, setCookie] = useCookies()
   const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
