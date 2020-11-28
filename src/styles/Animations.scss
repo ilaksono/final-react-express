@@ -86,3 +86,12 @@
     transform: translateY(0);
   }
 } 
+
+.fadeOut {
+  animation: fadeOut 0.5s 2
+}
+
+@keyframes fadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
