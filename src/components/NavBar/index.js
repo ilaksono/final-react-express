@@ -30,9 +30,9 @@ const NavBar = (props) => {
   }, [location]);
 
   useEffect(() => {
-    if (cookies.user_id) {
+    if (cookies.user_id) 
     authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, cookies.likes, cookies.favs)
-    }
+    // eslint-disable-next-line
   },[])
 
   const handleLogout = () => {

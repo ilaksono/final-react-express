@@ -302,7 +302,7 @@ export default function BusinessPage() {
   if (businessDetails.categories) {
     categoryList = businessDetails.categories.map((category, index) => {
       return (
-        <div className="category">
+        <div className="category" key={index}>
           {businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
         </div>
       );
@@ -312,7 +312,6 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
-        {console.log(appState)}
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>

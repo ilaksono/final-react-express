@@ -37,7 +37,6 @@ export default function AccountMenu(props) {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
   const [cookies, setCookie, removeCookie] = useCookies([0]);
   
   const handleClose = (event) => {

@@ -48,6 +48,7 @@ const Map = props => {
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
         <MarkerComponent
+        key={ind}
           label={((currentPage - 1) * resultsPerPage) + ind + 1}
           {...coord}
         />

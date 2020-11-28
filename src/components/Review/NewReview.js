@@ -218,7 +218,8 @@ const NewReview = props => {
             return handleClose();
           }
           resetState();
-          props.setOpen(true);
+          // props.setOpen(true);
+          setOpen(true);
 
         }).catch(err => console.log(err));
     }

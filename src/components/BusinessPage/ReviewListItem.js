@@ -36,7 +36,6 @@ export default function ReviewListItem(props) {
 
   const [open, setOpen] = useState(false);
 
-
   const handleAlert = () => {
     setOpenAlert(true);
   };
@@ -48,15 +47,6 @@ export default function ReviewListItem(props) {
   const handleEdit = () => {
     setOpen(true);
   };
-
-/*   const [err, setErr] = useState('');
-
-  const showErr = () => {
-    setErr('Log in first!');
-    setTimeout(() => {
-      setErr('');
-    }, 2000);
-  }; */
 
   const updateHelpfulCount = (id, name) => {
 
@@ -169,12 +159,6 @@ export default function ReviewListItem(props) {
     if (diff !== 1) unit += "s";
     return `${diff} ${unit} ago`;
   };
-  // const pageRedirect = () => {
-  //   if(props.isProfile) {
-
-  //   }
-  // }
-
 
 
   const formatDateString = date => {
@@ -182,8 +166,8 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
-  
-  
+
+
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
@@ -272,20 +256,20 @@ export default function ReviewListItem(props) {
             </HashLink>
           )}
           <div className='helpful-container'>
-              <div className='helpful'>
-                {appState.authorized && appState.user_id != props.user_id ? (
-                  <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
-                    <ThumbUpAltIcon/>
-                  </div>
-                ) : (
+            <div className='helpful'>
+              {appState.authorized && appState.user_id != props.user_id ? (
+                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+                  <ThumbUpAltIcon />
+                </div>
+              ) : (
                   <div className='helpful-count'>
                     <ThumbUpAltIcon />
                   </div>
                 )}
-              </div>
+            </div>
           </div>
         </div>
-        
+
         {props.user_id == appState.user_id && (
           <div className="edit-delete-container">
             <div className='delete-button'
@@ -308,23 +292,12 @@ export default function ReviewListItem(props) {
                 venue_id={props.venue_id}
                 isProfile={props.isProfile || null}
                 isHome={props.isHome || null}
+                setOpen={setOpen}
               />
             </div>
           </div>
         )}
-
-
-       {/*  <div className='error-container'>
-          <div className='error'>
-            {err && err}
-          </div>
-        </div> */}
       </div>
-      {/* 
-      <div className='home-name-label'>
-      </div> */}
-
-
     </div>
   );
 }
