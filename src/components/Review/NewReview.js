@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+   
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 2, 2),
     paddingBottom: '0px',
     marginBottom: '0px',
+    outline: 0,
   },
   businessName: {
     marginTop: '8px',

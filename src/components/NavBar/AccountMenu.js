@@ -7,8 +7,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,7 @@ const initAnim = {
 
 export default function AccountMenu(props) {
   const history = useHistory();
+  const location = useLocation();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);/* 
@@ -72,7 +74,7 @@ export default function AccountMenu(props) {
           cursor: 'pointer'
         }}
       >
-        {props.appState.name}
+        <div className={location.pathname.match(/^\/users/) && 'nav-selected'}>{props.appState.name}</div>
       </div>
       <div className='profile-icon-container'>
         <div

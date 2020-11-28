@@ -28,13 +28,13 @@
 }
 @keyframes wobble {
   25% {
-    transform: rotate(15deg);
+    transform: rotate(10deg);
   }
   50% {
-    transform: rotate(-30deg);
+    transform: rotate(-20deg);
   }
   75% {
-    transform: rotate(5deg);
+    transform: rotate(4deg);
   }
   100% {
     transform: rotate(0deg);
@@ -48,10 +48,10 @@
     transform: rotateY(360deg);
   }
 }
-.pulse-infinite {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+.pulse {
+  box-shadow: 0 0 0 0 rgb(224, 89, 89);
 	transform: scale(1);
-  animation: pulse 2s infinite;
+  animation: pulse 2s 1;
 }
 @keyframes pulse {
 	0% {

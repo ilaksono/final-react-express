@@ -40,13 +40,17 @@ const Results = props => {
     handlePageChange,
     applyPriceFilter,
     currentPage,
-    filters } = useContext(YelpContext);
+    refinedResults,
+    loadToxic,
+    appState,
+    filters
+  } = useContext(YelpContext);
 
 
   const handleSort = (property) => {
     sortBy(results, property, false, 'search')
       .then(() => {
-        
+
         applyPriceFilter(filters, results);
         addResults(results);
       });
@@ -54,10 +58,16 @@ const Results = props => {
 
   return (
     <div className='results-container'>
+      {(results.length < 2 && !loadingSearch && appState.searchCount < 1 && refinedResults.length < 2 && filters.categories.length < 2 && !loadToxic) &&
+        <div className='begin-your-search'>
+          Begin Your Search
+      </div>
+
+      }
       {loadingSearch ? (
         <div className='progress-bar-container'>
           <div className="progress-bar-container">
-            <CircularProgress size={110} disableShrink/>
+            <CircularProgress size={110} disableShrink />
           </div>
         </div>
       ) : (

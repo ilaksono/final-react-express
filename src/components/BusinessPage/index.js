@@ -25,7 +25,7 @@ import ChartSection from 'components/UserProfile/ChartSection';
 import ChartTab from './ChartTab';
 import TogglePerDay from './TogglePerDay';
 import useChartData from 'hooks/useChartData';
-
+import SimpleGrow from './FavouriteAnimation';
 
 
 const StyledRating = withStyles({
@@ -146,6 +146,11 @@ export default function BusinessPage() {
   const hideBigPhoto = () => {
     setBigPhoto(initPhoto);
   };
+
+  const initAnim = {
+    favGrow: false
+  };
+  const [busAnim, setBusAnim] = useState(initAnim);
 
   const venueAvgRatings = () => {
     if (businessDetails.reviews) {
@@ -436,12 +441,22 @@ export default function BusinessPage() {
                     startIcon={<FavoriteIcon />}
                     className={appState.favs.includes(businessDetails.id)
                       ? classes.favourite : classes.notFavouriteIcon}
-                    onClick={() => addFavourites(businessDetails.id)}
+                    onClick={() => {
+                      setBusAnim({ ...busAnim, favGrow: true });
+                      setTimeout(() => {
+                        setBusAnim(prev => ({ ...prev, favGrow: false }));
+                      }, 500);
+                      addFavourites(businessDetails.id);
+                    }}
                   >
                     Favourite
                     </Button>
                 </div>
               )}
+              <SimpleGrow busAnim={busAnim} setBusAnim={setBusAnim} 
+              color={appState.favs.includes(businessDetails.id)
+                ? 'red' : 'grey'}
+              />
 
               <div className='location-hours'>
                 <div className='map-label-group'>

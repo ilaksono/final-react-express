@@ -100,7 +100,8 @@ const Home = () => {
     resetPagination,
     resetResults,
     resetRefinedResults,
-    handleLikes
+    handleLikes,
+    addSearchCount
   } = useContext(YelpContext);
 
   const [homeReviews, setHomeReviews] = useState([]);
@@ -162,6 +163,7 @@ const Home = () => {
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           onClick={() => {
+            addSearchCount();
             resetResults();
             resetRefinedResults();
             setLoadingSearch(true);

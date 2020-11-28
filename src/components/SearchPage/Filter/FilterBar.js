@@ -74,12 +74,17 @@ const FilterBar = (props) => {
     <div className="filter-container">
       <div className='filter-bar-header'>
         <Button
-          endIcon={<AutorenewIcon />}
+          endIcon={<AutorenewIcon style={{
+            transform: 'rotate(90deg)',
+          }}/>}
           color="primary"
           size="large"
           style={{
-            left: '4px',
-            paddingRight: 30
+            paddingRight: 25,
+            marginLeft: 3,
+            marginBottom: 0,
+            height: 64,
+            borderRadius: "70%"
           }}
           onClick={() => 
             resetFiltersHandle()
@@ -92,7 +97,8 @@ const FilterBar = (props) => {
           size="large"
           style={{
             textAlign: 'center',
-            paddingRight: 20
+            paddingRight: 20,
+            height: 64,
           }}
           onClick={toggleFilterShow}>
         </Button>

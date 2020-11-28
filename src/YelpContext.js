@@ -41,7 +41,8 @@ export function YelpProvider({ children }) {
     loginSubmit,
     logout,
     handleFav,
-    handleLikes
+    handleLikes,
+    addSearchCount
   } = useApplicationData();
   const { results,
     setResults,
@@ -159,7 +160,8 @@ export function YelpProvider({ children }) {
       resetPagination,
       handleFav,
       handleLikes,
-      resetFiltersHandle
+      resetFiltersHandle,
+      addSearchCount
       // openFilterClick
     }}>
       {children}

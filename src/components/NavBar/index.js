@@ -31,13 +31,13 @@ const NavBar = (props) => {
 
   useEffect(() => {
     if (cookies.user_id) {
-      console.log("is it working?")
-      return axios.post("/api/users/data", {id: cookies.user_id})
-      .then(response => {
-        const arrayOfLikes = [];
-        response.data.likes.forEach(like => arrayOfLikes.push(like.id));
-        authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, arrayOfLikes, response.data.favs)
-      })
+      console.log("is it working?");
+      return axios.post("/api/users/data", { id: cookies.user_id })
+        .then(response => {
+          const arrayOfLikes = [];
+          response.data.likes.forEach(like => arrayOfLikes.push(like.id));
+          authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, arrayOfLikes, response.data.favs);
+        });
     }
     // eslint-disable-next-line
   }, []);
@@ -71,9 +71,19 @@ const NavBar = (props) => {
         <div className="logo-container">
           <Link to={'/'}>
             <img src={logo} alt="Logo" className='nav-icon' />
-              SafeSpace
+            <div className={location.pathname === '/' && 'nav-selected'}>SafeSpace</div>
         </Link>
         </div>
+        <Link to='/search'>
+          <div className={location.pathname === '/search' && 'nav-selected' }
+            style={{
+              position: 'fixed',
+              left: '260px'
+            }}
+          >
+            Search
+        </div>
+        </Link>
         {!isHome &&
           props.loadSearch && (
             <Search isHome={false} buttonMessage={<i className="fas fa-search"></i>}

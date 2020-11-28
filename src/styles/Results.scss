@@ -24,3 +24,10 @@
   @include flexbox(row, center, center);
   margin-bottom: 5px;
 }
+.begin-your-search {
+  @include flexbox(row, center, center);
+  text-align: center;
+  font-size: 24px;
+  position: absolute;
+  
+}

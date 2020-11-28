@@ -10,7 +10,8 @@ import appReducer, {
   ADD_FAV,
   REMOVE_FAV,
   ADD_LIKES,
-  REMOVE_LIKES
+  REMOVE_LIKES,
+  ADD_SEARCH
 } from 'reducers/appReducer';
 // const socket = new WebSocket('');
 
@@ -30,6 +31,7 @@ const initApp = {
   user_id: null,
   likes: [],
   favs: [],
+  searchCount: 0
 };
 
 const initReg = {
@@ -143,6 +145,10 @@ const useApplicationData = () => {
       });
   };
 
+  const addSearchCount = () => {
+    dispatch({type: ADD_SEARCH});
+  }
+
 
   return {
     // submitHandle,
@@ -154,7 +160,8 @@ const useApplicationData = () => {
     authorizeUser,
     logout,
     handleFav,
-    handleLikes
+    handleLikes,
+    addSearchCount
   };
 };
 
