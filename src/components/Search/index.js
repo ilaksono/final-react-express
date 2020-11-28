@@ -10,6 +10,7 @@ import { YelpContext } from 'YelpContext.js';
 import { Link, useHistory } from 'react-router-dom';
 import 'styles/Home.scss';
 import usePlacesAutocomplete from 'use-places-autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const Search = props => {
@@ -28,7 +29,10 @@ const Search = props => {
     setLoadingSearch,
     handlePageChange,
     setRefinedSeed,
-    isLoaded
+    resetRefinedResults,
+    yelpLoading,
+    loadingSearch,
+    resetPagination
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -48,23 +52,12 @@ const Search = props => {
       debounce: 200,
       defaultValue: appState.center.city || ''
     });
-  // function validate() {
-  //   if (location == "") {
 
-  //   }
-  // }
   useEffect(() => {
     setValue(appState.center.city, false);
   }, [appState]);
 
-  // useEffect(() => {
-  //   setLocation(appState.center.city)
-  // }, [appState])
 
-  // function reset() {
-  //   // resets the text data
-
-  // // }
   useEffect(() => {
     populateCategories(results);
     // addResults(results);
@@ -101,6 +94,7 @@ const Search = props => {
   };
 
   const handleSearch = (name) => {
+    resetPagination();
     setLoadingSearch(true);
     if (name) {
       yelpSearch(name, value); // value = location
@@ -138,7 +132,11 @@ const Search = props => {
 
       />
       <Link to={'/search'}>
-        <Button onClick={() => handleSearch()} message={props.buttonMessage} search isHome={props.isHome} />
+        <Button onClick={() => {
+          resetRefinedResults();
+          handleSearch()
+          }} message={props.buttonMessage} search isHome={props.isHome} >
+    {loadingSearch && <CircularProgress size={20} color='primary'/>}</Button>
       </Link>
     </div>
   );

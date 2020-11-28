@@ -9,6 +9,11 @@ const usePagination = () => {
     setCurrentPage(value);
   }
 
+  const resetPagination = () => {
+    setCurrentPage(1);
+    setMaxPageNumber(1);
+  }
+
 
   return {
     // submitHandle,
@@ -18,6 +23,7 @@ const usePagination = () => {
     resultsPerPage,
     setMaxPageNumber,
     handlePageChange,
+    resetPagination
   };
 };
 

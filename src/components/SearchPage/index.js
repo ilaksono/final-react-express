@@ -13,7 +13,7 @@ const SearchPage = props => {
  
 
   useEffect(() => {
-    setRefinedSeed(results);
+    // setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
  

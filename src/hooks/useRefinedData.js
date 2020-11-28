@@ -8,10 +8,11 @@ const SORT = 'SORT'; // can also be sort by x
 const PRICE_FILTER = 'PRICE_FILTER';
 const DIST_FILTER = 'DIST_FILTER';
 const ADD_REVIEWS = 'ADD_REVIEWS';
-
+const RESET = 'RESET';
 //api end points
 const REVIEWS_DATA = '/api/reviews';
 
+const initRefined = [];
 
 const refinedReducer = (refinedResults, action) => {
   switch (action.type) {
@@ -33,12 +34,15 @@ const refinedReducer = (refinedResults, action) => {
     case SORT: {
       return [...action.filteredCopy];
     }
+    case RESET: {
+      return initRefined;
+    }
     default:
       throw new Error('invalid refined type');
   }
 };
 
-const initRefined = getCoreYelpData(mockData);
+// getCoreYelpData(mockData);
 const useRefinedData = () => {
   const [refinedResults, dispatch] =
     useReducer(refinedReducer, initRefined);
@@ -146,6 +150,9 @@ const useRefinedData = () => {
   //     res(dispatch({ type: 'SORT', filteredCopy }));
   //   });
   // };
+  const resetRefinedResults = () => {
+    dispatch({ type: RESET });
+  };
 
   return {
     refinedResults,
@@ -153,6 +160,7 @@ const useRefinedData = () => {
     setRefinedSeed,
     applyDistanceFilter,
     applyAllFilters,
+    resetRefinedResults
     // sortBy
   };
 };

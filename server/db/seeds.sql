@@ -1,12 +1,12 @@
-INSERT INTO users(username, email, password, city)
-VALUES ('DannyBoy', 'test1@test.ca', 'password', 'Montreal'),
-('IanBein', 'test2@test.ca', 'password', 'Toronto'),
-('Androo', 'test3@test.ca', 'password', 'Toronto'),
-('Dog The Bounty Hunter', 'test4@test.ca', 'password', 'Vancouver'),
-('Maurice Richarde', 'test5@test.ca', 'password', 'New York'),
-('Beyonce', 'test6@test.ca', 'password', 'Hollywood'),
-('Lil Pimp', 'test7@test.ca','password', 'Detroit'),
-('The Brade Bunch', 'test8@test.ca', 'password', 'Log Angeles');
+INSERT INTO users(username, email, password, city, profile_pic)
+VALUES ('DannyBoy', 'test1@test.ca', 'password', 'Montreal', 'https://i.imgur.com/LpaY82x.png'),
+('IanBein', 'test2@test.ca', 'password', 'Toronto', 'https://i.imgur.com/Nmx0Qxo.png'),
+('Androo', 'test3@test.ca', 'password', 'Toronto', 'https://i.imgur.com/T2WwVfS.png'),
+('Dog The Bounty Hunter', 'test4@test.ca', 'password', 'Vancouver', 'https://i.imgur.com/FK8V841.jpg'),
+('Maurice Richarde', 'test5@test.ca', 'password', 'New York', 'https://i.imgur.com/twYrpay.jpg'),
+('Beyonce', 'test6@test.ca', 'password', 'Hollywood', 'https://i.imgur.com/TdOAdde.jpg'),
+('Lil Pimp', 'test7@test.ca','password', 'Detroit', 'https://i.imgur.com/3tVgsra.jpg'),
+('The Brade Bunch', 'test8@test.ca', 'password', 'Log Angeles', 'https://i.imgur.com/iHq8K8Z.jpg');
 
 INSERT INTO reviews (user_id, venue_id, venue_name, description, overall_rating, 
 cleanliness, socialDistancing, transactionProcess)

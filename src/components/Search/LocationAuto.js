@@ -1,14 +1,10 @@
-import { Fragment, useEffect } from "react";
 import 'styles/VenueAutoComplete.scss';
-import usePlacesAutocomplete from 'use-places-autocomplete';
 
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
-  ComboboxList,
   ComboboxOption,
-  ComboboxOptionText,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 
