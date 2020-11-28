@@ -55,7 +55,8 @@ const useRefinedData = () => {
         const filteredCopy = [];
         results.forEach((biz) => {
 
-          if (filters.allCats && filters.allPrice && biz.distance < filters.distance)
+          if (filters.allCats && filters.allPrice
+            && biz.distance < filters.distance)
             filteredCopy.push(biz);
           else if (filters.allPrice
             && biz.categories.some(cat => filters.catsSelected.includes(cat))

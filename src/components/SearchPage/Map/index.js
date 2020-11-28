@@ -72,6 +72,11 @@ const Map = props => {
       >
         { /* Child components, such as markers, info windows, etc. */}
         {parsedMarkers}
+        <MarkerComponent
+          lat={appState.center.lat}
+          lng={appState.center.lng}
+          currentLoc={true}
+        />
       </GoogleMap>
     </div>
   );

@@ -45,8 +45,7 @@ const useMapData = () => {
         return { ...marker, hover: true };
       else return { ...marker };
     });
-    // if (lat && lng)
-    //   mapRef.current.panTo({ lat, lng });
+
     dispatch({ type: HOVER, results });
   };
 

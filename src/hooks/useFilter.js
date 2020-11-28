@@ -38,7 +38,6 @@ const useFilter = () => {
         catsSelected: cats,
         price
       }));
-      return filters;
     }
   };
   //type can be price, categories
@@ -110,8 +109,18 @@ const useFilter = () => {
   };
   const toggleFilterShow = () => {
     setFilters({ ...filters, show: !filters.show });
-
   };
+
+  const resetFiltersHandle = () => {
+    setFilters({...filters, 
+      allPrice: true,
+      allCats: true,
+      distance: 50000,
+      price:['$','$$','$$$','$$$$'],
+      catsSelected:[...filters.categories]
+
+    })
+  }
   const setCategoriesSelected = () => {
     setFilters({ ...filters, catsSelected: [...filters.categories] });
   };
@@ -131,6 +140,7 @@ const useFilter = () => {
     setCategoriesSelected,
     toggleFilterShow,
     expandCategories,
+    resetFiltersHandle
     // openFilterClick
   };
 };
