@@ -1,18 +1,19 @@
 import { Marker } from '@react-google-maps/api';
-import {useContext} from 'react';
+import { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import { useHistory } from 'react-router-dom';
 
 const MarkerComponent = props => {
-  const { setBusinessDetails} = useContext(YelpContext);
+  const { setBusinessDetails } = useContext(YelpContext);
   const history = useHistory();
   const { lat, lng, hover, id, label } = props;
-  
-  const icon = hover ? `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${label}|1E0253|FFFFFF` :
-  `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${label}|FF717C|000000`;
-
+  let icon = '';
+  if (!props.currentLoc)
+    icon = hover ? `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${label}|1E0253|FFFFFF` :
+      `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${label}|FF717C|000000`;
+  else icon = '/blue-dot.png'
   const handleClick = () => {
-    setBusinessDetails('')
+    setBusinessDetails('');
     history.push(`/search/${id}`);
   };
 
@@ -21,6 +22,7 @@ const MarkerComponent = props => {
       position={{ lat, lng }}
       onClick={handleClick}
       icon={icon}
+      clickable={!props.currentLoc}
     />
   );
 };
