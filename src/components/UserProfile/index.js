@@ -1,4 +1,3 @@
-import 'styles/UserProfile.scss';
 import { useEffect, useState, useContext } from 'react';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import Profile from './Profile';
@@ -43,11 +42,12 @@ const UserProfile = (props) => {
   useEffect(() => {
     if (id)
       getTimeRating(id)
-      .then(() => setNewReview(true));
+        .then(() => setNewReview(true));
+    // eslint-disable-next-line
   }, [newReview, loadToxic]);
 
-  // eslint-disable-next-line
-  const whom = allUsers.all.find(user => user.id == id) || null;
+  const whom = allUsers.all // eslint-disable-next-line
+  .find(user => user.id == id) || null;
   return (
     <div className='user-profile-layout'>
       {

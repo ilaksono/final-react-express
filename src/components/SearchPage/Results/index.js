@@ -1,5 +1,4 @@
 import PlaceList from './PlaceList';
-import 'styles/Results.scss';
 import React, { useContext } from 'react';
 import { YelpContext } from 'YelpContext';
 import Sort from 'components/Sort';

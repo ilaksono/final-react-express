@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import 'styles/VenueAutoComplete.scss';
 
 const VenueAutoComplete = props => {
   const wrapperRef = useRef(null);

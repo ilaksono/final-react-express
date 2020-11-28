@@ -1,6 +1,4 @@
 import React from "react";
-import 'styles/Location.scss';
-import 'styles/Home.scss';
 import LocationAuto from './LocationAuto';
 const Location = props => {
   return (

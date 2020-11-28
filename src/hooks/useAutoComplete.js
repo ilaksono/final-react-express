@@ -11,7 +11,7 @@ export default function useAutoComplete() {
   const [autoComplete, setAutoComplete] = useState(initState);
 
   const yelpAutoComplete = (venue, latitude, longitude) => {
-    return axios.post('/api/autocomplete_yelp', { venue, latitude, longitude })
+    return axios.post('/api/yelp/autocomplete', { venue, latitude, longitude })
       .then((response) => {
         setAutoComplete(response.data);
       })

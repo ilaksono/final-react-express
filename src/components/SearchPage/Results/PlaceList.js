@@ -1,5 +1,4 @@
 import PlaceListItem from "./PlaceListItem";
-import "styles/PlaceListItem.scss";
 import { YelpContext } from 'YelpContext';
 import { useContext, useEffect } from "react";
 

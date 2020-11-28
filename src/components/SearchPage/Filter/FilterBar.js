@@ -1,5 +1,4 @@
 import FilterItem from './FilterItem';
-import 'styles/FilterBar.scss';
 import { YelpContext } from 'YelpContext.js';
 import { useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';

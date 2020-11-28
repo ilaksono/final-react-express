@@ -1,6 +1,4 @@
-import { useReducer, useEffect } from 'react';
-import getCoreYelpData, { mockData } from 'helpers/data_filter.js';
-import axios from "axios";
+import { useReducer } from 'react';
 
 // reducer constants
 const SEED = 'SEED';
@@ -42,7 +40,6 @@ const refinedReducer = (refinedResults, action) => {
   }
 };
 
-// getCoreYelpData(mockData);
 const useRefinedData = () => {
   const [refinedResults, dispatch] =
     useReducer(refinedReducer, initRefined);
@@ -98,12 +95,7 @@ const useRefinedData = () => {
         });
         res(dispatch({ type: 'PRICE_FILTER', filteredCopy }));
       }
-      // }
     });
-  };
-  const applyAllFilters = (filters, results) => {
-    applyPriceFilter(filters, results)
-      .then(applyDistanceFilter(filters, results));
   };
   const applyDistanceFilter = (filters, results) => {
     let filteredCopy = [];
@@ -126,30 +118,6 @@ const useRefinedData = () => {
       }
     });
   };
-
-  // const sortBy = (results, property, ascending) => {
-  //   return new Promise((res, rej) => {
-  //     let filteredCopy = [];
-  //     if (ascending) {
-  //       filteredCopy = results.sort((a, b) => {
-  //         if (isFinite(a[property] - b[property])) {
-  //           return a[property] - b[property];
-  //         } else {
-  //           return isFinite(a[property]) ? -1 : 1;
-  //         }
-  //       });
-  //     } else {
-  //       filteredCopy = results.sort((a, b) => {
-  //         if (isFinite(b[property] - a[property])) {
-  //           return b[property] - a[property];
-  //         } else {
-  //           return isFinite(a[property]) ? -1 : 1;
-  //         }
-  //       });
-  //     }
-  //     res(dispatch({ type: 'SORT', filteredCopy }));
-  //   });
-  // };
   const resetRefinedResults = () => {
     dispatch({ type: RESET });
   };
@@ -159,9 +127,7 @@ const useRefinedData = () => {
     applyPriceFilter,
     setRefinedSeed,
     applyDistanceFilter,
-    applyAllFilters,
     resetRefinedResults
-    // sortBy
   };
 };
 export default useRefinedData;

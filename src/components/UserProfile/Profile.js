@@ -1,20 +1,19 @@
-import 'styles/UserProfile.scss';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import PhotoModal from 'components/BusinessPage/PhotoModal.js';
 
 
 const initBig = {
   open: false,
   url: ''
-}
+};
 const Profile = (props) => {
 
-  const [bigPhoto, setBigPhoto] = useState(false);
+  const [bigPhoto, setBigPhoto] = useState(initBig);
 
-  const hideBigPhoto= () => {
-    setBigPhoto({...bigPhoto, open: false});
-  }
-  
+  const hideBigPhoto = () => {
+    setBigPhoto({ ...bigPhoto, open: false });
+  };
+
   const formatDateYM = (timeStp) => {
     const months = ['January', 'February', 'March',
       'April', 'May', 'June', 'July', "August", 'September'
@@ -27,14 +26,14 @@ const Profile = (props) => {
     props.setFocus(prev => ({
       ...prev,
       rev: true
-    }))
-  }
+    }));
+  };
   const notReviewTableHover = () => {
     props.setFocus(prev => ({
       ...prev,
       rev: false
-    }))
-  }
+    }));
+  };
 
   return (
     <>
@@ -44,23 +43,23 @@ const Profile = (props) => {
       {
         props.whom.profile_pic &&
         <div className='profile-picture-container'>
-          <img className='profile-picture' 
-          src={props.whom.profile_pic} 
-          alt='no img found' 
-          style={{
-            cursor: 'pointer'
-          }}
-          onClick={() => setBigPhoto({...bigPhoto, open: true})}
+          <img className='profile-picture'
+            src={props.whom.profile_pic}
+            alt='no img found'
+            style={{
+              cursor: 'pointer'
+            }}
+            onClick={() => setBigPhoto({ ...bigPhoto, open: true })}
           />
         </div>
       }
       {
-        <PhotoModal 
+        <PhotoModal
           url={props.whom.profile_pic}
           bigPhoto={bigPhoto}
           hideBigPhoto={hideBigPhoto}
         />
-        
+
       }
       <div className='city-container'>
         {props.whom.city}
@@ -68,28 +67,31 @@ const Profile = (props) => {
       </div>
       <div className='help-count'>
         <table className='profile-info-table'>
-          <thead>
-            <th>
-              <i class="far fa-thumbs-up review-table-icon"></i>
-              Score
-            </th>
-            <th
-            onMouseOver={reviewTableHover}
-            onMouseOut={notReviewTableHover}
-            >
-              <i className="fas fa-feather-alt review-table-icon"></i>
-              Reviews
-            </th>
-          </thead>
-          <tr>
-            <td>
-              {Number(props.whom.total) || 0}
-            </td>
+          <tbody>
 
-            <td className='review-table-doc' onMouseOver={reviewTableHover}
-              onMouseOut={notReviewTableHover}> {props.length || 0}
+            <tr className='profile-thead'>
+              <td>
+                <i className="far fa-thumbs-up review-table-icon"></i>
+              Score
             </td>
-          </tr>
+              <td
+                onMouseOver={reviewTableHover}
+                onMouseOut={notReviewTableHover}
+              >
+                <i className="fas fa-feather-alt review-table-icon"></i>
+              Reviews
+            </td>
+            </tr>
+            <tr>
+              <td>
+                {Number(props.whom.total) || 0}
+              </td>
+
+              <td className='review-table-doc' onMouseOver={reviewTableHover}
+                onMouseOut={notReviewTableHover}> {props.length || 0}
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div className='account-created'>

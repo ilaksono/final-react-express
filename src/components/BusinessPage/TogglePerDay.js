@@ -1,5 +1,4 @@
 import Switch from '@material-ui/core/Switch';
-import 'styles/ChartSection.scss';
 const TogglePerDay = (props) => {
 
   return (

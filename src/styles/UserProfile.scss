@@ -33,6 +33,10 @@
 
 }
 
+.profile-thead {
+  font-weight: bold;
+  font-size: 1.05em;
+}
 .profile-container {
   @include flexbox(column, flex-start, center);
   padding-left: 40px;
@@ -72,11 +76,12 @@
   height: 200px;
   width: 180px;
   margin-top: 40px;
+  text-align: center;
 }
 .profile-picture {
   max-width: 180px;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
 }
 
@@ -96,6 +101,7 @@
 .profile-info-table {
   text-align: center;
   border-spacing: 16px;
+  width: 100%;
   border-collapse: separate;
   cursor: default;
 }

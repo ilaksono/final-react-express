@@ -1,19 +1,13 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-
 import { makeStyles } from '@material-ui/core/styles';
-import 'styles/NavBar.scss';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import 'styles/AccountMenu.scss';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {useCookies} from 'react-cookie'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +37,6 @@ export default function AccountMenu(props) {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
   const [cookies, setCookie, removeCookie] = useCookies([0]);
   
   const handleClose = (event) => {

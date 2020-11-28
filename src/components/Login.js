@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { YelpContext } from 'YelpContext';
 import Modal from '@material-ui/core/Modal';
@@ -71,7 +71,7 @@ const LoginForm = props => {
       }
     }
  
-    axios.post("/login", { email, password })
+    axios.post("/api/users/login", { email, password })
       .then((response) => {
         if (response.data.username) {
           setCookie('user_id', response.data.user_id, {path: "/"})

@@ -1,7 +1,4 @@
 import { Line } from 'react-chartjs-2';
-import 'styles/ChartSection.scss';
-
-
 
 const ChartSection = (props) => {
   return (

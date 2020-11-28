@@ -13,7 +13,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
 import useProfileData from '../../hooks/useProfileData';
-import 'styles/BusinessPage.scss';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +131,7 @@ const NewReview = props => {
   const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
     setNewReview(true);
     if (props.isProfile && !props.isHome) {
-      return axios.post("/reviews/edit",
+      return axios.post("/api/reviews/edit",
         {
           id, user_id, venue_id, venue_name, cleanliness,
           socialDistancing, transactionProcess,
@@ -144,7 +143,7 @@ const NewReview = props => {
     }
     else {
       return axios
-        .post("/reviews/edit",
+        .post("/api/reviews/edit",
           {
             id, user_id, venue_id, venue_name,
             cleanliness, socialDistancing,
@@ -219,7 +218,8 @@ const NewReview = props => {
             return handleClose();
           }
           resetState();
-          props.setOpen(true);
+          // props.setOpen(true);
+          setOpen(true);
 
         }).catch(err => console.log(err));
     }

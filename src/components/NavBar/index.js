@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, Fragment } from "react";
 import logo from "../logo.png";
 import axios from 'axios';
-import 'styles/NavBar.scss';
 import Search from "components/Search";
 import Button from "components/Button";
 import SnackBar from 'components/SnackBar';
@@ -31,9 +30,9 @@ const NavBar = (props) => {
   }, [location]);
 
   useEffect(() => {
-    if (cookies.user_id) {
+    if (cookies.user_id) 
     authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, cookies.likes, cookies.favs)
-    }
+    // eslint-disable-next-line
   },[])
 
   const handleLogout = () => {

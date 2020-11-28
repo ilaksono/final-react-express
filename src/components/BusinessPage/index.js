@@ -18,8 +18,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReviewList from './ReviewList';
 import Photos from './Photos';
-import "styles/BusinessPage.scss";
-import 'styles/ChartSection.scss';
 import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';
@@ -267,7 +265,7 @@ export default function BusinessPage() {
             user_id: appState.user_id
           })
         .catch(er => console.log(er));
-    } else
+    } else {
       return axios
         .delete('/api/favs',
           {
@@ -278,6 +276,7 @@ export default function BusinessPage() {
             }
           })
         .catch(er => console.log(er));
+    }
   };
 
   useEffect(() => {
@@ -305,7 +304,7 @@ export default function BusinessPage() {
   if (businessDetails.categories) {
     categoryList = businessDetails.categories.map((category, index) => {
       return (
-        <div className="category">
+        <div className="category" key={index}>
           {businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
         </div>
       );
@@ -315,7 +314,6 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
-        {console.log(appState)}
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
@@ -427,7 +425,7 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              {appState.authorized && (
+              {(appState.authorized && appState.favs) && (
                 <div className='bus-buttons'>
                   {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
                     <>

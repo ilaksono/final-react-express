@@ -4,7 +4,6 @@ import { useContext, Fragment, useState, useEffect } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import 'styles/Home.scss';
 import Search from 'components/Search';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import axios from 'axios';

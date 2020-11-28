@@ -1,14 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import 'styles/Search.scss';
 import Venue from "components/Search/Venue/";
 import VenueAutoComplete from "components/Search/VenueAutoComplete/";
 import Location from "components/Search/Location/";
 import Button from "components/Button/";
-import 'styles/Venue.scss';
-import 'styles/Location.scss';
 import { YelpContext } from 'YelpContext.js';
 import { Link, useHistory } from 'react-router-dom';
-import 'styles/Home.scss';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 

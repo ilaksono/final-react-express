@@ -1,7 +1,6 @@
 import { useContext, useCallback, useEffect, useState } from 'react';
 import { GoogleMap } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
-import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
 
 const containerStyle = {
@@ -49,6 +48,7 @@ const Map = props => {
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
         <MarkerComponent
+        key={ind}
           label={((currentPage - 1) * resultsPerPage) + ind + 1}
           {...coord}
         />

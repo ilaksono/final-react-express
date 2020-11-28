@@ -4,8 +4,7 @@ import axios from 'axios';
 const initProfile = {
   all: [],
   reviews: [],
-  favs: [],
-  avgCoords: { lat: 43, lng: -79 }
+  favs: []
 };
 
 const useProfileData = () => {
@@ -15,33 +14,33 @@ const useProfileData = () => {
   const getUsersAPI = () => {
     return axios
       .get('/api/users/public')
-      .then(res => res)
       .catch(er => console.log(er));
   };
 
-  const getTimeRating = (id) => {
-    return axios
-      .get(`/api/reviews/users/${id}`)
-      .then(res => {
-        // setAllUsers({ ...allUsers, reviews: [...res.data.data] });
-        getUsersAPI()
-          .then(response => {
-            getUsersFavs(id)
-              .then(rez => {
-                setAllUsers({
-                  all: response.data.data,
-                  reviews: res.data.data,
-                  favs: rez.data.data
-                });
-              });
-          });
+  const getTimeRating = async (id) => {
+    try {
+      const reviews = await axios
+        .get(`/api/reviews/users/${id}`);
+      const users = await getUsersAPI();
+      const favs = await getUsersFavs(id);
+      const uniqueArr = [];
+      favs.data.data.forEach(data =>
+        !uniqueArr.some(fav =>
+          fav.venue_id === data.venue_id)
+        && uniqueArr.push(data));
+      setAllUsers({
+        all: users.data.data,
+        reviews: reviews.data.data,
+        favs: uniqueArr
       });
+    } catch (er) {
+      console.log(er);
+    }
   };
 
   const getUsersFavs = (id) => {
     return axios
       .get(`/api/favs/users/${id}`)
-      .then(res => res)
       .catch(er => console.log(er));
   };
 
@@ -49,55 +48,24 @@ const useProfileData = () => {
     let cpy = [...allUsers.reviews];
     let cpyAll = [...allUsers.all];
     let revOwnerID = -1;
-    if (term === 'add') {
-      cpy
-        .forEach((review, index) => {
-          if (review.id === reviewID) {
-            cpy[index].helpful_count += 1;
-            revOwnerID = review.user_id;
-          }
-        });
-    } else if (term === 'delete') {
-      cpy
-        .forEach((review, index) => {
-          if (review.id === reviewID) {
-            cpy[index].helpful_count -= 1;
-            revOwnerID = review.user_id;
-          }
-        });
-    }
-    cpyAll.forEach((user, index) => {
-      if (user.id === revOwnerID) {
-        if (term === 'add')
-          cpyAll[index].total++;
-        else if (term === 'delete')
-          cpyAll[index].total--;
+
+    const index = cpy.findIndex(review => {
+      if (review.id === reviewID) {
+        revOwnerID = review.user_id;
+        return true;
       }
+      return false;
     });
+    const ind = cpyAll.findIndex(user => user.id === revOwnerID);
+    if (term === 'add') {
+      cpyAll[ind].total++;
+      cpy[index].helpful_count++;
+    } else {
+      cpy[index].helpful_count--;
+      cpyAll[ind].total--;
+    }
     return setAllUsers({ ...allUsers, reviews: [...cpy], all: [...cpyAll] });
   };
-
-  // const profileEditReview = (id,
-  //   user_id, venue_id,
-  //   venue_name,
-  //   cleanliness, socialDistancing,
-  //   transactionProcess, overall_rating,
-  //   description, toxicity) => {
-  //   const cpy = [...allUsers.reviews];
-  //   const reviewIndex = allUsers.reviews
-  //     .findIndex(rev => rev.id === id);
-  //   cpy[reviewIndex] = {
-  //     ...cpy[reviewIndex],
-  //     cleanliness,
-  //     socialDistancing,
-  //     transactionProcess,
-  //     overall_rating,
-  //     description,
-  //     toxicity
-  //   };
-  //   // setAllUsers({ ...allUsers, reviews: cpy });
-
-  // };
 
   const profileDeleteReview = (reviewID) => {
     let copiedReviews = [...allUsers.reviews];
@@ -110,9 +78,6 @@ const useProfileData = () => {
     });
   };
 
-  // review id
-  // my name
-
   return {
     allUsers,
     getTimeRating,
@@ -120,7 +85,6 @@ const useProfileData = () => {
     profileHelpCount,
     setAllUsers,
     profileDeleteReview,
-    // profileEditReview
   };
 
 };

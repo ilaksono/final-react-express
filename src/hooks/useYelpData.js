@@ -51,10 +51,10 @@ export default function useYelpData() {
   const [yelpLoading, setYelpLoading] = useState(false);
   const [results, setResults] = useState(initResults);
   const [businessDetails, setBusinessDetails] = useState(initBusiness);
-  
-const resetResults = () => {
-  setResults(initResults);
-}
+
+  const resetResults = () => {
+    setResults(initResults);
+  };
 
   const getCoreYelpData = (yelpData) => {
     let filteredData = [];
@@ -173,7 +173,7 @@ const resetResults = () => {
     setYelpLoading(true);
     let reviewArr = [];
     return Promise.all([
-      axios.post('/api/search_yelp', { venue, location }),
+      axios.post('/api/yelp/search', { venue, location }),
       axios.get('/api/reviews')
     ]).then((all) => {
       const yelpData = all[0].data;
@@ -203,7 +203,7 @@ const resetResults = () => {
     let orderedReviews = [];
     let ratingSum = 0;
     return Promise.all([
-      axios.post(`/api/search_yelp/${id}`),
+      axios.post(`/api/yelp/search/${id}`),
       axios.post(`/api/reviews/${id}`)
     ]).then(all => {
       const businessData = all[0].data;
@@ -221,7 +221,7 @@ const resetResults = () => {
   };
 
   const submitNewReview = (username, venue_id, cleanliness, socialDistancing, transactionProcess, overall_rating, description, venue_name, profile_pic) => {
-    return axios.post('/reviews/new', {
+    return axios.post('/api/reviews/new', {
       username,
       venue_id,
       cleanliness,

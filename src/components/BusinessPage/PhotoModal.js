@@ -2,7 +2,6 @@ import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import 'styles/Photos.scss'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
