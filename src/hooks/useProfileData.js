@@ -29,8 +29,6 @@ const useProfileData = () => {
           .then(response => {
             getUsersFavs(id)
               .then(rez => {
-                const { lat, lng } = {
-                };
                 setAllUsers({
                   all: response.data.data,
                   reviews: res.data.data,

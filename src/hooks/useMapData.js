@@ -80,7 +80,6 @@ const useMapData = () => {
   };
 
   const panTo = useCallback((center) => {
-    console.log(center, mapRef.current);
     if (center && mapRef.current) {
       mapRef.current.panTo(center);
     }

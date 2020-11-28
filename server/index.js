@@ -44,6 +44,23 @@ app.post("/api/search_yelp", (req, res) => {
       console.log(e);
     });
 });
+
+// const getOneImage = (term, location) => {
+//  return client.search({
+//     term,
+//     location,
+//     limit: 1
+//   })
+//   .then( res => {
+//     return res
+//   })
+//   .catch(er => {
+//     setTimeout(() => {
+//       getOneImage(term, location)
+//     }, 300)
+//   })
+// }
+
 app.post("/api/search_one", (req, res) => {
   client
     .search({
@@ -176,27 +193,42 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
   let userID;
+  let userDetails;
   dbHelpers.serverLoginValidation()
     .then((userData) => {
       for (const user of userData) {
         if (user.email === req.body.email) {
           userID = user.id
           if (bcrypt.compareSync(req.body.password, user.password)) {
-            return res.json({
+            userDetails = {
               username: user.username,
               profile_pic: user.profile_pic,
-              user_id: user.id
-            });
+              user_id: userID,
+              likes: [],
+              favs: []
+            }
           } else {
             return res.send("password incorrect");
           }
         }
       }
-      req.session.user_id = userID
+        
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(() => {
+      dbHelpers.getLikesByUser(userID)
+      .then(response => {
+        userDetails.likes = response;
+        console.log(userDetails.likes)
+      })
+      .then(() => {
+        dbHelpers.getProfileFavs(userID)
+        .then(response => {
+          userDetails.favs = response
+          console.log(userDetails)
+        })
+        return res.send(userDetails)
+      })
+    })
 });
 
 
@@ -399,3 +431,13 @@ app.get('/api/favs/users/:id', (req, res) => {
       }))
     .catch(er => console.log(er));
 });
+
+app.post("/api/favs", (req, res) => {
+  dbHelpers.addToFavourites(req.body.id, req.body.user_id)
+  .then(response => {
+    res.json({
+      data:response
+    })
+  })
+  .catch(err => console.log(err))
+})

@@ -1,10 +1,8 @@
 import { useContext, useCallback, useEffect, useState } from 'react';
-import { GoogleMap, 
-  InfoWindow } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
 import MarkerComponent from './MarkerComponent';
 import 'styles/Map.scss';
 import { YelpContext } from 'YelpContext.js';
-import {Fragment} from 'react';
 
 const containerStyle = {
   width: '30vw',
@@ -17,12 +15,9 @@ const Map = props => {
     mapState,
     appState,
     onMapLoad,
-    mapRef,
     setLoadingSearch,
     currentPage,
     resultsPerPage,
-    isLoaded,
-    loadError
 
   } = useContext(YelpContext);
   const [map, setMap] = useState(null);
@@ -44,14 +39,16 @@ const Map = props => {
 
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
-  const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
+
 
   let parsedMarkers = [];
 
   if (mapState.places.length) {
+    const currentResults = mapState.places.slice(indexOfFirstResult, indexOfLastResult);
+    console.log(currentResults);
     parsedMarkers = currentResults.map((coord, ind) => {
       return (
-        <MarkerComponent key={ind} label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
+        <MarkerComponent  label={((currentPage - 1) * resultsPerPage) + ind + 1} {...coord} />
       );
     });
   }
@@ -71,16 +68,7 @@ const Map = props => {
         onUnmount={() => onUnmount(map)}
       >
         { /* Child components, such as markers, info windows, etc. */}
-          {parsedMarkers}
-          {/* <InfoWindow 
-          position={{lat: 42, lng: -79}}>
-          <div>
-          hi
-          </div>
-          </InfoWindow> */}
-          <>
-        </>
-         
+        {parsedMarkers}
       </GoogleMap>
     </div>
   );

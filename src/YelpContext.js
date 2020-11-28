@@ -12,6 +12,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import useLoadToxicity from 'hooks/useLoadToxicity';
 
 export const YelpContext = React.createContext();
+const libraries = ["places"]
 
 export function YelpProvider({ children }) {
   const { filters,
@@ -28,7 +29,7 @@ export function YelpProvider({ children }) {
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries: ["places"]
+    libraries
   });
   const {
     appState,
@@ -48,7 +49,10 @@ export function YelpProvider({ children }) {
     loadingSearch,
     setLoadingSearch,
     submitNewReview,
-    sortBy
+    sortBy,
+    yelpLoading, 
+    setYelpLoading,
+    resetResults
   } = useYelpData();
   const {
     loadToxic, 
@@ -63,6 +67,7 @@ export function YelpProvider({ children }) {
     applyPriceFilter,
     applyAllFilters,
     applyDistanceFilter,
+    resetRefinedResults
     // sortBy 
   } = useRefinedData();
   const { mapState,
@@ -81,7 +86,8 @@ export function YelpProvider({ children }) {
     maxPageNumber,
     setMaxPageNumber,
     resultsPerPage,
-    handlePageChange } = usePagination();
+    handlePageChange,
+  resetPagination } = usePagination();
 
   const {
     newReview, setNewReview
@@ -144,7 +150,12 @@ export function YelpProvider({ children }) {
       newReview,
       setNewReview,
       isLoaded, 
-      loadError
+      loadError,
+      yelpLoading,
+      setYelpLoading,
+      resetResults,
+      resetRefinedResults,
+      resetPagination
       // openFilterClick
     }}>
       {children}

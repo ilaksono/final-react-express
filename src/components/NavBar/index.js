@@ -32,7 +32,7 @@ const NavBar = (props) => {
 
   useEffect(() => {
     if (cookies.user_id) {
-    authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id)
+    authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, cookies.likes, cookies.favs)
     }
   },[])
 

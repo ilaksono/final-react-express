@@ -241,11 +241,6 @@
   @include flexbox(row, flex-start, center);
 }
 
-.toxic-review {
-  text-shadow: 0 0 10px black;
-  color: transparent;
-}
-
 .review-title:hover {
   font-weight: bold;
   color: $salmon;

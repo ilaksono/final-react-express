@@ -1,5 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { YelpContext } from 'YelpContext';
 import NewReview from 'components/Review/NewReview';
 import React from 'react';
@@ -254,6 +255,27 @@ export default function BusinessPage() {
     }
   };
 
+
+  const checkFavourites = (id) => {
+    if(appState.favs.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const checked = checkFavourites(businessDetails.id)
+
+  const addFavourites = (id) => {
+    if (!appState.favs.includes(id)) {
+      return axios.post("/api/favs", {id: businessDetails.id, user_id: appState.user_id})
+      .then(response => { 
+        console.log(response, "this is my response")
+        appState.favs.push(id);
+      })
+    }
+  }
+
   useEffect(() => {
     if (businessDetails.reviews) {
       if (businessDetails.reviews.length)
@@ -289,6 +311,7 @@ export default function BusinessPage() {
   return (
     <div className='business-page-container'>
       <div className="back-and-message-container">
+        {console.log(appState)}
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
@@ -408,12 +431,10 @@ export default function BusinessPage() {
                       <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
+                  {checked && <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>}
 
-                  {/* RENDER THIS BUTTON WHEN A USER FAVOURITED THE VENUE */}
-                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.favourite} >Favourite</Button>
-
-                  {/* RENDER THIS BUTTON WHEN A USER HAS NOT YET FAVOURITED THE VENUE */}
-                  <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon}>Favourite</Button>
+                  
+                  {!checked && <Button variant="contained" startIcon={<FavoriteIcon />} className={classes.notFavouriteIcon} onClick={() => addFavourites(businessDetails.id)}>Favourite</Button>}
                 </div>
               )}
 

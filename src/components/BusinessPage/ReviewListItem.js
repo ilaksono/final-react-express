@@ -10,6 +10,7 @@ import NewReview from '../Review/NewReview';
 import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog';
+import { HashLink } from 'react-router-hash-link';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {useCookies} from 'react-cookie';
 
@@ -186,14 +187,14 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
-  console.log(props.isHome, props.isProfile, props.venue_name);
+  
   
   return (
     <div className='review-container'>
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
         <div className='review-title-container'>
-          <Link to={`/search/${props.venue_id}/#reviews-container`} className="review-title">
+          <Link to={`/search/${props.venue_id}`} className="review-title" onClick={() => getIndividualBusinessData(props.venue_id)}>
             {props.venue_name}
           </Link>
         </div>
@@ -265,15 +266,15 @@ export default function ReviewListItem(props) {
       </div>
       <div className='review-content'>
         <div className={!props.isHome ? "review-list-description" : "review-list-description-short"}>
-          <div className={props.toxic && 'toxic-review'}>{props.description}</div>
+          {props.description}
         </div>
       </div>
       <div className='review-footer'>
         <div className="read-review-helpful-container">
-          {props.isHome || props.isProfile && (
-            <Link to={`/search/${props.venue_id}`} className="link-to-review">
+          {(props.isHome || props.isProfile) && (
+            <HashLink to={`/search/${props.venue_id}#reviews-container`} className="link-to-review">
               Read Review
-            </Link>
+            </HashLink>
           )}
           <div className='helpful-container'>
               <div className='helpful'>

@@ -1,9 +1,19 @@
 import 'styles/UserProfile.scss';
 import { Fragment, useState } from 'react';
+import PhotoModal from 'components/BusinessPage/PhotoModal.js';
 
 
-
+const initBig = {
+  open: false,
+  url: ''
+}
 const Profile = (props) => {
+
+  const [bigPhoto, setBigPhoto] = useState(false);
+
+  const hideBigPhoto= () => {
+    setBigPhoto({...bigPhoto, open: false});
+  }
   
   const formatDateYM = (timeStp) => {
     const months = ['January', 'February', 'March',
@@ -34,8 +44,23 @@ const Profile = (props) => {
       {
         props.whom.profile_pic &&
         <div className='profile-picture-container'>
-          <img className='profile-picture' src={props.whom.profile_pic} alt='no img found' />
+          <img className='profile-picture' 
+          src={props.whom.profile_pic} 
+          alt='no img found' 
+          style={{
+            cursor: 'pointer'
+          }}
+          onClick={() => setBigPhoto({...bigPhoto, open: true})}
+          />
         </div>
+      }
+      {
+        <PhotoModal 
+          url={props.whom.profile_pic}
+          bigPhoto={bigPhoto}
+          hideBigPhoto={hideBigPhoto}
+        />
+        
       }
       <div className='city-container'>
         {props.whom.city}
