@@ -1,4 +1,3 @@
-import 'styles/UserProfile.scss';
 import { Fragment, useState } from 'react';
 import PhotoModal from 'components/BusinessPage/PhotoModal.js';
 
@@ -9,7 +8,7 @@ const initBig = {
 }
 const Profile = (props) => {
 
-  const [bigPhoto, setBigPhoto] = useState(false);
+  const [bigPhoto, setBigPhoto] = useState(initBig);
 
   const hideBigPhoto= () => {
     setBigPhoto({...bigPhoto, open: false});

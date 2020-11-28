@@ -1,4 +1,3 @@
-import 'styles/BusinessPage.scss';
 import { useEffect } from 'react';
 const Hours = (props) => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

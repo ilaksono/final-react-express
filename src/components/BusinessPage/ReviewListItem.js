@@ -1,13 +1,10 @@
 import { useContext, useState, Fragment } from 'react';
-import 'styles/Register.scss';
-import 'styles/ReviewListItem.scss';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import NewReview from '../Review/NewReview';
-import 'styles/Register.scss';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog';
 import { HashLink } from 'react-router-hash-link';

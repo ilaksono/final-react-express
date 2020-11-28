@@ -1,4 +1,3 @@
-import 'styles/SearchPage.scss';
 import { Fragment, useContext, useState, useEffect } from 'react';
 import FilterBar from "./Filter/FilterBar";
 import Results from "./Results";
@@ -9,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 const SearchPage = props => {
   const { filters, toggleFilterShow,
-    results, setRefinedSeed } = useContext(YelpContext);
+    results} = useContext(YelpContext);
 
   const [showMap, setShowMap] = useState(true);
   useEffect(() => {

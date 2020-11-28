@@ -1,5 +1,3 @@
-import 'styles/VenueAutoComplete.scss';
-
 import {
   Combobox,
   ComboboxInput,

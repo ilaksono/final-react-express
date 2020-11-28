@@ -1,6 +1,4 @@
 import React from "react";
-import 'styles/Venue.scss';
-import 'styles/Home.scss';
 
 const Venue = props => {
 

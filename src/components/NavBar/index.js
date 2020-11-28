@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, Fragment } from "react";
 import logo from "../logo.png";
 import axios from 'axios';
-import 'styles/NavBar.scss';
 import Search from "components/Search";
 import Button from "components/Button";
 import SnackBar from 'components/SnackBar';

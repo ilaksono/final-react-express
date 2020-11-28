@@ -1,4 +1,3 @@
-import 'styles/FilterItem.scss';
 import React from 'react';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';

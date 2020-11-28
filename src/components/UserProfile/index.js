@@ -1,4 +1,3 @@
-import 'styles/UserProfile.scss';
 import { useEffect, useState, useContext } from 'react';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import Profile from './Profile';

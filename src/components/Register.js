@@ -1,11 +1,10 @@
-import { Fragment, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { YelpContext } from 'YelpContext.js';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
-import 'styles/Register.scss';
 import { Button } from '@material-ui/core';
 import { useCookies } from 'react-cookie';
 

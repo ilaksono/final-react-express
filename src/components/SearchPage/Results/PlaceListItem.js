@@ -1,4 +1,3 @@
-import "styles/PlaceListItem.scss";
 import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';

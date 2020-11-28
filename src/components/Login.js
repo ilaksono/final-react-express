@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { YelpContext } from 'YelpContext';
 import Modal from '@material-ui/core/Modal';

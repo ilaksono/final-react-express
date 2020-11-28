@@ -13,7 +13,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import { YelpContext } from 'YelpContext.js';
 import useProfileData from '../../hooks/useProfileData';
-import 'styles/BusinessPage.scss';
 
 
 const useStyles = makeStyles((theme) => ({

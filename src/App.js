@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import { useLoadScript } from '@react-google-maps/api';
 import NavBar from 'components/NavBar';
 import Home from 'components/Home';
 import Register from 'components/Register';
@@ -8,11 +7,8 @@ import SearchPage from 'components/SearchPage';
 import React from 'react';
 import BusinessPage from "components/BusinessPage/index";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import 'styles/App.scss';
 import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
-
-// export const YelpContext = React.createContext();
 
 const theme = createMuiTheme({
   palette: {
@@ -32,21 +28,9 @@ function App() {
   const {
     newRegister, setNewRegister
   } = useNewUser();
-  // const { isLoaded, loadError } = useLoadScript({
-  //   googleMapsApiKey: process.env.GOOGLE_API_KEY,
-  //   libraries
-  // });
-  // console.log(isLoaded);
-  // if (loadError) return 'Error loading maps';
-  // if (!isLoaded) return "loading maps";
-
- 
-
   return (
     <div className="layout">
-
         <MuiThemeProvider theme={theme}>
-        
           <Router>
             <NavBar loadSearch setNewRegister={setNewRegister} />
             <div className='spacer'>
@@ -76,7 +60,6 @@ function App() {
             </Switch>
           </Router>
         </MuiThemeProvider>
-
     </div>
   );
 }

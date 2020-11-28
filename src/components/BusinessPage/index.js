@@ -18,8 +18,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReviewList from './ReviewList';
 import Photos from './Photos';
-import "styles/BusinessPage.scss";
-import 'styles/ChartSection.scss';
 import HoursTable from './HoursTable.js';
 import StaticMap from './StaticMap.js';
 import PhotoModal from './PhotoModal.js';

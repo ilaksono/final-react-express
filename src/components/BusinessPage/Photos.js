@@ -1,4 +1,3 @@
-import "styles/BusinessPage.scss";
 export default function Photos(props) {
   return (
     <div className='photos'>
