@@ -1,4 +1,4 @@
-import { useContext, useState, Fragment } from 'react';
+import { useContext, useState, Fragment, useEffect } from 'react';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import { YelpContext } from 'YelpContext.js';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -47,8 +47,11 @@ export default function ReviewListItem(props) {
   const handleEdit = () => {
     setOpen(true);
   };
+  useEffect(() => {
+    return () => setRevAnim(initAnim);
+  }, []);
 
-  
+
   const updateHelpfulCount = (id, name) => {
 
     if (props.isProfile) {
@@ -71,29 +74,29 @@ export default function ReviewListItem(props) {
 
       return axios.post('/api/reviews/helpful', { id, username: name })
         .then((response) => {
-          if(!handleLikes(props.id)) {
+          if (!handleLikes(props.id)) {
             if (response.data === "add") {
-            const updatedBusinessDetails = { ...businessDetails };
-            updatedBusinessDetails.reviews.map
-              (review => review.id === id ?
-                review.helpful_count += 1
-                : "");
-            setBusinessDetails(updatedBusinessDetails);
-          }}
+              const updatedBusinessDetails = { ...businessDetails };
+              updatedBusinessDetails.reviews.map
+                (review => review.id === id ?
+                  review.helpful_count += 1
+                  : "");
+              setBusinessDetails(updatedBusinessDetails);
+            }
+          }
           if (handleLikes(props.id)) {
-          if (response.data === "delete") {
-            const updatedBusinessDetails = { ...businessDetails };
-            updatedBusinessDetails.reviews.map
-              (review => review.id === id && review.helpful_count > 0 ?
-                review.helpful_count -= 1
-                : "");
-            setBusinessDetails(updatedBusinessDetails);
-          };
-        }
+            if (response.data === "delete") {
+              const updatedBusinessDetails = { ...businessDetails };
+              updatedBusinessDetails.reviews.map
+                (review => review.id === id && review.helpful_count > 0 ?
+                  review.helpful_count -= 1
+                  : "");
+              setBusinessDetails(updatedBusinessDetails);
+            };
+          }
         });
     }
   };
-
 
 
 
@@ -174,16 +177,17 @@ export default function ReviewListItem(props) {
     return dateShortened;
   };
   const initAnim = {
-    smallWob: false
-  }
+    smallWob: false,
+    likeBounce: false
+  };
   const [revAnim, setRevAnim] = useState(initAnim);
 
 
   return (
-    <div 
-    className={`review-container${revAnim.smallWob ? ' small-wobble':''}`}
-    onMouseOver={() => setRevAnim({...revAnim, smallWob: true})}
-    onAnimationEnd={() => setRevAnim({...revAnim, smallWob: false})}
+    <div
+      className={`review-container${revAnim.smallWob ? ' small-wobble' : ''}`}
+      onMouseOver={() => setRevAnim({ ...revAnim, smallWob: true })}
+      onAnimationEnd={() => setRevAnim({ ...revAnim, smallWob: false })}
     >
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
@@ -271,14 +275,23 @@ export default function ReviewListItem(props) {
             </HashLink>
           )}
           <div className='helpful-container'>
-            <div className='helpful'>
-              {appState.authorized && appState.user_id != props.user_id ? (
-                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name) }}>
-                  {appState.likes.includes(props.id) ? <ThumbUpAltIcon style={{ color: '#FF717C' }} /> : <ThumbUpAltIcon />}
-         
+            <div className={`helpful${(revAnim.likeBounce && appState.user_id != props.user_id) ? ' like-bounce' : ''}`}
+              onClick={() => {
+                setRevAnim({ ...revAnim, likeBounce: true });
+                setTimeout(() => {
+                  setRevAnim(prev => 
+                    ({ ...prev, likeBounce: false }))
+                }, 1100);
+              }
+              }
+            >
+              {(appState.authorized && appState.user_id != props.user_id) ? (
+                <div className='helpful-count editable' onClick={() => { updateHelpfulCount(props.id, appState.name); }}>
+                  {appState.likes.includes(props.id) ? <ThumbUpAltIcon style={{ color: '#FF717C' }}
+                  /> : <ThumbUpAltIcon />}
                 </div>
               ) : (
-                  <div className='helpful-count'>
+                  <div className='helpful-count' >
                     <ThumbUpAltIcon />
                   </div>
                 )}

@@ -50,9 +50,9 @@ export default function AccountMenu(props) {
       return;
     }
     if (event === 'logout') {
-      removeCookie('user_id')
-      removeCookie('username')
-      removeCookie('profile_pic')
+      removeCookie('user_id');
+      removeCookie('username');
+      removeCookie('profile_pic');
       props.logout();
     }
     if (event === 'profile') {
@@ -67,6 +67,10 @@ export default function AccountMenu(props) {
       <div className={animation.wobble ? 'wobble-animation' : ''}
         onMouseOver={() => setAnimation({ ...animation, wobble: true })}
         onAnimationEnd={() => setAnimation({ ...animation, wobble: false })}
+        onClick={() => handleClose('profile')}
+        style={{
+          cursor: 'pointer'
+        }}
       >
         {props.appState.name}
       </div>
