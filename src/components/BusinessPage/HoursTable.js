@@ -11,6 +11,8 @@ const Hours = (props) => {
       if (!(num === 1200))
         num -= 1200;
     }
+    if (num === 0)
+      num = 1200;
     if (mins === 0)
       mins = '00';
     return `${Math.floor(num / 100)}:${mins} ${pm ? 'PM' : 'AM'}`;
@@ -38,7 +40,7 @@ const Hours = (props) => {
   const parsedRows = hoursDayArray.map((day, index) => {
     const results = [];
     const currentTime = now.getHours() * 100 + now.getMinutes();
-    for(const index in day) {
+    for (const index in day) {
       if (day[index].day === props.dayNum) {
         if (currentTime < day[index].start) {
           nextOpenDay = days[(day[index].day) % 7];
@@ -56,7 +58,8 @@ const Hours = (props) => {
       results.push((
         <tr className="hours-table-row">
           <td className="td-day">
-            { index == 0 ? days[day[index].day] : null }
+            {/* eslint-disable-next-line */}
+            {index == 0 ? days[day[index].day] : null}
           </td>
           <td className='time-block'>&nbsp; {formatAMPM(day[index].start)}
           </td>
@@ -75,7 +78,8 @@ const Hours = (props) => {
   });
 
   useEffect(() => {
-    props.setNextOpen({day: nextOpenDay, start: nextOpenStart, end: nextOpenEnd });
+    props.setNextOpen({ day: nextOpenDay, start: nextOpenStart, end: nextOpenEnd });
+    // eslint-disable-next-line
   }, [nextOpenDay, nextOpenStart, nextOpenEnd]);
 
   return (
