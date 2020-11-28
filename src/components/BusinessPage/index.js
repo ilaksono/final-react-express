@@ -27,6 +27,7 @@ import ChartSection from 'components/UserProfile/ChartSection';
 import ChartTab from './ChartTab';
 import TogglePerDay from './TogglePerDay';
 import useChartData from 'hooks/useChartData';
+import {useCookies} from 'react-cookie';
 
 
 const StyledRating = withStyles({
@@ -104,6 +105,7 @@ export default function BusinessPage() {
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
   const [reviewSnackBar, setReviewSnackBar] = useState(false);
   const history = useHistory();
+  const [cookies, setCookie] = useCookies()
   const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
     = useState(initPhoto);
@@ -125,7 +127,8 @@ export default function BusinessPage() {
   const {
     businessDetails,
     getIndividualBusinessData,
-    appState
+    appState,
+    authorizeUser
   } = useContext(YelpContext);
 
   useEffect(() => {
@@ -272,6 +275,8 @@ export default function BusinessPage() {
       .then(response => { 
         console.log(response, "this is my response")
         appState.favs.push(id);
+        authorizeUser(appState.username, appState.profile_pic, appState.user_id, appState.likes, appState.favs)
+        setCookie("favs",appState.favs,{path: "/"})
       })
     }
   }
