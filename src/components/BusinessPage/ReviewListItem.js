@@ -290,7 +290,7 @@ export default function ReviewListItem(props) {
           <div className="edit-delete-container">
             <div className='delete-button'
               onClick={handleAlert}
-            >
+              >
               <DeleteIcon />
             </div>
             <div className='edit-button'
