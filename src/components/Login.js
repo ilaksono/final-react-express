@@ -81,8 +81,6 @@ const LoginForm = props => {
           setCookie('user_id', response.data.user_id, {path: "/"})
           setCookie('username', response.data.username, {path: "/"})
           setCookie('profile_pic', response.data.profile_pic, {path: "/"})
-          setCookie('likes', arrayOfLikes, {path: "/"})
-          setCookie('favs', response.data.favs, {path: "/"})
           authorizeUser(response.data.username, 
             response.data.profile_pic, 
             response.data.user_id,

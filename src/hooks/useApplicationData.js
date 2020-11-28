@@ -1,4 +1,5 @@
 import { useReducer, useEffect, useState } from 'react';
+import {useCookies} from 'react-cookie';
 import axios from 'axios';
 import appReducer, {
   AUTHORIZE,
@@ -42,6 +43,7 @@ const useApplicationData = () => {
   const [appState, dispatch] = useReducer(appReducer, initApp);
   const [tops, setTops] = useState(initTops);
   const [userDetails, setUserDetails] = useState(initReg);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   useEffect(() => {
     axios.get(GET_IP)

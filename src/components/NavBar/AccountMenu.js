@@ -47,8 +47,6 @@ export default function AccountMenu(props) {
       removeCookie('user_id')
       removeCookie('username')
       removeCookie('profile_pic')
-      removeCookie('likes')
-      removeCookie('favs')
       props.logout();
     }
     if (event === 'profile') {
