@@ -166,10 +166,18 @@ export default function ReviewListItem(props) {
     const dateShortened = newDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     return dateShortened;
   };
+  const initAnim = {
+    smallWob: false
+  }
+  const [revAnim, setRevAnim] = useState(initAnim);
 
 
   return (
-    <div className='review-container'>
+    <div 
+    className={`review-container${revAnim.smallWob ? ' small-wobble':''}`}
+    onMouseOver={() => setRevAnim({...revAnim, smallWob: true})}
+    onAnimationEnd={() => setRevAnim({...revAnim, smallWob: false})}
+    >
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
         <div className='review-title-container'>

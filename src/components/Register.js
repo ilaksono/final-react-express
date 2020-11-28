@@ -159,9 +159,9 @@ const RegisterForm = (props) => {
             setCookie('username', res.data.username, { path: "/" });
             setCookie('profile_pic', res.data.profile_pic, { path: "/" });
             setCookie('likes', [], { path: "/" });
-            setCookie('favs', [], { path: "/" })
-            authorizeUser(res.data.username, 
-              res.data.profile_pic, 
+            setCookie('favs', [], { path: "/" });
+            authorizeUser(res.data.username,
+              res.data.profile_pic,
               res.data.user_id, [], []);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));
@@ -217,7 +217,9 @@ const RegisterForm = (props) => {
               variant='contained' color='primary'
               type='submit'
               className='user-input-btn'>Register</Button>
-            <div className='error'> {state.errMsg && state.errMsg}</div>
+            {state.errMsg && <div className='error'>
+              <i class="fas fa-exclamation-triangle"></i> {state.errMsg}
+            </div>}
           </form>
         </Fade>
       </Modal>

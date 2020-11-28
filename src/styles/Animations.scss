@@ -1,0 +1,19 @@
+.small-wobble {
+  animation: small-wobble 1s 1;
+}
+
+
+@keyframes small-wobble {
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

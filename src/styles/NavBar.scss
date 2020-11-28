@@ -53,10 +53,52 @@ a:hover {
   font-size: 24px;
   color: rgb(224, 127, 116);
   margin-right: 20px;
+  
 }
 
 .hidden {
   width: 0;
   margin: 0;
   padding: 0;
+}
+.profile-circle{
+  @include flexbox(row, center, center);
+  background-color: $salmon;
+  border-radius: 50%;
+  width: 41px;
+  height: 41px;
+  margin-right: 20px;
+  margin-left: 10px;
+
+}
+
+.account-animation {
+  animation: spin 1s 1;
+  
+}
+
+.wobble-animation {
+  animation: wobble 1s 1;
+}
+@keyframes wobble {
+  25% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
 }

@@ -28,6 +28,7 @@ import 'styles/AccountMenu.scss';
 import 'styles/ReviewListItem.scss';
 import "styles/ReviewList.scss";
 import 'styles/Photos.scss'
+import 'styles/Animations.scss';
 
 ReactDOM.render(
   <React.StrictMode>

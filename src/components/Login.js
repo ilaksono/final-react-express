@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const LoginForm = props => {
 
-  
+
 
   const classes = useStyles();
   const [login, setLogin] = useState(initLogin);
@@ -70,17 +70,17 @@ const LoginForm = props => {
         });
       }
     }
- 
+
     axios.post("/api/users/login", { email, password })
       .then((response) => {
         if (response.data.username) {
-          setCookie('user_id', response.data.user_id, {path: "/"})
-          setCookie('username', response.data.username, {path: "/"})
-          setCookie('profile_pic', response.data.profile_pic, {path: "/"})
-          setCookie('likes', response.data.likes, {path: "/"})
-          setCookie('favs', response.data.favs, {path: "/"})
-          authorizeUser(response.data.username, 
-            response.data.profile_pic, 
+          setCookie('user_id', response.data.user_id, { path: "/" });
+          setCookie('username', response.data.username, { path: "/" });
+          setCookie('profile_pic', response.data.profile_pic, { path: "/" });
+          setCookie('likes', response.data.likes, { path: "/" });
+          setCookie('favs', response.data.favs, { path: "/" });
+          authorizeUser(response.data.username,
+            response.data.profile_pic,
             response.data.user_id,
             response.data.likes,
             response.data.favs);
@@ -97,7 +97,8 @@ const LoginForm = props => {
           setLogin({ ...login, errMsg: 'password is incorrect!', errType: 'password' });
         } else {
           setLogin({ ...login, errMsg: 'Invalid email!', errType: 'email' });
-      }});
+        }
+      });
   };
 
   const handleClose = () => {
@@ -133,7 +134,9 @@ const LoginForm = props => {
               variant='contained' color='primary'
               type='submit'
               className='user-input-btn'>Login</Button>
-            <div className='error'> {login.errMsg && login.errMsg}</div>
+            {login.errMsg && <div className='error'>
+              <i class="fas fa-exclamation-triangle"></i> {login.errMsg}
+            </div>}
           </form>
         </Fade>
       </Modal>

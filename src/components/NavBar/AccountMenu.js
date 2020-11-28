@@ -8,7 +8,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router-dom';
-import {useCookies} from 'react-cookie'
+import { useCookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,28 +27,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const initAnim = {
+  wobble: false,
+  spin: false
+};
+
 export default function AccountMenu(props) {
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);/* 
   const [anchorEl, setAnchorEl] = React.useState(null); */
-
+  const [animation, setAnimation] = React.useState(initAnim);
   const handleToggle = () => {
+    setAnimation({ ...animation, spin: true });
     setOpen((prevOpen) => !prevOpen);
   };
   const [cookies, setCookie, removeCookie] = useCookies([0]);
-  
+
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     if (event === 'logout') {
-      removeCookie('user_id')
-      removeCookie('username')
-      removeCookie('profile_pic')
-      removeCookie('likes')
-      removeCookie('favs')
+      removeCookie('user_id');
+      removeCookie('username');
+      removeCookie('profile_pic');
+      removeCookie('likes');
+      removeCookie('favs');
       props.logout();
     }
     if (event === 'profile') {
@@ -60,15 +66,25 @@ export default function AccountMenu(props) {
 
   return (
     <div className="user-nav-container">
-      { props.appState.name }
-      <div className="profile-icon-container">
-        <AccountCircleIcon
-          style={{ fontSize: 45, color: 'white' }}
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        />
+      <div className={animation.wobble ? 'wobble-animation' : ''}
+        onMouseOver={() => setAnimation({ ...animation, wobble: true })}
+        onAnimationEnd={() => setAnimation({ ...animation, wobble: false })}
+      >
+        {props.appState.name}
+      </div>
+      <div className='profile-icon-container'>
+        <div
+          className={`profile-circle${animation.spin ? ' account-animation' : ''}`}
+          onAnimationEnd={() => setAnimation(prev => ({ ...prev, spin: false }))}>
+          <AccountCircleIcon
+            style={{ fontSize: 45, color: 'white' }}
+            ref={anchorRef}
+            aria-controls={open ? 'menu-list-grow' : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+
+          />
+        </div>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
             <Grow
@@ -78,21 +94,21 @@ export default function AccountMenu(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" className={classes.menu} >
-                    <MenuItem 
+                    <MenuItem
                       onClick={() => handleClose('profile')}
                       style={{
                         color: '#1E0253',
                         fontSize: '18px',
                       }}>
-                        Profile
+                      Profile
                       </MenuItem>
-                    <MenuItem 
-                        style={{
-                          color: '#1E0253',
-                          fontSize: '18px',
-                        }}
-                        onClick={() => handleClose('logout')}>
-                          Logout
+                    <MenuItem
+                      style={{
+                        color: '#1E0253',
+                        fontSize: '18px',
+                      }}
+                      onClick={() => handleClose('logout')}>
+                      Logout
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -125,8 +141,8 @@ export default function AccountMenu(props) {
               handleClose('logout')}
           >Logout</MenuItem>
         </Menu> */}
+      </div>
     </div>
-    </div>
-    
+
   );
 }
