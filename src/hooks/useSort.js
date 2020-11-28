@@ -17,7 +17,8 @@ const sortOptions = [
 
 const useSort = () => {
 
-  const [sort, setSort] = useState(sortOptions[0].id);
+  const [sort, setSort] 
+  = useState(sortOptions[0].id);
     return {
       sort,
       setSort

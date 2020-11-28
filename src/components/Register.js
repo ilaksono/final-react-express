@@ -7,7 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import 'styles/Register.scss';
 import { Button } from '@material-ui/core';
-import {useCookies} from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 export const userData = [
   {
@@ -147,7 +147,7 @@ const RegisterForm = (props) => {
   const handleClick = () => {
 
     if (validate(state))
-      axios.post("/register", { username: state.username, email: state.email, password: state.password, city: appState.center.city || 'Toronto' })
+      axios.post("/api/users/register", { username: state.username, email: state.email, password: state.password, city: appState.center.city || 'Toronto' })
         .then((res) => {
           console.log("data", res.data);
           if (res.data.username) {
@@ -156,10 +156,14 @@ const RegisterForm = (props) => {
               profile_pic: res.data.profile_pic
             };
             props.setNewRegister(true);
-          setCookie('user_id', res.data.user_id, {path: "/"})
-          setCookie('username', res.data.username, {path: "/"})
-          setCookie('profile_pic', res.data.profile_pic, {path: "/"})
-            authorizeUser(res.data.username, res.data.profile_pic, res.data.user_id);
+            setCookie('user_id', res.data.user_id, { path: "/" });
+            setCookie('username', res.data.username, { path: "/" });
+            setCookie('profile_pic', res.data.profile_pic, { path: "/" });
+            setCookie('likes', [], { path: "/" });
+            setCookie('favs', [], { path: "/" })
+            authorizeUser(res.data.username, 
+              res.data.profile_pic, 
+              res.data.user_id, [], []);
             setState(currentUser);
             props.setModal(prev => ({ ...prev, regOpen: false }));
             props.closeSnackBar("login");
@@ -202,7 +206,7 @@ const RegisterForm = (props) => {
         <Fade in={props.modal.regOpen}>
           <form className='register-container' onSubmit={event => {
             event.preventDefault();
-            handleClick()
+            handleClick();
           }}>
             <input placeholder='Username' type='text' value={state.username} onChange={(event) =>
               handleChange(event, 'username')} className={`user-input-item${state.errType === 'username' ? ' error-input' : ''}`} />
@@ -210,7 +214,7 @@ const RegisterForm = (props) => {
               handleChange(event, 'email')} className={`user-input-item${state.errType === 'email' ? ' error-input' : ''}`} />
             <input type='password' placeholder='Password' value={state.password} onChange={(event) =>
               handleChange(event, 'password')} className={`user-input-item${state.errType === 'password' ? ' error-input' : ''}`} />
-            <Button 
+            <Button
               variant='contained' color='primary'
               type='submit'
               className='user-input-btn'>Register</Button>

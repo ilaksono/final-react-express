@@ -132,7 +132,7 @@ const NewReview = props => {
   const submitEditReview = (id, user_id, venue_id, venue_name, cleanliness, socialDistancing, transactionProcess, overall_rating, description) => {
     setNewReview(true);
     if (props.isProfile && !props.isHome) {
-      return axios.post("/reviews/edit",
+      return axios.post("/api/reviews/edit",
         {
           id, user_id, venue_id, venue_name, cleanliness,
           socialDistancing, transactionProcess,
@@ -144,7 +144,7 @@ const NewReview = props => {
     }
     else {
       return axios
-        .post("/reviews/edit",
+        .post("/api/reviews/edit",
           {
             id, user_id, venue_id, venue_name,
             cleanliness, socialDistancing,

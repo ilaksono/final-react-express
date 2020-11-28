@@ -265,7 +265,7 @@ export default function BusinessPage() {
             user_id: appState.user_id
           })
         .catch(er => console.log(er));
-    } else
+    } else {
       return axios
         .delete('/api/favs',
           {
@@ -276,6 +276,7 @@ export default function BusinessPage() {
             }
           })
         .catch(er => console.log(er));
+    }
   };
 
   useEffect(() => {
@@ -425,7 +426,7 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              {appState.authorized && (
+              {(appState.authorized && appState.favs) && (
                 <div className='bus-buttons'>
                   {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
                     <>

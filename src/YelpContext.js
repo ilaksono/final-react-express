@@ -66,7 +66,6 @@ export function YelpProvider({ children }) {
   const { refinedResults,
     setRefinedSeed,
     applyPriceFilter,
-    applyAllFilters,
     applyDistanceFilter,
     resetRefinedResults
     // sortBy 
@@ -106,7 +105,6 @@ export function YelpProvider({ children }) {
       refinedResults,
       setRefinedSeed,
       applyPriceFilter,
-      applyAllFilters,
       applyDistanceFilter,
       sortBy,
       mapState,

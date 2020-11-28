@@ -71,7 +71,7 @@ const LoginForm = props => {
       }
     }
  
-    axios.post("/login", { email, password })
+    axios.post("/api/users/login", { email, password })
       .then((response) => {
         if (response.data.username) {
           setCookie('user_id', response.data.user_id, {path: "/"})

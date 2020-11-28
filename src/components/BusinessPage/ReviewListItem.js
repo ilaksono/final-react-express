@@ -64,7 +64,7 @@ export default function ReviewListItem(props) {
   const updateHelpfulCount = (id, name) => {
 
     if (props.isProfile) {
-      return axios.post('/reviews/helpful', { id, username: name })
+      return axios.post('/api/reviews/helpful', { id, username: name })
         .then((response) => {
           props.profileHelpCount(id, response.data);
           return;
@@ -72,7 +72,7 @@ export default function ReviewListItem(props) {
     }
 
     else if (props.isHome) {
-      return axios.post('/reviews/helpful', { id, username: name })
+      return axios.post('/api/reviews/helpful', { id, username: name })
         .then((response) => {
           props.profileHelpCount(id, response.data);
           return;
@@ -81,7 +81,7 @@ export default function ReviewListItem(props) {
 
     else {
 
-      return axios.post('/reviews/helpful', { id, username: name })
+      return axios.post('/api/reviews/helpful', { id, username: name })
         .then((response) => {
           if (response.data === "add") {
             const updatedBusinessDetails = { ...businessDetails };
@@ -106,7 +106,7 @@ export default function ReviewListItem(props) {
   const deleteReview = () => {
 
     if (props.isHome) {
-      return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+      return axios.post("/api/reviews/delete", { id: props.id, user_id: appState.user_id })
         .then(() => {
           props.profileDeleteReview(props.id);
           closeAlert();
@@ -115,7 +115,7 @@ export default function ReviewListItem(props) {
     };
 
     if (props.isProfile) {
-      return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+      return axios.post("/api/reviews/delete", { id: props.id, user_id: appState.user_id })
         .then(() => {
           props.profileDeleteReview(props.id);
           closeAlert();
@@ -123,7 +123,7 @@ export default function ReviewListItem(props) {
         .catch(err => { console.log(err); });
     };
 
-    return axios.post("/reviews/delete", { id: props.id, user_id: appState.user_id })
+    return axios.post("/api/reviews/delete", { id: props.id, user_id: appState.user_id })
       .then(() => {
         const updatedBusinessDetails = { ...businessDetails };
         updatedBusinessDetails.reviews.map(review => {
