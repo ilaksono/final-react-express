@@ -25,6 +25,7 @@
 }
 .widget-container:hover {
   background-color: rgb(230, 230, 230);
+  box-shadow: 0 0 6px 6px grey;
 }
 .home-reviews-container {
   @include flexbox(column, flex-start, center);
@@ -32,7 +33,8 @@
   max-width: 500px;
 }
 .home-reviews-container:hover {
-    background-color: rgb(230, 230, 230);
+  background-color: rgb(230, 230, 230);
+  box-shadow: 0 0 6px 6px grey;
 }
 
 .site-description {

@@ -40,7 +40,7 @@ export default function SimpleGrow(props) {
     style={{
       position: 'fixed',
       top: '35%',
-      left: '40%'
+      left: '43%'
     }}
     >
       {/* <FormControlLabel
