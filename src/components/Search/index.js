@@ -28,7 +28,8 @@ const Search = props => {
     resetRefinedResults,
     yelpLoading,
     loadingSearch,
-    resetPagination
+    resetPagination,
+    addSearchCount
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -91,6 +92,7 @@ const Search = props => {
 
   const handleSearch = (name) => {
     resetPagination();
+    addSearchCount();
     setLoadingSearch(true);
     if (name) {
       yelpSearch(name, value); // value = location
