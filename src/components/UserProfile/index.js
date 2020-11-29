@@ -63,7 +63,6 @@ const UserProfile = (props) => {
                   onClick={() => history.goBack()}>
                   <KeyboardBackspaceIcon />
                 </Button>
-                <div className=""></div>
               </div>
               <Profile
                 whom={whom || {}}

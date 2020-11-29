@@ -40,7 +40,8 @@ export default function SimpleGrow(props) {
     style={{
       position: 'fixed',
       top: '35%',
-      left: '43%'
+      left: '43%',
+      zIndex: props.busAnim.favGrow ? '1' : '-1'
     }}
     >
       {/* <FormControlLabel
