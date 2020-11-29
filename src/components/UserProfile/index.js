@@ -87,12 +87,12 @@ const UserProfile = (props) => {
             }
             <div className='user-chart-container'>
               {
-                allUsers.favs.length ?
+                allUsers.favsDetails.length ?
                   <>
                     <div className='chart-title'>Favourite Places</div>
 
                     <FavSection deleteFavProfile={deleteFavProfile} 
-                    whom={whom} favs={allUsers.favs} allUsers={allUsers}/>
+                    whom={whom} allUsers={allUsers}/>
                   </>
                   :
                   <div className='no-places-info'>

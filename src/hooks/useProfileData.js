@@ -4,7 +4,6 @@ import axios from 'axios';
 const initProfile = {
   all: [],
   reviews: [],
-  favs: [],
   favsDetails: []
 };
 
@@ -45,7 +44,6 @@ const useProfileData = () => {
       setAllUsers({
         all: users.data.data,
         reviews: reviews.data.data,
-        favs: uniqueArr,
         favsDetails: allDetails
       });
     } catch (er) {
@@ -67,13 +65,11 @@ const useProfileData = () => {
 
   const deleteFavProfile = (venue_id) => {
     const cpy = [...allUsers.favsDetails];
-    const cpyMini = [...allUsers.favs];
     const index = allUsers.favsDetails
       .findIndex(fav =>
         fav.id === venue_id);
     cpy.splice(index, 1);
-    cpyMini.splice(index, 1);
-    setAllUsers({ ...allUsers, favs:cpyMini, favsDetails: cpy });
+    setAllUsers({ ...allUsers, favsDetails: cpy });
 
   };
 

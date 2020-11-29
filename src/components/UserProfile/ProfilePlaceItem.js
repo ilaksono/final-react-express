@@ -144,7 +144,7 @@ const ProfilePlaceItem = (props) => {
       {id == appState.user_id &&
         <FavoriteIcon
           style={{
-            color: props.allUsers.favs.some(fav => fav.venue_id === props.id) ? 'red' : 'grey'
+            color: 'red'
           }}
           onClick={promptConfirm}
         />
