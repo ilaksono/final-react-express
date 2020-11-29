@@ -3,7 +3,7 @@
 .nav-bar {
   height: 60px;
   color: $white;
-  background-color: $purple;
+  background-color: #D87828;
   display: flex;
   @include flexbox(row, space-between, center);
   font-size: 24px;
