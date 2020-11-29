@@ -395,7 +395,7 @@ export default function BusinessPage() {
                     ) : (
                         <>
                           <div className="closed">
-                            Closed Now &nbsp; { (nextOpen.day && nextOpen.start && nextOpen.end) ? "&middot" : null }
+                            Closed Now &nbsp; { (nextOpen.day && nextOpen.start && nextOpen.end) ? `&middot` : null }
                         </div>
                         { (nextOpen.day && nextOpen.start && nextOpen.end) && (
                           <div className="category">

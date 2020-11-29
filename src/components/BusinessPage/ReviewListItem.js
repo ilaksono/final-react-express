@@ -297,6 +297,7 @@ export default function ReviewListItem(props) {
                   </div>
                 )}
             </div>
+          {props.helpful_count}
           </div>
         </div>
 
