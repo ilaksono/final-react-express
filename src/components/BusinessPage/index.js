@@ -382,10 +382,15 @@ export default function BusinessPage() {
                   <div className="bus-data-row">
                     { businessDetails.price && (
                       <div className="bus-price">
-                        {businessDetails.price} &nbsp; &middot;
+                        {businessDetails.price} 
+                        { categoryList.length && (
+                          <div>
+                            &nbsp; &middot; &nbsp; 
+                          </div>
+                        )}
                       </div>
                     )}
-                    &nbsp; {categoryList}
+                    {categoryList}
                   </div>
                   <div className="bus-data-row">
                     {openNow() ? (
