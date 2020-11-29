@@ -98,12 +98,17 @@
 }
 
 .search-title-container {
-  @include flexbox(row, space-between, center);
+  @include flexbox(row, flex-end, center);
   margin: 10px 20px 10px 20px;
   padding: 0px 10px 30px 10px;
   border-bottom: 1px solid $gray-line;
+  text-align: center;
 }
+.search-title-text {
+  position: fixed;
+  left: 27%;
 
+}
 .rating-outer-container {
   @include flexbox(row, flex-start, center);
   width: 300px;

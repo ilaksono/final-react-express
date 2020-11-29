@@ -5,6 +5,9 @@ import Sort from 'components/Sort';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from '@material-ui/lab/Pagination';
+import { Button } from '@material-ui/core';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +33,8 @@ const sortOptions = [
 ];
 
 const Results = props => {
+  const history = useHistory();
+  console.log(history);
   const classes = useStyles();
   const {
     loadingSearch,
@@ -58,6 +63,20 @@ const Results = props => {
 
   return (
     <div className='results-container'>
+      {
+        history.length > 0 &&
+        <div style={{
+          position: 'fixed',
+          zIndex: '7',
+          top: '85px',
+          left: `${filters.show ? 'calc((100% - 350px) * 0.3)' : '60px'}`
+        }}>
+          <Button variant="contained"
+            onClick={() => history.goBack()}>
+            <KeyboardBackspaceIcon />
+          </Button>
+        </div>
+      }
       {(results.length < 2 && !loadingSearch && appState.searchCount < 1 && refinedResults.length < 2 && filters.categories.length < 2 && !loadToxic) &&
         <div className='begin-your-search'>
           Begin Your Search
@@ -73,7 +92,7 @@ const Results = props => {
       ) : (
           <div className="articles-pagination-container">
             <div className="search-title-container">
-              <h2>Search Results</h2>
+              <h2 className='search-title-text'>Search Results</h2>
               <Sort sortOptions={sortOptions}
                 defaultOption={sortOptions[0].id}
                 onClick={handleSort}
