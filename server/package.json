@@ -10,6 +10,7 @@
     "cookie-session": "^1.4.0",
     "cors": "^2.8.4",
     "express": "^4.17.1",
+    "faker": "^5.1.0",
     "pg": "^6.4.2",
     "pg-native": "^3.0.0",
     "request-promise-native": "^1.0.9",
