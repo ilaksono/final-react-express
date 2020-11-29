@@ -178,7 +178,8 @@ export default function ReviewListItem(props) {
   };
   const initAnim = {
     smallWob: false,
-    likeBounce: false
+    likeBounce: false,
+    fadeOut: false
   };
   const [revAnim, setRevAnim] = useState(initAnim);
 
@@ -296,19 +297,20 @@ export default function ReviewListItem(props) {
                   </div>
                 )}
             </div>
+          {props.helpful_count}
           </div>
         </div>
 
         {props.user_id == appState.user_id && (
           <div className="edit-delete-container">
+          
             <div className='delete-button'
               onClick={handleAlert}
-            >
+              >
               <DeleteIcon />
             </div>
             <div className='edit-button'
               onClick={handleEdit}>
-
               <NewReview
                 review_id={props.id}
                 user_id={props.user_id}

@@ -49,12 +49,18 @@ const Hours = (props) => {
         } if (currentTime >= day[index].start && currentTime <= day[index].end) {
         } if (currentTime > day[index].end) {
           if (!nextOpenDay && !nextOpenStart && !nextOpenEnd) {
+            if (day[index].day === 6) {
             nextOpenDay = days[(day[index].day + 1) % 7];
             nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
             nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
           }
+         else {
+          nextOpenDay = days[(day[index].day - 1)];
+            nextOpenStart = formatAMPM(hoursDayArray[(day[index].day - 1)][0].start);
+            nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day - 1)][0].end);
         }
-      }
+        }
+      }}
       results.push((
         <tr className="hours-table-row">
           <td className="td-day">
