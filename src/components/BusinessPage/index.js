@@ -357,7 +357,7 @@ export default function BusinessPage() {
                       <Rating name="read-only" precision={0.5} value={Number(businessDetails.yelpRating)} readOnly size="medium" />
                     </Box>
                     <div className="covid_review_count">
-                      {businessDetails.yelpRatingCount} reviews
+                      {businessDetails.yelpRatingCount} {businessDetails.yelpRatingCount === 1 ? "review" : "reviews" }
                     </div>
                   </div>
                   <div className="bus-data-row">
@@ -376,7 +376,7 @@ export default function BusinessPage() {
                         />}
                     </Box>
                     <div className="covid_review_count">
-                      {businessDetails.reviews.length} reviews
+                      {businessDetails.reviews.length} {businessDetails.reviews.length === 1 ? "review" : "reviews" }
                     </div>
                   </div>
                   <div className="bus-data-row">
@@ -395,11 +395,11 @@ export default function BusinessPage() {
                     ) : (
                         <>
                           <div className="closed">
-                            Closed Now &nbsp; { (nextOpen.day && nextOpen.start && nextOpen.end) ? "&middot" : null }
+                            Closed Now &nbsp;
                         </div>
                         { (nextOpen.day && nextOpen.start && nextOpen.end) && (
                           <div className="category">
-                            &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
+                            &middot; &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
                           </div>
                         )}
                         </>
@@ -412,14 +412,14 @@ export default function BusinessPage() {
                       <LocationOnIcon />
                     </div>
                     <div className="data">
-                      {businessDetails.address},
+                      { businessDetails.address && businessDetails.address},
                     </div>
                   </div>
                   <div className="row">
                     <div className="icon">
                     </div>
                     <div className="data">
-                      {businessDetails.city}
+                      {businessDetails.city && businessDetails.city}
                     </div>
                   </div>
                   <div className="row">
@@ -428,7 +428,7 @@ export default function BusinessPage() {
                       <PhoneIcon />
                     </div>
                     <div className="data">
-                      {businessDetails.phone}
+                      {businessDetails.phone && businessDetails.phone}
                     </div>
                   </div>
                 </div>
