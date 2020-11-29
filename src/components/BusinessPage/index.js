@@ -97,11 +97,13 @@ const initPhoto = {
 //   perDay: false
 // };
 
+const initVal = false;
+
 export default function BusinessPage() {
 
   const classes = useStyles();
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
-  const [reviewSnackBar, setReviewSnackBar] = useState(false);
+  const [reviewSnackBar, setReviewSnackBar] = useState(initVal);
   const history = useHistory();
   const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
@@ -317,6 +319,7 @@ export default function BusinessPage() {
 
   return (
     <div className='business-page-container'>
+      <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
       <div className="back-and-message-container">
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
@@ -438,15 +441,13 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              {(appState.authorized && appState.favs) && (
+              {(appState.authorized) && (
                 <div className='bus-buttons'>
                   {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
                     <>
                       <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
-                      <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
-                  {console.log(appState)}
                   <Button variant="contained"
                     startIcon={<FavoriteIcon />}
                     className={appState.favs.includes(businessDetails.id)

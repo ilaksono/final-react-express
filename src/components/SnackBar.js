@@ -41,7 +41,7 @@ const SnackBar = (props) => {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={props.open}
-        style={{ marginTop: '60px' }}
+        style={{ marginTop: '60px'}}
         key={vertical + horizontal}>
         <Alert onClose={handleClose} severity="success">
           { props.message }
