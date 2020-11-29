@@ -175,7 +175,7 @@
 }
 
 .bus-price {
-  margin-right: 10px;
+  @include flexbox(row, flex-start, center);
 }
 
 .category {
