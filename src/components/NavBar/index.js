@@ -10,6 +10,7 @@ import RegisterForm from '../Register';
 import LoginForm from '../Login';
 import AccountMenu from './AccountMenu';
 import { useCookies } from 'react-cookie';
+import HomeIcon from '@material-ui/icons/Home';
 
 const initMod = {
   regOpen: false,
