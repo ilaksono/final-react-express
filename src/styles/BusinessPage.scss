@@ -62,8 +62,8 @@
 }
 
 .images-container {
-  @include flexbox(row, center, center);
-  height: 20%;
+  @include flexbox(row, space-around, center);
+  height: 240px;
   width: 100%;
   margin: 30px;
   background-color: rgb(230, 230, 230);
