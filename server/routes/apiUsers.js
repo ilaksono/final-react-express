@@ -25,16 +25,14 @@ module.exports = (dbHelpers) => {
         if (exists === false) {
           dbHelpers.registration(req.body.username, req.body.email, password, req.body.city)
             .then(response => {
-              console.log(response);
               res.json({
                 username: response[0].username,
                 profile_pic: response[0].profile_pic,
                 user_id: response[0].id
               });
-              req.session.user_id = response[0].id;
             })
             .catch(err => {
-              console.log("this is the err", err);
+              console.log(err);
             });
         }
       })
@@ -47,15 +45,16 @@ module.exports = (dbHelpers) => {
   router.post("/login", (req, res) => {
     let userID;
     let userDetails;
-    dbHelpers.serverLoginValidation()
-      .then((userData) => {
-        for (const user of userData) {
-          if (user.email === req.body.email) {
-            userID = user.id;
-            if (bcrypt.compareSync(req.body.password, user.password)) {
+    dbHelpers.serverLoginValidation(req.body.email)
+      .then((response) => {
+        if (!response) {
+          return res.send("email does not exist")
+        } else {
+          userID = response.id;
+            if (bcrypt.compareSync(req.body.password, response.password)) {
               userDetails = {
-                username: user.username,
-                profile_pic: user.profile_pic,
+                username: response.username,
+                profile_pic: response.profile_pic,
                 user_id: userID,
                 likes: [],
                 favs: []
@@ -64,20 +63,17 @@ module.exports = (dbHelpers) => {
               return res.send("password incorrect");
             }
           }
-        }
-
       })
       .then(() => {
         dbHelpers.getLikesByUser(userID)
           .then(response => {
             userDetails.likes = response;
-            console.log(userDetails.likes);
           })
           .then(() => {
             dbHelpers.getProfileFavs(userID)
               .then(response => {
                 userDetails.favs = response;
-                console.log(userDetails);
+                console.log(userDetails)
                 return res.send(userDetails);
               });
           });
@@ -85,18 +81,21 @@ module.exports = (dbHelpers) => {
   });
 
   router.post("/data", (req, res) => {
-    const data = {"likes": [], "favs": []}
+    const data = {
+      "likes": [],
+      "favs": []
+    }
     dbHelpers.getLikesByUser(req.body.id)
-    .then(response => {
-      data.likes = response;
-    })
-    .then(() => {
-      dbHelpers.getProfileFavs(req.body.id)
       .then(response => {
-        data.favs = response
-        return res.send(data)
+        data.likes = response;
       })
-    })
+      .then(() => {
+        dbHelpers.getProfileFavs(req.body.id)
+          .then(response => {
+            data.favs = response
+            return res.send(data)
+          })
+      })
   });
 
   router.get('/public', (req, res) => {
