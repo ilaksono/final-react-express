@@ -62,8 +62,8 @@
 }
 
 .images-container {
-  @include flexbox(row, center, center);
-  height: 20%;
+  @include flexbox(row, space-around, center);
+  height: 240px;
   width: 100%;
   margin: 30px;
   background-color: rgb(230, 230, 230);
@@ -128,7 +128,7 @@
 
 .bus-buttons {
   @include flexbox(row, space-between, center);
-  width: 440px;
+  width: 300px;
   margin-top: 20px;
   margin-left: 10px;
 }
@@ -180,7 +180,7 @@
 
 .category {
   font-style: italic;
-  margin-left: 5px;
+  margin-left: 0px;
 }
 
 .hours-table {
@@ -269,4 +269,13 @@
     @include flexbox(column-reverse, flex-start, center);
     
   }
+}
+
+.chart-filter-container {
+  @include flexbox(row, center, center);
+  margin-bottom: 10px;
+}
+
+.chart-filter-button {
+  font-size: 12px;
 }

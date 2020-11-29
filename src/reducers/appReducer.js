@@ -26,7 +26,8 @@ const appReducer = (appState, action) => {
       return {
         ...appState,
         authorized: false,
-        name: ''
+        name: '',
+        user_id: ''
       };
     }
     case CREATE: {

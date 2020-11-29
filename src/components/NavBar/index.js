@@ -32,12 +32,13 @@ const NavBar = (props) => {
 
   useEffect(() => {
     if (cookies.user_id) {
-      console.log("is it working?");
       return axios.post("/api/users/data", { id: cookies.user_id })
         .then(response => {
           const arrayOfLikes = [];
+          const arrayOfFavs = [];
           response.data.likes.forEach(like => arrayOfLikes.push(like.id));
-          authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, arrayOfLikes, response.data.favs);
+          response.data.favs.forEach(favs => arrayOfFavs.push(favs.venue_id))
+          authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, arrayOfLikes, arrayOfFavs);
         });
     }
     // eslint-disable-next-line
