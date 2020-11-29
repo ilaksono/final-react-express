@@ -1,6 +1,6 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { YelpContext } from 'YelpContext.js';
-import { useContext, Fragment, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,8 +8,6 @@ import Search from 'components/Search';
 import ReviewList from 'components/BusinessPage/ReviewList';
 import axios from 'axios';
 import { CircularProgress } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Home = () => {
-  const history = useHistory();
   const classes = useStyles();
   const { tops, yelpSearch, appState,
     resetFilters,
@@ -211,20 +208,7 @@ const Home = () => {
 
   return (
     <div className='home-layout'>
-      {
-        history.length > 0 &&
-        <div style={{
-          position: 'fixed',
-          zIndex: '7',
-          top: '95px',
-          left: '60px'
-        }}>
-          <Button variant="contained"
-            onClick={() => history.goBack()}>
-            <KeyboardBackspaceIcon />
-          </Button>
-        </div>
-      }
+      
       <div className='search-home-container'>
         < div className='site-description'>
           Find places to shop, eat and hangout that take pandemics seriously

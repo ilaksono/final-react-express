@@ -34,7 +34,6 @@ const sortOptions = [
 
 const Results = props => {
   const history = useHistory();
-  console.log(history);
   const classes = useStyles();
   const {
     loadingSearch,
