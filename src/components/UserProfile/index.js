@@ -15,6 +15,7 @@ const initFocus = {
 const UserProfile = (props) => {
 
   const [focus, setFocus] = useState(initFocus);
+  const [selected, setSelected] = useState("reviews");
   const history = useHistory();
   const { id } = useParams();
   const { allUsers,
@@ -70,35 +71,43 @@ const UserProfile = (props) => {
                 length={allUsers.reviews.length}
                 setFocus={setFocus} />
             </div>
-            {allUsers.reviews &&
-              <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
-
-                <div className='review-big-container'>
-                  <div classname='reviews'>
-                    <ReviewList
-                      reviews={allUsers.reviews}
-                      isProfile={true}
-                      profileHelpCount={profileHelpCount}
-                      profileDeleteReview={profileDeleteReview}
-                    />
-                  </div>
+            <div className="reviews-fav-container">
+              <div className="reviews-fav-title-container">
+                <div className={ selected === "reviews" ? "reviews-fav-title title-selected" : "reviews-fav-title"} onClick={() => setSelected("reviews")}>
+                  REVIEWS
+                </div>
+                <div className={ selected === "favourites" ? "reviews-fav-title title-selected" : "reviews-fav-title"} onClick={() => setSelected("favourites")}>
+                  FAVOURITES
                 </div>
               </div>
-            }
-            <div className='user-chart-container'>
-              {
-                allUsers.favsDetails.length ?
-                  <>
-                    <div className='chart-title'>Favourite Places</div>
+              { (selected === "reviews" && allUsers.reviews) &&
+                <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
 
-                    <FavSection deleteFavProfile={deleteFavProfile} 
-                    whom={whom} allUsers={allUsers}/>
-                  </>
-                  :
-                  <div className='no-places-info'>
-                    {`${whom.username || 'This User'} has no favourite places.`}
+                  <div className='review-big-container'>
+                      <ReviewList
+                        reviews={allUsers.reviews}
+                        isProfile={true}
+                        profileHelpCount={profileHelpCount}
+                        profileDeleteReview={profileDeleteReview}
+                      />
                   </div>
+                </div>
               }
+              { selected === "favourites" && (
+                <div className='user-chart-container'>
+                {
+                  allUsers.favsDetails.length ?
+                    <>
+                      <FavSection deleteFavProfile={deleteFavProfile} 
+                      whom={whom} allUsers={allUsers}/>
+                    </>
+                    :
+                    <div className='no-places-info'>
+                      {`${whom.username || 'This User'} has no favourite places.`}
+                    </div>
+                }
+              </div>
+              )}
             </div>
           </>
       }

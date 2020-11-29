@@ -64,19 +64,102 @@ const ProfilePlaceItem = (props) => {
 
 
   const [openAlert, setOpenAlert] = useState(false);
-
+  console.log("props", props);
   return (
     <>
-      {props.name &&
-        <>
-          <div className='profile-res-container'
+      {props.name && (
+        <div className='result-container'
+            onClick={moveToNextPage}>
+          <div className="img-general-info-container">
+            <div
+            style={{ 
+              backgroundImage: `url(${props.photos[0]})`,
+              width: '100px',
+              height: '100px',
+              backgroundSize: 'cover',
+              cursor: 'pointer',
+              borderRadius: '20px',
+              filter: 'grayscale(0%)',
+
+            }}
+            src={props.photos[0]}
+            >
+            </div>
+            <div className='general-info'>
+              <h3 className="venue_name">{props.name}</h3>
+              {props.profile_review ?
+              <>
+                <div className="rating-outer-container">
+
+
+                  <div className="rating-title">
+                    {props.whom.username}:
+                    </div>
+                  <Box component="fieldset" mb={0} pb={0} pt={0} borderColor="transparent">
+                    {isNaN(props.profile_review.overall_rating) ? "N/A"
+                      : <StyledRating
+                        name="customized-color"
+                        size="small"
+                        value={props.profile_review.overall_rating}
+                        precision={0.5}
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        readOnly
+                      />}
+                  </Box>
+                </div>
+                <div>
+                  "{props.profile_review.description}"
+                </div>
+              </>
+              :
+              id === appState.user_id ?
+                <Link to={`/search/${props.id}`}>
+                  <div className='prof-write-review' onClick={() => getIndividualBusinessData(props.id)}>
+                    Write a Review
+               </div>
+
+                </Link>
+                : ''
+            }
+            </div>
+          </div>
+          <div className='location'> 
+            {props.phone}<br />
+            {props.location.address1}<br />
+            {props.location.city}
+          </div>
+        </div>
+      )}
+        
+      <AlertDialog open={openAlert} 
+      onClose={promptOnClose} 
+      delete={() => handleFavClick(props.id)}
+      message={`Unfavourite ${props.name}?`}
+      />
+      
+      {id == appState.user_id &&
+        <FavoriteIcon
+          style={{
+            color: 'red'
+          }}
+          onClick={promptConfirm}
+        />
+      }
+      
+    </>
+  )
+};
+
+export default ProfilePlaceItem;
+
+{/* <>
+          <div className='result-container'
             onClick={moveToNextPage}>
             <div className='pro-general-info'>
-              <h3 className="pro-venue_name">{props.name}
-              </h3>
               <div className='pro-img-container'>
                 <img src={props.photos[0]} alt="Logo" className='pro-venue-image' />
               </div>
+              <h3 className="pro-venue_name">{props.name}</h3>
             </div>
 
             <div className="pro-rating-outer-container">
@@ -133,25 +216,4 @@ const ProfilePlaceItem = (props) => {
               
             </div>
           </div>
-        </>
-      }
-      <AlertDialog open={openAlert} 
-      onClose={promptOnClose} 
-      delete={() => handleFavClick(props.id)}
-      message={`Unfavourite ${props.name}?`}
-      />
-      
-      {id == appState.user_id &&
-        <FavoriteIcon
-          style={{
-            color: 'red'
-          }}
-          onClick={promptConfirm}
-        />
-      }
-      
-    </>
-  );
-};
-
-export default ProfilePlaceItem;
+        </> */}
