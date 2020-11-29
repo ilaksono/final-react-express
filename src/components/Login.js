@@ -98,7 +98,7 @@ const LoginForm = props => {
           props.setModal(prev => ({ ...prev, logOpen: false }));
         } else if (response.data === "password incorrect") {
           setLogin({ ...login, errMsg: 'password is incorrect!', errType: 'password' });
-        } else {
+        } else if (response.data === "email does not exist") {
           setLogin({ ...login, errMsg: 'Invalid email!', errType: 'email' });
         }
       });

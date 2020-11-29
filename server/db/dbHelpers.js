@@ -194,14 +194,16 @@ module.exports = (db) => {
       });
   };
 
-  const serverLoginValidation = () => {
+  const serverLoginValidation = (email) => {
     const queryString = `
     SELECT *
-    FROM users;
+    FROM users
+    WHERE email = $1;
     `;
-    return db.query(queryString)
+    const queryParams = [email]
+    return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows;
+        return response.rows[0];
       });
   };
 
