@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     paddingRight: 10,
     paddingLeft: 10,
-    fontSize: 16,
+    fontSize: 12,
     borderRadius: 0,
-    minWidth: '100px',
+    minWidth: '80px',
   },
   priceLeft: {
     margin: 0,
     paddingRight: 10,
     paddingLeft: 10,
-    fontSize: 16,
+    fontSize: 12,
     borderBottomLeftRadius: 20,
     borderTopLeftRadius: 20
   },
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     paddingRight: 10,
     paddingLeft: 10,
-    fontSize: 16,
+    fontSize: 12,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20
   },
@@ -43,7 +43,7 @@ const ChartTab = (props) => {
   const buttons = props.chartSelect.options
     .map((select, index) => {
       return (
-        <div key={index} >
+        <div className="chart-filter-button" key={index} >
           <Button
             color={select === props.chartSelect.select 
               ? 'primary' : 'default'}
@@ -60,7 +60,7 @@ const ChartTab = (props) => {
     });
 
   return (
-    <div className='price-filter-container'>
+    <div className='chart-filter-container'>
       {buttons}
     </div>
   );

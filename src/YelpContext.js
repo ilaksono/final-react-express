@@ -10,7 +10,7 @@ import useSort from 'hooks/useSort';
 import useNewReview from 'hooks/useNewReview';
 import { useLoadScript } from '@react-google-maps/api';
 import useLoadToxicity from 'hooks/useLoadToxicity';
-
+import useLocationAuto from 'hooks/useLocationAuto';
 export const YelpContext = React.createContext();
 const libraries = ["places"]
 
@@ -32,6 +32,16 @@ export function YelpProvider({ children }) {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries
   });
+
+  const {
+    ready,
+    value,
+    status,
+    data,
+    setValue,
+    clearSuggestions
+  } = useLocationAuto()
+
   const {
     appState,
     submitHandle,
@@ -161,7 +171,13 @@ export function YelpProvider({ children }) {
       handleFav,
       handleLikes,
       resetFiltersHandle,
-      addSearchCount
+      addSearchCount,
+      ready,
+      value,
+      status,
+      data,
+      setValue,
+      clearSuggestions
       // openFilterClick
     }}>
       {children}

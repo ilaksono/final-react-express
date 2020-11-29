@@ -29,29 +29,37 @@ const Search = props => {
     yelpLoading,
     loadingSearch,
     resetPagination,
-    addSearchCount
+    addSearchCount,
+    ready,
+    value,
+    status,
+    data,
+    setValue,
+    clearSuggestions
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   // const [location, setLocation] = useState('')
-  const { ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions } = usePlacesAutocomplete({
-      requestOptions: {
-        location: {
-          lat: () => appState.center.lat,
-          lng: () => appState.center.lng
-        },
-        radius: 200 * 1000,
-      },
-      debounce: 200,
-      defaultValue: appState.center.city || ''
-    });
+  
+  // const { ready,
+  //   value,
+  //   suggestions: { status, data },
+  //   setValue,
+  //   clearSuggestions } = usePlacesAutocomplete({
+  //     requestOptions: {
+  //       location: {
+  //         lat: () => appState.center.lat,
+  //         lng: () => appState.center.lng
+  //       },
+  //       radius: 200 * 1000,
+  //     },
+  //     debounce: 200,
+  //     // defaultValue: appState.center.city || ''
+  //   });
 
   useEffect(() => {
-    setValue(appState.center.city, false);
+    if (appState.searchCount === 0)
+      setValue(appState.center.city, false);
   }, [appState]);
 
 
@@ -133,9 +141,9 @@ const Search = props => {
         <Button onClick={() => {
           setLoadingSearch(true);
           resetRefinedResults();
-          handleSearch()
-          }} message={props.buttonMessage} search isHome={props.isHome} >
-    {loadingSearch && <CircularProgress size={20} color='primary'/>}</Button>
+          handleSearch();
+        }} message={props.buttonMessage} search isHome={props.isHome} >
+          {loadingSearch && <CircularProgress size={20} color='primary' />}</Button>
       </Link>
     </div>
   );
