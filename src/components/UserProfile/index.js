@@ -8,7 +8,6 @@ import FavSection from './FavSection';
 import { Button } from '@material-ui/core';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { YelpContext } from 'YelpContext';
-
 const initFocus = {
   like: false,
   rev: false
@@ -24,6 +23,7 @@ const UserProfile = (props) => {
     getUsersAPI,
     setAllUsers,
     profileDeleteReview,
+    deleteFavProfile
   } = useProfileData();
 
   const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
@@ -48,6 +48,7 @@ const UserProfile = (props) => {
 
   const whom = allUsers.all // eslint-disable-next-line
   .find(user => user.id == id) || null;
+  
   return (
     <div className='user-profile-layout'>
       {
@@ -90,7 +91,8 @@ const UserProfile = (props) => {
                   <>
                     <div className='chart-title'>Favourite Places</div>
 
-                    <FavSection favs={allUsers.favs} />
+                    <FavSection deleteFavProfile={deleteFavProfile} 
+                    whom={whom} favs={allUsers.favs} allUsers={allUsers}/>
                   </>
                   :
                   <div className='no-places-info'>

@@ -4,7 +4,8 @@ import axios from 'axios';
 const initProfile = {
   all: [],
   reviews: [],
-  favs: []
+  favs: [],
+  favsDetails: []
 };
 
 const useProfileData = () => {
@@ -29,14 +30,51 @@ const useProfileData = () => {
           !uniqueArr.some(fav =>
             fav.venue_id === data.venue_id)
           && uniqueArr.push(data));
+      const rawDetailsData = await getFavsDetails(uniqueArr);
+      const allDetails = rawDetailsData
+        .map(detail => {
+          reviews.data.data.some(review => {
+            if (review.venue_id === detail.data.id) {
+              detail.data.profile_review = review;
+              return true;
+            }
+            else return false;
+          });
+          return detail.data;
+        });
       setAllUsers({
         all: users.data.data,
         reviews: reviews.data.data,
-        favs: uniqueArr
+        favs: uniqueArr,
+        favsDetails: allDetails
       });
     } catch (er) {
       console.log(er);
     }
+  };
+  const getFavsDetails = async (arr) => {
+    try {
+      const promArr = arr.map(ele =>
+        axios.post(`/api/yelp/search/${ele.venue_id}`)
+      );
+      const allDetails = await Promise.all(promArr);
+      // console.log(allDetails);
+      return allDetails;
+    } catch (er) {
+      console.log(er);
+    }
+  };
+
+  const deleteFavProfile = (venue_id) => {
+    const cpy = [...allUsers.favsDetails];
+    const cpyMini = [...allUsers.favs];
+    const index = allUsers.favsDetails
+      .findIndex(fav =>
+        fav.id === venue_id);
+    cpy.splice(index, 1);
+    cpyMini.splice(index, 1);
+    setAllUsers({ ...allUsers, favs:cpyMini, favsDetails: cpy });
+
   };
 
   const getUsersFavs = (id) => {
@@ -86,6 +124,7 @@ const useProfileData = () => {
     profileHelpCount,
     setAllUsers,
     profileDeleteReview,
+    deleteFavProfile
   };
 
 };

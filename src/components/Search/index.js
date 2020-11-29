@@ -56,10 +56,10 @@ const Search = props => {
 
 
   useEffect(() => {
+    setRefinedSeed(results);
     populateCategories(results);
     // addResults(results);
     getPriceFilterMode(results);
-    setRefinedSeed(results);
     // eslint-disable-next-line
   }, [results]);
 
