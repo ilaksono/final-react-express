@@ -301,7 +301,7 @@ export default function ReviewListItem(props) {
           </div>
         </div>
 
-        {props.user_id == appState.user_id && (
+        {(props.user_id == appState.user_id || (props.user_id == appState.user_id && (props.isHome || props.isProfile))) && (
           <div className="edit-delete-container">
           
             <div className='delete-button'
