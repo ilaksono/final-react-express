@@ -441,6 +441,7 @@ export default function BusinessPage() {
                       <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
+                  {console.log(appState)}
                   <Button variant="contained"
                     startIcon={<FavoriteIcon />}
                     className={appState.favs.includes(businessDetails.id)
