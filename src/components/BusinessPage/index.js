@@ -498,7 +498,7 @@ export default function BusinessPage() {
                     <TogglePerDay
                       chartSelect={chartSelect}
                       changePerDay={changePerDay}
-                      message='per Day' />
+                      message='Daily' />
                     {/* {parsedCharts} */}
 
                     <ChartSection

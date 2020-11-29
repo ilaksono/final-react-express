@@ -31,9 +31,9 @@ const initOptions = {
   }
 };
 const initChartSelect = {
-  options: ['Overall', 'Clean', 'Distancing', 'Process'],
+  options: ['Overall', 'Clean', 'Distance', 'Process'],
   select: 'Overall',
-  perDay: false
+  perDay: true
 };
 
 const useChartData = () => {

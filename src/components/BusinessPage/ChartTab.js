@@ -8,29 +8,29 @@ const useStyles = makeStyles((theme) => ({
       }
     }, */
   root: {
-    width: '15px',
+    width: '40px',
   },
   price: {
     margin: 0,
-    paddingRight: 0,
-    paddingLeft: 0,
-    fontSize: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    fontSize: 16,
     borderRadius: 0,
-    maxWidth: '15px',
+    minWidth: '100px',
   },
   priceLeft: {
     margin: 0,
-    paddingRight: 0,
-    paddingLeft: 0,
-    fontSize: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    fontSize: 16,
     borderBottomLeftRadius: 20,
     borderTopLeftRadius: 20
   },
   priceRight: {
     margin: 0,
-    paddingRight: 0,
-    paddingLeft: 0,
-    fontSize: 10,
+    paddingRight: 10,
+    paddingLeft: 10,
+    fontSize: 16,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20
   },

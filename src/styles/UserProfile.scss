@@ -109,22 +109,20 @@
   margin-right: 6px;
 }
 
-.fav-item {
-  color: #363f47;
-  font-weight: bold;
-  border-radius: 5px;
-  box-shadow: 2px 2px 0 0 grey;
-  margin-bottom: 10px;
-  border: rgb(187, 187, 187) 1px solid;
-  padding: 5px;
-}
+// .fav-item {
+//   color: #363f47;
+//   font-weight: bold;
+//   border-radius: 5px;
+//   box-shadow: 2px 2px 0 0 grey;
+//   margin-bottom: 10px;
+//   border: rgb(187, 187, 187) 1px solid;
+//   padding: 5px;
+// }
 
-.fav-item:hover {
-  color: $purple;
-    box-shadow: 3px 3px 0 0 grey;
-
-
-}
+// .fav-item:hover {
+//   color: $purple;
+//     box-shadow: 3px 3px 0 0 grey;
+// }
 
 .no-places-info {
   text-align: center;
@@ -145,5 +143,66 @@
 }
 .back-arrow-fixed:hover {
   opacity: 1.0;
+}
 
+.profile-res-container {
+    @include flexbox(column, flex-start, center);
+  scroll-snap-align: start;
+  margin: 0px 8px 8px 8px;
+  height: 140px;
+  border: 1px solid $gray-line;
+  border-radius: 6px;
+  width: 80%;
+  padding: 10px;
+}
+
+.profile-res-container:hover {
+  cursor: pointer;
+  -moz-box-shadow:    1px 0px 3px 3px rgb(192, 192, 192);
+  -webkit-box-shadow: 1px 0px 3px 3px rgb(192, 192, 192);
+  box-shadow:         1px 0px 3px 3px rgb(192, 192, 192);
+}
+.pro-venue-image {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+
+}
+.pro-img-container {
+  position: relative;
+  top: 20%;
+}
+
+.pro-location {
+  font-size: 12px;
+  text-align: right;
+  min-width: 200px;
+}
+.pro-general-info {
+  @include flexbox(row, space-between, center)
+}
+
+.pro-rating-outer-container {
+  
+}
+
+.prof-write-review {
+  color: $purple;
+  font-weight: bold;
+
+}
+.prof-write-review:hover {
+  color: $salmon;
+}
+
+.prof-place-footer {
+  color: red;
+  @include flexbox(column, center, flex-end);
+  width: 100%;
+}
+
+@media screen and (max-width: 815px) {
+  .user-profile-layout {
+    @include flexbox(column, flex-start, center);    
+  }
 }
