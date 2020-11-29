@@ -207,22 +207,21 @@ const NewReview = props => {
     if (props.overall_rating) {
       submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
       .then(response => {
-          // props.setReviewSnackBar(true);
-          setLoadToxic(false);
-        }).catch(err => console.log(err));
+        setLoadToxic(false);
+      }).catch(err => console.log(err));
     }
     else {
+      props.setReviewSnackBar(true);
       submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
-        .then(response => {
-          setLoadToxic(false);
-          setNewReview(true);
-          if (!response) {
-            return handleClose();
-          }
+      .then(response => {
+        setLoadToxic(false);
+        setNewReview(true);
+        if (!response) {
+          return handleClose();
+        }
+        // props.setReviewSnackBar(true);
           resetState();
-          // props.setOpen(true);
           setOpen(true);
-
         }).catch(err => console.log(err));
     }
   };
