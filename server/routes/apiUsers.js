@@ -78,8 +78,8 @@ module.exports = (dbHelpers) => {
               .then(response => {
                 userDetails.favs = response;
                 console.log(userDetails);
+                return res.send(userDetails);
               });
-            return res.send(userDetails);
           });
       });
   });
@@ -94,8 +94,8 @@ module.exports = (dbHelpers) => {
       dbHelpers.getProfileFavs(req.body.id)
       .then(response => {
         data.favs = response
+        return res.send(data)
       })
-      return res.send(data)
     })
   });
 
