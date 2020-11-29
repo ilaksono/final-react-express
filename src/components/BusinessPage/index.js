@@ -472,7 +472,7 @@ export default function BusinessPage() {
                 </div>
                 {businessDetails.hours &&
                   <div className='table-container'>
-                    <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} setNextOpen={setNextOpen} />
+                      <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} setNextOpen={setNextOpen} />
                   </div>
                 }
               </div>
