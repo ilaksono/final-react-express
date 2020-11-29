@@ -296,7 +296,7 @@ export default function BusinessPage() {
     dayNum += 7;
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
-    if (!businessDetails.hours) {
+    if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
       return null;
     }
     if (businessDetails.hours[0].open[dayNum].end > time
@@ -380,9 +380,11 @@ export default function BusinessPage() {
                     </div>
                   </div>
                   <div className="bus-data-row">
-                    <div className="bus-price">
-                      {businessDetails.price} &nbsp; &middot;
-                    </div>
+                    { businessDetails.price && (
+                      <div className="bus-price">
+                        {businessDetails.price} &nbsp; &middot;
+                      </div>
+                    )}
                     &nbsp; {categoryList}
                   </div>
                   <div className="bus-data-row">
@@ -393,11 +395,13 @@ export default function BusinessPage() {
                     ) : (
                         <>
                           <div className="closed">
-                            Closed Now &nbsp; &middot;
+                            Closed Now &nbsp; { (nextOpen.day && nextOpen.start && nextOpen.end) ? "&middot" : null }
                         </div>
+                        { (nextOpen.day && nextOpen.start && nextOpen.end) && (
                           <div className="category">
                             &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
                           </div>
+                        )}
                         </>
                       )}
                   </div>
