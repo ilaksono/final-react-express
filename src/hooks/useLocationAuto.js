@@ -1,4 +1,11 @@
 import usePlacesAutocomplete from 'use-places-autocomplete';
+import axios from 'axios';
+import { useState } from 'react';
+
+const initLoc = {
+  val:'',
+  suggest: []
+};
 
 
 const useLocationAuto = (lat, lng) => {
@@ -19,14 +26,31 @@ const useLocationAuto = (lat, lng) => {
       // defaultValue: appState.center.city || ''
     });
 
+  const [loc, setLoc] = useState(initLoc);
+  const getPlacesAuto = async (str) => {
+    try {
+      const response = await axios
+        .get(`/api/places/${str}`);
+      setLoc({...loc, suggest: response.data.predictions})
+
+    } catch (er) {
+      console.log(er);
+    }
+
+  };
+
   return {
     ready,
     value,
     status,
     data,
     setValue,
-    clearSuggestions
+    clearSuggestions,
+    getPlacesAuto,
+    loc
+
   };
+
 
 
 };

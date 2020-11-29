@@ -25,6 +25,7 @@ const LocationAuto = props => {
       >
         <ComboboxInput value={props.value}
           onChange={e => {
+            props.getPlacesAuto(e.target.value);
             props.setValue(e.target.value);
           }}
           className={`${props.isHome ? 'home-search-l' : 'location-search-bar'}`}
@@ -32,12 +33,14 @@ const LocationAuto = props => {
           placeholder="Toronto"
         />
         <ComboboxPopover style={{zIndex: 10}}>
-          {(props.status === 'OK'&& props.appState.center.city !== props.value && props.ready)&& 
-          props.data.map
-              (({ id, description }) =>
-                <ComboboxOption key={id} value={description}>
+          
+          {props.loc && props.loc.suggest.map(({place_id, description}) => 
+            <ComboboxOption key={place_id} value={description}>
+              </ComboboxOption>
+          )
 
-                </ComboboxOption>)}
+        }
+
         </ComboboxPopover>
 
       </Combobox>
@@ -45,4 +48,13 @@ const LocationAuto = props => {
   );
 };
 
-export default LocationAuto;
+export default LocationAuto; 
+
+
+// { (props.status === 'OK' && props.appState.center.city !== props.value && props.ready) && 
+
+//  props.data.map
+//  (({ id, description }) =>
+//    <ComboboxOption key={id} value={description}>
+//
+//    </ComboboxOption>)}

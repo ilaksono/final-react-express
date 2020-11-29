@@ -14,6 +14,8 @@ const Location = props => {
         data={props.data}
         setValue={props.setValue}
         clearSuggestions={props.clearSuggestions}
+        getPlacesAuto={props.getPlacesAuto}
+        loc={props.loc}
       />
     </div>
   );

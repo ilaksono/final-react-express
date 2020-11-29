@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { YelpProvider } from './YelpContext';
 import { CookiesProvider } from 'react-cookie';
 import 'index.scss';
 import 'styles/App.scss';
@@ -33,9 +32,7 @@ import 'styles/Animations.scss';
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
-    <YelpProvider>
       <App />
-    </YelpProvider>
     </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
