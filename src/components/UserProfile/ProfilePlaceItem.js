@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePlaceItem = (props) => {
 
-  const { getIndividualBusinessData, appState, handleFav } = useContext(YelpContext);
+  const { getIndividualBusinessData, appState, 
+    handleFav } = useContext(YelpContext);
   const { id } = useParams();
   const history = useHistory();
   const moveToNextPage = () => {
@@ -47,7 +48,7 @@ const ProfilePlaceItem = (props) => {
           }
         });
         props.deleteFavProfile(props.id);
-        props.handleFav(props.id);
+        handleFav(props.id);
 
 
     } catch (er) {
@@ -140,7 +141,7 @@ const ProfilePlaceItem = (props) => {
       message={`Unfavourite ${props.name}?`}
       />
       
-      {id === appState.user_id &&
+      {id == appState.user_id &&
         <FavoriteIcon
           style={{
             color: props.allUsers.favs.some(fav => fav.venue_id === props.id) ? 'red' : 'grey'
