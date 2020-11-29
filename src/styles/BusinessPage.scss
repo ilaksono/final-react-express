@@ -270,3 +270,12 @@
     
   }
 }
+
+.chart-filter-container {
+  @include flexbox(row, center, center);
+  margin-bottom: 10px;
+}
+
+.chart-filter-button {
+  font-size: 12px;
+}
