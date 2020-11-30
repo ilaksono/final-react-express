@@ -312,7 +312,9 @@ export default function BusinessPage() {
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return !businessDetails.is_closed;
+      return businessDetails.hours[0].is_open_now
+      // return !businessDetails.is_closed;
+
     }
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {

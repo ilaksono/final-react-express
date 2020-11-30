@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import nextOpen from './nextOpen';
+
 const Hours = (props) => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -34,33 +36,38 @@ const Hours = (props) => {
     dayNum += 7;
   }
 
-  let nextOpenStart = null;
-  let nextOpenEnd = null;
-  let nextOpenDay = null;
+  // let nextOpenStart = null;
+  // let nextOpenEnd = null;
+  // let nextOpenDay = null;
+  const {
+    nextOpenStart, 
+    nextOpenEnd,
+    nextOpenDay
+  } = nextOpen(props.businessDetails.hours[0].open, dayNum)
   const parsedRows = hoursDayArray.map((day, index) => {
     const results = [];
     const currentTime = now.getHours() * 100 + now.getMinutes();
     for (const index in day) {
-      if (day[index].day === props.dayNum) {
-        if (currentTime < day[index].start) {
-          nextOpenDay = days[(day[index].day) % 7];
-          nextOpenStart = formatAMPM(day[index].start);
-          nextOpenEnd = formatAMPM(day[index].end);
-        } if (currentTime >= day[index].start && currentTime <= day[index].end) {
-        } if (currentTime > day[index].end) {
-          if (!nextOpenDay && !nextOpenStart && !nextOpenEnd) {
-            if (day[index].day === 6) {
-            nextOpenDay = days[(day[index].day + 1) % 7];
-            nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
-            nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
-          }
-        } else {
-          nextOpenDay = days[(day[index].day - 1)];
-            nextOpenStart = formatAMPM(hoursDayArray[(day[index].day - 1)][0].start);
-            nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day - 1)][0].end);
-        }
-        }
-      }
+      // if (day[index].day === props.dayNum) {
+      //   if (currentTime < day[index].start) {
+      //     nextOpenDay = days[(day[index].day) % 7];
+      //     nextOpenStart = formatAMPM(day[index].start);
+      //     nextOpenEnd = formatAMPM(day[index].end);
+      //   } if (currentTime >= day[index].start && currentTime <= day[index].end) {
+      //   } if (currentTime > day[index].end) {
+      //     if (!nextOpenDay && !nextOpenStart && !nextOpenEnd) {
+      //       if (day[index].day === 6) {
+      //       nextOpenDay = days[(day[index].day + 1) % 7];
+      //       nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
+      //       nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
+      //     }
+      //   } else {
+      //     nextOpenDay = days[(day[index].day - 1)];
+      //       nextOpenStart = formatAMPM(hoursDayArray[(day[index].day - 1)][0].start);
+      //       nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day - 1)][0].end);
+      //   }
+      //   }
+      // }
       results.push((
         <tr className="hours-table-row">
           <td className="td-day">
