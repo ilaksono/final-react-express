@@ -127,7 +127,8 @@ export default function BusinessPage() {
     businessDetails,
     getIndividualBusinessData,
     appState,
-    handleFav
+    handleFav,
+    wipeBusinessPage
   } = useContext(YelpContext);
 
   useEffect(() => {
