@@ -218,7 +218,7 @@ export default function BusinessPage() {
         primedVal = cpy.map(rev => rev[k]);
       }
       if (primedLabels.length === 1)
-        primedLabels.push(primedLabels[0]);
+        primedLabels.push(formatNextDayString(primedLabels[0]));
       if (primedVal.length === 1)
         primedVal.push(primedVal[0]);
 
@@ -229,19 +229,33 @@ export default function BusinessPage() {
         labels: primedLabels,
         datasets: [{
           label: key[k],
-          backgroundColor: clr,
+          // backgroundColor: 'none',
           borderColor: clr,
-          data: primedVal
+          data: primedVal,
+          fill: true,
+          // hoverBackgroundColor: '#1E0253',
+          pointBackgroundColor: clr
+          // pointHoverBackgroundColor: '#1E0253'
         }],
-        ready: true
+        ready: true,
       });
     }
   };
 
   const formatDateString = date => {
     return new Date(date).toUTCString().split('')
-      .slice(5, 10).join('').replace(' ', '-');
+      .slice(5, 11).join('').replace(' ', '-');
   };
+
+  const formatNextDayString = str => {
+    let d = str.split('')
+    if((!Number.isNaN(d[0] && !Number.isNaN(d[1])))) 
+      d[1]++;
+    else d[0]++;
+
+    return d.join('').replace(' ', '-')  
+    
+  }
 
 
 
@@ -501,10 +515,10 @@ export default function BusinessPage() {
                     <ChartTab
                       chartSelect={chartSelect}
                       clickChartTab={clickChartTab} />
-                    <TogglePerDay
+                    {/* <TogglePerDay
                       chartSelect={chartSelect}
                       changePerDay={changePerDay}
-                      message='Daily' />
+                      message='Daily' /> */}
                     {/* {parsedCharts} */}
 
                     <ChartSection
