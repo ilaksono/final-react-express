@@ -61,7 +61,7 @@ const Search = props => {
 
   useEffect(() => {
     if (appState.searchCount === 0)
-      setValue(appState.center.city, false);
+      setValue(`${appState.center.city}, ${appState.center.region}`, false);
   }, [appState]);
 
 

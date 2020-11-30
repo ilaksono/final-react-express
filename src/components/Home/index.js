@@ -168,7 +168,7 @@ const Home = () => {
             setLoadingSearch(true);
             resetFilters();
             resetPagination();
-            yelpSearch(image.title, appState.center.city)
+            yelpSearch(image.title, `${appState.center.city}, ${appState.center.region}`)
           }}
           style={{
             width: image.width,
