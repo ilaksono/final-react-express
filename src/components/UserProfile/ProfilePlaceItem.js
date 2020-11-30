@@ -29,6 +29,8 @@ const ProfilePlaceItem = (props) => {
     handleFav } = useContext(YelpContext);
   const { id } = useParams();
   const history = useHistory();
+  const [hover, setHover] = useState(false);
+
   const moveToNextPage = () => {
     getIndividualBusinessData(props.id)
       .then(() => {
@@ -64,7 +66,6 @@ const ProfilePlaceItem = (props) => {
 
 
   const [openAlert, setOpenAlert] = useState(false);
-  console.log("props", props);
   return (
     <>
       {props.name && (
@@ -79,14 +80,17 @@ const ProfilePlaceItem = (props) => {
               marginLeft: '8px',
               borderRadius: '20px',
               filter: 'grayscale(0%)',
+              ...(hover && { filter: 'grayscale(0%)', borderRadius: '10px', cursor: 'pointer' })
             }}
             onClick={moveToNextPage}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
             src={props.photos[0]}
             >
             </div>
             <div className='profile-general-info'>
               <div className="title-favourite-container">
-                <h3 className="venue_name" onClick={moveToNextPage}>{props.name}</h3>
+                <h3 className="profile-venue-name" onClick={moveToNextPage}>{props.name}</h3>
                 <AlertDialog open={openAlert} 
                   onClose={promptOnClose} 
                   delete={() => handleFavClick(props.id)}
@@ -96,7 +100,8 @@ const ProfilePlaceItem = (props) => {
                   {id == appState.user_id &&
                     <FavoriteIcon
                       style={{
-                        color: 'red'
+                        color: 'red',
+                        cursor: 'pointer',
                       }}
                       onClick={promptConfirm}
                     />
