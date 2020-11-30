@@ -440,7 +440,7 @@ export default function BusinessPage() {
                   </div>
                 </div>
               </div>
-              {(appState.authorized) && (
+              {(appState.authorized && appState.favs) && (
                 <div className='bus-buttons'>
                   {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
                     <>
