@@ -54,13 +54,13 @@ const Hours = (props) => {
             nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
             nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
           }
-         else {
+        } else {
           nextOpenDay = days[(day[index].day - 1)];
             nextOpenStart = formatAMPM(hoursDayArray[(day[index].day - 1)][0].start);
             nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day - 1)][0].end);
         }
         }
-      }}
+      }
       results.push((
         <tr className="hours-table-row">
           <td className="td-day">
