@@ -26,7 +26,7 @@ import ChartTab from './ChartTab';
 import TogglePerDay from './TogglePerDay';
 import useChartData from 'hooks/useChartData';
 import SimpleGrow from './FavouriteAnimation';
-
+import isOpen from 'helpers/isOpen';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -313,41 +313,53 @@ export default function BusinessPage() {
     dayNum += 7;
   const openNow = () => {
 
-    let numOpen = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: []
-    };
 
-
-    const time = now.getHours() * 100 + now.getMinutes();
-    if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return null;
-      // return !businessDetails.is_closed;
+    if (businessDetails.hours) {
+      if (businessDetails.hours[0].is_open_now === true
+        || businessDetails.hours[0].is_open_now === false)
+        return businessDetails.hours[0].is_open_now;
+      if (businessDetails.hours[0].open) {
+        return isOpen(businessDetails.hours[0].open, dayNum);
+      }
     }
-    businessDetails.hours[0].open.forEach((val, index) => {
-      numOpen[val.day].push(index);
-    });
-    if (numOpen[dayNum].length) {
+    return false;
 
-      if (Number(businessDetails.hours[0].open[numOpen[dayNum][0]].end) > time
-        && Number(businessDetails.hours[0].open[numOpen[dayNum][0]]).start < time) {
-        return businessDetails.hours[0].open[numOpen[dayNum[0]]];
-      }
-      
-      if (numOpen[dayNum].length > 1 && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].end) > time
-        && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].start) < time) {
-        return businessDetails.hours[0].open[numOpen[dayNum[1]]];
-      }
-      if (Number(businessDetails.hours[0].open[dayNum].end) > time
-        && Number(businessDetails.hours[0].open[dayNum].start) < time) {
-        return businessDetails.hours[0].open[dayNum];
-      }
-    } else return false;
+    // let numOpen = {
+    //   0: [],
+    //   1: [],
+    //   2: [],
+    //   3: [],
+    //   4: [],
+    //   5: [],
+    //   6: []
+    // };
+
+
+    // const time = now.getHours() * 100 + now.getMinutes();
+    // if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
+    //   return null;
+    //   // return !businessDetails.is_closed;
+    // }
+    // businessDetails.hours[0].open.forEach((val, index) => {
+    //   numOpen[val.day].push(index);
+    // });
+    // if (numOpen[dayNum].length) {
+
+    //   if (Number(businessDetails.hours[0].open[numOpen[dayNum][0]].end) > time
+    //     && Number(businessDetails.hours[0].open[numOpen[dayNum][0]]).start < time) {
+    //     return businessDetails.hours[0].open[numOpen[dayNum[0]]];
+    //   }
+
+    //   if (numOpen[dayNum].length > 1 && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].end) > time
+    //     && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].start) < time) {
+    //     return businessDetails.hours[0].open[numOpen[dayNum[1]]];
+    //   }
+    //   if (Number(businessDetails.hours[0].open[dayNum].end) > time
+    //     && Number(businessDetails.hours[0].open[dayNum].start) < time) {
+    //     return businessDetails.hours[0].open[dayNum];
+    //   }
+    // } else return false;
+
   };
   let categoryList = [];
   if (businessDetails.categories) {
@@ -366,8 +378,8 @@ export default function BusinessPage() {
       <div className="back-and-message-container">
         <Button variant="contained" onClick={() => {
           resetFiltersHandle();
-          history.goBack()
-          }}><KeyboardBackspaceIcon /></Button>
+          history.goBack();
+        }}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
       {!businessDetails.id && (

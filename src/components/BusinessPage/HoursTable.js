@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import nextOpen from './nextOpen';
+import nextOpen from 'helpers/nextOpen';
 
 const Hours = (props) => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
