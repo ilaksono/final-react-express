@@ -333,17 +333,17 @@ export default function BusinessPage() {
     });
     if (numOpen[dayNum].length) {
 
-      if (businessDetails.hours[0].open[numOpen[dayNum][0]].end > time
-        && businessDetails.hours[0].open[numOpen[dayNum][0]].start < time) {
+      if (Number(businessDetails.hours[0].open[numOpen[dayNum][0]].end) > time
+        && Number(businessDetails.hours[0].open[numOpen[dayNum][0]]).start < time) {
         return businessDetails.hours[0].open[numOpen[dayNum[0]]];
       }
       
-      if (numOpen[dayNum].length > 1 && businessDetails.hours[0].open[numOpen[dayNum][1]].end > time
-        && businessDetails.hours[0].open[numOpen[dayNum][1]].start < time) {
+      if (numOpen[dayNum].length > 1 && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].end) > time
+        && Number(businessDetails.hours[0].open[numOpen[dayNum][1]].start) < time) {
         return businessDetails.hours[0].open[numOpen[dayNum[1]]];
       }
-      if (businessDetails.hours[0].open[dayNum].end > time
-        && businessDetails.hours[0].open[dayNum].start < time) {
+      if (Number(businessDetails.hours[0].open[dayNum].end) > time
+        && Number(businessDetails.hours[0].open[dayNum].start) < time) {
         return businessDetails.hours[0].open[dayNum];
       }
     } else return false;

@@ -24,7 +24,7 @@ const UserProfile = (props) => {
     getUsersAPI,
     setAllUsers,
     profileDeleteReview,
-    deleteFavProfile
+    deleteFavProfile,
   } = useProfileData();
   const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
   useEffect(() => {

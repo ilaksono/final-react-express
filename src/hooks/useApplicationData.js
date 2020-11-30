@@ -52,6 +52,7 @@ const useApplicationData = () => {
       .then(body => {
         axios.get(`${GET_LATLNG}/${body.data.ip}`)
           .then(coords => {
+            console.log(coords);
             dispatch({
               type: INIT_CENTER, center: {
                 lat: coords.data.lat,
