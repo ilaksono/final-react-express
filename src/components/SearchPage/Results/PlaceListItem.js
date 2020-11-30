@@ -79,13 +79,14 @@ const PlaceListItem = (props) => {
               ({props.reviews.length})
             </div>
           </div>
-          <div className="sample-review-container">
+        </div>
+
+        <div className="sample-review-container">
             {props.reviews.length > 0 && `"${props.reviews[0].description}"`}
             <div className="sample-review-user">
               {props.reviews.length > 0 && `-${props.reviews[0].username}`}
             </div>
           </div>
-        </div>
         
       </div>
       <div className='location'> 
