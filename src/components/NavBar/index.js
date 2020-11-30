@@ -142,7 +142,8 @@ const NavBar = (props) => {
               <AccountMenu appState={appState}
                 closeSnackBar={closeSnackBar}
                 setSnackBar={setLogoutSnackBar}
-                logout={handleLogout}>
+                logout={handleLogout}
+                >
               </AccountMenu>
             </>
             :
