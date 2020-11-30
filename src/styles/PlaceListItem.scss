@@ -51,21 +51,22 @@
   margin: 5px;
 }
 
+.venue_name {
+  margin-top: 5px;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.venue_name:hover {
+  color: $purple;
+  cursor: pointer
+}
+
 .general-info { 
   height: 100%;
   @include flexbox(column, flex-start, flex-start);
   width: 440px;
 
-  .venue_name {
-    margin-top: 5px;
-    margin-bottom: 8px;
-    font-size: 20px;
-  }
-
-  .venue_name:hover {
-    color: $purple;
-    cursor: pointer
-  }
 
   .yelp_rating {
     font-size: 10px;

@@ -67,7 +67,7 @@ export default function ReviewList(props) {
       <div className='sort-group'>
       { !props.isHome && (
         <>
-          <h3><strong>Reviews</strong></h3>
+          { !props.isProfile && <h3><strong>Reviews</strong></h3> }
           <Sort sortOptions={sortOptions}
             defaultOption={sortOptions[0].id}
             onClick={handleSort} />
