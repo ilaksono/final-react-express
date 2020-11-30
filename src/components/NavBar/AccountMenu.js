@@ -120,7 +120,7 @@ export default function AccountMenu(props) {
             top: "40px",
           }}
         >
-          <StyledMenuItem onClick={() => history.push(`/users${props.appState.user_id}`)}>
+          <StyledMenuItem onClick={() => history.push(`/users/${props.appState.user_id}`)}>
             <ListItemIcon>
               <i class="far fa-user"></i>
             </ListItemIcon>

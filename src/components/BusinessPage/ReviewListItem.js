@@ -195,8 +195,8 @@ export default function ReviewListItem(props) {
         <div className='review-title-container'>
           <Link to={`/search/${props.venue_id}`} className="review-title" onClick={() => {
             wipeBusinessPage();
-            getIndividualBusinessData(props.venue_id)
-            }}>
+            getIndividualBusinessData(props.venue_id);
+          }}>
             {props.venue_name}
           </Link>
         </div>
@@ -281,11 +281,14 @@ export default function ReviewListItem(props) {
           <div className='helpful-container'>
             <div className={`helpful${(revAnim.likeBounce && appState.user_id != props.user_id) ? ' like-bounce' : ''}`}
               onClick={() => {
-                setRevAnim({ ...revAnim, likeBounce: true });
-                setTimeout(() => {
-                  setRevAnim(prev => 
-                    ({ ...prev, likeBounce: false }))
-                }, 1100);
+                if (appState.authorized) {
+
+                  setRevAnim({ ...revAnim, likeBounce: true });
+                  setTimeout(() => {
+                    setRevAnim(prev =>
+                      ({ ...prev, likeBounce: false }));
+                  }, 1100);
+                }
               }
               }
             >
@@ -300,16 +303,16 @@ export default function ReviewListItem(props) {
                   </div>
                 )}
             </div>
-          {props.helpful_count}
+            {props.helpful_count}
           </div>
         </div>
 
         {(props.user_id == appState.user_id || (props.user_id == appState.user_id && (props.isHome || props.isProfile))) && (
           <div className="edit-delete-container">
-          
+
             <div className='delete-button'
               onClick={handleAlert}
-              >
+            >
               <DeleteIcon />
             </div>
             <div className='edit-button'
