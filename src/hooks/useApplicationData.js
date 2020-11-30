@@ -56,7 +56,8 @@ const useApplicationData = () => {
               type: INIT_CENTER, center: {
                 lat: coords.data.lat,
                 lng: coords.data.lon,
-                city: coords.data.city
+                city: coords.data.city,
+                region: coords.data.region
               }
             });
             return coords;

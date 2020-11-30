@@ -66,7 +66,7 @@ export default function CustomizedMenus(props) {
     setLoadingSearch(true);
     resetFilters();
     resetPagination();
-    yelpSearch(val, appState.center.city);
+    yelpSearch(val, `${appState.center.city}, ${appState.center.region}`);
     history.push('/search');
     props.setSearchMenu(null);
   };
