@@ -25,6 +25,7 @@ const UserProfile = (props) => {
     setAllUsers,
     profileDeleteReview,
     deleteFavProfile,
+    resetFiltersHandle
   } = useProfileData();
   const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
   useEffect(() => {
@@ -61,7 +62,10 @@ const UserProfile = (props) => {
             <div className='profile-container'>
               <div className='back-arrow-fixed'>
                 <Button variant="contained"
-                  onClick={() => history.goBack()}>
+                  onClick={() => {
+                    resetFiltersHandle();
+                    history.goBack()
+                    }}>
                   <KeyboardBackspaceIcon />
                 </Button>
               </div>

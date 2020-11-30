@@ -37,7 +37,8 @@ const Search = props => {
     setValue,
     clearSuggestions,
     getPlacesAuto,
-    loc
+    loc,
+    
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -101,6 +102,7 @@ const Search = props => {
   };
 
   const handleSearch = (name) => {
+    resetRefinedResults();
     resetPagination();
     addSearchCount();
     setLoadingSearch(true);

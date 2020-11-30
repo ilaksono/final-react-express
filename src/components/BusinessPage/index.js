@@ -117,7 +117,7 @@ export default function BusinessPage() {
     setChartSelect,
     chartOptions,
     chartData,
-    setChartData
+    setChartData,
   } = useChartData();
 
   const clickChartTab = (value) => {
@@ -128,7 +128,8 @@ export default function BusinessPage() {
     getIndividualBusinessData,
     appState,
     handleFav,
-    wipeBusinessPage
+    wipeBusinessPage,
+    resetFiltersHandle
   } = useContext(YelpContext);
 
   useEffect(() => {
@@ -363,7 +364,10 @@ export default function BusinessPage() {
     <div className='business-page-container'>
       <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
       <div className="back-and-message-container">
-        <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
+        <Button variant="contained" onClick={() => {
+          resetFiltersHandle();
+          history.goBack()
+          }}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
       </div>
       {!businessDetails.id && (
