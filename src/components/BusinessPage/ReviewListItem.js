@@ -186,9 +186,9 @@ export default function ReviewListItem(props) {
 
   return (
     <div
-      className={`review-container${revAnim.smallWob ? ' small-wobble' : ''}`}
-      onMouseOver={() => setRevAnim({ ...revAnim, smallWob: true })}
-      onAnimationEnd={() => setRevAnim({ ...revAnim, smallWob: false })}
+      className={`review-container`}
+    // onMouseOver={() => setRevAnim({ ...revAnim, smallWob: true })}
+    // onAnimationEnd={() => setRevAnim({ ...revAnim, smallWob: false })}
     >
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
