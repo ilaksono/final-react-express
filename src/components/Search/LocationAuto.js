@@ -18,7 +18,11 @@ const LocationAuto = props => {
 
   return (
     <>
-      <Combobox onSelect={add => {
+      <Combobox 
+      style={{
+          fontFamily: 'Montserrat'
+      }}
+      onSelect={add => {
         props.setValue(add, false);
         props.clearSuggestions();
       }}

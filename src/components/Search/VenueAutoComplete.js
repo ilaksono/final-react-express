@@ -37,7 +37,7 @@ const VenueAutoComplete = props => {
 
   return (
     <div className={cls} ref={wrapperRef} >
-      <ul className="autocomplete-list">
+      <ul className="autocomplete-list" >
         { businessAutoComplete }
         { categoryAutoComplete }
       </ul>

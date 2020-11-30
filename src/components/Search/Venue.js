@@ -12,7 +12,9 @@ const Venue = props => {
       default="" 
       placeholder="Restaurants, parks, Max's" 
       onChange={event => 
-      props.onChange(event.target.value)} />
+      props.onChange(event.target.value)} 
+     
+      />
     </div>
   );
 
