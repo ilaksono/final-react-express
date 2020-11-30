@@ -267,6 +267,10 @@ export default function useYelpData() {
       });
   };
 
+  const wipeBusinessPage = () => {
+    setBusinessDetails(initBusiness);
+  }
+
   return {
     results,
     setResults,
@@ -280,6 +284,7 @@ export default function useYelpData() {
     sortBy,
     yelpLoading,
     setYelpLoading,
-    resetResults
+    resetResults,
+    wipeBusinessPage
   };
 }

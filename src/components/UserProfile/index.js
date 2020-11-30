@@ -26,7 +26,6 @@ const UserProfile = (props) => {
     profileDeleteReview,
     deleteFavProfile
   } = useProfileData();
-
   const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
   useEffect(() => {
     getTimeRating(id);
@@ -80,19 +79,27 @@ const UserProfile = (props) => {
                   FAVOURITES
                 </div>
               </div>
-              { (selected === "reviews" && allUsers.reviews) &&
+              { selected === "reviews" && (
                 <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
-
-                  <div className='review-big-container'>
-                      <ReviewList
-                        reviews={allUsers.reviews}
-                        isProfile={true}
-                        profileHelpCount={profileHelpCount}
-                        profileDeleteReview={profileDeleteReview}
-                      />
+                {
+                  allUsers.reviews.length > 0 ?
+                    <>
+                      <div className='review-big-container'>
+                          <ReviewList
+                            reviews={allUsers.reviews}
+                            isProfile={true}
+                            profileHelpCount={profileHelpCount}
+                            profileDeleteReview={profileDeleteReview}
+                          />
+                      </div>
+                    </>
+                  :
+                  <div className='no-places-info'>
+                    {`${whom.username || 'This User'} has no reviews`}
                   </div>
+                }
                 </div>
-              }
+              )}
               { selected === "favourites" && (
                 <div className='user-chart-container'>
                 {
@@ -103,7 +110,7 @@ const UserProfile = (props) => {
                     </>
                     :
                     <div className='no-places-info'>
-                      {`${whom.username || 'This User'} has no favourite places.`}
+                      {`${whom.username || 'This User'} has no favourite places`}
                     </div>
                 }
               </div>

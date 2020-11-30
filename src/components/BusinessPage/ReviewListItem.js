@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ReviewListItem(props) {
 
-  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData, handleLikes } = useContext(YelpContext);
+  const { businessDetails, setBusinessDetails, appState, getIndividualBusinessData, handleLikes, wipeBusinessPage } = useContext(YelpContext);
   const [openAlert, setOpenAlert] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -193,7 +193,10 @@ export default function ReviewListItem(props) {
       <AlertDialog open={openAlert} onClose={closeAlert} delete={deleteReview} message={"Are you sure you want to delete"} />
       {(props.isHome || props.isProfile) && (
         <div className='review-title-container'>
-          <Link to={`/search/${props.venue_id}`} className="review-title" onClick={() => getIndividualBusinessData(props.venue_id)}>
+          <Link to={`/search/${props.venue_id}`} className="review-title" onClick={() => {
+            wipeBusinessPage();
+            getIndividualBusinessData(props.venue_id)
+            }}>
             {props.venue_name}
           </Link>
         </div>

@@ -68,6 +68,20 @@ const Hours = (props) => {
       //   }
       //   }
       // }
+      
+      // if (day[index].day === props.dayNum) {
+      //   if (currentTime < day[index].start) {
+      //     nextOpenDay = days[(day[index].day) % 7];
+      //     nextOpenStart = formatAMPM(day[index].start);
+      //     nextOpenEnd = formatAMPM(day[index].end);
+      //   } if (currentTime >= day[index].start && currentTime <= day[index].end) {
+      //   } if (currentTime > day[index].end) {
+      //     if (!nextOpenDay && !nextOpenStart && !nextOpenEnd) {
+      //       nextOpenDay = days[(day[index].day + 1) % 7];
+      //       nextOpenStart = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].start);
+      //       nextOpenEnd = formatAMPM(hoursDayArray[(day[index].day + 1) % 7][0].end);
+      //   }
+      // }}
       results.push((
         <tr className="hours-table-row">
           <td className="td-day">

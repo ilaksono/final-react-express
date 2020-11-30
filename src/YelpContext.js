@@ -68,7 +68,8 @@ export function YelpProvider({ children }) {
     sortBy,
     yelpLoading, 
     setYelpLoading,
-    resetResults
+    resetResults,
+    wipeBusinessPage
   } = useYelpData();
   const {
     loadToxic, 
@@ -181,7 +182,8 @@ export function YelpProvider({ children }) {
       setValue,
       clearSuggestions,
       getPlacesAuto,
-      loc
+      loc,
+      wipeBusinessPage
       // openFilterClick
     }}>
       {children}
