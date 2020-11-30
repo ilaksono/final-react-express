@@ -97,11 +97,13 @@ const initPhoto = {
 //   perDay: false
 // };
 
+const initVal = false;
+
 export default function BusinessPage() {
 
   const classes = useStyles();
   const [nextOpen, setNextOpen] = useState({ day: null, start: null, end: null });
-  const [reviewSnackBar, setReviewSnackBar] = useState(false);
+  const [reviewSnackBar, setReviewSnackBar] = useState(initVal);
   const history = useHistory();
   const [avgRatings, setAvgRatings] = useState({ overall_rating: null, cleanliness: null, transactionprocess: null, socialdistancing: null });
   const [bigPhoto, setBigPhoto]
@@ -289,7 +291,6 @@ export default function BusinessPage() {
         primeChartData(businessDetails.reviews, chartSelect.select);
     }// eslint-disable-next-line
   }, [businessDetails, chartSelect]);
-
   const now = new Date();
   let dayNum = now.getDay() - 1; // 1 is monday
   if (dayNum < 0)
@@ -297,7 +298,7 @@ export default function BusinessPage() {
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return null;
+      return !businessDetails.is_closed;
     }
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {
@@ -317,6 +318,7 @@ export default function BusinessPage() {
 
   return (
     <div className='business-page-container'>
+      <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
       <div className="back-and-message-container">
         <Button variant="contained" onClick={() => history.goBack()}><KeyboardBackspaceIcon /></Button>
         <div className="right-offset"></div>
@@ -445,8 +447,6 @@ export default function BusinessPage() {
                       <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
                     </>
                   }
-                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
-                  {console.log(appState)}
                   <Button variant="contained"
                     startIcon={<FavoriteIcon />}
                     className={appState.favs.includes(businessDetails.id)

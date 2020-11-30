@@ -213,16 +213,15 @@ const NewReview = props => {
     else {
       props.setReviewSnackBar(true);
       submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
-        .then(response => {
-          setLoadToxic(false);
-          setNewReview(true);
-          if (!response) {
-            return handleClose();
-          }
+      .then(response => {
+        setLoadToxic(false);
+        setNewReview(true);
+        if (!response) {
+          return handleClose();
+        }
+        // props.setReviewSnackBar(true);
           resetState();
-          // props.setOpen(true);
           setOpen(true);
-
         }).catch(err => console.log(err));
     }
   };
