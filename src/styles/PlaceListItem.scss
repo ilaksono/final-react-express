@@ -35,7 +35,7 @@
   max-width: 580px;
   width: calc(100% - 140px);
   height: 100%;
-  @include flexbox(row, flex-start, center);
+  @include flexbox(row, flex-start, flex-start);
 }
 
 .img-container {
@@ -54,7 +54,7 @@
 .venue_name {
   margin-top: 5px;
   margin-bottom: 8px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .venue_name:hover {
@@ -64,8 +64,9 @@
 
 .general-info { 
   height: 100%;
+  margin-top: 3px;
   @include flexbox(column, flex-start, flex-start);
-  width: 440px;
+  width: 70%;
 
 
   .yelp_rating {
