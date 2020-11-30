@@ -39,7 +39,9 @@ export function YelpProvider({ children }) {
     status,
     data,
     setValue,
-    clearSuggestions
+    clearSuggestions,
+    getPlacesAuto,
+    loc
   } = useLocationAuto()
 
   const {
@@ -177,7 +179,9 @@ export function YelpProvider({ children }) {
       status,
       data,
       setValue,
-      clearSuggestions
+      clearSuggestions,
+      getPlacesAuto,
+      loc
       // openFilterClick
     }}>
       {children}

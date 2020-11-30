@@ -9,6 +9,7 @@ import BusinessPage from "components/BusinessPage/index";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserProfile from 'components/UserProfile';
 import useNewUser from 'hooks/useNewUser';
+import { YelpProvider } from './YelpContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +31,8 @@ function App() {
   } = useNewUser();
   return (
     <div className="layout">
+      <YelpProvider>
+
         <MuiThemeProvider theme={theme}>
           <Router>
             <NavBar loadSearch setNewRegister={setNewRegister} />
@@ -60,6 +63,8 @@ function App() {
             </Switch>
           </Router>
         </MuiThemeProvider>
+      </YelpProvider>
+
     </div>
   );
 }

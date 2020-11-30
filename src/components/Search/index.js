@@ -35,7 +35,9 @@ const Search = props => {
     status,
     data,
     setValue,
-    clearSuggestions
+    clearSuggestions,
+    getPlacesAuto,
+    loc
   } = useContext(YelpContext);
   const [venue, setVenue] = useState("");
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -135,6 +137,8 @@ const Search = props => {
         clearSuggestions={clearSuggestions}
         appState={appState}
         isHome={props.isHome}
+        getPlacesAuto={getPlacesAuto}
+        loc={loc}
 
       />
       <Link to={'/search'}>

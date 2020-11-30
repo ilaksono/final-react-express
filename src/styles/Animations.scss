@@ -95,3 +95,27 @@
   0% {opacity: 1;}
   100% {opacity: 0;}
 }
+
+
+// .dropdown_menu-3
+//   for num in (1..5)
+//      .dropdown_item-{num}  
+//        transform-origin: top center
+//        animation: rotateZ 300ms (num * 60ms) ease-in-out forwards
+
+
+// @keyframes rotateZ {
+//   0% {
+//     opacity: 0;
+//     transform: translateZ(290px);
+//   }
+  
+//   80% {
+//     transform: translateZ(10px);
+//   }
+
+//   100% {
+//     opacity: 1;
+//     transform: translateZ(0);
+//   }
+// }
