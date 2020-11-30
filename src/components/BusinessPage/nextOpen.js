@@ -35,13 +35,6 @@ const nextOpen = (open, today) => {
   let nextOpenDay = 'Today';
   let nextOpenStart = null;
   let nextOpenEnd = null;
-  console.log(nowInt);
-  if(Number(open[numOpen[today][0]].start) > nowInt)
-    return{
-      nextOpenStart: formatAMPM(open[numOpen[today][0]].start),
-      nextOpenEnd: formatAMPM(open[numOpen[today][0]].end),
-      nextOpenDay: 'Today'
-    }
   if (numOpen[today].length > 1) {
     // if open today again
     if ((h * 100 + m) < Number
@@ -97,6 +90,12 @@ const nextOpen = (open, today) => {
         return { nextOpenStart, nextOpenEnd, nextOpenDay };
 
       }
+    }
+    if(Number(open[numOpen[today][0]].start) > nowInt)
+    return{
+      nextOpenStart: formatAMPM(open[numOpen[today][0]].start),
+      nextOpenEnd: formatAMPM(open[numOpen[today][0]].end),
+      nextOpenDay: 'Today'
     }
     if (!nextOpenStart) {
       for (let i = 0; i < 7; i++) {

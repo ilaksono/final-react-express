@@ -97,29 +97,29 @@ export default function CustomizedMenus(props) {
           top: "40px",
         }}
       >
+        <StyledMenuItem onClick={() => handleSearchClick('Parks')}>
+          <ListItemIcon>
+          <i class="fas fa-tree"></i>
+          </ListItemIcon>
+          <ListItemText primary="Parks" />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={() => handleSearchClick('Patios')}>
+          <ListItemIcon>
+          <i class="fas fa-beer"></i>
+          </ListItemIcon>
+          <ListItemText primary="Patios" />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={() => handleSearchClick('Gyms')}>
+          <ListItemIcon>
+          <i class="fas fa-dumbbell"></i>
+          </ListItemIcon>
+          <ListItemText primary="Gyms" />
+        </StyledMenuItem>
         <StyledMenuItem onClick={() => handleSearchClick('Restaurants')}>
           <ListItemIcon>
             <i class="fas fa-utensils"></i>
           </ListItemIcon>
           <ListItemText primary="Restaurants" />
-        </StyledMenuItem>
-        <StyledMenuItem onClick={() => handleSearchClick('Shopping')}>
-          <ListItemIcon>
-            <i class="fas fa-shopping-cart"></i>
-          </ListItemIcon>
-          <ListItemText primary="Shopping" />
-        </StyledMenuItem>
-        <StyledMenuItem onClick={() => handleSearchClick('Pharmacies')}>
-          <ListItemIcon>
-            <i class="fas fa-prescription-bottle-alt"></i>
-          </ListItemIcon>
-          <ListItemText primary="Pharmacies" />
-        </StyledMenuItem>
-        <StyledMenuItem onClick={() => handleSearchClick('Coffee')}>
-          <ListItemIcon>
-            <i class="fas fa-coffee"></i>
-          </ListItemIcon>
-          <ListItemText primary="Coffee Shops" />
         </StyledMenuItem>
       </StyledMenu>
     </div>
