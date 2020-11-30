@@ -16,6 +16,7 @@ const initOptions = {
       ticks: {
         min: 0,
         max: 5,
+        maxTicksLimit: 6
       },
       scaleLabel: {
         labelString:'Rating',
@@ -25,10 +26,11 @@ const initOptions = {
     xAxes:[{
       scaleLabel: {
         labelString: 'Date',
-        display: true
+        display: true,
+        maxTicksLimit: 6
       }
     }]
-  }
+  },
 };
 const initChartSelect = {
   options: ['Overall', 'Clean', 'Distance', 'Process'],
