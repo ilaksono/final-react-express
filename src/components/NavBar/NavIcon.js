@@ -4,7 +4,7 @@ const NavIcon = (props) => {
     <div className={props.select[props.type] ? 'selected-container' : 'not-selected-container'}>
 
     <div className={props.select[props.type] ? 'nav-selected' : 'nav-not-selected' }>
-      <i style={{fontSize: '30px'}} className={props.FAClass}></i>
+      <i style={{fontSize: '24px'}} className={props.FAClass}></i>
     </div>
     </div>
   )

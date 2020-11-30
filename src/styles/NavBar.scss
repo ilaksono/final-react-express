@@ -65,19 +65,19 @@ a:hover {
   @include flexbox(row, center, center);
   background-color: $white;
   border-radius: 50%;
-  width: 41px;
-  height: 41px;
+  width: 38px;
+  height: 38px;
   margin-right: 20px;
   margin-left: 10px;
   color: $white;
-
 }
+
 .profile-circle-selected{
   @include flexbox(row, center, center);
   border: 2px solid $salmon;
   border-radius: 50%;
-  width: 41px;
-  height: 41px;
+  width: 38px;
+  height: 38px;
   color: $salmon;
 
 
@@ -101,8 +101,8 @@ a:hover {
 .selected-container {
   border-radius: 50%;
   // background-color: white;
-  height: 41px;
-  width:41px;
+  height: 38px;
+  width: 38px;
   border: 2px solid $salmon;
   text-align: center;
 }
@@ -115,5 +115,9 @@ a:hover {
 }
 .nav-bar-right-container {
   @include flexbox(row, space-around, center);
-  min-width: 400px;
+  min-width: 300px;
+}
+
+.icon-name-container {
+  @include flexbox(row, flex-start, center);
 }
