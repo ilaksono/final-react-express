@@ -63,16 +63,57 @@ a:hover {
 }
 .profile-circle{
   @include flexbox(row, center, center);
-  background-color: $salmon;
+  background-color: $white;
   border-radius: 50%;
   width: 41px;
   height: 41px;
   margin-right: 20px;
   margin-left: 10px;
+  color: $white;
+
+}
+.profile-circle-selected{
+  @include flexbox(row, center, center);
+  border: 2px solid $salmon;
+  border-radius: 50%;
+  width: 41px;
+  height: 41px;
+  color: $salmon;
+
 
 }
 
 .nav-selected {
   font-weight: bold;
-  border-bottom: 3px solid $white;
+  text-align: center;
+  // border-bottom: 2px solid $white;
+  color: $salmon;
+  font-size: 30px;
+}
+.nav-not-selected {
+  font-weight: bold;
+  text-align: center;
+  // border-bottom: 3px solid $white;
+  color: $white;
+  font-size: 30px;
+}
+
+.selected-container {
+  border-radius: 50%;
+  // background-color: white;
+  height: 41px;
+  width:41px;
+  border: 2px solid $salmon;
+  text-align: center;
+}
+.not-selected-container {
+   border-radius: 50%;
+  // background-color: white;
+  text-align: center;
+  height: 41px;
+  width:41px;
+}
+.nav-bar-right-container {
+  @include flexbox(row, space-around, center);
+  min-width: 400px;
 }

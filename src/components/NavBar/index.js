@@ -11,11 +11,20 @@ import LoginForm from '../Login';
 import AccountMenu from './AccountMenu';
 import { useCookies } from 'react-cookie';
 import HomeIcon from '@material-ui/icons/Home';
+import NavIcon from './NavIcon';
+import CustomizedMenu from './SearchMenu';
+
 
 const initMod = {
   regOpen: false,
   logOpen: false
 };
+
+const initAnim = {
+  homeSpin: false,
+  searchSpin: false
+};
+
 const NavBar = (props) => {
   const location = useLocation();
   const [modal, setModal] = useState(initMod);
@@ -26,8 +35,19 @@ const NavBar = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const { appState, logout, authorizeUser } = useContext(YelpContext);
 
+  const [searchMenu, setSearchMenu] = useState(null);
+
   useEffect(() => {
     setIsHome(location.pathname === '/');
+    let where = '';
+    if (location.pathname.match(/^\/users/))
+      where = 'profile';
+    else if (location.pathname.match(/^\/search/))
+      where = 'search';
+    else if (location.pathname === '/')
+      where = 'home';
+
+    setSelect({ ...initSelect, [where]: true });
   }, [location]);
 
   useEffect(() => {
@@ -37,7 +57,7 @@ const NavBar = (props) => {
           const arrayOfLikes = [];
           const arrayOfFavs = [];
           response.data.likes.forEach(like => arrayOfLikes.push(like.id));
-          response.data.favs.forEach(favs => arrayOfFavs.push(favs.venue_id))
+          response.data.favs.forEach(favs => arrayOfFavs.push(favs.venue_id));
           authorizeUser(cookies.username, cookies.profile_pic, cookies.user_id, arrayOfLikes, arrayOfFavs);
         });
     }
@@ -60,7 +80,14 @@ const NavBar = (props) => {
       setRegisterSnackBar(false);
     }
   };
+  const initSelect = {
+    home: false,
+    search: false,
+    profile: false
+  };
 
+  const [select, setSelect] = useState(initSelect);
+  const [animation, setAnimation] = useState(initAnim);
 
   return (
     <>
@@ -73,11 +100,11 @@ const NavBar = (props) => {
         <div className="logo-container">
           <Link to={'/'}>
             <img src={logo} alt="Logo" className='nav-icon' />
-            <div className={location.pathname === '/' && 'nav-selected'}>SafeSpace</div>
-        </Link>
+            <div>SafeSpace</div>
+          </Link>
         </div>
-        <Link to='/search'>
-          <div className={location.pathname === '/search' && 'nav-selected' }
+        {/* <Link to='/search'>
+          <div className={location.pathname === '/search' && 'nav-selected'}
             style={{
               position: 'fixed',
               left: '260px'
@@ -85,57 +112,78 @@ const NavBar = (props) => {
           >
             Search
         </div>
-        </Link>
+        </Link> */}
         {!isHome &&
           props.loadSearch && (
             <Search isHome={false} buttonMessage={<i className="fas fa-search"></i>}
             />
           )}
-        {appState.authorized ?
-          <>
-            <AccountMenu appState={appState}
-              closeSnackBar={closeSnackBar}
-              setSnackBar={setLogoutSnackBar}
-              logout={handleLogout}>
-            </AccountMenu>
-          </>
-          :
-          <div className="user-container">
-            <div className="login">
-              {/* <Link to={'/login'}> */}
-              <Button message="Login"
-                onClick={() =>
+        <div class='nav-bar-right-container'>
+
+          <Link to='/'>
+            <div className={`${animation.homeSpin ? 'account-animation' : ''}`}
+              onClick={() => setAnimation({...animation, homeSpin: true})}
+              onAnimationEnd={(() => setAnimation({...animation, homeSpin: false}))}
+            >
+              <NavIcon type='home' FAClass='fas fa-home' select={select} 
+              />
+
+            </div>
+          </Link>
+          
+          <CustomizedMenu 
+          select={select}
+          animation={animation}
+          setAnimation={setAnimation}
+          searchMenu={searchMenu} 
+          setSearchMenu={setSearchMenu}/>
+          {appState.authorized ?
+            <>
+              <AccountMenu appState={appState}
+                closeSnackBar={closeSnackBar}
+                setSnackBar={setLogoutSnackBar}
+                logout={handleLogout}>
+              </AccountMenu>
+            </>
+            :
+            <div className="user-container">
+              <div className="login">
+                {/* <Link to={'/login'}> */}
+                <Button message="Login"
+                  onClick={() =>
+                    setModal({
+                      ...modal,
+                      logOpen: true
+                    })}
+                  nav />
+                {modal.logOpen && <LoginForm
+                  modal={modal}
+                  setModal={setModal}
+                  setSnackBar={setLoginSnackBar}
+                  closeSnackBar={closeSnackBar}
+                />}
+                {/* </Link> */}
+              </div>
+              <div className="register">
+                {/* <Link to={'/register'}> */}
+                <Button message="Register" onClick={() =>
                   setModal({
                     ...modal,
-                    logOpen: true
-                  })}
-                nav />
-              {modal.logOpen && <LoginForm
-                modal={modal}
-                setModal={setModal}
-                setSnackBar={setLoginSnackBar}
-                closeSnackBar={closeSnackBar}
-              />}
-              {/* </Link> */}
+                    regOpen: true
+                  })} nav />
+                {modal.regOpen && <RegisterForm
+                  modal={modal}
+                  setModal={setModal}
+                  setSnackBar={setRegisterSnackBar}
+                  closeSnackBar={closeSnackBar}
+                  setNewRegister={props.setNewRegister}
+                />}
+                {/* </Link> */}
+              </div>
             </div>
-            <div className="register">
-              {/* <Link to={'/register'}> */}
-              <Button message="Register" onClick={() =>
-                setModal({
-                  ...modal,
-                  regOpen: true
-                })} nav />
-              {modal.regOpen && <RegisterForm
-                modal={modal}
-                setModal={setModal}
-                setSnackBar={setRegisterSnackBar}
-                closeSnackBar={closeSnackBar}
-                setNewRegister={props.setNewRegister}
-              />}
-              {/* </Link> */}
-            </div>
-          </div>
-        }
+          }
+        </div>
+
       </nav>
     </>
   );

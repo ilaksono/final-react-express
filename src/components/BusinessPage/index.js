@@ -443,9 +443,9 @@ export default function BusinessPage() {
                   {!checkIfHasReviewedPreviously(businessDetails.reviews) &&
                     <>
                       <NewReview venue_id={id} name={businessDetails.name} setReviewSnackBar={setReviewSnackBar} />
-                      <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                     </>
                   }
+                  <SnackBar message="Thanks for leaving a review!" open={reviewSnackBar} setSnackBar={setReviewSnackBar} />
                   {console.log(appState)}
                   <Button variant="contained"
                     startIcon={<FavoriteIcon />}

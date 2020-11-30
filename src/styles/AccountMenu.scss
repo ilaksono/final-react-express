@@ -14,12 +14,11 @@
   cursor: pointer;
 }
 
-.user-nav-container {
-  @include flexbox(row, flex-end, center);
-  height: 46px;
-  min-width: 200px;
-  padding: 0;
-}
+// .user-nav-container {
+//   @include flexbox(row, flex-end, center);
+//   height: 46px;
+//   padding: 0;
+// }
 
 .username {
   height: 100%;
