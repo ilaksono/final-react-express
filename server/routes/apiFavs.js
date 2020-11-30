@@ -4,7 +4,7 @@ const router = require('express').Router();
 module.exports = (dbHelpers) => {
   router.get('/users/:id', (req, res) => {
     dbHelpers
-      .getProfileFavs(req.params.id)
+      .getProfileFavsName(req.params.id)
       .then(response =>
         res.json({
           data: response

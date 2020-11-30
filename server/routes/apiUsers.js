@@ -70,7 +70,7 @@ module.exports = (dbHelpers) => {
             userDetails.likes = response;
           })
           .then(() => {
-            dbHelpers.getProfileFavs(userID)
+            dbHelpers.getProfileFavsName(userID)
               .then(response => {
                 userDetails.favs = response;
                 console.log(userDetails)
@@ -90,7 +90,7 @@ module.exports = (dbHelpers) => {
         data.likes = response;
       })
       .then(() => {
-        dbHelpers.getProfileFavs(req.body.id)
+        dbHelpers.getProfileFavsName(req.body.id)
           .then(response => {
             data.favs = response
             return res.send(data)

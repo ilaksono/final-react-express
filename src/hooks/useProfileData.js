@@ -23,13 +23,13 @@ const useProfileData = () => {
         .get(`/api/reviews/users/${id}`);
       const users = await getUsersAPI();
       const favs = await getUsersFavs(id);
-      const uniqueArr = [];
-      favs.data.data
-        .forEach(data =>
-          !uniqueArr.some(fav =>
-            fav.venue_id === data.venue_id)
-          && uniqueArr.push(data));
-      const rawDetailsData = await getFavsDetails(uniqueArr);
+      // const uniqueArr = [];
+      // favs.data.data
+      //   .forEach(data =>
+      //     !uniqueArr.some(fav =>
+      //       fav.venue_id === data.venue_id)
+      //     && uniqueArr.push(data));
+      const rawDetailsData = await getFavsDetails(favs.data.data);
       const allDetails = rawDetailsData
         .map(detail => {
           reviews.data.data.some(review => {
@@ -37,7 +37,7 @@ const useProfileData = () => {
               detail.data.profile_review = review;
               return true;
             }
-            else return false;
+            else return null;
           });
           return detail.data;
         });

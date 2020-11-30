@@ -249,14 +249,14 @@ export default function BusinessPage() {
   };
 
   const formatNextDayString = str => {
-    let d = str.split('')
-    if((!Number.isNaN(d[0] && !Number.isNaN(d[1])))) 
+    let d = str.split('');
+    if ((!Number.isNaN(d[0] && !Number.isNaN(d[1]))))
       d[1]++;
     else d[0]++;
 
-    return d.join('').replace(' ', '-')  
-    
-  }
+    return d.join('').replace(' ', '-');
+
+  };
 
 
 
@@ -311,16 +311,41 @@ export default function BusinessPage() {
   if (dayNum < 0)
     dayNum += 7;
   const openNow = () => {
+
+    let numOpen = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: []
+    };
+    businessDetails.hours[0].open.forEach((val, index) => {
+      numOpen[val.day].push(index);
+    });
+
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return businessDetails.hours[0].is_open_now
+      return businessDetails.hours[0].is_open_now;
       // return !businessDetails.is_closed;
 
     }
-    if (businessDetails.hours[0].open[dayNum].end > time
-      && businessDetails.hours[0].open[dayNum].start < time) {
-      return businessDetails.hours[0].open[dayNum];
-    }
+    if (numOpen[dayNum].length) {
+
+      if (businessDetails.hours[0].open[numOpen[dayNum][0]].end > time
+        && businessDetails.hours[0].open[numOpen[dayNum][0]].start < time) {
+        return businessDetails.hours[0].open[numOpen[dayNum[0]]];
+      }
+      if (businessDetails.hours[1].open[numOpen[dayNum][1]].end > time
+        && businessDetails.hours[1].open[numOpen[dayNum][1]].start < time) {
+        return businessDetails.hours[1].open[numOpen[dayNum[1]]];
+      }
+      if (businessDetails.hours[0].open[dayNum].end > time
+        && businessDetails.hours[0].open[dayNum].start < time) {
+        return businessDetails.hours[0].open[dayNum];
+      }
+    } else return false
   };
   let categoryList = [];
   if (businessDetails.categories) {
@@ -376,7 +401,7 @@ export default function BusinessPage() {
                       <Rating name="read-only" precision={0.5} value={Number(businessDetails.yelpRating)} readOnly size="medium" />
                     </Box>
                     <div className="covid_review_count">
-                      {businessDetails.yelpRatingCount} {businessDetails.yelpRatingCount === 1 ? "review" : "reviews" }
+                      {businessDetails.yelpRatingCount} {businessDetails.yelpRatingCount === 1 ? "review" : "reviews"}
                     </div>
                   </div>
                   <div className="bus-data-row">
@@ -395,16 +420,16 @@ export default function BusinessPage() {
                         />}
                     </Box>
                     <div className="covid_review_count">
-                      {businessDetails.reviews.length} {businessDetails.reviews.length === 1 ? "review" : "reviews" }
+                      {businessDetails.reviews.length} {businessDetails.reviews.length === 1 ? "review" : "reviews"}
                     </div>
                   </div>
                   <div className="bus-data-row">
-                    { businessDetails.price && (
+                    {businessDetails.price && (
                       <div className="bus-price">
-                        {businessDetails.price} 
-                        { categoryList.length && (
+                        {businessDetails.price}
+                        {categoryList.length && (
                           <div>
-                            &nbsp; &middot; &nbsp; 
+                            &nbsp; &middot; &nbsp;
                           </div>
                         )}
                       </div>
@@ -421,11 +446,11 @@ export default function BusinessPage() {
                           <div className="closed">
                             Closed Now &nbsp;
                         </div>
-                        { (nextOpen.day && nextOpen.start && nextOpen.end) && (
-                          <div className="category">
-                            &middot; &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
-                          </div>
-                        )}
+                          {(nextOpen.day && nextOpen.start && nextOpen.end) && (
+                            <div className="category">
+                              &middot; &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
+                            </div>
+                          )}
                         </>
                       )}
                   </div>
@@ -436,7 +461,7 @@ export default function BusinessPage() {
                       <LocationOnIcon />
                     </div>
                     <div className="data">
-                      { businessDetails.address && businessDetails.address},
+                      {businessDetails.address && businessDetails.address},
                     </div>
                   </div>
                   <div className="row">
@@ -480,9 +505,9 @@ export default function BusinessPage() {
                     </Button>
                 </div>
               )}
-              <SimpleGrow busAnim={busAnim} setBusAnim={setBusAnim} 
-              color={appState.favs.includes(businessDetails.id)
-                ? 'red' : 'grey'}
+              <SimpleGrow busAnim={busAnim} setBusAnim={setBusAnim}
+                color={appState.favs.includes(businessDetails.id)
+                  ? 'red' : 'grey'}
               />
 
               <div className='location-hours'>
@@ -495,7 +520,7 @@ export default function BusinessPage() {
                 </div>
                 {businessDetails.hours &&
                   <div className='table-container'>
-                      <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} setNextOpen={setNextOpen} />
+                    <HoursTable businessDetails={businessDetails} dayNum={dayNum} openNow={openNow} setNextOpen={setNextOpen} />
                   </div>
                 }
               </div>

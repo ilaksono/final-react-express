@@ -144,6 +144,18 @@ module.exports = (db) => {
       .then(res => res.rows);
   };
 
+  const getProfileFavsName = (id) => {
+    const qs = 
+    `
+    SELECT *
+    FROM favourited_businesses
+    WHERE user_id = $1;
+    `;
+    return db
+    .query(qs, [Number(id)])
+    .then(res => res.rows);
+  }
+
   const getLikesByUser = (id) => {
     const queryString = `
     SELECT liked_reviews.*, reviews.id
@@ -341,6 +353,7 @@ module.exports = (db) => {
     editReviews,
     getLikesByUser,
     addToFavourites,
-    removeFromFavourites
+    removeFromFavourites,
+    getProfileFavsName
   };
 };
