@@ -68,25 +68,48 @@ const ProfilePlaceItem = (props) => {
   return (
     <>
       {props.name && (
-        <div className='result-container'
-            onClick={moveToNextPage}>
-          <div className="img-general-info-container">
+        <div className='profile-result-container'>
+          <div className="pro-img-general-info-container">
             <div
             style={{ 
               backgroundImage: `url(${props.photos[0]})`,
-              width: '100px',
-              height: '100px',
+              width: '124px',
+              height: '124px',
               backgroundSize: 'cover',
-              cursor: 'pointer',
+              marginLeft: '8px',
               borderRadius: '20px',
               filter: 'grayscale(0%)',
-
             }}
+            onClick={moveToNextPage}
             src={props.photos[0]}
             >
             </div>
-            <div className='general-info'>
-              <h3 className="venue_name">{props.name}</h3>
+            <div className='profile-general-info'>
+              <div className="title-favourite-container">
+                <h3 className="venue_name" onClick={moveToNextPage}>{props.name}</h3>
+                <AlertDialog open={openAlert} 
+                  onClose={promptOnClose} 
+                  delete={() => handleFavClick(props.id)}
+                  message={`Unfavourite ${props.name}?`}
+                  />
+                  
+                  {id == appState.user_id &&
+                    <FavoriteIcon
+                      style={{
+                        color: 'red'
+                      }}
+                      onClick={promptConfirm}
+                    />
+                  }
+                </div>
+              <div className='profile-location'> 
+                {props.phone}<br />
+                {props.location.address1}, &nbsp;
+                {props.location.city}
+              </div>
+              <div className={ props.is_closed ? "is-closed" : "is-open" }>
+                { props.is_closed ? "Closed Now" : "Open Now" }
+              </div>
               {props.profile_review ?
               <>
                 <div className="rating-outer-container">
@@ -121,30 +144,13 @@ const ProfilePlaceItem = (props) => {
                 </Link>
                 : ''
             }
+              
             </div>
-          </div>
-          <div className='location'> 
-            {props.phone}<br />
-            {props.location.address1}<br />
-            {props.location.city}
           </div>
         </div>
       )}
         
-      <AlertDialog open={openAlert} 
-      onClose={promptOnClose} 
-      delete={() => handleFavClick(props.id)}
-      message={`Unfavourite ${props.name}?`}
-      />
       
-      {id == appState.user_id &&
-        <FavoriteIcon
-          style={{
-            color: 'red'
-          }}
-          onClick={promptConfirm}
-        />
-      }
       
     </>
   )

@@ -291,7 +291,6 @@ export default function BusinessPage() {
         primeChartData(businessDetails.reviews, chartSelect.select);
     }// eslint-disable-next-line
   }, [businessDetails, chartSelect]);
-
   const now = new Date();
   let dayNum = now.getDay() - 1; // 1 is monday
   if (dayNum < 0)
@@ -299,7 +298,7 @@ export default function BusinessPage() {
   const openNow = () => {
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return null;
+      return !businessDetails.is_closed;
     }
     if (businessDetails.hours[0].open[dayNum].end > time
       && businessDetails.hours[0].open[dayNum].start < time) {
