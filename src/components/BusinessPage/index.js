@@ -327,7 +327,7 @@ export default function BusinessPage() {
 
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
-      return businessDetails.hours[0].is_open_now;
+      return null;
       // return !businessDetails.is_closed;
 
     }
@@ -437,7 +437,9 @@ export default function BusinessPage() {
                     {categoryList}
                   </div>
                   <div className="bus-data-row">
-                    {openNow() ? (
+                  { businessDetails.hours && (
+                    <>
+                    { openNow() ? (
                       <div className="open">
                         Open Now
                       </div>
@@ -453,6 +455,9 @@ export default function BusinessPage() {
                           )}
                         </>
                       )}
+                    </>
+                  )}
+                    
                   </div>
                 </div>
                 <div className="right-col">

@@ -117,8 +117,8 @@ const useApplicationData = () => {
     });
 
     example.push({
-      venue: 'Delivery',
-      title: 'Delivery',
+      venue: 'Gyms',
+      title: 'Gyms',
       width
     });
 

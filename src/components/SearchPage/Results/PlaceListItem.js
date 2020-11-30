@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
@@ -27,6 +27,7 @@ const PlaceListItem = (props) => {
   const { getIndividualBusinessData } = useContext(YelpContext);
 
   const history = useHistory();
+  const [hover, setHover] = useState(false);
   const moveToNextPage = () => {
     getIndividualBusinessData(props.id)
       .then(() => {
@@ -44,9 +45,26 @@ const PlaceListItem = (props) => {
         onMouseOut={() =>
           props.notHoverMarker()}>
         <div className="img-general-info-container">
-          <div className='img-container'>
-            <img src={props.image} alt="Logo" className='venue-image' />
-          </div>
+          <div
+            style={{ 
+              backgroundImage: `url(${props.image})`,
+              width: '30%',
+              height: '124px',
+              backgroundSize: 'cover',
+              marginLeft: '8px',
+              marginTop: 'auto',
+              marginBottom: 'auto',
+              marginRight: '8px',
+              borderRadius: '20px',
+              filter: 'grayscale(0%)',
+              ...(hover && { filter: 'grayscale(0%)', borderRadius: '10px', cursor: 'pointer' })
+            }}
+            onClick={moveToNextPage}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            src={props.image}
+            >
+            </div>
           <div className='general-info'>
           <h3 className="venue_name">{props.label}. {props.name}</h3>
           <div className="rating-outer-container">
@@ -79,14 +97,15 @@ const PlaceListItem = (props) => {
               ({props.reviews.length})
             </div>
           </div>
-        </div>
 
-        <div className="sample-review-container">
-          {props.reviews.length > 0 && `"${props.reviews[0].description}"`}
-          <div className="sample-review-user">
-            {props.reviews.length > 0 && `-${props.reviews[0].username}`}
+          <div className="sample-review-container">
+            {props.reviews.length > 0 && `"${props.reviews[0].description}"`}
+            <div className="sample-review-user">
+              {props.reviews.length > 0 && `-${props.reviews[0].username}`}
+            </div>
           </div>
         </div>
+
         
       </div>
       <div className='location'> 

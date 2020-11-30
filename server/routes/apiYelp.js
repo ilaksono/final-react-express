@@ -16,7 +16,7 @@ module.exports = () => {
       .search({
         term: req.body.venue,
         location: req.body.location,
-        limit: 11
+        limit: 50
       }).then(response => {
         console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
         let bus = response.jsonBody.businesses;
