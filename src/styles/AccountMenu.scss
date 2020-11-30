@@ -9,8 +9,11 @@
 //   margin-right: 20px;
 //   margin-left: 10px;
 // }
-
-.profile-icon-container:hover {
+.profile-icon-container {
+  @include flexbox(row, center, center);
+  margin-right: 8px;
+  width: 42px;
+  height: 42px;
   cursor: pointer;
 }
 

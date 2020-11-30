@@ -14,7 +14,7 @@
   scroll-snap-type: y mandatory;
   scroll-padding-top: 4px;
   width: 100%;
-  @include flexbox(column, center, center);
+  @include flexbox(column, flex-start, center);
 }
 
 .profile-reviews-hover {

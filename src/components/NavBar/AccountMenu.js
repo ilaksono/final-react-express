@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     width: '150px',
+    marginLeft: theme.spacing(1),
   }
 }));
 
@@ -65,13 +66,12 @@ export default function AccountMenu(props) {
   };
 
   return (
-    <>
-      
+    <div className="icon-name-container">
       <div className='profile-icon-container'>
         <div
           className={`profile-circle${location.pathname.match(/^\/user/) && '-selected'}${animation.spin ? ' account-animation' : ''}`}
           onAnimationEnd={() => setAnimation(prev => ({ ...prev, spin: false }))}>
-           {/* <AccountCircleIcon
+          {/* <AccountCircleIcon
             style={{ fontSize: 45, color: '#1E0253' }}
             ref={anchorRef}
             aria-controls={open ? 'menu-list-grow' : undefined}
@@ -79,7 +79,7 @@ export default function AccountMenu(props) {
             onClick={handleToggle}
 
           />  */}
-          <i class="fas fa-user" style={{ fontSize: 30 }}
+          <i class="fas fa-user" style={{ fontSize: 26 }}
             ref={anchorRef}
             aria-controls={open ? 'menu-list-grow' : undefined}
             onClick={handleToggle}></i>
@@ -97,14 +97,14 @@ export default function AccountMenu(props) {
                       onClick={() => handleClose('profile')}
                       style={{
                         color: '#1E0253',
-                        fontSize: '18px',
+                        fontSize: '16px',
                       }}>
                       Profile
                       </MenuItem>
                     <MenuItem
                       style={{
                         color: '#1E0253',
-                        fontSize: '18px',
+                        fontSize: '16px',
                       }}
                       onClick={() => handleClose('logout')}>
                       Logout
@@ -141,17 +141,16 @@ export default function AccountMenu(props) {
           >Logout</MenuItem>
         </Menu> */}
       </div>
-        <div className={animation.wobble ? 'wobble-animation' : ''}
-          onMouseOver={() => setAnimation({ ...animation, wobble: true })}
-          onAnimationEnd={() => setAnimation({ ...animation, wobble: false })}
-          onClick={() => handleClose('profile')}
-          style={{
-            cursor: 'pointer'
-          }}
-        >
-          <div>{props.appState.name}</div>
-        </div>
-    </>
-
+      <div /* className={animation.wobble ? 'wobble-animation' : ''} */
+        onMouseOver={() => setAnimation({ ...animation, wobble: true })}
+        onAnimationEnd={() => setAnimation({ ...animation, wobble: false })}
+        onClick={() => handleClose('profile')}
+        style={{
+          cursor: 'pointer'
+        }}
+      >
+        <div>{props.appState.name}</div>
+      </div>
+    </div>
   );
 }
