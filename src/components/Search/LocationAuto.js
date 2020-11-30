@@ -5,7 +5,6 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import useDebounce from 'hooks/useDebounce';
 
 const LocationAuto = props => {
 

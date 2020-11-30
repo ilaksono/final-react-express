@@ -321,31 +321,32 @@ export default function BusinessPage() {
       5: [],
       6: []
     };
-    businessDetails.hours[0].open.forEach((val, index) => {
-      numOpen[val.day].push(index);
-    });
+
 
     const time = now.getHours() * 100 + now.getMinutes();
     if (!businessDetails.hours || !businessDetails.hours[0].open[dayNum]) {
       return null;
       // return !businessDetails.is_closed;
-
     }
+    businessDetails.hours[0].open.forEach((val, index) => {
+      numOpen[val.day].push(index);
+    });
     if (numOpen[dayNum].length) {
 
       if (businessDetails.hours[0].open[numOpen[dayNum][0]].end > time
         && businessDetails.hours[0].open[numOpen[dayNum][0]].start < time) {
         return businessDetails.hours[0].open[numOpen[dayNum[0]]];
       }
-      if (businessDetails.hours[1].open[numOpen[dayNum][1]].end > time
-        && businessDetails.hours[1].open[numOpen[dayNum][1]].start < time) {
-        return businessDetails.hours[1].open[numOpen[dayNum[1]]];
+      
+      if (numOpen[dayNum].length > 1 && businessDetails.hours[0].open[numOpen[dayNum][1]].end > time
+        && businessDetails.hours[0].open[numOpen[dayNum][1]].start < time) {
+        return businessDetails.hours[0].open[numOpen[dayNum[1]]];
       }
       if (businessDetails.hours[0].open[dayNum].end > time
         && businessDetails.hours[0].open[dayNum].start < time) {
         return businessDetails.hours[0].open[dayNum];
       }
-    } else return false
+    } else return false;
   };
   let categoryList = [];
   if (businessDetails.categories) {
@@ -437,27 +438,27 @@ export default function BusinessPage() {
                     {categoryList}
                   </div>
                   <div className="bus-data-row">
-                  { businessDetails.hours && (
-                    <>
-                    { openNow() ? (
-                      <div className="open">
-                        Open Now
-                      </div>
-                    ) : (
-                        <>
-                          <div className="closed">
-                            Closed Now &nbsp;
+                    {businessDetails.hours && (
+                      <>
+                        {openNow() ? (
+                          <div className="open">
+                            Open Now
+                          </div>
+                        ) : (
+                            <>
+                              <div className="closed">
+                                Closed Now &nbsp;
                         </div>
-                          {(nextOpen.day && nextOpen.start && nextOpen.end) && (
-                            <div className="category">
-                              &middot; &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
-                            </div>
+                              {(nextOpen.day && nextOpen.start && nextOpen.end) && (
+                                <div className="category">
+                                  &middot; &nbsp; {`Next Open: ${nextOpen.day}, ${nextOpen.start} - ${nextOpen.end}`}
+                                </div>
+                              )}
+                            </>
                           )}
-                        </>
-                      )}
-                    </>
-                  )}
-                    
+                      </>
+                    )}
+
                   </div>
                 </div>
                 <div className="right-col">
