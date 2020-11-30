@@ -157,8 +157,8 @@ const NewReview = props => {
             let updatedBusinessDetailsReviews = [...businessDetails.reviews];
             const findReview = updatedBusinessDetailsReviews.find(review => review.id === id);
             findReview.cleanliness = cleanliness;
-            findReview.socialDistancing = socialDistancing;
-            findReview.transactionProcess = transactionProcess;
+            findReview.socialdistancing = socialDistancing;
+            findReview.transactionprocess = transactionProcess;
             findReview.overall_rating = overall_rating;
             findReview.description = description;
             findReview.toxic = response.data.toxic;
