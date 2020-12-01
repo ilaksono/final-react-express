@@ -25,9 +25,9 @@ const UserProfile = (props) => {
     setAllUsers,
     profileDeleteReview,
     deleteFavProfile,
-    resetFiltersHandle
   } = useProfileData();
-  const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
+  const { newReview, setNewReview, loadToxic,
+  resetFiltersHandle } = useContext(YelpContext);
   useEffect(() => {
     getTimeRating(id);
     // eslint-disable-next-line

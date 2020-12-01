@@ -27,6 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 ## Server Dependencies
+- Nodejs v10.x
 - Express v4.x
 - pg
 - request-promise-native
