@@ -34,7 +34,7 @@ const LocationAuto = props => {
           }}
           className={`${props.isHome ? 'home-search-l' : 'location-search-bar'}`}
           disabled={false}
-          placeholder="Location"
+          placeholder="city, region, province"
         />
         <ComboboxPopover style={{zIndex: 10}}>
           
