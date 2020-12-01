@@ -37,7 +37,7 @@ module.exports = () => {
     // console.log(vens);
     let i = 0;
     let results = [];
-
+    
     const A = setInterval(async () => {
         const res = await searchByID(vens[i++].venue_id);
         results.push(res);
