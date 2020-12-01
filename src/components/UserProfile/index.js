@@ -28,10 +28,7 @@ const UserProfile = (props) => {
     resetFiltersHandle
   } = useProfileData();
   const { newReview, setNewReview, loadToxic } = useContext(YelpContext);
-  useEffect(() => {
-    getTimeRating(id);
-    // eslint-disable-next-line
-  }, [id, loadToxic]);
+ 
   useEffect(() => {
     getUsersAPI()
       .then((res) => {
