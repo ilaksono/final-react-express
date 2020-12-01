@@ -59,7 +59,7 @@ const UserProfile = (props) => {
       {
         !whom ?
           <div className='loading-circle' style={{ marginLeft: '45%' }}>
-            <CircularProgress size={140} color="secondary" />
+            <CircularProgress size={100} color="secondary"/>
           </div>
           :
           <>
@@ -88,7 +88,7 @@ const UserProfile = (props) => {
                 </div>
               </div>
               { proLoading && (
-                <div className='loading-circle' style={{ marginLeft: '45%' }}>
+                <div className='loading-circle'>
                 <CircularProgress size={140} color="secondary" />
               </div>
               )}

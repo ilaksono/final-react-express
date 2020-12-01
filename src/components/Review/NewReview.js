@@ -146,7 +146,6 @@ const NewReview = props => {
               transactionprocess: transactionProcess,
               cleanliness,
               user_id
-
              });
           setLoadToxic(false);
         });
