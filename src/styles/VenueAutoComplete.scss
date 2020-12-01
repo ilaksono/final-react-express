@@ -4,7 +4,7 @@
   @include flexbox(column, flex-start, flex-start);
   position: fixed; /* Stay in place */
   z-index: 2; /* Sit on top */
-  left: calc((180.16px + (100% - 836.75px) / 2) + 75px);
+  left: calc((180.16px + (100% - 836.75px) / 2) - 50px);
   top: 47px;
   border: 1px solid $gray-line;
   border-radius: 2px;

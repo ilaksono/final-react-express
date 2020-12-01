@@ -145,6 +145,7 @@ const NewReview = props => {
               socialdistancing: socialDistancing,
               transactionprocess: transactionProcess,
               cleanliness,
+              user_id
               
              });
           setLoadToxic(false);

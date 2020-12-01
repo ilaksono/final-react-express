@@ -23,8 +23,6 @@ const useProfileData = () => {
   // const getFavourites = () => {
   //   // api call to yelp
   //   const favs = await getUsersFavs(id);
-
-
   // }
 
   const updateFavouriteReview = (venue_id, review) => {
@@ -94,6 +92,7 @@ const useProfileData = () => {
       //     && uniqueArr.push(data));
 
       const favs = await getUsersFavs(id);
+      if (favs.data.data.length > 0) {
       const rawDetailsData = await getFavsDetails(favs.data.data);
       const allDetails = rawDetailsData
         .map(detail => {
@@ -105,14 +104,15 @@ const useProfileData = () => {
             else return null;
           });
           return detail;
-        });
+        })
+      setFavsDetails(allDetails);
+    };
       setProLoading(false);
       setAllUsers({
         all: users.data.data,
         reviews: reviews.data.data,
         // favsDetails: allDetails,
       });
-      setFavsDetails(allDetails);
     } catch (er) {
       console.log(er);
     }

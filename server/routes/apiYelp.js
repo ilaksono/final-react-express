@@ -31,24 +31,24 @@ module.exports = () => {
   });
 
   // pass it array of business IDs we want to iterate through
-  router.post("/search/favs", async (req, resp, next) => {
+  router.post("/search/favs", async (req, res, next) => {
 
     const vens = req.body.arr;
-    // console.log(vens);
     let i = 0;
     let results = [];
 
     const A = setInterval(async () => {
-        const res = await searchByID(vens[i++].venue_id);
-        results.push(res);
+        const response = await searchByID(vens[i++].venue_id);
+        console.log("this is the leng",vens.length)
+        if(response) {
+        results.push(response);
+        }
         if (i >= vens.length) {
           clearTimeout(A);
-          console.log(results, results.length, 'result');
-          return resp.json({ data: results });
+          return res.json({ data: results });
         }
       }, 250);
   });
-  // );
 
 
 
