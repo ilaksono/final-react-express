@@ -25,10 +25,13 @@ const UserProfile = (props) => {
     setAllUsers,
     profileDeleteReview,
     deleteFavProfile,
-    proLoading
+    proLoading,
+    favsDetails,
+    updateFavouriteReview
   } = useProfileData();
   const { newReview, setNewReview, loadToxic,
-  resetFiltersHandle } = useContext(YelpContext);
+  resetFiltersHandle,
+} = useContext(YelpContext);
   useEffect(() => {
     getUsersAPI()
       .then((res) => {
@@ -46,7 +49,7 @@ const UserProfile = (props) => {
         .then(() => setNewReview(true));
     }
     // eslint-disable-next-line
-  }, [loadToxic]);
+  }, []);
 
   const whom = allUsers.all // eslint-disable-next-line
   .find(user => user.id == id) || null;
@@ -100,6 +103,7 @@ const UserProfile = (props) => {
                             isProfile={true}
                             profileHelpCount={profileHelpCount}
                             profileDeleteReview={profileDeleteReview}
+                            updateFavouriteReview={updateFavouriteReview}
                           />
                       </div>
                     </>
@@ -113,10 +117,12 @@ const UserProfile = (props) => {
               { (!proLoading && selected === "favourites") && (
                 <div className='user-chart-container'>
                 {
-                  allUsers.favsDetails.length ?
+                  favsDetails.length ?
                     <>
                       <FavSection deleteFavProfile={deleteFavProfile} 
-                      whom={whom} allUsers={allUsers}/>
+                      whom={whom} allUsers={allUsers}
+                      favsDetails={favsDetails}
+                      />
                     </>
                     :
                     <div className='no-places-info'>

@@ -43,6 +43,7 @@ module.exports = () => {
         results.push(res);
         if (i >= vens.length) {
           clearTimeout(A);
+          console.log(results, results.length, 'result');
           return resp.json({ data: results });
         }
       }, 250);
