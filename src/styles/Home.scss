@@ -38,7 +38,9 @@
 }
 
 .search-home-container {
-  background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+  // background: linear-gradient(45deg, salmon 30%, #fcd0d4 90%);
+    background: linear-gradient(45deg, #fde3e5 30%, salmon 90%);
+
   padding-top: 60px;
   width: 100%;
   @include flexbox(column, flex-start, center);
