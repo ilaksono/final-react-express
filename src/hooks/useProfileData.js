@@ -30,16 +30,17 @@ const useProfileData = () => {
       //       fav.venue_id === data.venue_id)
       //     && uniqueArr.push(data));
       const rawDetailsData = await getFavsDetails(favs.data.data);
+      console.log(rawDetailsData, 'yo');
       const allDetails = rawDetailsData
         .map(detail => {
           reviews.data.data.some(review => {
-            if (review.venue_id === detail.data.id) {
-              detail.data.profile_review = review;
+            if (review.venue_id === detail.id) {
+              detail.profile_review = review;
               return true;
             }
             else return null;
           });
-          return detail.data;
+          return detail;
         });
       setAllUsers({
         all: users.data.data,
@@ -52,12 +53,17 @@ const useProfileData = () => {
   };
   const getFavsDetails = async (arr) => {
     try {
+      return axios.post('/api/yelp/search/favs', { arr })
+        .then(results => {
+          console.log(results, 'hi');
+          return results.data.data;
+        });/* 
       const promArr = arr.map(ele =>
         axios.post(`/api/yelp/search/${ele.venue_id}`)
       );
-      const allDetails = await Promise.all(promArr);
+      const allDetails = await Promise.all(promArr); */
       // console.log(allDetails);
-      return allDetails;
+      /* return allDetails; */
     } catch (er) {
       console.log(er);
     }

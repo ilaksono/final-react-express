@@ -29,10 +29,6 @@ const UserProfile = (props) => {
   const { newReview, setNewReview, loadToxic,
   resetFiltersHandle } = useContext(YelpContext);
   useEffect(() => {
-    getTimeRating(id);
-    // eslint-disable-next-line
-  }, [id, loadToxic]);
-  useEffect(() => {
     getUsersAPI()
       .then((res) => {
         setAllUsers({ ...allUsers, all: res.data.data });
@@ -41,11 +37,15 @@ const UserProfile = (props) => {
     // eslint-disable-next-line
   }, [props.newRegister]);
   useEffect(() => {
-    if (id)
+    if (id) {
+
+      console.log("newReview is currently", newReview);
+      console.log("loadToxic is currently", loadToxic);
       getTimeRating(id)
         .then(() => setNewReview(true));
+    }
     // eslint-disable-next-line
-  }, [newReview, loadToxic]);
+  }, [loadToxic]);
 
   const whom = allUsers.all // eslint-disable-next-line
   .find(user => user.id == id) || null;
