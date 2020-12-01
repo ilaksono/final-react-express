@@ -142,8 +142,8 @@ const NewReview = props => {
         .then(() => {
             props.updateFavouriteReview(venue_id, { description, 
               overall_rating,
-              social_distancing: socialDistancing,
-              transaction_process: transactionProcess,
+              socialdistancing: socialDistancing,
+              transactionprocess: transactionProcess,
               cleanliness,
               user_id
 
