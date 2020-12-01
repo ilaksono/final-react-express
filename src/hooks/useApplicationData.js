@@ -109,42 +109,48 @@ const useApplicationData = () => {
     example.push({
       venue: 'Parks',
       title: 'Parks',
+      url: "/Parks.jpg",
       width
     });
 
     example.push({
       venue: 'Patios',
       title: 'Patios',
+      url: '/Patios.jpg',
+
       width
     });
 
     example.push({
       venue: 'Gyms',
       title: 'Gyms',
+      url: '/Gyms.jpg',
       width
     });
 
     example.push({
       venue: 'Restaurants',
       title: 'Restaurants',
+      url: '/Restaurants.jpg',
+
       width
 
     });
-    const pArr = example.map((ex) => {
-      return axios
-        .post('/api/yelp/one', {
-          venue: ex.venue,
-          location: 'toronto'
-        });
-    });
-    return Promise.all(pArr)
-      .then((all) => {
-        all.forEach((each, index) => {
-          example[index].location = tops.city;
-          example[index].url = each.data;
-        });
+    // const pArr = example.map((ex) => {
+    //   return axios
+    //     .post('/api/yelp/one', {
+    //       venue: ex.venue,
+    //       location: 'toronto'
+    //     });
+    // });
+    // return Promise.all(pArr)
+      // .then((all) => {
+        // all.forEach((each, index) => {
+          // example[index].location = tops.city;
+          // example[index].url = each.data;
+        // });
         return setTops({ ...tops, show: example });
-      });
+      // });
   };
 
   const addSearchCount = () => {

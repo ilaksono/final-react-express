@@ -31,34 +31,34 @@ module.exports = () => {
   });
 
   // pass it array of business IDs we want to iterate through
-  router.post("/search/favs", (req, resp, next) => {
+  router.post("/search/favs", async (req, resp, next) => {
 
-      const vens = req.body.arr;
-      console.log(vens);
-      let i = 0;
-      let results = [];
+    const vens = req.body.arr;
+    // console.log(vens);
+    let i = 0;
+    let results = [];
 
-      const A = setInterval(async () => {
-          const res = await searchByID(vens[i++].venue_id);
-          results.push(res);
-          if (i >= vens.length) {
-            console.log(i);
-            clearTimeout(A);
-            return resp.json({data: results})
-          }
-        }, 200);
+    const A = setInterval(async () => {
+        const res = await searchByID(vens[i++].venue_id);
+        results.push(res);
+        if (i >= vens.length) {
+          clearTimeout(A);
+          return resp.json({ data: results });
+        }
+      }, 250);
   });
+  // );
+
+
 
   function searchByID(id) {
 
     return client.business(id)
       .then((result) => {
         const business = result.jsonBody;
-        console.log(business);
-        return business
+        return business;
       })
       .catch((e) => {
-
         console.log(e);
       });
   }
@@ -66,54 +66,54 @@ module.exports = () => {
 
 
 
-router.post("/search/:id", (req, res) => {
-  // handles array of search/:id
+  router.post("/search/:id", (req, res) => {
+    // handles array of search/:id
 
-  client
-    .business(req.params.id).then(response => {
-      res.json(response.jsonBody);
-    }).catch(e => {
-      console.log(e);
-    });
-});
-
-
-router.post("/autocomplete", (req, res) => {
-  client
-    .autocomplete({
-      text: req.body.venue,
-      latitude: req.body.latitude,
-      longitude: req.body.longitude
-    }).then(response => {
-      console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
-      const businesses = cleanAutoComplete(response.jsonBody.businesses, "name").slice(0, 4);
-      const categories = cleanAutoComplete(response.jsonBody.categories, "title").slice(0, 5);
-      const obj = {
-        businesses,
-        categories
-      };
-      res.json(obj);
-
-    }).catch(e => {
-      console.log(e);
-    });
-});
-
-router.post("/one", (req, res) => {
-  client
-    .search({
-      term: req.body.venue,
-      location: req.body.location,
-      limit: 1
-    }).then(response => {
-      console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
-      res.json(response.jsonBody.businesses[0].image_url);
-    }).catch(e => {
-      console.log(e);
-    });
-});
+    client
+      .business(req.params.id).then(response => {
+        res.json(response.jsonBody);
+      }).catch(e => {
+        console.log(e);
+      });
+  });
 
 
+  router.post("/autocomplete", (req, res) => {
+    client
+      .autocomplete({
+        text: req.body.venue,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
+      }).then(response => {
+        console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
+        const businesses = cleanAutoComplete(response.jsonBody.businesses, "name").slice(0, 4);
+        const categories = cleanAutoComplete(response.jsonBody.categories, "title").slice(0, 5);
+        const obj = {
+          businesses,
+          categories
+        };
+        res.json(obj);
 
-return router;
+      }).catch(e => {
+        console.log(e);
+      });
+  });
+
+  router.post("/one", (req, res) => {
+    client
+      .search({
+        term: req.body.venue,
+        location: req.body.location,
+        limit: 1
+      }).then(response => {
+        console.log("Ratelimit Remaining: ", response.headers['ratelimit-remaining']);
+        res.json(response.jsonBody.businesses[0].image_url);
+      }).catch(e => {
+        console.log(e);
+      });
+  });
+
+
+
+  return router;
 };

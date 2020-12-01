@@ -4,12 +4,14 @@ import axios from 'axios';
 const initProfile = {
   all: [],
   reviews: [],
-  favsDetails: []
+  favsDetails: [],
+  loading:false
 };
 
 const useProfileData = () => {
   const [allUsers, setAllUsers]
     = useState(initProfile);
+  const [proLoading, setProLoading] = useState(false);
 
   const getUsersAPI = () => {
     return axios
@@ -19,6 +21,7 @@ const useProfileData = () => {
 
   const getTimeRating = async (id) => {
     try {
+      setProLoading(true);
       const reviews = await axios
         .get(`/api/reviews/users/${id}`);
       const users = await getUsersAPI();
@@ -42,10 +45,11 @@ const useProfileData = () => {
           });
           return detail;
         });
-      setAllUsers({
+        setProLoading(false);
+        setAllUsers({
         all: users.data.data,
         reviews: reviews.data.data,
-        favsDetails: allDetails
+        favsDetails: allDetails,
       });
     } catch (er) {
       console.log(er);
@@ -123,10 +127,11 @@ const useProfileData = () => {
     allUsers,
     getTimeRating,
     getUsersAPI,
+    proLoading,
     profileHelpCount,
     setAllUsers,
     profileDeleteReview,
-    deleteFavProfile
+    deleteFavProfile,
   };
 
 };

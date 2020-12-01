@@ -25,6 +25,7 @@ const UserProfile = (props) => {
     setAllUsers,
     profileDeleteReview,
     deleteFavProfile,
+    proLoading
   } = useProfileData();
   const { newReview, setNewReview, loadToxic,
   resetFiltersHandle } = useContext(YelpContext);
@@ -83,7 +84,12 @@ const UserProfile = (props) => {
                   FAVOURITES
                 </div>
               </div>
-              { selected === "reviews" && (
+              { proLoading && (
+                <div className='loading-circle' style={{ marginLeft: '45%' }}>
+                <CircularProgress size={140} color="secondary" />
+              </div>
+              )}
+              { (!proLoading && selected === "reviews") && (
                 <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
                 {
                   allUsers.reviews.length > 0 ?
@@ -104,7 +110,7 @@ const UserProfile = (props) => {
                 }
                 </div>
               )}
-              { selected === "favourites" && (
+              { (!proLoading && selected === "favourites") && (
                 <div className='user-chart-container'>
                 {
                   allUsers.favsDetails.length ?
