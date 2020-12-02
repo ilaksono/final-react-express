@@ -36,7 +36,7 @@ module.exports = () => {
     const vens = req.body.arr;
     let i = 0;
     let results = [];
-
+    
     const A = setInterval(async () => {
         const response = await searchByID(vens[i++].venue_id);
         console.log("this is the leng",vens.length)
