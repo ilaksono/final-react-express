@@ -72,7 +72,7 @@ const Profile = (props) => {
             <tr className='profile-thead'>
               <td>
                 <i className="far fa-thumbs-up review-table-icon"></i>
-              Score
+              Helpful
             </td>
               <td
                 
