@@ -13,7 +13,20 @@ const StyledRating = withStyles({
     color: '#ff6d75',
   },
 })(Rating);
-
+const sortOptions = [
+  {
+    id: "overall_rating",
+    value: "Safe Score"
+  },
+  {
+    id: "helpful_count",
+    value: "Helpful Count"
+  },
+  {
+    id: 'date',
+    value: 'Date'
+  }
+];
 export default function ReviewList(props) {
 
   const { sortBy, newReview } = useContext(YelpContext);
@@ -43,20 +56,6 @@ export default function ReviewList(props) {
     />;
   });
 
-  const sortOptions = [
-    {
-      id: "overall_rating",
-      value: "Safe Score"
-    },
-    {
-      id: "helpful_count",
-      value: "Helpful Count"
-    },
-    {
-      id: 'date',
-      value: 'Date'
-    }
-  ];
 
   const handleSort = (property) => {
     sortBy(props.reviews,
