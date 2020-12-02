@@ -136,13 +136,12 @@ const useProfileData = () => {
   };
 
   const deleteFavProfile = (venue_id) => {
-    const cpy = [...allUsers.favsDetails];
-    const index = allUsers.favsDetails
+    const cpy = [...favsDetails];
+    const index =favsDetails
       .findIndex(fav =>
         fav.id === venue_id);
     cpy.splice(index, 1);
-    setAllUsers({ ...allUsers, favsDetails: cpy });
-
+    setFavsDetails(cpy);
   };
 
   const getUsersFavs = (id) => {
