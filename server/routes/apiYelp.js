@@ -39,7 +39,6 @@ module.exports = () => {
     
     const A = setInterval(async () => {
         const response = await searchByID(vens[i++].venue_id);
-        console.log("this is the leng",vens.length)
         if(response) {
         results.push(response);
         }
