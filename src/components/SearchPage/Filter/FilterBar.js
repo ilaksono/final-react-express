@@ -170,13 +170,13 @@ const FilterBar = (props) => {
           filters={filters} message='> 8 km' value={50000} />
         <FilterItem type='distance' handleClick={() =>
           handleClick({ type: 'distance', value: 8000 })}
-          filters={filters} message='6 - 8 km' value={8000} />
+          filters={filters} message='< 8 km' value={8000} />
         <FilterItem type='distance' handleClick={() =>
           handleClick({ type: 'distance', value: 6000 })}
-          filters={filters} message='4 - 6 km' value={6000} />
+          filters={filters} message='< 6 km' value={6000} />
         <FilterItem type='distance' handleClick={() =>
           handleClick({ type: 'distance', value: 4000 })}
-          filters={filters} message='2 - 4 km' value={4000} />
+          filters={filters} message='< 4 km' value={4000} />
         <FilterItem type='distance' handleClick={() =>
           handleClick({ type: 'distance', value: 2000 })}
           filters={filters} message='< 2 km' value={2000} />
