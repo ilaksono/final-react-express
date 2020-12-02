@@ -30,7 +30,46 @@ module.exports = () => {
       });
   });
 
+  // pass it array of business IDs we want to iterate through
+  router.post("/search/favs", async (req, res, next) => {
+
+    const vens = req.body.arr;
+    let i = 0;
+    let results = [];
+    
+    const A = setInterval(async () => {
+        const response = await searchByID(vens[i++].venue_id);
+        console.log("this is the leng",vens.length)
+        if(response) {
+        results.push(response);
+        }
+        if (i >= vens.length) {
+          clearTimeout(A);
+          return res.json({ data: results });
+        }
+      }, 250);
+  });
+
+
+
+  function searchByID(id) {
+
+    return client.business(id)
+      .then((result) => {
+        const business = result.jsonBody;
+        return business;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+
+
+
   router.post("/search/:id", (req, res) => {
+    // handles array of search/:id
+
     client
       .business(req.params.id).then(response => {
         res.json(response.jsonBody);

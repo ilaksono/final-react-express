@@ -330,6 +330,7 @@ export default function ReviewListItem(props) {
                 isProfile={props.isProfile || null}
                 isHome={props.isHome || null}
                 setOpen={setOpen}
+                updateFavouriteReview={props.updateFavouriteReview}
               />
             </div>
           </div>

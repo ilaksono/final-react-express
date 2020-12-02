@@ -6,6 +6,7 @@ const useLoadToxicity = () => {
     loadToxic,
     setLoadToxic
   }
+  
 }
 
 export default useLoadToxicity;

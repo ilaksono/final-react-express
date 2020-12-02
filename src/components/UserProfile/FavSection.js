@@ -2,7 +2,7 @@ import ProfilePlaceItem from './ProfilePlaceItem';
 
 const FavSection = (props) => {
 
-  const parsedPlaces = props.allUsers.favsDetails
+  const parsedPlaces = props.favsDetails
     .map((place, i) => <ProfilePlaceItem
       deleteFavProfile={props.deleteFavProfile}
       {...place} whom={props.whom}

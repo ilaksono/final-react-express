@@ -366,7 +366,9 @@ export default function BusinessPage() {
     categoryList = businessDetails.categories.map((category, index) => {
       return (
         <div className="category" key={index}>
-          {businessDetails.categories.length === (index + 1) ? `${category.title}` : `${category.title},`}
+          {businessDetails.categories.length === (index + 1) 
+          ? `${category.title}` 
+          : `${category.title},`}
         </div>
       );
     });

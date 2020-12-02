@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-   
+
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -140,6 +140,13 @@ const NewReview = props => {
           description, overall_rating
         })
         .then(() => {
+            props.updateFavouriteReview(venue_id, { description, 
+              overall_rating,
+              socialdistancing: socialDistancing,
+              transactionprocess: transactionProcess,
+              cleanliness,
+              user_id
+             });
           setLoadToxic(false);
         });
     }
@@ -161,10 +168,13 @@ const NewReview = props => {
             findReview.transactionprocess = transactionProcess;
             findReview.overall_rating = overall_rating;
             findReview.description = description;
-            findReview.toxic = response.data.toxic;
             updatedBusinessDetailsReviews = updatedBusinessDetailsReviews.map(review => review.user_id === user_id ? findReview : review);
+
+           
             setLoadToxic(false);
+
             return setBusinessDetails(prev => ({ ...prev, reviews: updatedBusinessDetailsReviews }));
+
           }
         })
         .catch(err => console.log(err));
@@ -206,20 +216,20 @@ const NewReview = props => {
     handleClose();
     if (props.overall_rating) {
       submitEditReview(props.review_id, props.user_id, props.venue_id, props.venue_name, cleanliness, socialDistancing, transactionProcess, overallComfort, description, props.isProfile)
-      .then(response => {
-        setLoadToxic(false);
-      }).catch(err => console.log(err));
+        .then(response => {
+          setLoadToxic(false);
+        }).catch(err => console.log(err));
     }
     else {
       props.setReviewSnackBar(true);
       submitNewReview(appState.name, props.venue_id, cleanliness, socialDistancing, transactionProcess, overallComfort, description, businessDetails.name, appState.profile_pic)
-      .then(response => {
-        setLoadToxic(false);
-        setNewReview(true);
-        if (!response) {
-          return handleClose();
-        }
-        // props.setReviewSnackBar(true);
+        .then(response => {
+          setLoadToxic(false);
+          setNewReview(true);
+          if (!response) {
+            return handleClose();
+          }
+          // props.setReviewSnackBar(true);
           resetState();
           setOpen(true);
         }).catch(err => console.log(err));

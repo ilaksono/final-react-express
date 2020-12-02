@@ -47,7 +47,7 @@ const SearchPage = props => {
           position: 'absolute',
           fontSize: 10,
           fontWeight: 'bold',
-          right: showMap ? '445px' : '40px'
+          right: showMap ? '470px' : '40px'
         }}
         variant="outlined"
         color="primary"

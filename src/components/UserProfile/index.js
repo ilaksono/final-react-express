@@ -25,13 +25,13 @@ const UserProfile = (props) => {
     setAllUsers,
     profileDeleteReview,
     deleteFavProfile,
+    proLoading,
+    favsDetails,
+    updateFavouriteReview
   } = useProfileData();
   const { newReview, setNewReview, loadToxic,
-  resetFiltersHandle } = useContext(YelpContext);
-  useEffect(() => {
-    getTimeRating(id);
-    // eslint-disable-next-line
-  }, [id, loadToxic]);
+  resetFiltersHandle,
+} = useContext(YelpContext);
   useEffect(() => {
     getUsersAPI()
       .then((res) => {
@@ -41,11 +41,15 @@ const UserProfile = (props) => {
     // eslint-disable-next-line
   }, [props.newRegister]);
   useEffect(() => {
-    if (id)
+    if (id) {
+
+      console.log("newReview is currently", newReview);
+      console.log("loadToxic is currently", loadToxic);
       getTimeRating(id)
         .then(() => setNewReview(true));
+    }
     // eslint-disable-next-line
-  }, [newReview, loadToxic]);
+  }, []);
 
   const whom = allUsers.all // eslint-disable-next-line
   .find(user => user.id == id) || null;
@@ -55,7 +59,7 @@ const UserProfile = (props) => {
       {
         !whom ?
           <div className='loading-circle' style={{ marginLeft: '45%' }}>
-            <CircularProgress size={140} color="secondary" />
+            <CircularProgress size={100} color="secondary"/>
           </div>
           :
           <>
@@ -83,7 +87,12 @@ const UserProfile = (props) => {
                   FAVOURITES
                 </div>
               </div>
-              { selected === "reviews" && (
+              { proLoading && (
+                <div className='loading-circle'>
+                <CircularProgress size={140} color="secondary" />
+              </div>
+              )}
+              { (!proLoading && selected === "reviews") && (
                 <div className={`profile-reviews${focus.rev ? '-hover' : ''}`}>
                 {
                   allUsers.reviews.length > 0 ?
@@ -94,6 +103,7 @@ const UserProfile = (props) => {
                             isProfile={true}
                             profileHelpCount={profileHelpCount}
                             profileDeleteReview={profileDeleteReview}
+                            updateFavouriteReview={updateFavouriteReview}
                           />
                       </div>
                     </>
@@ -104,13 +114,15 @@ const UserProfile = (props) => {
                 }
                 </div>
               )}
-              { selected === "favourites" && (
+              { (!proLoading && selected === "favourites") && (
                 <div className='user-chart-container'>
                 {
-                  allUsers.favsDetails.length ?
+                  favsDetails.length ?
                     <>
                       <FavSection deleteFavProfile={deleteFavProfile} 
-                      whom={whom} allUsers={allUsers}/>
+                      whom={whom} allUsers={allUsers}
+                      favsDetails={favsDetails}
+                      />
                     </>
                     :
                     <div className='no-places-info'>

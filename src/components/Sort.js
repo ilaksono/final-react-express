@@ -21,13 +21,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Sort = props => {
   const classes = useStyles();
-  const {sort, setSort} = useContext(YelpContext)
-  // const [sortBy, setSortBy] =
-  //   React.useState(props.defaultOption);
+  // const {sort, setSort} = useContext(YelpContext)
+  const [sortBy, setSortBy] =
+    React.useState(props.defaultOption);
 
 
   const handleChange = (event) => {
-    setSort(event.target.value);
+    setSortBy(event.target.value);
   };
 
   const items = props.sortOptions.map((option, index) => {
@@ -45,7 +45,7 @@ const Sort = props => {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           className={classes.select}
-          value={sort}
+          value={sortBy}
           onChange={handleChange}
           label="Sort By"
         >

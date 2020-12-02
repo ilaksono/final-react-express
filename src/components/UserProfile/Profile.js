@@ -72,11 +72,10 @@ const Profile = (props) => {
             <tr className='profile-thead'>
               <td>
                 <i className="far fa-thumbs-up review-table-icon"></i>
-              Score
+              Helpful
             </td>
               <td
-                onMouseOver={reviewTableHover}
-                onMouseOut={notReviewTableHover}
+                
               >
                 <i className="fas fa-feather-alt review-table-icon"></i>
               Reviews
@@ -87,8 +86,8 @@ const Profile = (props) => {
                 {Number(props.whom.total) || 0}
               </td>
 
-              <td className='review-table-doc' onMouseOver={reviewTableHover}
-                onMouseOut={notReviewTableHover}> {props.length || 0}
+              <td className='review-table-doc' 
+                > {props.length || 0}
               </td>
             </tr>
           </tbody>
