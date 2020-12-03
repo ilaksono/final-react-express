@@ -29,6 +29,14 @@ import "styles/ReviewList.scss";
 import 'styles/Photos.scss'
 import 'styles/Animations.scss';
 
+
+import axios from "axios";
+
+if (process.env.REACT_APP_API_BASE_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+}
+
+
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
@@ -37,4 +45,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
