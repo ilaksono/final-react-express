@@ -32,22 +32,25 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - pg
 - request-promise-native
 - yelp-fusion
+- cors
 - yelp autocomplete
 - google-maps places library
 
 
 ### Server Module can be found in `/server`
 
+### Screenshots:
 
+!["Home Page"](https://github.com/ilaksono/safe-space/blob/master/ssdocs/home-page.jpg)
+!["Profile Page"](https://github.com/ilaksono/safe-space/blob/master/ssdocs/profile-page.jpg)
+!["Search Page"](https://github.com/ilaksono/safe-space/blob/master/ssdocs/search-page.jpg)
 
-### 
-
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Deployed on netlify:
+https://safespace-a.netlify.app/
+
+API deployed on heroku: 
+https://safespace-laksono.herokuapp.com/
 
