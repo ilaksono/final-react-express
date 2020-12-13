@@ -1,19 +1,10 @@
 # SafeSpace App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Uses Express server handling with yelp-fusion api and pg postgres-database.
+A yelp-like application for reviewing places based on covid safety practices. Uses Express server handling with yelp-fusion api and pg postgres-database. Built by Andrew Markham, Daniel Shaefer and myself(Ian Laksono).
 
 ## Front-End Frameworks:
 - Material-UI v4.11.0
 - Combobox v0.12.0
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Front-end Dependencies
 - React v17.0
@@ -25,7 +16,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - axios
 - react-static-google-map
 
-
 ## Server Dependencies
 - Nodejs v10.x
 - Express v4.x
@@ -36,8 +26,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - yelp autocomplete
 - google-maps places library
 
+## The following custom hooks can be found in 'src/hooks':
+- `useApplicationData`: Reducer which maintains and updates client data and home page state.
+- `useAutoComplete`: State which updates and controls the venue autocomplete interaction with yelp autocomplete api
+- `useChartData`: State which updates and controls the Chart component
+- `useFilter`: State which updates and controls the filter switches in Search Page 
+- `useLocationAuto`: State which updates and controls the location autocomplete interacting with google maps/places api
+- `useMapData`: State which updates and controls the map object, panning, and marker subcomponents
+- `usePagination`: State which updates and controls results and pages displayed
+- `useProfileData`: State which controls the data displayed on user profile pages
+- `useRefinedData`: Reducer that updates, filters and controls the results listed in the middle section of the search page
+-  `useYelpData`: State that updates, sorts, and maintains the yelp api search results from venue search, and business ID end points
 
-### Server Module can be found in `/server`
+### Server-API can be found in `/server` 
 
 ### Screenshots:
 
@@ -65,7 +66,10 @@ https://safespace-laksono.herokuapp.com/
 - Solving back-end bottlenecks
 - Front-end error handling
 - Creating and managing Google Map and places API
+- Creating and managing Chart
 - Creating and managing Yelp API
-- Initialise docs
+- Initialise docs and readme
 - Heavy styling of react components
+- Creating and managing config and .env files
+- Organizing front-end hooks and components
 
