@@ -54,3 +54,10 @@ https://safespace-a.netlify.app/
 API deployed on heroku: 
 https://safespace-laksono.herokuapp.com/
 
+## My Role:
+- Deploying
+- Creating project
+- Architecture of Database Design
+- Researching Back-end middleware
+- Researching Front-end APIs
+
