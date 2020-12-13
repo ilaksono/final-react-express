@@ -59,5 +59,13 @@ https://safespace-laksono.herokuapp.com/
 - Creating project
 - Architecture of Database Design
 - Researching Back-end middleware
+- Organizing express router
 - Researching Front-end APIs
+- Integrating react-router and context
+- Solving back-end bottlenecks
+- Front-end error handling
+- Creating and managing Google Map and places API
+- Creating and managing Yelp API
+- Initialise docs
+- Heavy styling of react components
 
