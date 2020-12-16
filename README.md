@@ -65,10 +65,11 @@ https://safespace-laksono.herokuapp.com/
 - Integrating react-router and context
 - Solving back-end bottlenecks
 - Front-end error handling
-- Creating and managing Google Map and places API
-- Creating and managing Chart
-- Creating and managing Yelp API
+- Creating and managing Google Maps and Places API integration
+- Creating and managing Chart integration
+- Creating and managing Yelp API integration
 - Initialise docs and readme
+- Design and build animations
 - Heavy styling of react components
 - Creating and managing config and .env files
 - Organizing front-end hooks and components
