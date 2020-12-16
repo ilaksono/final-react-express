@@ -70,6 +70,11 @@ https://safespace-laksono.herokuapp.com/
 - Creating and managing Yelp API integration
 - Initialise docs and readme
 - Design and build animations
+- Design and build filter Component and algorithms
+- Integrate sort algorithm into Yelp Results hook
+- Create and build Search Page, Home Page, and Profile Page
+- Support building Business Page 
+- Build time algorithms for business open times
 - Heavy styling of react components
 - Creating and managing config and .env files
 - Organizing front-end hooks and components
